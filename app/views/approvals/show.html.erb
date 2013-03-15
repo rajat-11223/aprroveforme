@@ -27,4 +27,4 @@
 
 
 <%= link_to 'Edit', edit_approval_path(@approval) %> |
-<%= link_to 'Back', approvals_path %>
+<%= link_to 'Destroy', @approval, method: :delete, data: { confirm: 'Are you sure?' } %>

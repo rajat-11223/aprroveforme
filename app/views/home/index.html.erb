@@ -1,4 +1,6 @@
-<h3>Home</h3>
-<% @users.each do |user| %>
-  <p>User: <%=link_to user.name, user %></p>
+
+<% if current_user %>
+	<%= render 'logged_in' %>
+<% else %>
+	<%= render 'logged_out' %>
 <% end %>

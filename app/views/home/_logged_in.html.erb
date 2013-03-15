@@ -1,0 +1,18 @@
+I'm logged in. views/home/logged_in
+
+</br>
+
+<%= link_to "New Approval", new_approval_path, :class => "btn" %>
+
+</br>
+My approvals:
+</br>
+<% @my_approvals.each do |approval| %>
+	<%= link_to approval.title, approval %></br>
+<% end %>
+
+</br></br>
+Approvals for me:
+<% @for_approvals.each do |approver| %>
+	<%= link_to approver.approval.title, approver.approval %></br>
+<% end %>

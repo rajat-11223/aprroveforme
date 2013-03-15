@@ -42,6 +42,7 @@ class ApprovalsController < ApplicationController
   # POST /approvals.json
   def create
     @approval = Approval.new(params[:approval])
+    @approval.owner = current_user.id
 
     respond_to do |format|
       if @approval.save
