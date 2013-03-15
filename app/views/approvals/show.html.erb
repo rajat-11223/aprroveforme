@@ -22,7 +22,16 @@
 
 <p>
   <b>Approvers:</b>
-  <%= @approval.approvers %>
+  <table>
+  <% @approval.approvers.each do |approver| %>
+  <tr>
+  	<td><%= approver.name %></td>
+  	<td><%= approver.email %></td>
+  	<td><%= approver.required %></td>
+  	<td><%= approver.status %></td>
+  </tr>
+  <% end %>
+  <table>
 </p>
 
 

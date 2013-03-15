@@ -1,18 +1,23 @@
-I'm logged in. views/home/logged_in
+<div class="jumbotron">
+	<h1>Let's get started!</h1>
+	<p class="lead">Don't worry. It's a lot easier than chasing everyone around.</p>
+	<%= link_to "Create a new approval", new_approval_path, :class => "btn btn-large btn-success" %>
+</div>
 
-</br>
+<hr>
 
-<%= link_to "New Approval", new_approval_path, :class => "btn" %>
+<div class="row-fluid marketing">
+        <div class="span6">
+          <h4>My Approvals</h4>
+          <% @my_approvals.each do |approval| %>
+			<p><%= link_to approval.title, approval %></p>
+		  <% end %>
+        </div>
 
-</br>
-My approvals:
-</br>
-<% @my_approvals.each do |approval| %>
-	<%= link_to approval.title, approval %></br>
-<% end %>
-
-</br></br>
-Approvals for me:
-<% @for_approvals.each do |approver| %>
-	<%= link_to approver.approval.title, approver.approval %></br>
-<% end %>
+        <div class="span6">
+          <h4>Stuff I need to approve</h4>
+          <% @for_approvals.each do |approver| %>
+			<p><%= link_to approver.approval.title, approver.approval %></p>
+		  <% end %>
+        </div>
+      </div>
