@@ -36,3 +36,14 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem "rspec-rails", ">= 2.12.2", :group => [:development, :test]
+gem "database_cleaner", ">= 0.9.1", :group => :test
+gem "email_spec", ">= 1.4.0", :group => :test
+gem "bootstrap-sass", ">= 2.3.0.0"
+gem "sendgrid", ">= 1.0.1"
+gem "omniauth", ">= 1.1.3"
+gem "omniauth-google-oauth2"
+gem "cancan", ">= 1.6.8"
+gem "rolify", ">= 3.2.0"
+gem "simple_form", ">= 2.0.4"
