@@ -9,12 +9,25 @@
   </div>
 
   <div class="form-inputs">
+    <table class="table">
+      
     <%= f.simple_fields_for :approvers do |a| %>
-      <%= a.input :name %>
-      <%= a.input :email %>
-      <%= a.input :required %>
-      <%= a.input :status %>
+    <tr>
+      <td><%= a.input :name %></td>
+      <td><%= a.input :email %></td>
+      <td><%= a.input :required %></td>
+      <td><%= a.input :status %></td>
+
+      <% unless a.object.new_record? %>
+        <% # Don't forget to name both of these '_destroy' in Rails 3 %>
+        <td><%= a.check_box '_destroy' %>
+        <%= a.label '_destroy', 'Remove' %></td>
+      <% end %>
     <% end %>
+      </tr>
+
+
+    </table>
   </div>
 
   <div class="form-actions">

@@ -25,7 +25,7 @@ class ApprovalsController < ApplicationController
   # GET /approvals/new.json
   def new
     @approval = Approval.new
-    @approval.approvers.build
+    3.times {@approval.approvers.build}
 
     respond_to do |format|
       format.html # new.html.erb
