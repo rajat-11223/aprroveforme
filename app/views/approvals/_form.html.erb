@@ -9,28 +9,29 @@
   </div>
 
   <div class="form-inputs">
-    <table class="table">
+    
       
-    <%= f.simple_fields_for :approvers do |a| %>
-    <tr>
-      <td><%= a.input :name %></td>
-      <td><%= a.input :email %></td>
-      <td><%= a.input :required %></td>
-      <td><%= a.input :status %></td>
-
-      <% unless a.object.new_record? %>
-        <% # Don't forget to name both of these '_destroy' in Rails 3 %>
-        <td><%= a.check_box '_destroy' %>
-        <%= a.label '_destroy', 'Remove' %></td>
-      <% end %>
+    <%= f.simple_fields_for :approvers do |builder| %>
+      
+      <%= render 'approver_form', :f => builder %>
+      
     <% end %>
-      </tr>
 
-
-    </table>
+    
+    <%= button_to_add_fields 'Add Approver', f, :approvers %>
+  
+  
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+function add_fields(link, association, content) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g")
+  $(link).before(content.replace(regexp, new_id));
+}
+</script>

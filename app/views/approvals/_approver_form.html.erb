@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="span2"><%= f.input :name %></div>
+  <div class="span2"><%= f.input :email %></div>
+  <div class="span2"><%= f.input :required, collection: [ "Required", "Optional"] %></div>
+  <div class="span2"><%= f.input :status, collection: [ "Not Reviewed"] %></div>
+
+  <% unless f.object.new_record? %>
+    <% # Don't forget to name both of these '_destroy' in Rails 3 %>
+    <div class="span2"><%= f.check_box '_destroy' %>
+    <%= f.label '_destroy', 'Remove' %></div>
+  <% end %>
+
+</div>
