@@ -1,41 +1,56 @@
-<%= simple_form_for(@approval) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :title, :placeholder => "Give it a title" %>
-
-      <%= f.input :link %>
-
-    
-
-    <%= f.input :description %>
-    <%= f.input :deadline, as: :date %>
-  </div>
-
-  <div class="form-inputs">
-    
-      
-    <%= f.simple_fields_for :approvers do |builder| %>
-      
-      <%= render 'approver_form', :f => builder %>
-      
-    <% end %>
-
-    
-    <%= button_to_add_fields 'Add Approver', f, :approvers %>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span9">
+      <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
+      <%= f.error_notification %>
+      <%= f.input :title, :placeholder => "Give it a title" , :input_html => { :class => "span10" }%>
+      <%= f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
+      <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
+      <%= f.input :deadline, as: :date, :default => Date.today+1, :input_html => { :class => "inline span10"} %>
   
-  
-  </div>
+      <table class="table-condensed">
+        <tr>
+          <td>Name</td><td>Email Address</td><td>Required?</td>
+        </tr>
+      <%= f.simple_fields_for :approvers do |builder| %>
+        <%= render 'approver_form', :f => builder %> 
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+      <% end %>
+        
+        <tr class="add">
+        
+      </tr>
+      </table>
+      <p>
+      <%= button_to_add_fields 'Add Approver', f, :approvers %>
+      </p>
+      </br>
+      <%= f.button :submit, :class => "btn-primary" %>
+ 
+  <% end %>
+    </div>
+
+
+    <div class="span3">
+      tips for how to use this
+    </div>
   </div>
-<% end %>
+</div>
+
+
+
 
 <script type="text/javascript">
 function add_fields(link, association, content) {
   var new_id = new Date().getTime();
-  var regexp = new RegExp("new_" + association, "g")
-  $(link).before(content.replace(regexp, new_id));
+  var regexp = new RegExp("new_" + association, "g");
+  //document.body.insertBefore(content.replace(regexp, new_id), $('div#insert'));
+  $("tr.add").before(content.replace(regexp, new_id));
+  //$(link).before(content.replace(regexp, new_id));
 }
+
+$(function() {
+    $("input.date_picker").datepicker();
+  });
+
 </script>
