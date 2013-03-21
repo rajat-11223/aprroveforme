@@ -14,6 +14,14 @@ class ApprovalsController < ApplicationController
   # GET /approvals/1.json
   def show
     @approval = Approval.find(params[:id])
+    @approver_count = @approval.approvers.count
+    @approved_count = @approval.approvers.where("status = ?", "Approved").count
+    if @approver_count > 0
+      @percent_complete = "#{((@approved_count*100)/@approver_count)}%"
+    else
+      @percent_complete = 0
+    end
+
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,6 +44,7 @@ class ApprovalsController < ApplicationController
   # GET /approvals/1/edit
   def edit
     @approval = Approval.find(params[:id])
+
   end
 
   # POST /approvals
@@ -60,16 +69,28 @@ class ApprovalsController < ApplicationController
   def update
     @approval = Approval.find(params[:id])
 
-    respond_to do |format|
-      if @approval.update_attributes(params[:approval])
-        format.html { redirect_to @approval, notice: 'Approval was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @approval.errors, status: :unprocessable_entity }
+    if params[:approval][:approver]
+      @approver = @approval.approvers.where("email = ?", current_user.email).first
+      @approver.status = params[:approval][:approver][:status]
+      @approver.comments = params[:approval][:approver][:comments]
+      @approver.save
+      redirect_to @approval, notice: 'Approval submitted'
+    else
+
+      respond_to do |format|
+        if @approval.update_attributes(params[:approval])
+          format.html { redirect_to @approval, notice: 'Approval was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @approval.errors, status: :unprocessable_entity }
+        end
       end
+
     end
   end
+
+  
 
   # DELETE /approvals/1
   # DELETE /approvals/1.json
@@ -78,7 +99,7 @@ class ApprovalsController < ApplicationController
     @approval.destroy
 
     respond_to do |format|
-      format.html { redirect_to approvals_url }
+      format.html { redirect_to root_url }
       format.json { head :no_content }
     end
   end

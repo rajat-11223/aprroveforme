@@ -1,34 +1,43 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @approval.title %>
-</p>
+<h3><%= @approval.title %></h3>
+<p class="lead"><%= @approval.description %></p>
+
 
 <p>
   <b>Link:</b>
-  <%= @approval.link %>
+  <%= link_to @approval.link, @approval.link, :target=>"_blank" %>
+</p>
+
+
+<p>
+  <b>Please review by</b> <%= @approval.deadline.to_date %>
 </p>
 
 <p>
-  <b>Description:</b>
-  <%= @approval.description %>
+<b>Percent complete</b>
+<div class="progress progress-info progress-striped">
+  <div class="bar" style="width: <%= @percent_complete %>"></div>
+</div>
 </p>
 
-<p>
-  <b>Deadline:</b>
-  <%= @approval.deadline %>
-</p>
+<% if @app = @approval.approvers.where("email = ?", current_user.email).first %>
+<%= render "response", :approver => @app %>
+<% end %>
+
+
 
 <p>
-  <b>Approvers:</b>
-  <table>
+  <table class="table table-hover table-condensed">
   <% @approval.approvers.each do |approver| %>
-  <tr>
+  <% @hash = Digest::MD5.hexdigest(approver.email.downcase.strip) %> 
+  <tr class="<%= get_status(approver.status) %>">
+    <td><%= image_tag "http://www.gravatar.com/avatar/#{@hash}" %></td>
   	<td><%= approver.name %></td>
   	<td><%= approver.email %></td>
   	<td><%= approver.required %></td>
   	<td><%= approver.status %></td>
+    <td><i><%= approver.comments %></i></td>
   </tr>
   <% end %>
   <table>

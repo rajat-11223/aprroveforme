@@ -1,0 +1,28 @@
+<hr>
+
+<% if approver.status == "Approved" %>
+You've already signed off!
+<% elsif approver.status == "Declined" %>
+You've declined. Want to change your mind?
+<% else %>
+Time for you to sign off! 
+<% end %>
+
+</br>
+
+<%= simple_form_for approver.approval do |f| %>
+	<p>
+	<%= f.button :submit, :class => "btn-success", :name => "approval[approver][status]", :value => "Approved" %>
+	<%= f.button :submit, :class => "btn-danger", :name => "approval[approver][status]", :value => "Declined" %>
+    </p>
+	<%= f.simple_fields_for approver do |builder| %>
+		
+		<%= builder.input :comments, :input_html => { :class => "span10", :rows => "3" }, :placeholder => "Have any comments?", :label => false %>
+	<% end %>
+	
+
+<% end %>
+
+
+<hr>
+

@@ -1,5 +1,9 @@
 Workflow::Application.routes.draw do
-  resources :approvals
+  resources :approvals do
+  	resources :approvers
+  end
+
+
 
   root :to => "home#index"
   resources :users, :only => [:index, :show, :edit, :update ]

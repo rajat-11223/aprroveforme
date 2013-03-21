@@ -8,6 +8,7 @@
       <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
       <%= f.input :deadline, as: :date, :default => Date.today+1, :input_html => { :class => "inline span10"} %>
   
+     
       <table class="table-condensed">
         <tr>
           <td>Name</td><td>Email Address</td><td>Required?</td>
@@ -17,12 +18,17 @@
 
       <% end %>
         
-        <tr class="add">
-        
+      <!-- leave the tr add row for adding new approvers -->
+      <tr class="add">
       </tr>
+      <!-- end extra tr -->
+
       </table>
+  
       <p>
-      <%= button_to_add_fields 'Add Approver', f, :approvers %>
+      
+      <%= button_to_add_fields('Add Approver', f, :approvers)%>
+      
       </p>
       </br>
       <%= f.button :submit, :class => "btn-primary" %>

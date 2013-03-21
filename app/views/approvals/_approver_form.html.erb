@@ -3,6 +3,10 @@
   <td><%= f.input :email, :placeholder => "Email address", label: false %></div>
   <td><%= f.input :required, collection: [ "Required", "Optional"], :default => "Required", label: false %></td>
 
+  <% if f.object.new_record? %>
+  <td><%= f.input :status, :as => :hidden, :input_html => { :value => "Pending" }, label: false %></td>
+  <% end %>
+
   <% unless f.object.new_record? %>
     <% # Don't forget to name both of these '_destroy' in Rails 3 %>
     <td><%= f.check_box '_destroy' %>
