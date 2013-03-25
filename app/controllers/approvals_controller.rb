@@ -43,6 +43,7 @@ class ApprovalsController < ApplicationController
   # POST /approvals.json
   def create
     @approval = Approval.new(params[:approval])
+    @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
     @approval.owner = current_user.id
 
     respond_to do |format|
@@ -59,7 +60,9 @@ class ApprovalsController < ApplicationController
   # PUT /approvals/1
   # PUT /approvals/1.json
   def update
+    
     @approval = Approval.find(params[:id])
+    #@approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
 
     if params[:approval][:approver]
       @approver = @approval.approvers.where("email = ?", current_user.email).first

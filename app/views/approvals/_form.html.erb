@@ -6,8 +6,17 @@
       <%= f.input :title, :placeholder => "Give it a title" , :input_html => { :class => "span10" }%>
       <%= f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
       <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
-      <%= f.input :deadline, as: :date, :default => Date.today+1, :input_html => { :class => "inline span10"} %>
-  
+      <% #f.input :deadline, as: :date, :default => Date.today+1, :input_html => { :class => "inline span10"} %>
+      <% #f.input :deadline, :type=>"text", :default => Date.today+1, :input_html => { :class => "inline span10", :id=>"datepicker"} %>
+
+      <%= f.input :deadline, :required => true, 
+            :input_html => { :id => "datepicker"}, 
+            :as => :string %>
+
+    <!-- <p>Date: <input type="text" id="datepicker" name="approval[deadline]" /></p> -->
+
+
+</select>
      
       <table class="table-condensed">
         <tr>
@@ -56,7 +65,10 @@ function add_fields(link, association, content) {
 }
 
 $(function() {
-    $("input.date_picker").datepicker();
+    $( "#datepicker" ).datepicker();
+    $( "#format" ).change(function() {
+      $( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
+    });
   });
 
 </script>

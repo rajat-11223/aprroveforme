@@ -1,6 +1,7 @@
 
 <!-- show pending approvals waiting for you -->
 <% if @pending_approvals.count > 0 %>
+
 <div class="row">
         <% @pending_approvals.each do |approver| %>
     <div class="well well-small pending span10">

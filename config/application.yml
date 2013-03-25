@@ -7,8 +7,8 @@
 # makes 'Your_Gmail_Username' available as ENV["GMAIL_USERNAME"]
 # Add application configuration variables here, as shown below.
 #
-SENDGRID_USERNAME: Your_Username
-SENDGRID_PASSWORD: Your_Password
+SENDGRID_USERNAME: approveforme
+SENDGRID_PASSWORD: Snakes557
 ADMIN_NAME: First User
 ADMIN_EMAIL: user@example.com
 ADMIN_PASSWORD: changeme
