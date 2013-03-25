@@ -3,6 +3,10 @@
 body {
         padding-top: 20px;
         padding-bottom: 40px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #333333;
+        background-color: #e8e8e8;
+        text-shadow: 1px 1px #fff;
       }
 
       /* Custom container */
@@ -35,4 +39,6 @@ body {
       .marketing p + h4 {
         margin-top: 28px;
       }
+
+
       
