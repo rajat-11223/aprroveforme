@@ -1,3 +1,27 @@
+
+<!-- show pending approvals waiting for you -->
+<% if @pending_approvals.count > 0 %>
+<div class="row">
+        <% @pending_approvals.each do |approver| %>
+    <div class="well well-small pending span10">
+    <p><div class="lead">
+      <div class="span5">
+      <%= User.find(approver.approval.owner).name %> needs you to approve <%= link_to approver.approval.title, approver.approval %> 
+    </div>
+    <div class="span4">
+      <%= link_to "View " + approver.approval.title, approver.approval, :class=>"btn btn-primary" %></div>
+    </div>
+    </p>
+    </div>
+
+    <% end %>
+  </div>
+<hr>
+<% end %>
+
+
+
+<!-- new approval button -->
 <div class="jumbotron">
 	<h1>Let's get started!</h1>
 	<p class="lead">Don't worry. It's a lot easier than chasing everyone around.</p>
@@ -6,18 +30,25 @@
 
 <hr>
 
-<div class="row-fluid marketing">
-        <div class="span6">
-          <h4>My Approvals</h4>
-          <% @my_approvals.each do |approval| %>
-			<p><%= link_to approval.title, approval %></p>
-		  <% end %>
-        </div>
 
-        <div class="span6">
-          <h4>Stuff I need to approve</h4>
-          <% @for_approvals.each do |approver| %>
-			<p><%= link_to approver.approval.title, approver.approval %></p>
-		  <% end %>
-        </div>
-      </div>
+<!-- show the approvals you've sent out -->
+<% if @my_approvals.count > 0 %>
+<h1 class="span10 header">Here's what you're waiting on</h1>
+<div class="row">
+  <% @my_approvals.each do |approval| %>
+  <div class="row span10">
+    <div class="span4 lead">
+      <%= link_to approval.title, approval %></br>
+      Deadline: <%= approval.deadline.to_date %>
+    </div>
+    <div class="span5">
+      <div class="progress progress-info progress-striped">
+        <div class="bar" style="width: <%= percentage_complete(approval) %>"></div>
+      </div><%= percentage_complete(approval) %> signed off
+    </br>
+    </div>
+  </div>
+
+  <% end %>
+</div>  
+<% end %>

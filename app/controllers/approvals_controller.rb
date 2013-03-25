@@ -14,14 +14,6 @@ class ApprovalsController < ApplicationController
   # GET /approvals/1.json
   def show
     @approval = Approval.find(params[:id])
-    @approver_count = @approval.approvers.count
-    @approved_count = @approval.approvers.where("status = ?", "Approved").count
-    if @approver_count > 0
-      @percent_complete = "#{((@approved_count*100)/@approver_count)}%"
-    else
-      @percent_complete = 0
-    end
-
 
     respond_to do |format|
       format.html # show.html.erb
