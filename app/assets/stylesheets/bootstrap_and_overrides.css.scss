@@ -12,7 +12,7 @@ body {
       /* Custom container */
       .container {
         margin: 0 auto;
-        max-width: 1000px;
+
       }
       .container > hr {
         margin: 10px 0;
@@ -45,5 +45,13 @@ body {
       }
       .pending{
         text-align: center;
+      }
+      .brand {
+      font-family: 'Leckerli One', cursive;
+      font-size:30px;
+      color: black;
+      }
+      .brand:hover {
+      text-decoration:none;
       }
       
