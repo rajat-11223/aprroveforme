@@ -1,4 +1,5 @@
 <div class="masthead">
+  <div class="span12">
   <ul class="nav nav-pills pull-right">
     <% if user_signed_in? %>
       <li><%= link_to 'Logout', signout_path %></li>
@@ -12,4 +13,5 @@
     <% end %>
   </ul>
   <h3 class="muted"><%= link_to "ApproveForMe", root_path, :class => 'brand' %></h3>
+</div>
 </div>
