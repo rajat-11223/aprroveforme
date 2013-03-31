@@ -1,17 +1,17 @@
 <div class="masthead">
   <div class="span12">
-  <ul class="nav nav-pills pull-right">
-    <% if user_signed_in? %>
-      <li><%= link_to 'Logout', signout_path %></li>
-    <% else %>
-      <li><%= link_to 'Login', signin_path %></li>
-    <% end %>
-    <% if user_signed_in? %>
-      <% if current_user.has_role? :admin %>
-      <li><%= link_to 'Admin', users_path %></li>
+    <ul class="nav nav-pills pull-right">
+      <% if user_signed_in? %>
+        <li><%= link_to 'Logout', signout_path %></li>
+      <% else %>
+        <li><%= link_to 'Login', signin_path %></li>
       <% end %>
-    <% end %>
-  </ul>
-  <h3 class="muted"><%= link_to "ApproveForMe", root_path, :class => 'brand' %></h3>
-</div>
+      <% if user_signed_in? %>
+        <% if current_user.has_role? :admin %>
+        <li><%= link_to 'Admin', users_path %></li>
+        <% end %>
+      <% end %>
+    </ul>
+    <h3 class="muted"><%= link_to "ApproveForMe", root_path, :class => 'brand' %></h3>
+  </div>
 </div>
