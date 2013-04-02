@@ -1,4 +1,10 @@
 Workflow::Application.routes.draw do
+  get "privacy/index"
+
+  get "terms/index"
+
+  get "about/index"
+
   resources :approvals do
   	resources :approvers
   end
