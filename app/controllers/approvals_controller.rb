@@ -43,8 +43,10 @@ class ApprovalsController < ApplicationController
   # POST /approvals.json
   def create
     @approval = Approval.new(params[:approval])
-    @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
     @approval.owner = current_user.id
+    if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
+      @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
+    end
 
     respond_to do |format|
       if @approval.save
@@ -62,7 +64,9 @@ class ApprovalsController < ApplicationController
   def update
     
     @approval = Approval.find(params[:id])
-    
+    if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
+      params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
+    end
 
     if params[:approval][:approver]
       @approver = @approval.approvers.where("email = ?", current_user.email).first
@@ -74,10 +78,7 @@ class ApprovalsController < ApplicationController
 
       respond_to do |format|
         if @approval.update_attributes(params[:approval])
-          if params[:approval][:deadline]
-            @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
-            @approval.save
-          end
+          @approval.save
           format.html { redirect_to @approval, notice: 'Approval was successfully updated.' }
           format.json { head :no_content }
         else
