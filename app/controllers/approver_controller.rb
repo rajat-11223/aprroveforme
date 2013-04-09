@@ -1,5 +1,5 @@
 class ApproverController < ApplicationController
-
+  before_filter :authenticate_user!
   def show
     @approver = Approver.find(params[:id])
   end
