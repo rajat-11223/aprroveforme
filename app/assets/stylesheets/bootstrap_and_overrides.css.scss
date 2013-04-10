@@ -1,12 +1,13 @@
 @import "bootstrap";
 @import "bootstrap-responsive";
 body {
-        padding-top: 20px;
-        padding-bottom: 40px;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         color: #333333;
-        background-color: #e8e8e8;
-        text-shadow: 1px 1px #fff;
+        background-color: white;
+        padding: 0px;
+      }
+      a{
+        color: #236775;
       }
 
       /* Custom container */
@@ -18,11 +19,27 @@ body {
         margin: 10px 0;
       }
 
+      .barcolors {
+        position: absolute;
+        height: 7px;
+        left: 0;
+        top: 0;
+        bottom: auto;
+        right: 0;
+        z-index: 3;
+        background-color: #DE6957;
+      }
+
       /* Main marketing message and sign up button */
       .jumbotron {
         margin: 60px 0;
         text-align: center;
       }
+      .jumbotron .lead{
+        padding-left: 10%;
+        padding-right: 10%;
+      }
+
       .jumbotron h1 {
         font-size: 72px;
         line-height: 1;
@@ -30,11 +47,15 @@ body {
       .jumbotron .btn {
         font-size: 21px;
         padding: 14px 24px;
+        background: #DE6957;
+        color: white;
       }
 
       /* Supporting marketing content */
       .marketing {
-        margin: 60px 0;
+        background: #6BD3E9;
+        position: relative;
+        padding: 10px;
       }
       .marketing p + h4 {
         margin-top: 28px;
@@ -47,9 +68,9 @@ body {
         text-align: center;
       }
       .brand {
-      font-family: 'Leckerli One', cursive;
       font-size:30px;
-      color: black;
+      color: #333333;
+      margin-left: 10px;
       }
       .brand:hover {
       text-decoration:none;
@@ -64,8 +85,89 @@ body {
       font-size:16px;
       }
 
+      .text-green{
+        color: #14AF82;
+        fill: #14AF82;
+      }
+
+      .text-blue{
+        color: #6BD3E9;
+        fill: #6BD3E9;
+      }
+      .text-red{
+        color: #DE6957;
+        fill: #DE6957;
+      }
+      .text-dark{
+        color: #444;
+        fill: #444;
+      }
+      .text-grey{
+        color: #777;
+      }
+      .text-yellow{
+        color: #F6E772;
+        fill: #F6E772;
+      }
+
+      .feature{
+        padding-top: 20px;
+      }
+
+      .feature p{
+      padding: 20px;
+      margin: 10px;
+      }
+      .feature img{
+        height: 80px;
+      }
+
+      .nav{
+        padding: 0px;
+        margin: 0px;
+      }
+      .header-btn{
+        background: #DE6957;
+        color: white;
+        padding: 25px;
+      }
+      
+      .header-btn:hover {
+        background: #DE6957 !important;
+        color: white;
+      }
+
+      .nav-pills > li > a {
+        margin-top: 8px;
+        padding: 10px 25px;
+        margin-right: 10px;
+      }
+
+      .btn-primary, .btn-primary:hover{
+        background: #236775
+      }
+
       /* Footer */
       .text-footer {
       font-size:12px;
       }
-      
+      .footer{
+        background-color: #444;
+        color: white;
+        padding-top: 15px;
+        padding-bottom: 25px;
+        padding-left: 10px;
+      }
+      .footer a{
+        color: white;
+
+      }
+
+      .alert {
+        background-color: #F6E772;
+        color: #444;
+        }
+
+      .invites{
+        background-color: #777;
+      }
