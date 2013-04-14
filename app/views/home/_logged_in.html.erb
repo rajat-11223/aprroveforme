@@ -1,23 +1,5 @@
 
-<!-- show pending approvals waiting for you -->
-<% if @pending_approvals.count > 0 %>
 
-<div class="span12 row">
-  <% @pending_approvals.each do |approver| %>
-    <div class="span12">
-      <div class="row alert alert-block">
-        <div class="span8">
-        <%= User.find(approver.approval.owner).name %> needs you to approve <%= link_to approver.approval.title, approver.approval %> 
-      </div>
-      <div class="span3">
-        <%= link_to "View " + approver.approval.title, approver.approval, :class=>"btn btn-primary" %>
-      </div>
-      </div>
-    </div>
-  <% end %>
-</div>
-
-<% end %>
 
 
 
@@ -28,11 +10,29 @@
 	<%= link_to "Create a new approval", new_approval_path, :class => "btn btn-large btn-success" %>
 </div>
 
-<hr>
-
+<!-- show pending approvals waiting for you -->
+<% if @pending_approvals.count > 0 %>
+<div class="invites row">
+<div class="row">
+  <% @pending_approvals.each do |approver| %>
+    <div class="span12 alert-invite">
+      <div class="row alert alert-block">
+        <div class="span7">
+        <%= User.find(approver.approval.owner).name %> needs you to approve <%= link_to approver.approval.title, approver.approval %> 
+      </div>
+      <div class="span4">
+        <%= link_to "View " + approver.approval.title, approver.approval, :class=>"btn btn-primary" %>
+      </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>
+<% end %>
 
 <!-- show the approvals you've sent out -->
 <% if @my_approvals.count > 0 %>
+
 <h1 class="span12 header">Your open approvals</h1>
   <% @my_approvals.each do |approval| %>
     <div class="row">
@@ -48,4 +48,5 @@
         </div>
     </div>  
   <% end %>
+
 <% end %>

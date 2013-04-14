@@ -1,0 +1,55 @@
+<!-- new approval -->
+<div class="marketing">
+      <div class="jumbotron">
+        <h1>Let's get started!</h1>
+		<p class="lead">Don't worry, it's a lot easier than chasing everyone around.</p>
+		<%= link_to "Create a new approval", new_approval_path, :class => "btn btn-large btn-success" %>
+      </div>
+</div>
+
+<div class="row pending">
+	<div class="span4 text-center">
+        <h3>Stuff for you to sign off on</h3>
+		<p>If you like it, tell them!</p>
+	</div>
+	<div class="span8">
+		<div class="row-fluid">
+		 <% @pending_approvals.each do |approver| %>
+    	<div class="span3 pending-invite">
+      		<h4><%= link_to approver.approval.title, approver.approval %> </h4></br>
+      		<%= image_tag "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(User.find(approver.approval.owner).email.downcase.strip)}", :size => "50x50" %> <%= User.find(approver.approval.owner).name %></br>
+      		<%= approver.required %>
+    	</div>
+  		<% end %>
+  	</div>
+	</div>
+</div>
+
+
+
+
+<!-- show the approvals you've sent out -->
+<% if @my_approvals.count > 0 %>
+<div class="row">
+<h1 class="span12 header text-center">Your open approvals</h1>
+  <% @my_approvals.each do |approval| %>
+    <div class="row span12">
+        <div class="span5 lead">
+          <%= link_to approval.title, approval %></br>
+          <p class="text-large">Deadline: <%= approval.deadline.to_date %></p>
+        </div>
+        <div class="span6">
+          <div class="progress progress-info progress-striped">
+            <div class="bar" style="width: <%= percentage_complete(approval) %>"></div>
+          </div><%= percentage_complete(approval) %> complete
+          </br>
+        </div>
+    </div>  
+  <% end %>
+</div>
+<% end %>
+
+
+
+      
+
