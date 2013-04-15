@@ -112,9 +112,10 @@ body {
 
       .text-homepage-sub-title {
       font-size:23px;
-      font-weight:300;
+      font-weight:400;
       margin-top:10px;
       margin-bottom:10px;
+      text-shadow: 1px 1px 0 #B1B1B1;
       }
 
       .feature img{
@@ -142,22 +143,20 @@ body {
       /* Footer */
       .text-footer {
       font-size:12px;
-      font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin-left:10px;
+      margin-top:10px;
+      margin-bottom:10px;
       }
 
-      .footer{
+      .foot{
         background-color: #444;
         color: white;
-        padding-top: 15px;
-        padding-bottom: 25px;
-        padding-left: 10px;
-
       }
 
-      .footer a{
+      .foot a{
         color: white;
-
       }
+
       div.wrapper {
         position: relative;
         display: block;
