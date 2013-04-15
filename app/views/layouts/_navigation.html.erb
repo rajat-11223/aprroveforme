@@ -3,13 +3,13 @@
 <ul class="nav">
     <ul class="nav nav-pills pull-right">
       <% if user_signed_in? %>
-        <li><%= link_to 'Logout', signout_path, :class=>"btn header-btn" %></li>
+        <li><%= link_to 'Logout', signout_path, :class=>"btn btn-primary btn-small" %></li>
       <% else %>
-        <li><%= link_to 'Login', signin_path, :class=>"btn header-btn" %></li>
+        <li><%= link_to 'Login', signin_path, :class=>"btn btn-primary btn-small" %></li>
       <% end %>
       <% if user_signed_in? %>
         <% if current_user.has_role? :admin %>
-        <li><%= link_to 'Admin', users_path, :class=>"btn header-btn" %></li>
+        <li><%= link_to 'Admin', users_path, :class=>"btn btn-primary btn-small" %></li>
         <% end %>
       <% end %>
     </ul>

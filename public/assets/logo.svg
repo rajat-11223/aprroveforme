@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="500px" height="100px" viewBox="0 0 500 100" enable-background="new 0 0 500 100" xml:space="preserve">
+<g>
+	<rect x="-221.802" y="-26.424" fill="#010101" width="13.954" height="1.213"/>
+	<rect x="-221.802" y="-12.47" fill="#010101" width="15.167" height="1.213"/>
+	<rect x="-221.802" y="-26.424" fill="#010101" width="1.213" height="15.167"/>
+	<line fill="none" x1="-207.848" y1="-11.257" x2="-206.635" y2="-11.257"/>
+	<polyline fill="#010101" points="-206.635,-26.424 -207.848,-26.424 -207.848,-25.211 	"/>
+</g>
+<rect x="-207.848" y="-19.741" fill="#010101" width="1.213" height="8.484"/>
+<polyline fill="#010101" points="-206.635,-20.954 -206.635,-19.741 -207.848,-19.741 "/>
+<rect x="-215.774" y="-20.71" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 -373.8493 115.8808)" fill="#010101" width="9.698" height="2.439"/>
+<polyline fill="#010101" points="-206.635,-25.496 -208.355,-23.777 -206.635,-22.056 "/>
+<rect x="-219.772" y="-20.036" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -354.7204 -184.7751)" fill="#010101" width="8.283" height="2.236"/>
+<text transform="matrix(1 0 0 1 7.6006 66.0586)" font-family="'Skia-Regular'" font-size="60">Approve For Me</text>
+</svg>

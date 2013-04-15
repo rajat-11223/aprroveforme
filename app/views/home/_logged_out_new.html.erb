@@ -1,27 +1,27 @@
 <!-- Jumbotron -->
     <div class="marketing">
       <div class="jumbotron">
-        <h1>Approvals, Simplified.</h1>
+        <p class="text-hero">Approvals, Simplified.</p>
         <p class="lead">ApproveForMe is a free web-based tool that simplifies your professional life by making it easy to create, track, and manage approvals.</p>
-        <%= link_to 'Get started for free', signin_path, :class=>"btn btn-large landingpage" %>
+        <%= link_to 'Get started for free', signin_path, :class=>"btn btn-primary btn-large" %>
       </div>
     </div>
 
-      <!-- Example row of columns -->
-      <div class="row-fluid feature">
-        <div class="span4 text-center">
-          <h2 class="text-dark">Quick setup</h2>
-          <%= image_tag "idea.svg", :class=>"text-green" %>
-          <p class="text-grey">Easily create approvals with just a few bits of information and you're off.</p>
-        </div>
-        <div class="span4 text-center">
-          <h2 class="text-dark">Automated approval</h2>
-          <%= image_tag "check.svg", :class=>"text-red" %>
-          <p class="text-grey">Approvers are automatically emailed and presented with clear action.</p>
-       </div>
-        <div class="span4 text-center">
-          <h2 class="text-dark">Easy peasy</h2>
-          <%= image_tag "smile.svg", :class=>"text-yellow" %>
-          <p class="text-grey">View status and feedback in one place - no more piecing together emails.</p>
-        </div>
+    <!-- Example row of columns -->
+    <div class="row-fluid feature">
+      <div class="span4 text-center">
+        <%= image_tag "idea.svg" %>
+        <p class="text-dark text-homepage-sub-title">Quick setup</p>
+        <p class="text-homepage-sub">Easily create approvals with just a few bits of information and you're off.</p>
       </div>
+      <div class="span4 text-center">
+        <%= image_tag "check.svg" %>
+        <p class="text-dark text-homepage-sub-title">Automated approval</p>
+        <p class="text-homepage-sub">Approvers are automatically emailed and presented with clear action.</p>
+     </div>
+      <div class="span4 text-center">   
+        <%= image_tag "smile.svg" %>
+        <p class="text-dark text-homepage-sub-title">Easy peasy</p>
+        <p class="text-homepage-sub">View status and feedback in one place - no more piecing together emails.</p>
+      </div>
+    </div>
