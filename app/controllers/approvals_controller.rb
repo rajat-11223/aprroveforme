@@ -65,10 +65,7 @@ class ApprovalsController < ApplicationController
   def update
     
     @approval = Approval.find(params[:id])
-    if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
-      params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
-    end
-
+    
     if params[:approval][:approver]
       @approver = @approval.approvers.where("email = ?", current_user.email).first
       @approver.status = params[:approval][:approver][:status]
@@ -76,6 +73,9 @@ class ApprovalsController < ApplicationController
       @approver.save
       redirect_to @approval, notice: 'Approval submitted'
     else
+      if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
+        params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
+      end
 
       respond_to do |format|
         if @approval.update_attributes(params[:approval])

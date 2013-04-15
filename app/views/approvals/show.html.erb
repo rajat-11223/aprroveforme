@@ -1,5 +1,4 @@
-<p id="notice"><%= notice %></p>
-
+<div class="span12">
 <h3><%= @approval.title %></h3>
 <p class="lead"><%= @approval.description %></p>
 
@@ -25,7 +24,7 @@
 <%= render "response", :approver => @app %>
 <% end %>
 
-
+</div>
 
 <p>
   <table class="table table-hover table-condensed">
@@ -44,5 +43,9 @@
 </p>
 <p>User photos provided by <%= link_to "Gravatar", "http://www.gravatar.com", :target =>"_blank" %></p>
 
+
+
 <%= link_to 'Edit', edit_approval_path(@approval) %> |
 <%= link_to 'Destroy', @approval, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+

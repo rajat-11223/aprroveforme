@@ -1,46 +1,51 @@
-
-
-
-
-
 <!-- new approval button -->
+<div class="marketing">
 <div class="jumbotron">
-	<h1>Let's get started!</h1>
+	<h1 class="text-hero">Let's get started!</h1>
 	<p class="lead">Don't worry, it's a lot easier than chasing everyone around.</p>
 	<%= link_to "Create a new approval", new_approval_path, :class => "btn btn-large btn-success" %>
+</div>
 </div>
 
 <!-- show pending approvals waiting for you -->
 <% if @pending_approvals.count > 0 %>
-<div class="invites row">
-<div class="row">
+<div class="invites row"></br>
+  <h1 class="text-center">Your approval is needed</h1></br>
+<div class="offset1 row">
   <% @pending_approvals.each do |approver| %>
-    <div class="span12 alert-invite">
-      <div class="row alert alert-block">
-        <div class="span7">
-        <%= User.find(approver.approval.owner).name %> needs you to approve <%= link_to approver.approval.title, approver.approval %> 
+    <div class="span9 invite-row media">
+    <a class="pull-left" href="<%= approval_path(approver.approval) %>">
+      <%= image_tag "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(User.find(approver.approval.owner).email.downcase.strip)}", :size => "100x10", :class=>"media-object" %>
+    </a>
+      <div class="media-body">
+      <small><%= User.find(approver.approval.owner).name %> asked for your approval. </small></br>
+      <%= link_to approver.approval.title, approver.approval, :class=>"lead" %></br>
+      <% if approver.required.downcase == "required" %>
+      <small class="text-error">
+      <% else %>
+      <small class="text-warning">
+      <% end %>
+        *Your approval is <%= approver.required.downcase %>.</small>
       </div>
-      <div class="span4">
-        <%= link_to "View " + approver.approval.title, approver.approval, :class=>"btn btn-primary" %>
-      </div>
-      </div>
+
+
     </div>
   <% end %>
+
 </div>
 </div>
 <% end %>
 
 <!-- show the approvals you've sent out -->
-<% if @my_approvals.count > 0 %>
-
-<h1 class="span12 header">Your open approvals</h1>
+<% if @my_approvals.count > 0 %></br>
+<h1 class="header">Your open approvals</h1></br>
   <% @my_approvals.each do |approval| %>
     <div class="row">
-        <div class="span5 lead">
+        <div class="span5 offset1 lead">
           <%= link_to approval.title, approval %></br>
           <p class="text-large">Deadline: <%= approval.deadline.to_date %></p>
         </div>
-        <div class="span7">
+        <div class="span6">
           <div class="progress progress-info progress-striped">
             <div class="bar" style="width: <%= percentage_complete(approval) %>"></div>
           </div><%= percentage_complete(approval) %> complete
@@ -48,5 +53,47 @@
         </div>
     </div>  
   <% end %>
+
+<% end %>
+
+<!-- list expired approvals -->
+<% if (@my_completed_approvals.count > 0) or (@signedoff_approvals.count > 0 )  %>
+<div class="row previous-row">
+</br><h1 class="header">Previous Approvals</h1></br>
+
+<div class="row-fluid">
+  <div class="span6 previous">
+    <!-- my expired approvals -->
+    <h4>My Previous Approvals</h4>
+    <% if @my_completed_approvals.count > 0 %>
+    <ul>
+    <% @my_completed_approvals.each do |approval| %>
+    <li>
+    <%= link_to approval.title, approval %>
+    </li>
+    <% end %>
+    </ul>
+    <% else %>
+    You don't have any previous approvals. <%= link_to "Create a new approval!", new_approval_path %>
+    <% end %>
+  </div>
+
+  <div class="span6 previous">
+    <h4>Approvals I've Signed Off On</h4>
+    <!-- approvals i've signed off on -->
+    <% if @signedoff_approvals.count > 0 %>
+    <ul>
+    <% @signedoff_approvals.each do |approver| %>
+    <li>
+    <%= link_to approver.approval.title, approver.approval %>
+    </li>
+    <% end %>
+    </ul>
+    <% else %>
+    You haven't signed off on any approvals yet. <%= link_to "Create a new approval!", new_approval_path %>
+    <% end %>
+  </div>
+</div>
+</div>
 
 <% end %>

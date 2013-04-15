@@ -63,7 +63,6 @@ body {
         background: #65cee4;
         position: relative;
         padding: 10px;
-        border-bottom: 1px solid #b1b1b1;
       }
       .marketing p + h4 {
         margin-top: 28px;
@@ -192,9 +191,33 @@ body {
 
       .invites{
         background-color: #eee;
-        border-top: 1px solid #6BD3E9;
         padding-top: 10px;
+        padding-bottom: 10px;
       }
-      .alert-invite{
+      .invite-row{
         margin-left: 8%;
+        margin-bottom: 5px;
+        border: 1px solid #ddd;
+        background-color: white;
       }
+
+     .invite-row img{
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+
+     }
+
+     .media-body{
+      padding-top: 10px;
+     }
+
+     .previous{
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-bottom: 20px;
+     }
+
+     .previous-row{
+        border-top: 1px solid #ddd;
+
+     }
