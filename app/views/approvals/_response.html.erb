@@ -1,28 +1,39 @@
-<hr>
 
 <% if approver.status == "Approved" %>
-You've already signed off!
+<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" data-backdrop="false">Update your response</a>
 <% elsif approver.status == "Declined" %>
-You've declined. Want to change your mind?
+<a href="#myModal" role="button" class="btn-primary" data-toggle="modal" data-backdrop="false">Update your response.</a>
 <% else %>
-Time for you to sign off! 
+ <p class="text-warning"> <%= User.find(approver.approval.owner).name %> has asked for your approval. Please review the attached document before you respond.</p>
+<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" data-backdrop="false">Click here to respond.</a>
 <% end %>
 
 </br>
 
-<%= simple_form_for approver.approval do |f| %>
-	<p>
-	<%= f.button :submit, :class => "btn-success", :name => "approval[approver][status]", :value => "Approved" %>
-	<%= f.button :submit, :class => "btn-danger", :name => "approval[approver][status]", :value => "Declined" %>
-    </p>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Do you approve <%= approver.approval.title %>?</h3>
+  </div>
+  <div class="modal-body">
+    <%= simple_form_for approver.approval do |f| %>
+	
 	<%= f.simple_fields_for approver do |builder| %>
 		
-		<%= builder.input :comments, :input_html => { :class => "span10", :rows => "3" }, :placeholder => "Have any comments?", :label => false %>
+		<%= builder.input :comments, :input_html => { :class => "span5", :rows => "3" }, :placeholder => "Have any feedback?", :label => false %>
 	<% end %>
 	
 
-<% end %>
+
+  </div>
+  <div class="modal-footer">
+    <%= f.button :submit, :class => "btn-success", :name => "approval[approver][status]", :value => "Approved" %>
+	<%= f.button :submit, :class => "btn-danger", :name => "approval[approver][status]", :value => "Declined" %>
+	<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  </div>
+  <% end %>
+</div>
 
 
-<hr>
 

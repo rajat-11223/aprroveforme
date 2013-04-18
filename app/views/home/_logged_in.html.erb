@@ -25,7 +25,7 @@
       <% else %>
       <small class="text-warning">
       <% end %>
-        *Your approval is <%= approver.required.downcase %>.</small>
+        *Your approval is <%= approver.required.downcase %>. <%= distance_of_time_in_words_to_now(approver.approval.deadline) %> <% if approver.approval.deadline > Time.now %> remaining. <% else %> past due. <% end %></small>
       </div>
 
 
@@ -43,7 +43,7 @@
     <div class="row">
         <div class="span5 offset1 lead">
           <%= link_to approval.title, approval %></br>
-          <p class="text-large">Deadline: <%= approval.deadline.to_date %></p>
+          <p class="text-large"><%= distance_of_time_in_words_to_now(approval.deadline) %> <% if approval.deadline > Time.now %> remaining <% else %> ago <% end %></p>
         </div>
         <div class="span6">
           <div class="progress progress-info progress-striped">

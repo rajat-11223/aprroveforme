@@ -10,7 +10,7 @@
 
 
 <p>
-  <b>Please review by</b> <%= @approval.deadline.to_date %>
+  <b>Please review by</b> <%= @approval.deadline.to_date %>, <%= distance_of_time_in_words_to_now(@approval.deadline) %> <% if @approval.deadline > Time.now %> remaining <% else %> ago <% end %>
 </p>
 
 <p>
@@ -20,32 +20,42 @@
 </div>
 </p>
 
-<% if @app = @approval.approvers.where("email = ?", current_user.email).first %>
-<%= render "response", :approver => @app %>
-<% end %>
 
 </div>
 
-<p>
-  <table class="table table-hover table-condensed">
+
+<div class="span12 row media">
   <% @approval.approvers.each do |approver| %>
-  <% @hash = Digest::MD5.hexdigest(approver.email.downcase.strip) %> 
-  <tr class="<%= get_status(approver.status) %>">
-    <td><%= image_tag "http://www.gravatar.com/avatar/#{@hash}" %></td>
-  	<td><%= approver.name %></td>
-  	<td><%= approver.email %></td>
-  	<td><%= approver.required %></td>
-  	<td><%= approver.status %></td>
-    <td><i><%= approver.comments %></i></td>
-  </tr>
+  <div class="media approver-row">
+    <a class="pull-left" href="#">
+      <%= image_tag "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(approver.email.downcase.strip)}", :size => "100x10", :class=>"media-object" %>
+    </a>
+    <div class="media-body span6">
+      <strong><%= approver.name %></strong>, <em><%= approver.email %></em></br>
+      Approval <%= approver.required.downcase %></br>
+      Status: <%= approver.status %> </br>
+      <%= "Comments: #{approver.comments}" if approver.comments %>
+
+    </div>
+    <div class="media-body span4">
+      <% if current_user.email == approver.email %>
+        <%= render "response", :approver => approver %>
+      <% end %>
+    </div>
+  </div>
   <% end %>
-  <table>
-</p>
+
+</div>
+
+<div class="span12 row-fluid">
 <p>User photos provided by <%= link_to "Gravatar", "http://www.gravatar.com", :target =>"_blank" %></p>
 
 
-
-<%= link_to 'Edit', edit_approval_path(@approval) %> |
-<%= link_to 'Destroy', @approval, method: :delete, data: { confirm: 'Are you sure?' } %>
-
+<% if current_user == User.find(@approval.owner) %>
+<p>
+<%= link_to 'Edit', edit_approval_path(@approval), :class=>"btn btn-primary" %> 
+<%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn btn-primary" %>
+</p>
+<% end %>
+</div>
 
