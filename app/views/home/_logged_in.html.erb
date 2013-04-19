@@ -97,3 +97,10 @@
 </div>
 
 <% end %>
+
+<!-- if you don't have any incoming or outgoing approvals, show some first run text. -->
+<% if @any_approvers.count == 0 and @any_approvals.count==0 %>
+<div class="span12">
+<p>put some first run text here for new users.</p>
+</div>
+<% end %>

@@ -20,16 +20,18 @@
 
 
 </select>
-     
+      </br>
+      Who will be signing off on this approval?</br>
+      <%= f.error :approvers, :class=>"alert alert-error" %>
       <table class="table-condensed">
         <tr>
           <td>Name</td><td>Email Address</td><td>Required?</td>
         </tr>
       <%= f.simple_fields_for :approvers do |builder| %>
         <%= render 'approver_form', :f => builder %> 
-
       <% end %>
-        
+
+
       <!-- leave the tr add row for adding new approvers -->
       <tr class="add">
       </tr>
