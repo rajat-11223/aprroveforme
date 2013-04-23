@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
          user.name = auth['info']['name'] || ""
          user.email = auth['info']['email'] || ""
       end
-      UserMailer.new_user(user.name, user.email).deliver
+      UserMailer.delay.new_user(user.name, user.email)
     end
   end
 

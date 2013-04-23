@@ -7,12 +7,11 @@ class Approval < ActiveRecord::Base
   accepts_nested_attributes_for :approvers, :reject_if => proc { |attributes| attributes['name'].blank? or attributes['email'].blank?}, :allow_destroy => true
   validate :require_one_approver
 
-  private
     def require_one_approver
-    	if approvers.count < 1
+    	if approvers.empty?
       		errors.add(:approvers, "You must include at least one approver. For each approver, please provide a name and email address so that we can contact them.") 
-      		3.times {self.approvers.build}
       	end
     end
+
  
 end

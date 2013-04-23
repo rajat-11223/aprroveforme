@@ -24,7 +24,7 @@ Workflow::Application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: 25,
-    domain: "approveforme.com",
+    domain: "localhost.localdomain",
     authentication: "plain",
     user_name: ENV["SENDGRID_USERNAME"],
     password: ENV["SENDGRID_PASSWORD"]

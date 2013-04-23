@@ -2,7 +2,7 @@
 <% if approver.status == "Approved" %>
 <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" data-backdrop="false">Update your response</a>
 <% elsif approver.status == "Declined" %>
-<a href="#myModal" role="button" class="btn-primary" data-toggle="modal" data-backdrop="false">Update your response.</a>
+<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" data-backdrop="false">Update your response.</a>
 <% else %>
  <p class="text-warning"> <%= User.find(approver.approval.owner).name %> has asked for your approval. Please review the attached document before you respond.</p>
 <a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal" data-backdrop="false">Click here to respond.</a>
