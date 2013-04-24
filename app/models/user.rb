@@ -24,13 +24,12 @@ class User < ActiveRecord::Base
     client = Google::APIClient.new
     client.authorization.client_id = ENV['GOOGLE_ID']
     client.authorization.client_secret = ENV['GOOGLE_SECRET']
-    client.authorization.scope = 'https://www.googleapis.com/auth/drive.file https://docs.google.com/feeds/ https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.profile'
+    client.authorization.scope = ENV['GOOGLE_SCOPE']
     client.authorization.redirect_uri = ENV['REDIRECT_URI']
-    drive = client.discovered_api('drive', 'v2')
     client.authorization.code = self.code.chomp
     client.authorization.access_token = self.token
     client.authorization.refresh_token = self.refresh_token
-
+    return client
   
    # result = client.execute!(
    #   :api_method => drive.files.list,
@@ -43,6 +42,36 @@ class User < ActiveRecord::Base
    #     page_token = nil
    # end
   
+  end
+
+  def view_docs
+    client = self.google_auth
+    drive = client.discovered_api('drive', 'v2')
+    page_token = nil
+    doc_list = []
+
+    # params
+    @string = "title contains 'WhichBus'"
+
+    begin
+    if page_token.to_s != ''
+      parameters['pageToken'] = page_token
+    end
+    result = client.execute!(
+      :api_method => drive.files.list,
+      :parameters => {'q' => @string})
+    if result.status == 200
+        puts "success!"
+        files = result.data
+        #doc_list << files.items
+        files.items.each {|file| doc_list << file}
+        page_token = files.next_page_token
+    else
+        puts "An error occurred: #{result.data['error']['message']}"
+        page_token = nil
+    end
+    end while page_token.to_s != ''
+  doc_list
   end
 
 end

@@ -52,17 +52,56 @@
       <%= link_to 'Back', @approval, :class=>"btn" %>
       <% end %>
  
-  <% end %>
+  
     </div>
 
 
     <div class="span3">
-      tips for how to use this
+      <div id="result"></div>
+      
+      
     </div>
   </div>
 </div>
 
+<% end %>
 
+ <!-- The standard Google Loader script. -->
+    <script src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+    // Use the Google Loader script to load the google.picker script.
+    google.setOnLoadCallback(createPicker);
+    google.load('picker', '1');
+
+    // Create and render a Picker object for searching images.
+    function createPicker() {
+         var view = new google.picker.View(google.picker.ViewId.DOCS);
+          //view.setMimeTypes("image/png,image/jpeg,image/jpg");    
+          var picker = new google.picker.PickerBuilder()
+          .enableFeature(google.picker.Feature.NAV_HIDDEN)
+          //.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+          .setAppId("<%= ENV['GOOGLE_ID']%>")
+          .setOAuthToken("<%= current_user.token %>") //Optional: The auth token used in the current Drive API session.
+          .addView(view)
+          .addView(new google.picker.DocsUploadView())
+          .setCallback(pickerCallback)
+          .build();
+       picker.setVisible(true);
+
+    }
+
+    // A simple callback implementation.
+    function pickerCallback(data) {
+      var url = 'nothing';
+      if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+        var doc = data[google.picker.Response.DOCUMENTS][0];
+        url = doc[google.picker.Document.URL];
+      }
+      var message = 'You picked: ' + url;
+      document.getElementById('result').innerHTML = message;
+    }
+    </script>
 
 
 <script type="text/javascript">

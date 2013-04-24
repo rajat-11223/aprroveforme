@@ -27,6 +27,7 @@ class ApprovalsController < ApplicationController
   def new
     @approval = Approval.new
     3.times {@approval.approvers.build} if @approval.approvers.empty?
+    #@docs = current_user.view_docs
 
     respond_to do |format|
       format.html # new.html.erb
