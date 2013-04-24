@@ -10,7 +10,7 @@
 
 
 <p>
-  <b>Please review by</b> <%= @approval.deadline.to_date %>, <%= distance_of_time_in_words_to_now(@approval.deadline) %> <% if @approval.deadline > Time.now %> remaining <% else %> ago <% end %>
+  <b>Please review by</b> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %>
 </p>
 
 <p>
@@ -28,7 +28,7 @@
   <% @approval.approvers.each do |approver| %>
   <div class="media approver-row">
     <a class="pull-left" href="#">
-      <%= image_tag "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(approver.email.downcase.strip)}", :size => "100x10", :class=>"media-object" %>
+      <%= image_tag image_url(approver.email), :size => "100x10", :class=>"media-object" %>
     </a>
     <div class="media-body span6">
       <strong><%= approver.name %></strong>, <em><%= approver.email %></em></br>

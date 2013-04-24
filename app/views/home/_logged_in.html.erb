@@ -15,7 +15,7 @@
   <% @pending_approvals.each do |approver| %>
     <div class="span9 invite-row media">
     <a class="pull-left" href="<%= approval_path(approver.approval) %>">
-      <%= image_tag "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(User.find(approver.approval.owner).email.downcase.strip)}", :size => "100x10", :class=>"media-object" %>
+      <%= image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10", :class=>"media-object" %>
     </a>
       <div class="media-body">
       <small><%= User.find(approver.approval.owner).name %> asked for your approval. </small></br>
@@ -25,7 +25,7 @@
       <% else %>
       <small class="text-warning">
       <% end %>
-        *Your approval is <%= approver.required.downcase %>. <%= distance_of_time_in_words_to_now(approver.approval.deadline) %> <% if approver.approval.deadline > Time.now %> remaining. <% else %> past due. <% end %></small>
+        *<%= approver.to_s %></small>
       </div>
 
 
@@ -43,7 +43,7 @@
     <div class="row">
         <div class="span5 offset1 lead">
           <%= link_to approval.title, approval %></br>
-          <p class="text-large"><%= distance_of_time_in_words_to_now(approval.deadline) %> <% if approval.deadline > Time.now %> remaining <% else %> ago <% end %></p>
+          <p class="text-large"><%= approval.deadline_in_words %></p>
         </div>
         <div class="span6">
           <div class="progress progress-info progress-striped">

@@ -1,4 +1,5 @@
 class Approval < ActiveRecord::Base
+  include ActionView::Helpers::DateHelper
   attr_accessible :deadline, :description, :link, :title, :approvers_attributes
   has_many :approvers, :dependent => :destroy
   validates :title, :link, :deadline, :presence => true
@@ -13,5 +14,13 @@ class Approval < ActiveRecord::Base
       	end
     end
 
+    def deadline_in_words
+      string = distance_of_time_in_words_to_now(self.deadline).humanize
+      if self.deadline > Time.now
+        string << " remaining. "
+      else
+        string << " ago. "
+      end
+    end
  
 end
