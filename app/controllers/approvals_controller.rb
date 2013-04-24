@@ -74,9 +74,7 @@ class ApprovalsController < ApplicationController
       @approver.comments = params[:approval][:approver][:comments]
       @approver.save
       UserMailer.delay.approval_update(@approver)
-      if percentage_complete(@approval) == "100%"
-        UserMailer.delay.completed_approval(@approval)
-      end
+      UserMailer.delay.completed_approval(@approval) if percentage_complete(@approval) == "100%"
       redirect_to @approval, notice: 'Approval submitted'
     else
       if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
@@ -116,9 +114,10 @@ end
 def percentage_complete(approval)
       @approver_count = approval.approvers.count
       @approved_count = approval.approvers.where("status = ?", "Approved").count
+
       if @approver_count > 0
         return "#{((@approved_count*100)/@approver_count)}%"
       else
-        return 0
+        return "0%"
       end
   end

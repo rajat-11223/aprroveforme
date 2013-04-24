@@ -15,5 +15,9 @@ ADMIN_PASSWORD: changeme
 OMNIAUTH_PROVIDER_KEY: Your_OmniAuth_Provider_Key
 OMNIAUTH_PROVIDER_SECRET: Your_OmniAuth_Provider_Secret
 ROLES: [admin, user, VIP]
-GOOGLE_ID: 107940143634.apps.googleusercontent.com
-GOOGLE_SECRET: n1adtCS9usCvQkxPzEspTYAA
+development:
+ GOOGLE_ID: 107940143634.apps.googleusercontent.com
+ GOOGLE_SECRET: n1adtCS9usCvQkxPzEspTYAA
+production:
+ GOOGLE_ID: 107940143634-iel5h5i1tu4siqfct2tjqm68iou6oppe.apps.googleusercontent.com
+ GOOGLE_SECRET: tdkWnSp3zoneFgGmm1rz3L_T
