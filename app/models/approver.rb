@@ -4,7 +4,7 @@ class Approver < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
 
   def to_s
-    string = "Your approval is #{self.required}. "
+    string = "Your approval is #{self.required}. ".humanize
     string << self.approval.deadline_in_words
   end
 
