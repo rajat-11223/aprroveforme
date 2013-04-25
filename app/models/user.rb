@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
       user.provider = auth['provider']
       user.uid = auth['uid']
       if auth['info']
+        puts auth.to_s
          user.name = auth['info']['name'] || ""
          user.email = auth['info']['email'] || ""
          user.picture = auth['info']['image'] || ""
