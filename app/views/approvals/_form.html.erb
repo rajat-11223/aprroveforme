@@ -5,7 +5,8 @@
       <%= f.error_notification %>
       <%= f.input :title, :placeholder => "Give it a title" , :input_html => { :class => "span10" }%>
       <% #f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
-      <a onclick="createPicker()" class="btn">Select File from Google Drive</a>  <small>*All approvers will be given read permissions to this document.</small>
+      <a onclick="createPicker()" class="btn">Select File from Google Drive</a>  
+      <small><input id="perms" name="perms" value="writer" type="checkbox">*Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small>
       <div id="result"> 
         <%= @approval.link_title if @approval.link_title %>
       </div>
@@ -19,8 +20,6 @@
               :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline)}, 
             :as => :string
             %>
-
-    <!-- <p>Date: <input type="text" id="datepicker" name="approval[deadline]" /></p> -->
 
 
 </select>

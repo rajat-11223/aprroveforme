@@ -49,7 +49,7 @@ class ApprovalsController < ApplicationController
       @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
     end
 
-    @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver)}
+    @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader")}
     
     respond_to do |format|
       if @approval.save
@@ -82,8 +82,9 @@ class ApprovalsController < ApplicationController
       if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
         params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
       end
-      @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver)}
-      
+
+      @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader")}
+
       respond_to do |format|
         if @approval.update_attributes(params[:approval])
           @approval.save
