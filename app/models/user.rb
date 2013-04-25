@@ -31,17 +31,6 @@ class User < ActiveRecord::Base
     client.authorization.refresh_token = self.refresh_token
     return client
   
-   # result = client.execute!(
-   #   :api_method => drive.files.list,
-   #   :parameters => {})
-   # if result.status == 200
-   #     puts "success!"
-   #     jj result.data.to_hash
-   # else
-   #     puts "An error occurred: #{result.data['error']['message']}"
-   #     page_token = nil
-   # end
-  
   end
 
   def view_docs
