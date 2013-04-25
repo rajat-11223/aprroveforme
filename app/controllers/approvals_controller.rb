@@ -27,7 +27,6 @@ class ApprovalsController < ApplicationController
   def new
     @approval = Approval.new
     3.times {@approval.approvers.build} if @approval.approvers.empty?
-    #@docs = current_user.view_docs
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,6 +49,8 @@ class ApprovalsController < ApplicationController
       @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
     end
 
+    @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver)}
+    
     respond_to do |format|
       if @approval.save
         format.html { redirect_to @approval, notice: 'Approval was successfully created.' }
@@ -81,7 +82,8 @@ class ApprovalsController < ApplicationController
       if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
         params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
       end
-
+      @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver)}
+      
       respond_to do |format|
         if @approval.update_attributes(params[:approval])
           @approval.save

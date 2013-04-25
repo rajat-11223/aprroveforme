@@ -4,11 +4,15 @@
       <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
       <%= f.error_notification %>
       <%= f.input :title, :placeholder => "Give it a title" , :input_html => { :class => "span10" }%>
-      <%= f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
+      <% #f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
+      <a onclick="createPicker()" class="btn">Select File from Google Drive</a>  <small>*All approvers will be given read permissions to this document.</small>
+      <div id="result"> 
+        <%= @approval.link_title if @approval.link_title %>
+      </div>
+    </br>
       <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
       <% #f.input :deadline, as: :date, :default => Date.today+1, :input_html => { :class => "inline span10"} %>
       <% #f.input :deadline, :type=>"text", :default => Date.today+1, :input_html => { :class => "inline span10", :id=>"datepicker"} %>
-
       <%= f.input :deadline, :required => true, 
             :input_html => { 
               :id => "datepicker", 
@@ -57,9 +61,10 @@
 
 
     <div class="span3">
-      <div id="result"></div>
+      more info here
       
       
+
     </div>
   </div>
 </div>
@@ -70,8 +75,9 @@
     <script src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
 
+    
     // Use the Google Loader script to load the google.picker script.
-    google.setOnLoadCallback(createPicker);
+    //google.setOnLoadCallback(createPicker);
     google.load('picker', '1');
 
     // Create and render a Picker object for searching images.
@@ -79,7 +85,7 @@
          var view = new google.picker.View(google.picker.ViewId.DOCS);
           //view.setMimeTypes("image/png,image/jpeg,image/jpg");    
           var picker = new google.picker.PickerBuilder()
-          .enableFeature(google.picker.Feature.NAV_HIDDEN)
+          //.enableFeature(google.picker.Feature.NAV_HIDDEN)
           //.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
           .setAppId("<%= ENV['GOOGLE_ID']%>")
           .setOAuthToken("<%= current_user.token %>") //Optional: The auth token used in the current Drive API session.
@@ -90,6 +96,7 @@
        picker.setVisible(true);
 
     }
+    
 
     // A simple callback implementation.
     function pickerCallback(data) {
@@ -97,10 +104,22 @@
       if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
         var doc = data[google.picker.Response.DOCUMENTS][0];
         url = doc[google.picker.Document.URL];
+        title = doc.name;
+        id = doc.id;
+        type = doc.type;
+        embed = doc[google.picker.Document.EMBEDDABLE_URL ];
       }
-      var message = 'You picked: ' + url;
+
+      var message = "<input id=\"approval_link\" name=\"approval[link]\" type=\"hidden\" value=\"" + url + "\">";
+      message = message + "<input id=\"approval_embed\" name=\"approval[embed]\" type=\"hidden\" value=\"" + embed + "\">";
+      message = message + "<input id=\"approval_link_title\" name=\"approval[link_title]\" type=\"hidden\" value=\"" + title + "\">";
+      message = message + "<input id=\"approval_link_id\" name=\"approval[link_id]\" type=\"hidden\" value=\"" + id + "\">";
+      message = message + "<input id=\"approval_link_type\" name=\"approval[link_type]\" type=\"hidden\" value=\"" + type + "\">";
+      message = message + title
       document.getElementById('result').innerHTML = message;
     }
+
+  
     </script>
 
 

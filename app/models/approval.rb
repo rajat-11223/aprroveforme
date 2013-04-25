@@ -1,6 +1,6 @@
 class Approval < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
-  attr_accessible :deadline, :description, :link, :title, :approvers_attributes
+  attr_accessible :deadline, :description, :link, :title, :approvers_attributes, :embed, :link_title, :link_id, :link_type
   has_many :approvers, :dependent => :destroy
   validates :title, :link, :deadline, :presence => true
   validates :deadline, :format => { :with => /\d{2}\/\d{2}\/\d{4}/,
@@ -21,6 +21,28 @@ class Approval < ActiveRecord::Base
       else
         string << " ago. "
       end
+    end
+
+    def update_permissions(file_id, user, approver, role = 'reader')
+      client = user.google_auth
+      drive = client.discovered_api('drive', 'v2')# First retrieve the permission from the API.
+      
+      new_permission = drive.permissions.insert.request_schema.new({
+        'value' => approver.email,
+        'type' => 'user',
+        'role' => role,
+        'withLink' => 'true'
+      })
+      result = client.execute(
+        :api_method => drive.permissions.insert,
+        :body_object => new_permission,
+        :parameters => { 'fileId' => file_id })
+      if result.status == 200
+        return result.data
+      else
+        puts "An error occurred: #{result.data['error']['message']}"
+      end
+
     end
  
 end
