@@ -36,7 +36,7 @@ class Approval < ActiveRecord::Base
       result = client.execute(
         :api_method => drive.permissions.insert,
         :body_object => new_permission,
-        :parameters => { 'fileId' => file_id })
+        :parameters => { 'fileId' => file_id, 'sendNotificationEmails'=>'false' })
       if result.status == 200
         return result.data
       else
