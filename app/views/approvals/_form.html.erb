@@ -1,12 +1,10 @@
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span9">
+<div class="row large-12 columns">
       <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
       <%= f.error_notification %>
       <%= f.input :title, :placeholder => "Give it a title" , :input_html => { :class => "span10" }%>
       <% #f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
-      <a onclick="createPicker()" class="btn">Select File from Google Drive</a>  
-      <small><input id="perms" name="perms" value="writer" type="checkbox">*Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small>
+      <a onclick="createPicker()" class="button">Select File from Google Drive</a>  
+      <small><input id="perms" name="perms" value="writer" type="checkbox">  *Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small>
       <div id="result"> 
         <%= @approval.link_title if @approval.link_title %>
       </div>
@@ -26,7 +24,7 @@
       </br>
       Who will be signing off on this approval?</br>
       <%= f.error :approvers, :class=>"alert alert-error" %>
-      <table class="table-condensed">
+      <table>
         <tr>
           <td>Name</td><td>Email Address</td><td>Required?</td>
         </tr>
@@ -48,28 +46,17 @@
       
       </p>
       </br>
-      <%= f.button :submit, :class => "btn-primary" %>  
+      <%= f.button :submit, :class => "button" %>  
       <% if f.object.new_record? %>
-      <%= link_to 'Cancel', root_url, :class=>"btn" %>
+      <%= link_to 'Cancel', root_url, :class=>"button" %>
       <% else %>
-      <%= link_to 'Back', @approval, :class=>"btn" %>
+      <%= link_to 'Back', @approval, :class=>"button" %>
       <% end %>
  
-  
-    </div>
 
-
-    <div class="span3">
-      more info here
-      
-      
-
-    </div>
-  </div>
-</div>
 
 <% end %>
-
+</div>
  <!-- The standard Google Loader script. -->
     <script src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">

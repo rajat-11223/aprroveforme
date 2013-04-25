@@ -1,68 +1,72 @@
 <!-- new approval button -->
-<div class="marketing">
-<div class="jumbotron">
-	<h1 class="text-hero">Let's get started!</h1>
-	<p class="lead">Don't worry, it's a lot easier than chasing everyone around.</p>
-	<%= link_to "Create a new approval", new_approval_path, :class => "btn btn-large btn-success" %>
+<div class="row">
+  <div class="large-12 columns">
+    	<h1 class="hero-tagline">Let's get started!</h1>
+    	<h3 class="large-10 columns large-centered small-centered">Don't worry, it's a lot easier than chasing everyone around.</h3>
+      <div class="large-4 columns large-centered small-centered">
+    	<%= link_to "Create a new approval", new_approval_path, :class => "button" %>
+      </div>
+  </div>
 </div>
+
+<div class="row">
+<hr>
 </div>
 
 <!-- show pending approvals waiting for you -->
 <% if @pending_approvals.count > 0 %>
-<div class="invites row"></br>
-  <h1 class="text-center">Your approval is needed</h1></br>
-<div class="offset1 row">
-  <% @pending_approvals.each do |approver| %>
-    <div class="span9 invite-row media">
-    <a class="pull-left" href="<%= approval_path(approver.approval) %>">
-      <%= image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10", :class=>"media-object" %>
-    </a>
-      <div class="media-body">
-      <small><%= User.find(approver.approval.owner).name %> asked for your approval. </small></br>
-      <%= link_to approver.approval.title, approver.approval, :class=>"lead" %></br>
-      <% if approver.required.downcase == "required" %>
-      <small class="text-error">
-      <% else %>
-      <small class="text-warning">
-      <% end %>
-        *<%= approver.to_s %></small>
-      </div>
-
-
-    </div>
-  <% end %>
-
+<div class="row">
+  <div class="large-12 columns">
+    <h2 class="text-center">Your approval is needed</h2>
+  </div>
 </div>
+  <% @pending_approvals.each do |approver| %>
+  <div class="row">
+    <div class="small-3 small-offset-1 columns">
+      <%= link_to (image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10", :class=>"media-object"),  approval_path(approver.approval) %>
+      </div>
+      <div class="small-8 columns">
+      <%= User.find(approver.approval.owner).name %> asked for your approval.</br>
+      <%= link_to approver.approval.title, approver.approval, :class=>"subheader" %></br>
+      *<%= approver.to_s %>
+      </div>
+  </div>
+  <% end %>
+<div class="row">
+<hr>
 </div>
 <% end %>
 
 <!-- show the approvals you've sent out -->
 <% if @my_approvals.count > 0 %></br>
-<h1 class="header">Your open approvals</h1></br>
+<div class="row">
+  <h2 class="text-center">Your open approvals</h2></br>
+</div>
   <% @my_approvals.each do |approval| %>
-    <div class="row">
-        <div class="span5 offset1 lead">
+  <div class="row">
+      <div class="small-3 small-offset-1 columns">        
           <%= link_to approval.title, approval %></br>
           <p class="text-large"><%= approval.deadline_in_words %></p>
-        </div>
-        <div class="span6">
-          <div class="progress progress-info progress-striped">
-            <div class="bar" style="width: <%= percentage_complete(approval) %>"></div>
-          </div><%= percentage_complete(approval) %> complete
-          </br>
-        </div>
-    </div>  
+      </div>
+      <div class="small-8 columns"> 
+          <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(approval) %>"></span></div>
+          <%= percentage_complete(approval) %> complete
+      </div>
+        
+  </div>  
   <% end %>
-
+<div class="row">
+<hr>
+</div>
 <% end %>
 
 <!-- list expired approvals -->
 <% if (@my_completed_approvals.count > 0) or (@signedoff_approvals.count > 0 )  %>
-<div class="row previous-row">
-</br><h1 class="header">Previous Approvals</h1></br>
-
-<div class="row-fluid">
-  <div class="span6 previous">
+<div class="row">
+  <h2 class="text-center">Previous Approvals</h2></br>
+</div>
+<div class="row">
+  <div class="large-6 columns">
     <!-- my expired approvals -->
     <h4>My Previous Approvals</h4>
     <% if @my_completed_approvals.count > 0 %>
@@ -76,9 +80,9 @@
     <% else %>
     You don't have any previous approvals. <%= link_to "Create a new approval!", new_approval_path %>
     <% end %>
-  </div>
+ </div>
 
-  <div class="span6 previous">
+ <div class="large-6 columns">
     <h4>Approvals I've Signed Off On</h4>
     <!-- approvals i've signed off on -->
     <% if @signedoff_approvals.count > 0 %>
@@ -94,13 +98,13 @@
     <% end %>
   </div>
 </div>
-</div>
-
 <% end %>
 
 <!-- if you don't have any incoming or outgoing approvals, show some first run text. -->
 <% if @any_approvers.count == 0 and @any_approvals.count==0 %>
-<div class="span12">
-<p>put some first run text here for new users.</p>
+<div class="row">
+  <div class="large-12 columns">
+    <p>put some first run text here for new users.</p>
+  </div>
 </div>
 <% end %>

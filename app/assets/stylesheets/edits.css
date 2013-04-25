@@ -1,0 +1,50 @@
+/* Global */
+.row {
+  margin-bottom: 15px;
+}
+body {
+ font-family: 'Open Sans', sans-serif; 
+}
+
+/* Homepage */
+.hero-tagline {
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.main {
+  font-size: 22px;
+  text-align: center;
+  line-height: 130%;
+}
+.main-login {
+  text-align: center;
+}
+.screenshot {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.sub-image {
+  text-align: center;
+}
+.sub-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.sub-text {
+  text-align: center;
+  font-size: 17px;
+}
+
+/* Footer */
+.text-footer, .text-footer a, .text-footer a:hover {
+  font-size: 13px;
+  color: gray;
+}
+.text-copyright {
+  font-size: 14px;
+  color: gray;
+}

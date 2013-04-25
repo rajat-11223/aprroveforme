@@ -1,27 +1,54 @@
-<!-- Jumbotron -->
-    <div class="marketing">
-      <div class="jumbotron">
-        <p class="text-hero">Approvals, Simplified.</p>
-        <p class="lead">ApproveForMe is a free web-based tool that simplifies your professional life by making it easy to create, track, and manage approvals.</p>
-        <%= link_to 'Get started for free', signin_path, :class=>"btn btn-primary btn-large" %>
+<div class="row">
+  <div class="large-12 columns">
+    <div class="row">
+      <div class="large-12 columns">
+        <p class="hero-tagline">Approvals, Simplified.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-10 columns large-centered small-centered"><p class="main">ApproveForMe is a free web-based tool that simplifies your professional life by making it easy to create, track, and manage approvals.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-4 columns large-centered small-centered">
+        <p class="main-login"><%= link_to 'Get started for free', signin_path, :style=>"font-size:20px;", :class=>"zocial google" %></p>
       </div>
     </div>
 
-    <!-- Example row of columns -->
-    <div class="row-fluid feature">
-      <div class="span4 text-center">
-        <%= image_tag "idea.svg" %>
-        <p class="text-dark text-homepage-sub-title">Quick setup</p>
-        <p class="text-homepage-sub">Easily create approvals with just a few bits of information and you're off.</p>
-      </div>
-      <div class="span4 text-center">
-        <%= image_tag "check.svg" %>
-        <p class="text-dark text-homepage-sub-title">Automated approval</p>
-        <p class="text-homepage-sub">Approvers are automatically emailed and presented with clear action.</p>
-     </div>
-      <div class="span4 text-center">   
-        <%= image_tag "smile.svg" %>
-        <p class="text-dark text-homepage-sub-title">Easy peasy</p>
-        <p class="text-homepage-sub">View status and feedback in one place - no more piecing together emails.</p>
-      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <div class="large-12 columns large-centered small-centered"><p class="screenshot"><img src="http://placehold.it/1000x350"></p></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-4 columns">
+    <p class="sub-image"><%= image_tag "idea.svg" %></p>
+    <p class="sub-title">Quick setup</p>
+    <p class="sub-text">Easily create approvals of Google Drive documents with just a few bits of information like email addresses.</p>
+  </div>
+  <div class="large-4 columns">
+    <p class="sub-image"><%= image_tag "check.svg" %></p>
+    <p class="sub-title">Automated approval</p>
+    <p class="sub-text">Approvers are automatically emailed and they'll able to view, comment, and approve all from the site.</p>
+  </div>
+  <div class="large-4 columns">
+    <p class="sub-image"><%= image_tag "smile.svg" %></p>
+    <p class="sub-title">Easy peasy</p>
+    <p class="sub-text">View status and feedback in one place. No more having to piece together multiple emails.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    <div class="large-12 columns large-centered small-centered">
+      <p class="main-login">
+        <%= link_to 'Get started for free', signin_path, :style=>"font-size:12px;", :class=>"zocial secondary" %>
+        or <a href="#">learn more</a>
+      </p>
     </div>
+  </div>
+</div>
