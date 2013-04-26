@@ -1,57 +1,48 @@
-<div class="row large-12 columns">
-<h3><%= @approval.title %></h3>
-<p class="lead"><%= @approval.description %></p>
-
-
-<p>
-  <%= link_to "Open in Google Drive", @approval.link, :target=>"_blank" %>
-</p>
-
-<!-- if you're an approver, show option to approve -->
-<% if approver = @approval.approvers.where("email =?", current_user.email).first %>
-  <%= render "response", :approver => approver %>
-<% end %>
-
-<p>
-  <b>Please review by</b> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %>
-</p>
-
-<p>
-<b>Percent complete</b>
-<div class="progress success round"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
-
-</p>
-
-
+<div class="row">
+  <div class="large-12 columns">
+    <h3><%= @approval.title %></h3>
+    <p class="lead"><%= @approval.description %></p>
+    <p><%= link_to "Open in Google Drive", @approval.link, :target=>"_blank" %></p>
+    <!-- if you're an approver, show option to approve -->
+    <% if approver = @approval.approvers.where("email =?", current_user.email).first %>
+      <%= render "response", :approver => approver %>
+    <% end %>
+    <p>
+      <b>Please review by</b> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %>
+    </p>
+    <p>
+      <b>Percent complete</b>
+        <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
+    </p>
+  </div>
 </div>
 
-<div class="row text-center large-12 columns">
-<iframe src="<%= @approval.embed %>" style="width:600px; height:500px;" frameborder="0"></iframe>
+<div class="row">
+  <div class="row text-center large-12 columns">
+    <iframe src="<%= @approval.embed %>" style="width:600px; height:500px;" frameborder="0"></iframe>
+  </div>
 </div>
 
-
-
-  <% @approval.approvers.each do |approver| %>
-  </br>
-  <div class="row">
-      <div class="small-3 small-offset-1 columns">
-      <%= image_tag image_url(approver.email), :size => "100x10", :class=>"media-object" %>
-      </div>
-      <div class="small-8 columns">
+<% @approval.approvers.each do |approver| %>
+</br>
+<div class="row">
+    <div class="large-2 small-3 columns">
+     <%= image_tag image_url(approver.email), :size => "100x10", :class=>"media-object" %>
+    </div>
+    <div class="large-10 small-8 columns">
       <strong><%= approver.name %></strong>, <em><%= approver.email %></em></br>
       Approval <%= approver.required.downcase %></br>
       Status: <%= approver.status %> </br>
       <%= "Comments: #{approver.comments}" if approver.comments %>
-    </div>
-    </div>
-  <% end %>
-
-
-<% if current_user == User.find(@approval.owner) %>
-<div class="row large-12 columns">
-<%= link_to 'Edit', edit_approval_path(@approval), :class=>"button" %> 
-<%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"button" %>
+   </div>
 </div>
 <% end %>
 
-
+<% if current_user == User.find(@approval.owner) %>
+<div class="row">
+  <div class="large-12 columns">
+    <%= link_to 'Edit', edit_approval_path(@approval), :class=>"button" %> 
+    <%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"button" %>
+  </div>
+</div>
+<% end %>

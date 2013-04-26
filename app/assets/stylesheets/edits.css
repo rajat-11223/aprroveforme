@@ -6,6 +6,8 @@ body {
  font-family: 'Open Sans', sans-serif; 
 }
 
+
+
 /* Homepage */
 .hero-tagline {
   font-size: 40px;
@@ -27,6 +29,7 @@ body {
 }
 .sub-image {
   text-align: center;
+  margin-top: 35px;
 }
 .sub-title {
   text-align: center;
@@ -38,8 +41,14 @@ body {
   text-align: center;
   font-size: 17px;
 }
+.secondcta {
+  margin-top: 30px;
+}
 
 /* Footer */
+.footer {
+  margin-top: 25px;
+}
 .text-footer, .text-footer a, .text-footer a:hover {
   font-size: 13px;
   color: gray;
