@@ -22,14 +22,16 @@
 </div>
   <% @pending_approvals.each do |approver| %>
   <div class="row">
-    <div class="small-3 small-offset-1 columns">
-      <%= link_to (image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10", :class=>"media-object"),  approval_path(approver.approval) %>
+    <div class="th radius large-11 columns large-centered">
+    <div class="large-2 columns">
+      <%= link_to (image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10", :class=>""),  approval_path(approver.approval) %>
       </div>
-      <div class="small-8 columns">
+      <div class="large-9 columns">
       <%= User.find(approver.approval.owner).name %> asked for your approval.</br>
-      <%= link_to approver.approval.title, approver.approval, :class=>"subheader" %></br>
+      <%= link_to approver.approval.title, approver.approval, :class=>"button" %></br>
       *<%= approver.to_s %>
       </div>
+    </div>
   </div>
   <% end %>
 <div class="row">
@@ -97,6 +99,10 @@
     You haven't signed off on any approvals yet. <%= link_to "Create a new approval!", new_approval_path %>
     <% end %>
   </div>
+  
+</div>
+<div class="row">
+<hr>
 </div>
 <% end %>
 
