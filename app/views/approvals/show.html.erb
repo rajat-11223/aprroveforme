@@ -9,13 +9,17 @@
 </div>
 
 <div class="row">
+  <% unless @approval.embed == ("undefined" || nil )  %>
   <div class="large-8 columns">
-    <iframe src="<%= @approval.embed %>" style="width:600px; height:500px;" frameborder="0"></iframe>
+    <iframe src="<%= @approval.embed %>" style="width:600px; height:600px;" frameborder="0"></iframe>
   </div>
   <div class="large-4 columns">
+  <% else %>
+    <div class="large-12 columns">
+    <% end %>
     <p><b>Deadline:</b> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %> </p>
 
-    <b>Percent complete</b>
+    <b>Percent complete</b></br>
         <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
     <%= link_to "Open in Google Drive", @approval.link, :target=>"_blank", :class=>"button"%>
 
