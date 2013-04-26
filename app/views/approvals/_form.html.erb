@@ -10,9 +10,8 @@
       </div>
     </br>
       <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
-      <% #f.input :deadline, as: :date, :default => Date.today+1, :input_html => { :class => "inline span10"} %>
-      <% #f.input :deadline, :type=>"text", :default => Date.today+1, :input_html => { :class => "inline span10", :id=>"datepicker"} %>
-      <%= f.input :deadline, :required => true, 
+      </br>     
+      <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY",
             :input_html => { 
               :id => "datepicker", 
               :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline)}, 
@@ -22,7 +21,7 @@
 
 </select>
       </br>
-      Who will be signing off on this approval?</br>
+      Who will be signing off on this approval?</br></br>
       <%= f.error :approvers, :class=>"alert alert-error" %>
       <table>
         <tr>
@@ -46,11 +45,11 @@
       
       </p>
       </br>
-      <%= f.button :submit, :class => "button" %>  
+      <%= f.button :submit, :class => "button " %>  
       <% if f.object.new_record? %>
-      <%= link_to 'Cancel', root_url, :class=>"button" %>
+      <%= link_to 'Cancel', root_url, :class=>"button " %>
       <% else %>
-      <%= link_to 'Back', @approval, :class=>"button" %>
+      <%= link_to 'Back', @approval, :class=>"button " %>
       <% end %>
  
 

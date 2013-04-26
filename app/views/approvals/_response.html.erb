@@ -1,14 +1,19 @@
 
 <% if approver.status == "Approved" %>
-<a href="#" role="button" class="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a>
+<p>You have already approved this document.</br>
+<a href="#" role="button" class="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a></p>
 <% elsif approver.status == "Declined" %>
-<a href="#" role="button" class="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response.</a>
+<p>You have already declined this document. </br>
+<a href="#" role="button" class="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response.</a></p>
 <% else %>
- <p class="text-warning"> <%= User.find(approver.approval.owner).name %> has asked for your approval. Please review the attached document before you respond.</p>
-<a href="#" role="button" class="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Click here to respond.</a>
+ <p> <%= User.find(approver.approval.owner).name %> has asked for your approval. Please review the attached document before you respond. </br>
+<a href="#" role="button" class="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Click here to respond.</a></p>
 <% end %>
 
-</br>
+
+
+
+
 
 
 <div id="myModal" class="reveal-modal">
@@ -17,23 +22,19 @@
   </div>
   <div class="modal-body">
     <%= simple_form_for approver.approval do |f| %>
-	
-	<%= f.simple_fields_for approver do |builder| %>
-		
-		<%= builder.input :comments, :input_html => { :class => "span5", :rows => "3" }, :placeholder => "Have any feedback?", :label => false %>
+  
+  <%= f.simple_fields_for approver do |builder| %>
+    
+    <%= builder.input :comments, :input_html => { :class => "span5", :rows => "3" }, :placeholder => "Have any feedback?", :label => false %>
     <a class="close-reveal-modal">&#215;</a>
-	<% end %>
-	
-
-
+  <% end %>
+  
   </div>
   <div class="modal-footer">
     <%= f.button :submit, :class => "button", :name => "approval[approver][status]", :value => "Approved" %>
-	<%= f.button :submit, :class => "button", :name => "approval[approver][status]", :value => "Declined" %>
-	<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+  <%= f.button :submit, :class => "button", :name => "approval[approver][status]", :value => "Declined" %>
+  <button class="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
   </div>
   <% end %>
 </div>
-
-
 
