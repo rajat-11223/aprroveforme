@@ -20,24 +20,28 @@
     <h2 class="text-center">Your approval is needed</h2>
   </div>
 </div>
-  <% @pending_approvals.each do |approver| %>
-  <div class="row">
-    <div class="th radius large-11 columns large-centered">
-    <div class="large-2 columns">
-      <%= link_to (image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10", :class=>""),  approval_path(approver.approval) %>
-      </div>
-      <div class="large-9 columns">
-      <%= User.find(approver.approval.owner).name %> asked for your approval.</br>
+   <% @pending_approvals.each do |approver| %>
+   <div class="row">
+      <div class="large-8 large-offset-2 small-centered columns th">
+        <%= link_to (image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10"),  approval_path(approver.approval), :class=>"pending" %>
+      <div class="pending_text">
+      <small>
+      <%= User.find(approver.approval.owner).name %> asked for your approval.</br></br>
       <%= link_to approver.approval.title, approver.approval, :class=>"button" %></br>
       *<%= approver.to_s %>
+      </small>
       </div>
-    </div>
-  </div>
-  <% end %>
+    
+      </div>
+   </div></br>
+   <% end %>
 <div class="row">
 <hr>
 </div>
+
 <% end %>
+<!-- end pending approvals waiting for you -->
+
 
 <!-- show the approvals you've sent out -->
 <% if @my_approvals.count > 0 %></br>
