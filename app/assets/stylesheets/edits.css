@@ -5,7 +5,13 @@
 body {
  font-family: 'Open Sans', sans-serif; 
 }
+.button {
+  border-width: 0px !important;
+}
+.button:hover {
+  text-decoration: none;
 
+}
 
 
 /* Homepage */

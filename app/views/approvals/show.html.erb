@@ -6,7 +6,7 @@
     <% if approver = @approval.approvers.where("email =?", current_user.email).first %>
       <%= render "response", :approver => approver %>
     <% end %>
-</div>
+  </div>
 
 <div class="row">
   <% unless @approval.embed == ("undefined" || nil )  %>
@@ -21,12 +21,12 @@
 
     <b>Percent complete</b></br>
         <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
-    <%= link_to "Open in Google Drive", @approval.link, :target=>"_blank", :class=>"button"%>
+    <%= link_to "Open file", @approval.link, :target=>"_blank", :class=>"button success"%>
 
   </br>
     <% if current_user == User.find(@approval.owner) %>
-      <%= link_to 'Edit', edit_approval_path(@approval), :class=>"small button" %> 
-      <%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"small button" %>
+      <%= link_to 'Edit', edit_approval_path(@approval), :class=>"tiny button" %> 
+      <%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"tiny button" %>
     <% end %>
 
 
