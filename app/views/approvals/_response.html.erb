@@ -13,21 +13,27 @@
 
 
 <div id="myModal" class="reveal-modal">
-  <div class="modal-header">
-    <h3 id="myModalLabel">Do you approve <%= approver.approval.title %>?</h3>
+  
+  <div class="row">
+    <h3>Do you approve <%= approver.approval.title %>?</h3>
   </div>
-  <div class="modal-body">
+  
+  <div class="row">
     <%= simple_form_for approver.approval do |f| %>
+    <div class="large-12 columns">
     <%= f.simple_fields_for approver do |builder| %>
-      <%= builder.input :comments, :input_html => { :class => "span5", :rows => "3" }, :placeholder => "Have any feedback?", :label => false %>
-      <a class="close-reveal-modal">&#215;</a>
+      <%= builder.input :comments, :input_html => { :class=>"", :rows => "3" }, :placeholder => "Have any feedback?", :label => false %>
+    </div>
     <% end %>
-  </div>
-  <div class="modal-footer">
-    <%= f.button :submit, :class => "button success", :name => "approval[approver][status]", :value => "Approved" %>
-    <%= f.button :submit, :class => "button alert", :name => "approval[approver][status]", :value => "Declined" %>
-    <button class="button secondary" data-dismiss="modal" aria-hidden="true">Cancel</button>
-  </div>
+    </div>
+  </br>
+    <div class="row">
+      <%= f.button :submit, :class => "button success large-2 columns", :name => "approval[approver][status]", :value => "Approved" %>
+      <%= f.button :submit, :class => "button alert large-2 columns", :name => "approval[approver][status]", :value => "Declined" %>
+      <button class="button secondary large-2 columns" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div>
+ 
   <% end %>
+  <a class="close-reveal-modal">&#215;</a>
 </div>
 
