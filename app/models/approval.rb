@@ -4,7 +4,7 @@ class Approval < ActiveRecord::Base
   has_many :approvers, :dependent => :destroy
   validates :title, :link, :deadline, :presence => true
   validates :deadline, :format => { :with => /\d{2}\/\d{2}\/\d{4}/,
-    :message => "The date must be in the format MM/DD/YYYY and must be a date in the future." }, :unless => Proc.new { |a| (a.deadline.to_date > Date.today) }
+    :message => "The date must be in the format MM/DD/YYYY and must be a date in the future." }, :unless => Proc.new { |a| (a.deadline && (a.deadline.to_date > Date.today)) }
   accepts_nested_attributes_for :approvers, :reject_if => proc { |attributes| attributes['name'].blank? or attributes['email'].blank?}, :allow_destroy => true
   validate :require_one_approver
 
