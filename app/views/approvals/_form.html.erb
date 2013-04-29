@@ -1,22 +1,23 @@
-<div class="row large-12 columns">
-      <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
-      <%= f.error_notification %>
-      <%= f.input :title, :placeholder => "Give it a title" , :input_html => { :class => "span10" }%>
-      <% #f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
-      <a onclick="createPicker()" class="button">Select File from Google Drive</a>  
-      <small><input id="perms" name="perms" value="writer" type="checkbox">  *Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small>
-      <div id="result"> 
-        <%= @approval.link_title if @approval.link_title %>
-      </div>
-    </br>
-      <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
-      </br>     
-      <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY",
+<div class="row">
+  <div class="large-12 columns">
+    <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
+    <%= f.error_notification %>
+    <%= f.input_field :title, :placeholder => "Give it a title", :input_html => { :class => "span10" }%> 
+    <% #f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
+    <a onclick="createPicker()" class="button">Select File from Google Drive</a>  
+    <small><input id="perms" name="perms" value="writer" type="checkbox">  *Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small> 
+    <div id="result"> 
+      <%= @approval.link_title if @approval.link_title %>
+    </div>
+    <br />
+    <%= f.input_field :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
+    <br />     
+    <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY", label: false,
             :input_html => { 
-              :id => "datepicker", 
-              :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline)}, 
+            :id => "datepicker", 
+            :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline)}, 
             :as => :string
-            %>
+    %>
 
 
 </select>
@@ -56,6 +57,9 @@
 
 <% end %>
 </div>
+</div>
+
+
  <!-- The standard Google Loader script. -->
     <script src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">

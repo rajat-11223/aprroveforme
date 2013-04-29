@@ -17,7 +17,7 @@
 // We use these to control various global styles
 // $body-bg: #fff;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+ $body-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -85,7 +85,7 @@
 //
 
 // We use these to control header font styles
-// $header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+ $header-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $header-font-weight: bold;
 // $header-font-style: normal;
 // $header-font-color: #222;
@@ -755,7 +755,7 @@
 
 // We use these to set the meter colors
 // $progress-meter-color: $primary-color;
-// $progress-meter-secondary-color: $secondary-color;
+ $progress-meter-secondary-color: #6b6b6b;
 // $progress-meter-success-color: $success-color;
 // $progress-meter-alert-color: $alert-color;
 

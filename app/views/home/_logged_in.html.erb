@@ -23,13 +23,11 @@
    <% @pending_approvals.each do |approver| %>
    <div class="row">
       <div class="large-8 large-offset-2 columns">
-        <%= link_to (image_tag image_url(User.find(approver.approval.owner).email), :size => "100x80"),  approval_path(approver.approval), :class=>"pending" %>
-        <div class="pending_text">
-          <small>
-          <%= User.find(approver.approval.owner).name %> asked for your approval.</br></br>
-          <%= link_to approver.approval.title, approver.approval, :class=>"small button primary" %></br>
-          *<%= approver.to_s %>
-          </small>
+        <%= link_to (image_tag image_url(User.find(approver.approval.owner).email), :size => "60x60"),  approval_path(approver.approval), :class=>"pending" %>
+        <div class="pending-text">
+          <%= User.find(approver.approval.owner).name %> asked for your approval of
+          "<strong><%= link_to approver.approval.title, approver.approval %></strong>."<br />
+          <small><%= approver.to_s %></small>
         </div>
       </div>
    </div>
@@ -58,8 +56,8 @@
         <p class="deadline"><%= approval.deadline_in_words %></p>
     </div>
     <div class="large-7 small-6 columns"> 
-        <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(approval) %>"></span></div>
-        <%= percentage_complete(approval) %> complete
+        <div class="progress secondary"><span class="meter" style="width: <%= percentage_complete(approval) %>"></span></div>
+        <p class="deadline"><%= percentage_complete(approval) %> complete</p>
     </div> 
 </div>  
 <% end %>
@@ -76,7 +74,7 @@
 <div class="row">
   <div class="large-6 columns">
     <!-- my expired approvals -->
-    <h4>Previous Files</h4>
+    <h5>Previous Files</h5>
     <% if @my_completed_approvals.count > 0 %>
      <% @my_completed_approvals.each do |approval| %>
        <p class="list">
@@ -89,7 +87,7 @@
  </div>
 
  <div class="large-6 columns">
-    <h4>Previous Approvals</h4>
+    <h5>Previous Approvals</h5>
     <!-- approvals i've signed off on -->
     <% if @signedoff_approvals.count > 0 %>
       <% @signedoff_approvals.each do |approver| %>
