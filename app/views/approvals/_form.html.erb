@@ -2,28 +2,44 @@
   <div class="large-12 columns">
     <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
     <%= f.error_notification %>
-    <%= f.input :title, :placeholder => "Give it a title", :input_html => { :class => "span10" }%> 
-    <% #f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
-    <a onclick="createPicker()" class="button">Select File from Google Drive</a>  
-    <small><input id="perms" name="perms" value="writer" type="checkbox">  *Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small> 
-    <div id="result"> 
-      <%= @approval.link_title if @approval.link_title %>
+    <%= f.input :title, :placeholder => "Give it a title", :input_html => { :class=>"large-10 columns" }%> 
+
+    <div class="row">
+      <div class="large-2 columns">Select a file: </div>
+      
+      <%  if @approval.link_title %>
+      <%= link_to @approval.link_title, @approval.link %> <a onclick="createPicker()" class="button small large-4 columns" style="float: right;">Change File</a>
+      <% else %>
+      <a onclick="createPicker()" class="button large-4 columns">Select File from Google Drive</a>
+      <div class="large-6 columns">
+      <small><input id="perms" name="perms" value="writer" type="checkbox">  *Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small> 
+      </div>
+      <% end %>
+    
+    <%= f.error :link, :class=>"alert-box alert" %> 
+      
+
     </div>
+
     <br />
-    <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
+    <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "large-10 columns", :rows => "3" } %>
     <br />     
-    <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY", 
+
+
+    <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY",
             :input_html => { 
             :id => "datepicker", 
+            :class=>"large-10 columns",
             :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline)}, 
             :as => :string
+          
     %>
 
 
-</select>
       </br>
-      Who will be signing off on this approval?</br></br>
-      <%= f.error :approvers, :class=>"alert alert-error" %>
+      Who will be signing off on this approval?
+      <%= f.error :approvers, :class=>"alert-box alert" %>
+    
       <table>
         <tr>
           <td>Name</td><td>Email Address</td><td>Required?</td>
