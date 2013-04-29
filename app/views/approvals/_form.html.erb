@@ -2,7 +2,7 @@
   <div class="large-12 columns">
     <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
     <%= f.error_notification %>
-    <%= f.input_field :title, :placeholder => "Give it a title", :input_html => { :class => "span10" }%> 
+    <%= f.input :title, :placeholder => "Give it a title", :input_html => { :class => "span10" }%> 
     <% #f.input :link, :placeholder => "Link to thing you want approved", :input_html => { :class => "span10" } %>
     <a onclick="createPicker()" class="button">Select File from Google Drive</a>  
     <small><input id="perms" name="perms" value="writer" type="checkbox">  *Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small> 
@@ -10,9 +10,9 @@
       <%= @approval.link_title if @approval.link_title %>
     </div>
     <br />
-    <%= f.input_field :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
+    <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "span10", :rows => "3" } %>
     <br />     
-    <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY", label: false,
+    <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY", 
             :input_html => { 
             :id => "datepicker", 
             :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline)}, 
