@@ -4,9 +4,12 @@
     <h5 class="subheader"><%= @approval.description %></h5>
     <!-- if you're an approver, show option to approve -->
     <% if approver = @approval.approvers.where("email =?", current_user.email).first %>
-      <%= render "response", :approver => approver %>
+      <div data-alert class="alert-box secondary">
+        <%= render "response", :approver => approver %>
+      </div>
     <% end %>
   </div>
+</div>
 
 <div class="row">
   <% unless @approval.embed == ("undefined" || nil )  %>
@@ -15,56 +18,47 @@
   </div>
   <div class="large-4 small-12 columns">
   <% else %>
-    <div class="large-12 small-12 columns">
-    <% end %>
-    <p><b>Deadline:</b> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %> </p>
-
-    <b>Percent complete</b></br>
-        <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
-    <%= link_to "Open file", @approval.link, :target=>"_blank", :class=>"button success"%>
-
+  <div class="large-12 small-12 columns">
+  <% end %>
+  <p><b>Deadline:</b> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %> </p>
+  <b>Percent complete</b></br>
+      <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
+  <%= link_to "Open file", @approval.link, :target=>"_blank", :class=>"button"%>
   </br>
-    <% if current_user == User.find(@approval.owner) %>
-      <%= link_to 'Edit', edit_approval_path(@approval), :class=>"tiny button" %> 
-      <%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"tiny button" %>
-    <% end %>
-
-
+  <% if current_user == User.find(@approval.owner) %>
+    <%= link_to 'Edit', edit_approval_path(@approval), :class=>"tiny button" %> 
+    <%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"tiny button" %>
+  <% end %>
   </br>
   <h3>Approvers</h3>
-
-        <hr>
-    
+    <hr>
     <% @approval.approvers.each do |approver| %>
-    <div class="row">
-      <div class="large-3 small-3 columns">
-        <%= image_tag image_url(approver.email), :size => "100x10" %>
-      </div>
-      <div class="large-4 small-4 columns">
-        <strong><%= approver.name %></strong> 
-      </div>
-      <div class="large-5 small-5 columns">
-        <small>
-          <% if approver.status.downcase != "pending" %> <%= approver.status %> <% else %> Approval <%= approver.required.downcase %> <% end %>
-        </small>
-      </div>
-      <div class="large-9 small-9 columns">
-        <small>
-          <% if approver.comments && approver.comments == "" %>
-          <b>Comments:</b> N/A
-          <% elsif approver.comments %>
-          <b>Comments: </b><%= approver.comments %>
-          <% end %>
-        </small>
-      </div>
-    </div>
-  
-  <div class="row">
-        <hr>
-    </div>
- 
-    <% end %>
-
+      <div class="row">
+         <div class="large-3 small-3 columns">
+            <%= image_tag image_url(approver.email), :size => "100x10" %>
+         </div>
+         <div class="large-4 small-4 columns">
+            <strong><%= approver.name %></strong> 
+         </div>
+         <div class="large-5 small-5 columns">
+            <small>
+              <% if approver.status && approver.status.downcase != "pending" %> <%= approver.status %> <% else %> Approval <%= approver.required.downcase %> <% end %>
+            </small>
+         </div>
+         <div class="large-9 small-9 columns">
+            <small>
+              <% if approver.comments && approver.comments == "" %>
+              <b>Comments:</b> N/A
+              <% elsif approver.comments %>
+              <b>Comments: </b><%= approver.comments %>
+              <% end %>
+            </small>
+         </div>
+       </div>
+       <div class="row">
+          <hr>
+       </div>
+  <% end %>
   </div>
 </div>
 

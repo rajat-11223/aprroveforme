@@ -2,10 +2,10 @@
 <div class="row">
   <div class="large-12 columns">
     	<h1 class="hero-tagline">Let's get started!</h1>
-    	<h3 class="large-10 columns large-centered small-centered">Don't worry, it's a lot easier than chasing everyone around.</h3>
-      <div class="large-4 columns large-centered small-centered">
-    	<%= link_to "Create a new approval", new_approval_path, :class => "button success radius" %>
-      </div>
+    	<h4 class="center">Don't worry, it's a lot easier than chasing everyone around.</h3>
+      <p class="center">
+    	 <%= link_to "Create new approval", new_approval_path, :class => "button success radius" %>
+      </p>
   </div>
 </div>
 
@@ -17,24 +17,25 @@
 <% if @pending_approvals.count > 0 %>
 <div class="row">
   <div class="large-12 columns">
-    <h2 class="text-center">Your approval is needed</h2>
+    <h3 class="text-center">Approvals Requested</h3>
   </div>
 </div>
    <% @pending_approvals.each do |approver| %>
    <div class="row">
-      <div class="large-8 large-offset-2 small-centered columns th">
-        <%= link_to (image_tag image_url(User.find(approver.approval.owner).email) , :size => "100x10"),  approval_path(approver.approval), :class=>"pending" %>
-      <div class="pending_text">
-      <small>
-      <%= User.find(approver.approval.owner).name %> asked for your approval.</br></br>
-      <%= link_to approver.approval.title, approver.approval, :class=>"button" %></br>
-      *<%= approver.to_s %>
-      </small>
+      <div class="large-8 large-offset-2 columns">
+        <%= link_to (image_tag image_url(User.find(approver.approval.owner).email), :size => "100x80"),  approval_path(approver.approval), :class=>"pending" %>
+        <div class="pending_text">
+          <small>
+          <%= User.find(approver.approval.owner).name %> asked for your approval.</br></br>
+          <%= link_to approver.approval.title, approver.approval, :class=>"small button primary" %></br>
+          *<%= approver.to_s %>
+          </small>
+        </div>
       </div>
-    
-      </div>
-   </div></br>
+   </div>
+ </br>
    <% end %>
+
 <div class="row">
 <hr>
 </div>
@@ -52,11 +53,11 @@
 </div>
 <% @my_approvals.each do |approval| %>
 <div class="row">
-    <div class="large-4 small-6 columns">        
-        <%= link_to approval.title, approval %></br>
-        <p class="text-large"><%= approval.deadline_in_words %></p>
+    <div class="large-5 small-6 columns">        
+        <p class="small-title"><%= link_to approval.title, approval %></p>
+        <p class="deadline"><%= approval.deadline_in_words %></p>
     </div>
-    <div class="large-8 small-6 columns"> 
+    <div class="large-7 small-6 columns"> 
         <div class="progress success round"><span class="meter" style="width: <%= percentage_complete(approval) %>"></span></div>
         <%= percentage_complete(approval) %> complete
     </div> 
@@ -70,38 +71,35 @@
 <!-- list expired approvals -->
 <% if (@my_completed_approvals.count > 0) or (@signedoff_approvals.count > 0 )  %>
 <div class="row">
-  <h3 class="text-center">Past Approvals</h3></br>
+  <h3 class="text-center">History</h3></br>
 </div>
 <div class="row">
   <div class="large-6 columns">
     <!-- my expired approvals -->
-    <h4>My Files</h4>
+    <h4>Previous Files</h4>
     <% if @my_completed_approvals.count > 0 %>
-    <ul>
-    <% @my_completed_approvals.each do |approval| %>
-    <li>
-    <%= link_to approval.title, approval %>
-    </li>
-    <% end %>
-    </ul>
+     <% @my_completed_approvals.each do |approval| %>
+       <p class="list">
+        <%= link_to approval.title, approval %>
+       </p>
+     <% end %>
     <% else %>
-    You don't have any previous approvals. <%= link_to "Create a new approval!", new_approval_path %>
+    You don't have any previous approvals. <%= link_to "Create new approval", new_approval_path %>
     <% end %>
  </div>
 
  <div class="large-6 columns">
-    <h4>My Approvals</h4>
+    <h4>Previous Approvals</h4>
     <!-- approvals i've signed off on -->
     <% if @signedoff_approvals.count > 0 %>
-    <ul>
-    <% @signedoff_approvals.each do |approver| %>
-    <li>
-    <%= link_to approver.approval.title, approver.approval %>
-    </li>
-    <% end %>
-    </ul>
+      <% @signedoff_approvals.each do |approver| %>
+      <p class="list">
+        <%= link_to approver.approval.title, approver.approval %>
+        <br />
+      </p>
+      <% end %>
     <% else %>
-    You haven't signed off on any approvals yet. <%= link_to "Create a new approval!", new_approval_path %>
+      You haven't signed off on any approvals yet. 
     <% end %>
   </div>
 </div>
