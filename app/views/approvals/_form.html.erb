@@ -8,12 +8,15 @@
       <%= f.label :link, :label => "Select a file" %>
       
       <%  if @approval.link_title %>
-      <div id="result">
-      <%= link_to @approval.link_title, @approval.link %></div> <a onclick="createPicker()" class="button small large-4 columns" style="float: right;">Change File</a></br>
-      <%= f.error :link, :class=>"alert-box alert" %> 
+      <div class="large-3 columns">
+        <div id="result"><%= link_to @approval.link_title, @approval.link %></div> 
+      </div>
+      <div class="large-7 columns">
+        <a onclick="createPicker()" class="button small" style="float: right;">Change File</a>
+      </div>
+      
       <% else %>
       <a onclick="createPicker()" class="button large-4 columns">Select File from Google Drive</a>
-      
       <div id="result">
       </div>
       <div class="large-6 columns">

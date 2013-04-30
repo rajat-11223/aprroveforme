@@ -26,8 +26,14 @@
   <%= link_to "Open file", @approval.link, :target=>"_blank", :class=>"button"%>
   </br>
   <% if current_user == User.find(@approval.owner) %>
-    <%= link_to 'Edit', edit_approval_path(@approval), :class=>"tiny button" %> 
-    <%= link_to 'Delete', @approval, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"tiny button" %>
+  <div class="row">
+    <div class="large-1 columns">
+    <%= link_to 'Edit', edit_approval_path(@approval), :class=>"tiny button" %>
+  </div>
+    <div class="large-10 columns">
+    <%= button_to 'Delete', @approval, method: :delete, :confirm => "Are you sure you want to delete this approval?", :class=>"tiny button" %>
+  </div>
+  </div>
   <% end %>
   </br>
   <h3>Approvers</h3>
@@ -42,7 +48,11 @@
          </div>
          <div class="large-5 small-5 columns">
             <small>
-              <% if approver.status && approver.status.downcase != "pending" %> <%= approver.status %> <% else %> Approval <%= approver.required.downcase %> <% end %>
+              <% if approver.status == ("" || "Pending") %> 
+                Approval <%= approver.required.downcase %> 
+              <% else %> 
+                <%= approver.status %>
+              <% end %>
             </small>
          </div>
          <div class="large-9 small-9 columns">
