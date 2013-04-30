@@ -1,2 +1,6 @@
-Hi <%= @approver.name %>, </br>
-<%= @owner_name %> has requested your approval on <%= @title %>
+Hi <%= @approver.name %>, 
+
+<%= @owner_name %> has requested your approval on <%= @approval.title %>. Your approval is <%= @approver.required.camelize(:lower) %>. Please review and leave your comments by <%= @approval.deadline.to_date %>. You can read over the approval, leave comments, and sign off at <%= root_url %>.
+
+Have a great day!
+-The ApproveForMe Team

@@ -1,2 +1,6 @@
 Hi <%= @approver.name %>, </br>
-<%= @owner_name %> has requested your approval on <%= link_to @approval.title, approval_path(@approval) %>.
+<p>
+<%= @owner_name %> has requested your approval on <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %>. Your approval is <%= @approver.required.camelize(:lower) %>. Please review and leave your comments by <%= @approval.deadline.to_date %>. You can read over the approval, leave comments, and sign off at <%= link_to "ApproveForMe.com", root_url %>.
+</p>
+Have a great day!</br>
+-The ApproveForMe Team

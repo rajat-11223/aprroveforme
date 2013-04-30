@@ -1,2 +1,6 @@
-Hi <%= @name %>, </br>
-We've sent out <%= @title %> to all of the approvers you've requested.
+Hi <%= @name %>,
+
+We've sent out <%= link_to @approval.title %> to all of the approvers you've requested. You can check out the status of your approval at <%=  root_url %>.
+
+Have a great day!
+-The ApproveForMe Team
