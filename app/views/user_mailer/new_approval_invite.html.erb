@@ -1,6 +1,9 @@
-Hi <%= @approver.name %>, </br>
-<p>
-<%= @owner_name %> has requested your approval on <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %>. Your approval is <%= @approver.required.camelize(:lower) %>. Please review and leave your comments by <%= @approval.deadline.to_date %>. You can read over the approval, leave comments, and sign off at <%= link_to "ApproveForMe.com", root_url %>.
-</p>
-Have a great day!</br>
--The ApproveForMe Team
+Hi <%= @approver.name %>, </br></br>
+
+<%= @owner_name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %>.</br></br>
+
+You can read over the document, leave comments, and sign off at <%= link_to "ApproveForMe.com", root_url %>.</br></br>
+
+-The ApproveForMe Team</br></br>
+
+<a href="#">Sign up for ApproveForMe</a>, a free tool that simplifies your professional life by making it easier to create, track, and manage document signoffs.
