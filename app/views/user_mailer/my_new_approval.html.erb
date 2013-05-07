@@ -1,6 +1,9 @@
-Hi <%= @name %>, </br>
-<p>
-We've sent out <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %> to all of the approvers you've requested. You can check out the status of your approval at <%= link_to "ApproveForMe.com", root_url %>.
-</p>
-Have a great day!</br>
+Hi <%= @name %>, </br></br>
+
+We've sent out <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %> to all those you requested. You can check out the status of your approval at <%= link_to "ApproveForMe.com", root_url %>.
+</br></br>
+
+If you have any questions, feel free to reply directly to this mail or tweet us <a href="https://twitter.com/approveforme" target="_blank">@approveforme</a>.</br></br>
+
+Sincerely,</br>
 -The ApproveForMe Team

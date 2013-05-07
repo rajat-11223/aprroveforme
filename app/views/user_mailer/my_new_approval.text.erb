@@ -1,6 +1,9 @@
 Hi <%= @name %>,
 
-We've sent out <%= link_to @approval.title %> to all of the approvers you've requested. You can check out the status of your approval at <%=  root_url %>.
+We've sent out <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %> to all those you requested. You can check out the status of your approval at http://approveforme.com.
 
-Have a great day!
+
+If you have any questions, feel free to reply directly to this mail or tweet us @approveforme.
+
+Sincerely,
 -The ApproveForMe Team

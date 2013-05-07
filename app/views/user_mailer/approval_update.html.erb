@@ -1,9 +1,6 @@
-Hi <%= @owner.name %>, </br>
-<p>
-<%= @approver.name %> has responded to  <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %>.
-</p>
-Status: <%= @approver.status %></br>
-Comments: <%= @approver.comments %></br>
-</br>
-Have a great day! </br>
+Hi <%= @owner.name %>, <br /><br />
+
+<%= @approver.name %> has responded to  <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %> with <b><%= @approver.status %></b> and the following comments: "<%= @approver.comments %>".<br /><br />
+
+Sincerely,<br />
 -The ApproveForMe Team
