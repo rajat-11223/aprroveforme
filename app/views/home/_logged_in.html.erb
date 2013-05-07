@@ -107,7 +107,7 @@
 <% if @any_approvers.count == 0 and @any_approvals.count==0 %>
 <div class="row">
   <div class="large-12 columns">
-    <p>You don't have any approvals yet. <%= link_to "Create new approval.", new_approval_path %>. </p>
+    <p>It looks like you don't have any approvals yet. Get started now by <%= link_to "creating a new approval", new_approval_path %>. </p>
   </div>
 </div>
 <% end %>
