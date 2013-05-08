@@ -25,7 +25,7 @@
       <div class="progress secondary"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
   <%= link_to "Open file", @approval.link, :target=>"_blank", :class=>"button"%>
   </br>
-  <% if current_user == User.find(@approval.owner) %>
+  <% if can? :manage, @approval %>
   <div class="row">
     <div class="large-1 columns">
     <%= link_to 'Edit', edit_approval_path(@approval), :class=>"tiny button" %>
