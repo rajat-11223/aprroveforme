@@ -6,7 +6,8 @@ module ApproverHelper
 		if user && user.picture && user.picture != ""
 			user.picture
 		else
-			"http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email.downcase.strip)}"
+			"http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email.downcase.strip)}?d=mm"
+
 		end
 	end
 
