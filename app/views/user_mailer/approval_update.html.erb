@@ -440,7 +440,7 @@
 
 						<%= @approver.name %> has <b><%= @approver.status.downcase %></b>  <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %>. 
 						<% unless @approver.comments == "" %>
-						<%= @approver.name %> had the following comments: <em>"<%= @approver.comments %>"</em>.
+						<%= @approver.name %> had the following comments: <em>"<%= @approver.comments %>"</em>
 						<% end %>
 						<br ><br >
 
