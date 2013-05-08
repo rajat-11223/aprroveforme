@@ -4,7 +4,7 @@
 		  <% if msg.is_a?(String) %>
 		    <div class="alert-box alert-<%= name == :notice ? "success" : "error" %>">
 		      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-		      <a href="#" class="close">&times;</a>	
+		      <!--<a href="#" class="close">&times;</a> -->
 		    </div>
 		  <% end %>
 		<% end %>
