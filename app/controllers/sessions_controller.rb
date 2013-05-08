@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     user = User.where(:provider => auth['provider'], 
                       :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
+    session[:credentials] = auth["credentials"]
     user.token = auth["credentials"]["token"] || ""
     user.refresh_token = auth["credentials"]["refresh_token"] || ""
     user.code = params["code"] || ""

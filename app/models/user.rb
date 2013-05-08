@@ -30,8 +30,12 @@ class User < ActiveRecord::Base
     client.authorization.code = self.code.chomp
     client.authorization.access_token = self.token
     client.authorization.refresh_token = self.refresh_token
+    
+    if client.authorization.refresh_token &&
+        client.authorization.expired?
+        client.authorization.fetch_access_token!
+     end
     return client
-  
   end
 
   def view_docs
