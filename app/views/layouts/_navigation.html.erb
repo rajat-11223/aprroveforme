@@ -9,11 +9,11 @@
     <ul class="right">
       <li class="divider hide-for-small"></li>
       <% if user_signed_in? %>
+      <li><a href="http://blog.approveforme.com" target="_blank">Blog</a></li>
+      <li class="divider"></li>
       <li><%= link_to 'Logout', signout_path %></li>
       <% else %>
-        <li><a href="#">Tour</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Blog</a></li>
+        <li><a href="http://blog.approveforme.com" target="_blank">Blog</a></li>
         <li class="divider"></li>
         <li><%= link_to 'Login', signin_path %></li>
       <% end %>
