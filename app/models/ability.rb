@@ -7,8 +7,9 @@ class Ability
       can :manage, :all
     end
 
+    can :create, Approval
     can [:read, :update], Approval, :approvers => {:email => user.email}
-    can :manage, Approval, :owner => user.email
+    can :manage, Approval, :owner => user.id
     can :manage, User, :user_id => user.id
 
     # Define abilities for the passed in user here. For example:
