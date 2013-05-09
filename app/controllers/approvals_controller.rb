@@ -1,7 +1,7 @@
 class ApprovalsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
-  
+
   # GET /approvals
   # GET /approvals.json
   def index
@@ -72,6 +72,7 @@ class ApprovalsController < ApplicationController
     
     @approval = Approval.find(params[:id])
     
+    # if an approver is approving
     if params[:approval][:approver]
       @approver = @approval.approvers.where("email = ?", current_user.email).first
       @approver.status = params[:approval][:approver][:status]
@@ -85,7 +86,9 @@ class ApprovalsController < ApplicationController
         params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
       end
 
-      @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader")} if @approval.link
+      @approval.approvers.each do |approver| 
+          @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader") 
+      end
 
       respond_to do |format|
         if @approval.update_attributes(params[:approval])
