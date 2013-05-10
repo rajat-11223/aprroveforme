@@ -24,6 +24,7 @@ class Approval < ActiveRecord::Base
     end
 
     def update_permissions(file_id, user, approver, role = 'reader')
+      user.refresh_google
       client = user.google_auth
       drive = client.discovered_api('drive', 'v2')# First retrieve the permission from the API.
 
@@ -42,9 +43,9 @@ class Approval < ActiveRecord::Base
       if result.status == 200
         return result.data
       # token has expired
-      elsif result.status == 401
-        user.refresh_google
-        update_permissions(file_id, user, approver, role)
+      #elsif result.status == 401
+      #  user.refresh_google
+      #  update_permissions(file_id, user, approver, role)
       else
         puts "An error occurred when setting permissions: #{result.data['error']['message']}"
       end
