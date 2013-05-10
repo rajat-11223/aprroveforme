@@ -43,9 +43,9 @@ class Approval < ActiveRecord::Base
       if result.status == 200
         return result.data
       # token has expired
-      #elsif result.status == 401
-      #  user.refresh_google
-      #  update_permissions(file_id, user, approver, role)
+     # elsif result.status == 401
+     #   user.refresh_google
+     #   update_permissions(file_id, user, approver, role)
       else
         puts "An error occurred when setting permissions: #{result.data['error']['message']}"
       end

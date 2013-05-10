@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     session[:user_id] = user.id
     session[:credentials] = auth["credentials"]
     user.token = auth["credentials"]["token"] || ""
-    user.refresh_token = auth["credentials"]["refresh_token"] || ""
+    user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
     user.code = params["code"] || ""
     user.add_role :admin if User.count == 1 # make the first user an admin
     if user.email.blank?
