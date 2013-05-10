@@ -4,6 +4,7 @@
 }
 body {
  font-family: 'Open Sans', sans-serif; 
+ background-image:url('/assets/pattern-50im.png') !important;
 }
 .button {
   border-width: 0px !important;
