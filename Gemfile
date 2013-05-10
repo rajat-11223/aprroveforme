@@ -30,3 +30,4 @@ gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri
 gem "delayed_job_active_record"
 gem "google-api-client"
 gem "workless"
+gem "httparty"

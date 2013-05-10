@@ -34,12 +34,17 @@ class Approval < ActiveRecord::Base
         'role' => role,
         'withLink' => 'true'
       })
+   
       result = client.execute(
         :api_method => drive.permissions.insert,
         :body_object => new_permission,
         :parameters => { 'fileId' => file_id, 'sendNotificationEmails'=>'false' })
       if result.status == 200
         return result.data
+      # token has expired
+      elsif result.status == 401
+        user.refresh_google
+        update_permissions(file_id, user, approver, role)
       else
         puts "An error occurred when setting permissions: #{result.data['error']['message']}"
       end

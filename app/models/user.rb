@@ -19,8 +19,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def google_auth
-    
+  def google_auth 
     # Create a new API client & load the Google Drive API 
     client = Google::APIClient.new
     client.authorization.client_id = ENV['GOOGLE_ID']
@@ -36,6 +35,28 @@ class User < ActiveRecord::Base
         client.authorization.fetch_access_token!
      end
     return client
+  end
+
+  def refresh_google
+    options = {
+      body: {
+        client_id: ENV['GOOGLE_ID'],
+        client_secret: ENV['GOOGLE_SECRET'],
+        refresh_token: self.refresh_token,
+        grant_type: 'refresh_token'
+      },
+      headers: {
+        'Content-Type' => 'application/x-www-form-urlencoded'
+      }
+    }
+    @response = HTTParty.post('https://accounts.google.com/o/oauth2/token', options)
+    if @response.code == 200
+      self.token = @response.parsed_response['access_token']
+      self.save        
+    else
+      Rails.logger.error("Unable to refresh google_oauth2 authentication token.")
+      Rails.logger.error("Refresh token response body: #{@response.body}")
+    end
   end
 
   def view_docs
