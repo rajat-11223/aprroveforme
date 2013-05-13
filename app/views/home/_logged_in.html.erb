@@ -107,7 +107,65 @@
 <% if @any_approvers.count == 0 and @any_approvals.count==0 %>
 <div class="row">
   <div class="large-12 columns">
-    <p>It looks like you don't have any approvals yet. Get started now by <%= link_to "creating a new approval", new_approval_path %>. </p>
+    <p>It looks like you don't have any approvals yet. Get started now by <%= link_to "creating a new approval", new_approval_path %>.</p>
+  </div>
+</div>
+<div class="row">
+    <div class="large-4 small-12 large-offset-1 columns">
+      <h4>How it works</h4>
+    </div>
+</div>
+<div class="row">
+  <div class="large-4 small-4 large-offset-1 columns">
+    <img src="http://placehold.it/500x300">
+  </div>
+  <div class="large-6 small-8 end columns">
+    <p class="tour-title hide-for-small">1. Create your approval</p>
+    <p class="">Fill in a few pieces of information, like title, description, when it's due, and who needs to approve. You can also mark each approver as required or optional.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
+</div>
+<div class="row">
+  <div class="large-6 small-8 large-offset-1  columns">
+    <p class="tour-title hide-for-small">2. Add your document</p>
+    <p class="">Select your document from Google Drive. Don't worry if it's not already there, you'll be able to quickly upload it and we'll automatically set the permissions.</p>
+  </div>
+  <div class="large-4 small-4 end columns">
+    <img src="http://placehold.it/500x300">
+  </div>
+</div>
+<div class="row">
+  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
+</div>
+<div class="row">
+  <div class="large-4 small-4 large-offset-1 columns">
+    <img src="http://placehold.it/500x300">
+  </div>
+  <div class="large-6 small-8 end columns">
+    <p class="tour-title hide-for-small">3. Approvers notified and provide feedback</p>
+    <p class="">Each approve will receive an email asking them to approve your document. When the click through, they'll be able to add any comments and click "approve" or "decline."</p>
+  </div>
+</div>
+<div class="row">
+  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
+</div>
+<div class="row">
+  <div class="large-6 small-8 large-offset-1  columns">
+    <p class="tour-title hide-for-small">4. Everything in one place</p>
+    <p class="">See status of each approval, comments, and more in the summary page. No more having to peice together multiple emails.</p>
+  </div>
+  <div class="large-4 small-4 end columns">
+    <img src="http://placehold.it/500x300">
+  </div>
+</div>
+<div class="row">
+  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <p>Isn't it easy? Start saving time and stop chasing people around and <%= link_to "create your first approval", new_approval_path %> now. It just takes a few minutes. Have have you got to lose?</p>
   </div>
 </div>
 <% end %>

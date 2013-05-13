@@ -103,6 +103,10 @@ h3 {
   margin-bottom:5px;
   color:#6b6b6b;
 }
+.tour-title {
+  font-size: 22px;
+  margin-bottom: 0px;
+}
 
 /* Footer */
 .footer {
