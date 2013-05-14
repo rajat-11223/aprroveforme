@@ -74,7 +74,7 @@
 <div class="row">
   <div class="large-6 columns">
     <!-- my expired approvals -->
-    <h5>Previous Files</h5>
+    <h5>My Past Documents</h5>
     <% if @my_completed_approvals.count > 0 %>
      <% @my_completed_approvals.each do |approval| %>
        <p class="list">
@@ -87,7 +87,7 @@
  </div>
 
  <div class="large-6 columns">
-    <h5>Previous Approvals</h5>
+    <h5>My Past Approvals</h5>
     <!-- approvals i've signed off on -->
     <% if @signedoff_approvals.count > 0 %>
       <% @signedoff_approvals.each do |approver| %>
@@ -105,11 +105,7 @@
 
 <!-- if you don't have any incoming or outgoing approvals, show some first run text. -->
 <% if @any_approvers.count == 0 and @any_approvals.count==0 %>
-<div class="row">
-  <div class="large-12 columns">
-    <p>It looks like you don't have any approvals yet. Get started now by <%= link_to "creating a new approval", new_approval_path %>.</p>
-  </div>
-</div>
+
 <div class="row">
     <div class="large-4 small-12 large-offset-1 columns">
       <h4>How it works</h4>
@@ -121,7 +117,7 @@
   </div>
   <div class="large-6 small-8 end columns">
     <p class="tour-title hide-for-small">1. Create your approval</p>
-    <p class="">Fill in a few pieces of information, like title, description, when it's due, and who needs to approve. You can also mark each approver as required or optional.</p>
+    <p class="">It's easy! Just give it a title, deadline and a list of people who need to approve. If you like, you can include a longer description too. </p>
   </div>
 </div>
 <div class="row">
@@ -130,7 +126,7 @@
 <div class="row">
   <div class="large-6 small-8 large-offset-1  columns">
     <p class="tour-title hide-for-small">2. Add your document</p>
-    <p class="">Select your document from Google Drive. Don't worry if it's not already there, you'll be able to quickly upload it and we'll automatically set the permissions.</p>
+    <p class="">Select your document from Google Drive. Don't worry, if it's not already there, you'll be able to quickly upload it and we'll automatically set the permissions. You can give approvers write access too if you'd like them to be able to edit the file.</p>
   </div>
   <div class="large-4 small-4 end columns">
     <img src="http://placehold.it/500x300">
@@ -145,7 +141,7 @@
   </div>
   <div class="large-6 small-8 end columns">
     <p class="tour-title hide-for-small">3. Approvers notified and provide feedback</p>
-    <p class="">Each approve will receive an email asking them to approve your document. When the click through, they'll be able to add any comments and click "approve" or "decline."</p>
+    <p class="">Each approver will receive an email asking them to approve your document. When they click through, they'll be able to open up the doc, add any comments and click "approve" or "decline."</p>
   </div>
 </div>
 <div class="row">
@@ -154,7 +150,7 @@
 <div class="row">
   <div class="large-6 small-8 large-offset-1  columns">
     <p class="tour-title hide-for-small">4. Everything in one place</p>
-    <p class="">See status of each approval, comments, and more in the summary page. No more having to peice together multiple emails.</p>
+    <p class="">See status of each approval, comments, and more in the summary page. No more having to piece together multiple emails.</p>
   </div>
   <div class="large-4 small-4 end columns">
     <img src="http://placehold.it/500x300">

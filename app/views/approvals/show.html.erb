@@ -25,16 +25,7 @@
       <div class="progress secondary"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
   <%= link_to "Open file", @approval.link, :target=>"_blank", :class=>"button"%>
   </br>
-  <% if can? :manage, @approval %>
-  <div class="row">
-    <div class="large-1 columns">
-    <%= link_to 'Edit', edit_approval_path(@approval), :class=>"tiny button" %>
-  </div>
-    <div class="large-10 columns">
-    <%= button_to 'Delete', @approval, method: :delete, :confirm => "Are you sure you want to delete this approval?", :class=>"tiny button" %>
-  </div>
-  </div>
-  <% end %>
+
   </br>
   <h3>Approvers</h3>
     <hr>
@@ -71,4 +62,11 @@
   <% end %>
   </div>
 </div>
-
+<% if can? :manage, @approval %>
+<div class="row">
+  <div class="large-12 columns">
+   Since you are the creator of this approval, you can <%= link_to 'edit', edit_approval_path(@approval) %> it or 
+   <%= button_to 'delete', @approval, method: :delete %> it altogether.
+  </div>
+</div>
+<% end %>

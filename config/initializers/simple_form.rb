@@ -96,7 +96,7 @@ SimpleForm.setup do |config|
    config.label_text = lambda { |label, required| "#{required} #{label}" }
 
   # You can define the class to use on all labels. Default is nil.
-  config.label_class = 'control-label large-2 columns'
+  config.label_class = 'control-label large-2 small-3 columns'
 
   # You can define the class to use on all forms. Default is simple_form.
   #config.form_class = "large-5 columns"
