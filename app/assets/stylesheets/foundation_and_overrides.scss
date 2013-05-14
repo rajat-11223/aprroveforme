@@ -755,7 +755,7 @@
 
 // We use these to set the meter colors
 // $progress-meter-color: $primary-color;
- $progress-meter-secondary-color: #6b6b6b;
+ $progress-meter-secondary-color: #d4d4d4;
 // $progress-meter-success-color: $success-color;
 // $progress-meter-alert-color: $alert-color;
 
@@ -968,7 +968,7 @@
 //
 
 // Background color for the top bar
- $topbar-bg: #FFC840;
+ $topbar-bg: #f2f2f2;
 
 // Height and margin
 // $topbar-height: 45px;
@@ -982,12 +982,12 @@
 // $topbar-title-font-size: emCalc(17px);
 
 // Set the link colors and styles for top-level nav
- $topbar-link-color: #fcfcfd;
-// $topbar-link-weight: bold;
+ $topbar-link-color: #000;
+ $topbar-link-weight: normal;
 // $topbar-link-font-size: emCalc(13px);
 
 // Style the top bar dropdown elements
- $topbar-dropdown-bg: #FFC840;
+ $topbar-dropdown-bg: #f2f2f2;
 // $topbar-dropdown-link-color: #fff;
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
@@ -998,10 +998,10 @@
 // $topbar-menu-link-transform: uppercase;
 // $topbar-menu-link-font-size: emCalc(13px);
 // $topbar-menu-link-weight: bold;
- $topbar-menu-link-color: #fcfcfd;
- $topbar-menu-icon-color: #fcfcfd;
- $topbar-menu-link-color-toggled: #f0f2f5;
- $topbar-menu-icon-color-toggled: #f0f2f5;
+ $topbar-menu-link-color: #000;
+ $topbar-menu-icon-color: #000;
+ $topbar-menu-link-color-toggled: #000;
+ $topbar-menu-icon-color-toggled: #000;
 
 // Transitions and breakpoint styles
 // $topbar-transition-speed: 300ms;
