@@ -60,6 +60,21 @@
           <hr>
        </div>
   <% end %>
+
+<% if can? :manage, @approval %>
+<div class="row">
+  <div class="large-4 columns">
+    <div class="large-2 columns">
+  <%= link_to 'edit', edit_approval_path(@approval), :class=>"tiny button secondary" %> 
+  </div>
+  <div class="large-2 columns">
+   <%= button_to 'delete', @approval, method: :delete, :class=>"tiny button secondary" %> 
+  </div>
+  </div>
+</div>
+<% end %>
+
+
   </div>
 </div>
 <% if can? :manage, @approval %>
