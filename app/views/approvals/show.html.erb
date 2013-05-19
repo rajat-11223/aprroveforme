@@ -77,11 +77,4 @@
 
   </div>
 </div>
-<% if can? :manage, @approval %>
-<div class="row">
-  <div class="large-12 columns">
-   Since you are the creator of this approval, you can <%= link_to 'edit', edit_approval_path(@approval) %> it or 
-   <%= button_to 'delete', @approval, method: :delete %> it altogether.
-  </div>
-</div>
-<% end %>
+
