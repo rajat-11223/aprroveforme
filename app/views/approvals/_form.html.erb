@@ -1,14 +1,10 @@
 <%= form_for @approval do |f| %>
 
-<!-- Error notifications -->
-<% if @approval.errors.any? %>
-	<div class="alert-box alert">     
-	  <% @approval.errors.full_messages.each do |msg| %>
-	    <li><%= msg %></li>
-	  <% end %>
-	 
-	</div>
-<% end %>
+<div class="alert-box alert"> 
+<%= f.error_messages %>
+</div>
+
+
 
 <div class="row">
 		<div class="large-8 large-offset-2 item-approval-form end columns">
