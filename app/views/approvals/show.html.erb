@@ -1,80 +1,110 @@
-<div class="row">
-  <div class="large-12 columns">
-    <h3><%= @approval.title %></h3>
-    <h5 class="subheader"><%= @approval.description %></h5>
-    <!-- if you're an approver, show option to approve -->
-    <% if approver = @approval.approvers.where("email =?", current_user.email).first %>
-      <div data-alert class="alert-box secondary">
-        <%= render "response", :approver => approver %>
-      </div>
-    <% end %>
+<!-- approval title -->
+  <div class="row">
+    <div class="large-12 columns">
+      <p class="page-title"><%= @approval.title %></p>
+      <p class="approval-description"><%= @approval.description %></p>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <% unless @approval.embed == ("undefined" || nil )  %>
-  <div class="large-8 columns hide-for-small">
-    <iframe src="<%= @approval.embed %>" style="width:600px; height:600px;" frameborder="0"></iframe>
-  </div>
-  <div class="large-4 small-12 columns">
-  <% else %>
-  <div class="large-12 small-12 columns">
-  <% end %>
-  <p><b>Deadline:</b> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %> </p>
-  <b>Approval Progress:</b>
-      <div class="progress secondary"><span class="meter" style="width: <%= percentage_complete(@approval) %>"></span></div>
-  <%= link_to "Open file", @approval.link, :target=>"_blank", :class=>"button"%>
-  </br>
-
-  </br>
-  <h3>Approvers</h3>
-    <hr>
-    <% @approval.approvers.each do |approver| %>
-      <div class="row">
-         <div class="large-3 small-3 columns">
-            <%= image_tag image_url(approver.email), :size => "100x10" %>
-         </div>
-         <div class="large-4 small-4 columns">
-            <strong><%= approver.name %></strong> 
-         </div>
-         <div class="large-5 small-5 columns">
-            <small>
-              <% if approver.status == ("" || "Pending") %> 
-                Approval <%= approver.required.downcase %> 
-              <% else %> 
-                <%= approver.status %>
-              <% end %>
-            </small>
-         </div>
-         <div class="large-9 small-9 columns">
-            <small>
-              <% if approver.comments && approver.comments == "" %>
-              <b>Comments:</b> N/A
-              <% elsif approver.comments %>
-              <b>Comments: </b><%= approver.comments %>
-              <% end %>
-            </small>
-         </div>
-       </div>
-       <div class="row">
-          <hr>
-       </div>
-  <% end %>
-
-<% if can? :manage, @approval %>
-<div class="row">
-  <div class="large-4 columns">
-    <div class="large-2 columns">
-  <%= link_to 'edit', edit_approval_path(@approval), :class=>"tiny button secondary" %> 
-  </div>
-  <div class="large-2 columns">
-   <%= button_to 'delete', @approval, method: :delete, :class=>"tiny button secondary" %> 
-  </div>
-  </div>
-</div>
+<!-- if you have been asked to approve, show alert (code separated out in view/approvals/_response) -->
+<% if approver = @approval.approvers.where("email =?", current_user.email).first %>
+  <%= render "response", :approver => approver %>
 <% end %>
 
 
-  </div>
-</div>
+<!--- START CONTENT -->
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="row">
+        <div class="large-8 small-2 hide-for-small columns hide-for-">
+          <% unless @approval.embed == ("undefined" || nil )  %>
+            <iframe src="<%= @approval.embed %>" style="width:600px; height:600px;" frameborder="0"></iframe>
+          <% else %>
+            <img src="http://placehold.it/600x600"> <!--- PLACEHOLDER IF SOMETHING IS NOT EMBEDDABLE -->
+          <% end %>
+        </div>
+        
+        <!--- START RIGHT COLUMN -->
+        <div class="large-4 small-12 columns">
+          <div class="row">
+            <div class="large-12 item-approval-info columns">
+              <!--- START DOCUMENT INFO -->
+              <p class="approval-details"><strong>Created by:</strong> <%= User.find(@approval.owner).name %><br /></p>
+              <p class="approval-details"><strong>Deadline:</strong> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %></p>
+              <p class="approval-details"><strong>Progress:</strong> <%= ratio_complete(@approval) %> responses</p>
+              <div class="progress"><span class="meter" style="width:<%= percentage_complete(@approval) %>;"></span></div><br />
+              <a href="#" role="button" class="button primary" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Respond</a>
+              <%= link_to "Open File", @approval.link, :target=>"_blank", :class=>"button secondary"%>
+              <!--- END DOCUMENT INFO -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="large-4 small-3 columns"><hr></div>
+            <div class="large-4 small-6 columns">
+              <p class="text-divider">APPROVERS</p>
+            </div>
+            <div class="large-4 small-3 columns"><hr></div>
+          </div>
+          <!--- START APPROVERS -->
+          <div class="row">
+            <div class="large-12 item-approval-info columns">
+
+              <!--- APPROVER REPEAT -->
+              <% @approval.approvers.each do |approver| %>
+              <div class="row">
+                <div class="large-3 small-3 columns"><%= image_tag image_url(approver.email), :class=>"approvers-pic" %></div>
+                <div class="large-9 small-9 columns">
+                  <div class="row">
+                    <div class="large-7 small-7 columns">
+                      <p class="approver-name"><%= approver.name %></p>
+                    </div>
+                    <div class="large-5 small-5 columns">
+                      <% if approver.status == "Approved" %>
+                      <p class="approval-details approved">Approved</p> <!--- APPROVED -->
+                      <% elsif approver.status == "Declined" %>
+                      <p class="approval-details declined">Declined</p> <!--- DECLINED -->
+                      <% else %>
+                      <p class="approval-details">No Response</p> <!--- NO RESPONSE -->
+                      <% end %>
+                      
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <p class="approval-details">
+                        <% if approver.comments && approver.comments != "" %>
+                        <%= approver.comments %>
+                        <% else approver.comments %>
+                        No comments
+                        <% end %>
+                     </p>
+                    </div>
+                  </div>
+                </div>
+              </div><br />
+              <% end %>
+
+             
+            </div>
+          </div><br />
+          <!--- END APPROVERS -->
+          
+          <!--- START EDIT / DELETE BUTTON -->
+          <% if can? :manage, @approval %>
+          <div class="row">
+            <div class="large-12 columns">
+              <%= link_to 'edit', edit_approval_path(@approval), :class=>"small button secondary" %> 
+              <%= button_to 'delete', @approval, method: :delete, :class=>"small button secondary" %> 
+            </div>
+          </div>
+           <% end %>
+          <!--- END EDIT / DELETE BUTTON -->
+        </div>
+        <!--- END RIGHT COLUMN -->
+      </div>
+    </div>
+  </div><br />
+  <!--- END CONTENT -->
+
+
 

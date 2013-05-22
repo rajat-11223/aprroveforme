@@ -1,13 +1,52 @@
 
 <% if approver.status == "Approved" %>
-  <p class="alert-style">You have already approved this document.
-  <a href="#" role="button" class="button success" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a></p>
+
+<div class="row">
+    <div class="large-10 large-offset-1 end columns">
+      <div class="row item action-past">
+        <div class="large-1 small-2 columns">
+          <p class="center"><img src="/assets/approved.png"></p>
+        </div>
+        <div class="large-11 small-10 columns">
+          <p class="title-approval-alert">You have approved this. <a href="#" role="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a>.</p><br />
+        </div>
+      </div>
+    </div>
+  </div><br />
+
+  
 <% elsif approver.status == "Declined" %>
-  <p class="alert-style">You have already declined this document. 
-  <a href="#" role="button" class="button success" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a></p>
+
+<div class="row">
+    <div class="large-10 large-offset-1 end columns">
+      <div class="row item action-past">
+        <div class="large-1 small-2 columns">
+          <p class="center"><img src="/assets/declined.png"></p>
+        </div>
+        <div class="large-11 small-10 columns">
+          <p class="title-approval-alert">You have declined this. <a href="#" role="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a>.</p><br />
+        </div>
+      </div>
+    </div>
+  </div><br />
+
 <% else %>
-  <p class="alert-style"><%= User.find(approver.approval.owner).name %> has asked for your approval of "<%= approver.approval.title %>."
-  <a href="#" role="button" class="button success" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Click here to respond</a></p>
+
+
+<div class="row">
+    <div class="large-10 large-offset-1 end columns">
+      <div class="row item action">
+        <div class="large-1 small-2 columns">
+          <p class="center"><img src="/assets/action.png"></p>
+        </div>
+        <div class="large-11 small-10 columns">
+          <p class="title-approval-alert"><%= User.find(approver.approval.owner).name %> has requested your approval. <a href="#" role="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Click here to respond</a>.</p><br />
+        </div>
+      </div>
+    </div>
+  </div><br />
+
+
 <% end %>
 
 
@@ -30,7 +69,8 @@
     <div class="row">
       <%= f.button :submit, :class => "button success large-2 columns", :name => "approval[approver][status]", :value => "Approved" %>
       <%= f.button :submit, :class => "button alert large-2 columns", :name => "approval[approver][status]", :value => "Declined" %>
-      <button class="button secondary large-2 columns" data-dismiss="modal" aria-hidden="true">Cancel</button>
+     
+      
     </div>
  
   <% end %>

@@ -1,32 +1,24 @@
-<div class="top-border"></div>
-<nav class="top-bar">
-  <ul class="title-area">
-    <li class="name">
-      <h1><a href="<%= root_url %>"><%= image_tag "logo.png", :style=>"padding-top:10px;" %></a></h1>
-    </li>
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-  </ul>
-  <section class="top-bar-section">
-    <% if user_signed_in? %>
-    <ul class="left"><!---
-      <li class="divider"></li>
-      <li><%= link_to "New Approval", new_approval_path %></li>
-      <li class="divider"></li>-->
-    </ul>
-    <% end %>
-    <ul class="right">
-      <li class="divider hide-for-small"></li>
-      <% if user_signed_in? %>
-      <li><a href="https://docs.google.com/forms/d/1nW9f_sYa6ndNxXc-c9M8FtbUGiA4K1fUi4ohYkM9BHE/viewform" target="_blank">Feedback</a></li>
-      <li class="divider"></li>
-      <li><%= link_to 'Logout', signout_path %></li>
-      <% else %>
-        <li><%= link_to 'Login or Signup', signin_path %></li>
-      <% end %>
-      <li class="divider show-for-small"></li>
-      <% if user_signed_in? and current_user.has_role? :admin %>
-        <li><%= link_to 'Admin', users_path %></li>
-      <% end %>
-    </ul>
-  </section>
-</nav>
+<!--- START NAVIGATION -->
+  <div class="top">
+    <div class="row">
+      <div class="large-6 small-12 columns">
+        <p class="logo"><%= link_to (image_tag "logo.png"), root_url %></a></p>
+      </div>
+      <div class="large-6 small-12 columns">
+        <ul class="inline-list right">
+
+               <% if user_signed_in? %>
+               <li><%= link_to 'Logout', signout_path, :class=>"login" %></li>
+                 <% if current_user.has_role? :admin %>
+                  <li><%= link_to 'Admin', users_path %></li>
+                 <% end %>
+               <% else %>
+                  <li><%= link_to 'Login or Signup', signin_path, :class=>"login" %></li>
+               <% end %>
+
+               <li><a href="">Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--- END NAVIGATION -->

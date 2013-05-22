@@ -17,9 +17,9 @@ class Approval < ActiveRecord::Base
     def deadline_in_words
       string = distance_of_time_in_words_to_now(self.deadline).humanize
       if self.deadline > Time.now
-        string << " remaining. "
+        string << " remaining"
       else
-        string << " ago. "
+        string << " ago"
       end
     end
 

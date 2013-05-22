@@ -1,167 +1,199 @@
-<!-- new approval button -->
-<div class="row">
-  <div class="large-12 columns">
-    	<h1 class="hero-tagline">Let's get started!</h1>
-    	<h4 class="center">Don't worry, it's a lot easier than chasing everyone around.</h3>
-      <p class="center">
-    	 <%= link_to "Create New Approval", new_approval_path, :style=>"font-size:20px;", :class => "button" %>
-      </p>
-  </div>
-</div>
 
-<div class="row">
-<hr>
-</div>
+<!--- START GET STARTED -->
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row item-top">
+        <p class="get-started"><strong>Let's get started!</strong> Don't worry, it's a lot easier than chasing everyone around.</p>
+        <%= link_to "Create New Approval", new_approval_path, :class => "button primary create" %>
+      </div>
+    </div>
+  </div><br />
+  <!--- END GET STARTED -->
 
-<!-- show pending approvals waiting for you -->
+
+
+  <!--- BEGIN ACTION ALERT -->
 <% if @pending_approvals.count > 0 %>
-<div class="row">
-  <div class="large-12 columns">
-    <h3 class="text-center">Approvals Requested</h3>
-  </div>
-</div>
-   <% @pending_approvals.each do |approver| %>
-   <div class="row">
-      <div class="large-8 large-offset-2 columns">
-        <%= link_to (image_tag image_url(User.find(approver.approval.owner).email), :size => "60x60"),  approval_path(approver.approval), :class=>"pending" %>
-        <div class="pending-text">
-          <%= User.find(approver.approval.owner).name %> asked for your approval of
-          "<strong><%= link_to approver.approval.title, approver.approval %></strong>."<br />
-          <small><%= approver.to_s %></small>
+  <% @pending_approvals.each do |approver| %>
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row item action">
+        <div class="large-1 small-2 columns">
+          <img src="/assets/action.png">
+        </div>
+        <div class="large-11 small-10 columns">
+          <p class="details"><%= User.find(approver.approval.owner).name %> requested your approval. You have <strong><%= approver.approval.deadline_in_words %></strong> to respond.</p>
+          <p class="title"><%= link_to approver.approval.title, approver.approval %></p><br />
         </div>
       </div>
-   </div>
- </br>
-   <% end %>
-
-<div class="row">
-<hr>
-</div>
-
-<% end %>
-<!-- end pending approvals waiting for you -->
-
-
-<!-- show the approvals you've sent out -->
-<% if @my_approvals.count > 0 %></br>
-<div class="row">
-  <div class="large-12">
-    <h3 class="text-center">Open Approvals</h3></br>
-  </div>
-</div>
-<% @my_approvals.each do |approval| %>
-<div class="row">
-    <div class="large-5 small-6 columns">        
-        <p class="small-title"><%= link_to approval.title, approval %></p>
-        <p class="deadline"><%= approval.deadline_in_words %></p>
     </div>
-    <div class="large-7 small-6 columns"> 
-        <div class="progress secondary"><span class="meter" style="width: <%= percentage_complete(approval) %>"></span></div>
-        <p class="deadline"><%= percentage_complete(approval) %> complete</p>
-    </div> 
-</div>  
+  </div><br />
+  <% end %>
 <% end %>
-<div class="row">
-<hr>
-</div>
-<% end %>
+  <!--- BEGIN ACTION ALERT -->
 
-<!-- list expired approvals -->
-<% if (@my_completed_approvals.count > 0) or (@signedoff_approvals.count > 0 )  %>
-<div class="row">
-  <h3 class="text-center">History</h3></br>
-</div>
-<div class="row">
-  <div class="large-6 columns">
-    <!-- my expired approvals -->
-    <h5>My Past Documents</h5>
-    <% if @my_completed_approvals.count > 0 %>
-     <% @my_completed_approvals.each do |approval| %>
-       <p class="list">
-        <%= link_to approval.title, approval %>
-       </p>
-     <% end %>
-    <% else %>
-    You don't have any previous approvals. <%= link_to "Create new approval", new_approval_path %>.
-    <% end %>
- </div>
 
- <div class="large-6 columns">
-    <h5>My Past Approvals</h5>
-    <!-- approvals i've signed off on -->
-    <% if @signedoff_approvals.count > 0 %>
-      <% @signedoff_approvals.each do |approver| %>
-      <p class="list">
-        <%= link_to approver.approval.title, approver.approval %>
-        <br />
-      </p>
-      <% end %>
-    <% else %>
-      You haven't signed off on any approvals yet. 
-    <% end %>
+ <!--- BEGIN OPEN APPROVAL SECTION -->
+<% if @my_approvals.count > 0 %>
+<div class="row">
+    <div class="large-3 small-2 large-offset-2 columns"><hr></div>
+    <div class="large-2 small-8 columns">
+      <p class="text-divider">OPEN APPROVALS</p>
+    </div>
+    <div class="large-3 small-2 end columns"><hr></div>
   </div>
-</div>
+  
+  <!--- BEGIN OPEN APPROVAL -->
+  <% @my_approvals.each do |approval| %>
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row item">
+        <div class="large-1 small-2 columns">
+          <img src="/assets/open.png">
+        </div>
+        <div class="large-8 small-10 columns">
+          <p class="title"><%= link_to approval.title, approval %></p>
+          <p class="details">Deadline: <%= approval.deadline.to_date  %>, <strong><%= approval.deadline_in_words %></strong>.</p>
+          
+        </div>
+        <div class="large-3 columns">
+          <div class="progress"><span class="meter" style="width:<%= percentage_complete(approval) %>;"></span></div>
+          <p class="progress-details"><%= ratio_complete(approval) %> responses</p>
+        </div>
+      </div>
+    </div>
+  </div><br />
+  <% end %>
 <% end %>
+  <!--- END OPEN APPROVAL -->
+
+
+<!--- BEGIN PAST DOCUMENTS SECTION -->
+<% if @my_completed_approvals.count > 0 %>
+<div class="row">
+    <div class="large-3 large-offset-2 small-2 columns"><hr></div>
+    <div class="large-2 small-8 columns">
+      <p class="text-divider">PAST DOCUMENTS</p>
+    </div>
+    <div class="large-3 small-2 end columns"><hr></div>
+  </div>
+  
+  <!--- BEGIN PAST DOCUMENTS -->
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row item">
+        <div class="large-1 small-2 columns">
+          <p class="status-past">
+            <% if percentage_complete(approval) == "100%" %> <!--- SHOW /DECLINED.PNG IF DOCUMENT DECLINED -->
+            <img src="/assets/approved.png"></p> 
+            <% else %>
+            <img src="/assets/declined.png"></p>
+            <% end %>
+        </div>
+        <div class="large-11 small-10 columns">
+          <p class="title"><%= link_to approval.title, approval %></p>
+          <p class="description"><i><%= approval.description %></i></p>
+          <p class="details">Deadline: <%= approval.deadline.to_date  %>, <%= approval.deadline_in_words %>.</p>
+        </div>
+      </div>
+    </div>
+  </div><br />
+<% end %>
+  <!--- END PAST DOCUMENTS -->
+
+<!--- BEGIN PAST APPROVALS SECTION -->
+<% if @signedoff_approvals.count > 0 %>
+<div class="row">
+    <div class="large-3 small-2 large-offset-2 columns"><hr></div>
+    <div class="large-2 small-8 columns">
+      <p class="text-divider">PAST APPROVALS</p>
+    </div>
+    <div class="large-3 small-2 end columns"><hr></div>
+  </div>
+  
+  <!--- BEGIN PAST APPROVALS -->
+  <% @signedoff_approvals.each do |approver| %>
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row item">
+        <div class="large-1 small-2 columns">
+          <p class="status-past">
+            <% if approver.status == "Approved" %> <!--- SHOW /DECLINED.PNG IF CURRENT_USER DECLINED -->
+            <img src="/assets/approved.png"></p> 
+            <% else %>
+            <img src="/assets/declined.png"></p>
+            <% end %>
+        </div>
+        <div class="large-11 small-10 columns">
+          <p class="title"><%= link_to approver.approval.title, approver.approval %></p>
+          <p class="description"><i><%= approver.approval.description %></i></p>
+          <p class="details">Created by <%= image_tag image_url(User.find(approver.approval.owner).email), :class=>"pic-details" %> <%= User.find(approver.approval.owner).name %>. Deadline: <%= approver.approval.deadline.to_date  %>, <%= approver.approval.deadline_in_words %>. </p>
+        </div>
+      </div>
+    </div>
+  </div><br />
+  <% end %>
+<% end %>
+  <!--- END PAST APPROVALS -->
+
+
 
 <!-- if you don't have any incoming or outgoing approvals, show some first run text. -->
 <% if @any_approvers.count == 0 and @any_approvals.count==0 %>
 
-<div class="row">
-    <div class="large-4 small-12 large-offset-1 columns">
-      <h4>How it works</h4>
+<!--- BEGIN THE NEW USER TOUR -->
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row">
+        <div class="large-4 small-4 columns">
+          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+        </div>
+        <div class="large-8 small-8 columns">
+          <p class="tour-title">1. Create your approval</p>
+          <p class="tour-description">It's easy! Just give it a title, deadline and a list of people who need to approve. If you like, you can include a longer description too.</p>
+        </div>
+      </div>
     </div>
-</div>
-<div class="row">
-  <div class="large-4 small-4 large-offset-1 columns">
-    <%= image_tag "create-approval.png", :class=>"intro_image" %>
-  </div>
-  <div class="large-6 small-8 end columns">
-    <p class="tour-title hide-for-small">1. Create your approval</p>
-    <p class="">It's easy! Just give it a title, deadline and a list of people who need to approve. If you like, you can include a longer description too. </p>
-  </div>
-</div>
-<div class="row">
-  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
-</div>
-<div class="row">
-  <div class="large-6 small-8 large-offset-1  columns">
-    <p class="tour-title hide-for-small">2. Add your document</p>
-    <p class="">Select your document from Google Drive. Don't worry, if it's not already there, you'll be able to quickly upload it and we'll automatically set the permissions. You can give approvers write access too if you'd like them to be able to edit the file.</p>
-  </div>
-  <div class="large-4 small-4 end columns">
-    <%= image_tag "select-document.png", :class=>"intro_image" %>
-  </div>
-</div>
-<div class="row">
-  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
-</div>
-<div class="row">
-  <div class="large-4 small-4 large-offset-1 columns">
-    <%= image_tag "approval-popup.png", :class=>"intro_image" %>
-  </div>
-  <div class="large-6 small-8 end columns">
-    <p class="tour-title hide-for-small">3. Approvers notified and provide feedback</p>
-    <p class="">Each approver will receive an email asking them to approve your document. When they click through, they'll be able to open up the doc, add any comments and click "approve" or "decline."</p>
-  </div>
-</div>
-<div class="row">
-  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
-</div>
-<div class="row">
-  <div class="large-6 small-8 large-offset-1  columns">
-    <p class="tour-title hide-for-small">4. Everything in one place</p>
-    <p class="">See status of each approval, comments, and more in the summary page. No more having to piece together multiple emails.</p>
-  </div>
-  <div class="large-4 small-4 end columns">
-    <%= image_tag "dashboard.png", :class=>"intro_image" %>
-  </div>
-</div>
-<div class="row">
-  <div class="large-5 large-offset-3 small-5 small-offset-3 columns centered end"><hr></div>
-</div>
-<div class="row">
-  <div class="large-12 columns">
-    <p>Isn't it easy? Start saving time and stop chasing people around and <%= link_to "create your first approval", new_approval_path %> now. It just takes a few minutes. Have have you got to lose?</p>
-  </div>
-</div>
+  </div><br />
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row">
+        <div class="large-8 small-8 columns">
+          <p class="tour-title">2. Add your document</p>
+          <p class="tour-description">Select your document from Google Drive. Don't worry, if it's not already there, you'll be able to quickly upload it and we'll automatically set the permissions. You can give approvers write access too if you'd like them to be able to edit the file.</p>
+        </div>
+        <div class="large-4 small-4 columns">
+          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+        </div>
+      </div>
+    </div>
+  </div><br />
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row">
+        <div class="large-4 small-4 columns">
+          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+        </div>
+        <div class="large-8 small-8 columns">
+          <p class="tour-title">3. Approvers notified and provide feedback</p>
+          <p class="tour-description">Each approver will receive an email asking them to approve your document. When they click through, they'll be able to open up the doc, add any comments and click "approve" or "decline."</p>
+        </div>
+      </div>
+    </div>
+  </div><br />
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row">
+        <div class="large-8 small-8 columns">
+          <p class="tour-title">4. Everything in one place</p>
+          <p class="tour-description">See status of each approval, comments, and more in the summary page. No more having to piece together multiple emails.</p>
+        </div>
+        <div class="large-4 small-4 columns">
+          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+        </div>
+      </div>
+    </div>
+  </div><br />
+  <!--- END THE NEW USER TOUR -->
+
 <% end %>
