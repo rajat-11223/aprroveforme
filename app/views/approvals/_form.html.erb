@@ -1,96 +1,95 @@
+<%= form_for @approval do |f| %>
+
+<!-- Error notifications -->
+<% if @approval.errors.any? %>
+	<div class="alert-box alert">     
+	  <% @approval.errors.full_messages.each do |msg| %>
+	    <li><%= msg %></li>
+	  <% end %>
+	 
+	</div>
+<% end %>
+
 <div class="row">
-  <div class="large-12 columns">
-    <%= simple_form_for(@approval, :html => { :class => 'form-inline' }) do |f| %>
-    <%= f.error_notification %>
-    <%= f.input :title, :placeholder => "Give it a title", :input_html => { :class=>"large-9 small-8 columns end" } %> 
-
-    <div class="row">
-      <%= f.label :link, :label => "Select file" %>
-      
-      <%  if @approval.link_title %>
-      <div class="large-3 columns">
-        <div id="result"><%= link_to @approval.link_title, @approval.link %></div> 
-      </div>
-      <div class="large-7 small-8 columns">
-        <a onclick="createPicker()" class="button small" style="float: right;">Change File</a>
-      </div>
-      
-      <% else %>
-      <a onclick="createPicker()" class="button primary large-4 small-8 columns">Select File from Google Drive</a>
-      <div id="result">
-      </div>
-      <div class="large-5 columns end">
-      <small><input id="perms" name="perms" value="writer" type="checkbox">  *Grant approvers edit permissions to this document. If left unchecked, approvers will still be able to read the doc.</small> 
-      </div>
-      <% end %>
-    </div>
-
-    <% if @approval.errors[:link].any? %>
-    <div class="row">
-      <%= f.error :link, :class=>"large-2 large-offset-2 columns alert-box alert", :style=>"float: left;"  %> 
-    </div>
-    <% end %>
-
-    <br />
-      
-    <%= f.input :description, :placeholder => "What kind of feedback are you looking for?", :input_html => { :class => "large-9 columns end", :rows => "3" } %>
-
-    <br />     
-
-
-    <%= f.input :deadline, :required => true, :placeholder =>"MM/DD/YYYY",
-            :input_html => { 
-            :id => "datepicker", 
-            :class=>"large-9 small-9 columns end",
-            :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline)}, 
-            :as => :string
-          
-    %>
-
-
-      </br>
-      <h6 class="subheader">
-      <abbr title="required">*</abbr> Who will be signing off on this approval?</br>
-      </h6>
-      <% if @approval.errors[:approvers].any? %>
-      <div class="row">
-      <%= f.error :approvers, :class=>"alert-box alert" %>
-      </div>
-      <% end %>
-      <table>
-        <tr>
-          <td>Name</td><td>Email Address</td><td>Required?</td>
-        </tr>
-      <%= f.simple_fields_for :approvers do |builder| %>
-        <%= render 'approver_form', :f => builder %> 
-      <% end %>
-
-
-      <!-- leave the tr add row for adding new approvers -->
-      <tr class="add">
-      </tr>
-      <!-- end extra tr -->
-
-      </table>
-  
-      <p>
-      
-      <%= button_to_add_fields('Add Approver', f, :approvers, )%>
-      
-      </p>
-      </br>
-      <%= f.button :submit, :class => "button" %>  
-      <% if f.object.new_record? %>
-      <%= link_to 'Cancel', root_url, :class=>"button secondary" %>
-      <% else %>
-      <%= link_to 'Back', @approval, :class=>"button " %>
-      <% end %>
- 
+		<div class="large-8 large-offset-2 item-approval-form end columns">
+			<div class="row">
+				<div class="large-2 small-3 columns">
+					<p class="form-label">Title*</p>
+				</div>
+				<div class="large-10 small-9 columns">
+					<%= f.text_field :title, :placeholder => "Approval Title" %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-2 small-3 columns">
+					<p class="form-label">Description</p>
+				</div>
+				<div class="large-10 small-9 columns">
+					<%= f.text_field :description, :placeholder => "What type of feedback do you want?" %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-2 small-3 columns">
+					<p class="form-label">Deadline*</p>
+				</div>
+				<div class="large-10 small-9 columns">
+					<%= f.text_field :deadline, :placeholder=>"MM/DD/YYYY", :id=>"datepicker", :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline), :as => :string %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-2 small-3 columns">
+					<p class="form-label">File*</p>
+				</div>
+				<div class="large-3 small-4 columns">
+					<a onclick="createPicker()" class="button primary" style="width:100%;">Select File</a>
+				</div>
+				<div class="large-7 small-5 columns">
+					<p class="form-file-name"><div id="result"><%=  (link_to @approval.link_title, @approval.link ) if @approval.link_title %></div></p>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-2 small-12 columns">
+					<label for="perms"><input id="perms" name="perms" value="writer" type="checkbox"> Grant approvers permissions to edit this document.</label> 
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-2 hide-for-small columns">
+					<p class="form-label">Approvers*</p>
+				</div>
+				<div class="large-10 small-12 columns">
+					<div class="row show-for-small">
+						<div class="small-12 columns">
+							<p class="form-label">Approvers*</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="large-3 small-3 columns"><p class="form-label-approvers">Name</p></div>
+						<div class="large-6 small-6 columns"><p class="form-label-approvers">Email Address</p></div>
+						<div class="large-3 small-3 columns"><p class="form-label-approvers">Type</p></div>
+					</div>
+					<%= f.fields_for :approvers do |builder| %>
+				        <%= render 'approver_form', :f => builder %> 
+				      <% end %>
+				      <div class="add">
+      				  </div>
+					<div class="row">
+						<div class="large-12 columns">
+      						<%= button_to_add_fields('Add Another Approver', f, :approvers ) %>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-2  columns">
+					<%= f.submit "Submit Approval", :class => "button primary" %>  
+				</div>
+			</div>
+		</div>
+	</div><br />
 
 
 <% end %>
-</div>
-</div>
 
 
  <!-- The standard Google Loader script. -->
@@ -137,6 +136,7 @@
       message = message + "<input id=\"approval_link_title\" name=\"approval[link_title]\" type=\"hidden\" value=\"" + title + "\">";
       message = message + "<input id=\"approval_link_id\" name=\"approval[link_id]\" type=\"hidden\" value=\"" + id + "\">";
       message = message + "<input id=\"approval_link_type\" name=\"approval[link_type]\" type=\"hidden\" value=\"" + type + "\">";
+      
       message = message + title
       document.getElementById('result').innerHTML = message;
     }
@@ -150,7 +150,7 @@ function add_fields(link, association, content) {
   var new_id = new Date().getTime();
   var regexp = new RegExp("new_" + association, "g");
   //document.body.insertBefore(content.replace(regexp, new_id), $('div#insert'));
-  $("tr.add").before(content.replace(regexp, new_id));
+  $("div.add").before(content.replace(regexp, new_id));
   //$(link).before(content.replace(regexp, new_id));
 }
 
