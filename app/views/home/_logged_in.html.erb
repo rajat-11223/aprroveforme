@@ -79,6 +79,7 @@
   </div>
   
   <!--- BEGIN PAST DOCUMENTS -->
+  <% @my_completed_approvals.each do |approval| %>
   <div class="row">
     <div class="large-8 large-offset-2 end columns">
       <div class="row item">
@@ -98,6 +99,7 @@
       </div>
     </div>
   </div><br />
+  <% end %>
 <% end %>
   <!--- END PAST DOCUMENTS -->
 
@@ -139,7 +141,7 @@
 
 
 <!-- if you don't have any incoming or outgoing approvals, show some first run text. -->
-<% if @any_approvers.count == 0 and @any_approvals.count==0 %>
+<% if @any_approvals.count==0 %>
 
 <!--- BEGIN THE NEW USER TOUR -->
   <div class="row">
