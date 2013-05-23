@@ -1,7 +1,12 @@
 <%= form_for @approval do |f| %>
 
-<%= f.error_messages %>
-
+<div class="row">
+	<div class="large-8 large-offset-2 item-approval-form end columns">
+		<%= f.error_messages :header_message => "Invalid approval.",
+		  :message => "You'll need to fix the following fields:",
+		  :header_tag => :h5 %>
+	</div>
+</div>
 
 
 <div class="row">
