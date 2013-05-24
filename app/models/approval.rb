@@ -2,7 +2,10 @@ class Approval < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
   attr_accessible :deadline, :description, :link, :title, :approvers_attributes, :embed, :link_title, :link_id, :link_type
   has_many :approvers, :dependent => :destroy
-  validates :title, :link, :deadline, :presence => true
+  validates :title, :deadline, :presence => true
+  validate do |approval|
+    approval.errors[:link] << "Please select a file or upload a new one." if approval.link.blank?
+  end
   validates :deadline, :format => { :with => /\d{2}\/\d{2}\/\d{4}/,
     :message => "The date must be in the format MM/DD/YYYY and must be a date in the future." }, :unless => Proc.new { |a| (a.deadline && (a.deadline.to_date > Date.today)) }
   accepts_nested_attributes_for :approvers, :reject_if => proc { |attributes| attributes['name'].blank? or attributes['email'].blank?}, :allow_destroy => true
