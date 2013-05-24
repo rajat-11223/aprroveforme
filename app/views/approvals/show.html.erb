@@ -17,8 +17,10 @@
     <div class="large-12 columns">
       <div class="row">
         <div class="large-8 small-2 hide-for-small columns hide-for-">
-          <% unless @approval.embed == ("undefined" || nil )  %>
+          <% if @approval.embed != ("undefined" || nil )  %>
             <iframe src="<%= @approval.embed %>" style="width:600px; height:600px;" frameborder="0"></iframe>
+          <% elsif @approval.link_type == "photo"  %>
+            <%= image_tag "https://drive.google.com/uc?export=download&id=#{@approval.link_id}", :size => "600x600" %>
           <% else %>
             <img src="http://placehold.it/600x600"> <!--- PLACEHOLDER IF SOMETHING IS NOT EMBEDDABLE -->
           <% end %>
