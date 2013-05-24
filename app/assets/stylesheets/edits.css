@@ -188,6 +188,11 @@ p {
     color: #F4F4F4;
     margin-top: 15px;
 }
+.text-footer, .text-footer a, .text-footer a:hover {
+    font-size: 12px;
+    color: #fff;
+    font-weight: normal;
+}
 
 /* Approval Page */
 .item-approval-info {
@@ -281,4 +286,25 @@ label {
     font-size: 15px;
     color: #595959;
     margin-bottom: 0px;
+}
+
+/* Homepage */
+.homepage-hero {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+.homepage-description {
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 140%;
+}
+.sub-title {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #595959;
+}
+.sub-description {
+    font-size: 15px;
+    color: #595959;
+    line-height: 130%;
 }
