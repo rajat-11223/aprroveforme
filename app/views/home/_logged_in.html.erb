@@ -49,7 +49,11 @@
     <div class="large-8 large-offset-2 end columns">
       <div class="row item">
         <div class="large-1 small-2 columns">
-          <img src="/assets/open.png">
+          <% if percentage_complete(approval) == "100%" %> <!--- SHOW /DECLINED.PNG IF DOCUMENT DECLINED -->
+            <img src="/assets/approved.png">
+            <% else %>
+            <img src="/assets/open.png">
+            <% end %> 
         </div>
         <div class="large-8 small-10 columns">
           <p class="title"><%= link_to approval.title, approval %></p>
