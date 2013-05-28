@@ -80,7 +80,7 @@
       <p class="text-divider">PAST DOCUMENTS</p>
     </div>
     <div class="large-3 small-2 end columns"><hr></div>
-  </div>
+</div>
   
   <!--- BEGIN PAST DOCUMENTS -->
   <% @my_completed_approvals.each do |approval| %>
@@ -147,12 +147,20 @@
 <!-- if you don't have any incoming or outgoing approvals, show some first run text. -->
 <% if @any_approvals.count==0 %>
 
+<div class="row">
+    <div class="large-3 large-offset-2 small-2 columns"><hr></div>
+    <div class="large-2 small-8 columns">
+      <p class="text-divider">HOW IT WORKS</p>
+    </div>
+    <div class="large-3 small-2 end columns"><hr></div>
+</div>
+
 <!--- BEGIN THE NEW USER TOUR -->
   <div class="row">
     <div class="large-8 large-offset-2 end columns">
       <div class="row">
         <div class="large-4 small-4 columns">
-          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+          <%= image_tag "tour1.png", :class => "tour-pic" %>
         </div>
         <div class="large-8 small-8 columns">
           <p class="tour-title">1. Create your approval</p>
@@ -169,7 +177,7 @@
           <p class="tour-description">Select your document from Google Drive. Don't worry, if it's not already there, you'll be able to quickly upload it and we'll automatically set the permissions. You can give approvers write access too if you'd like them to be able to edit the file.</p>
         </div>
         <div class="large-4 small-4 columns">
-          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+          <%= image_tag "tour2.png", :class => "tour-pic" %>
         </div>
       </div>
     </div>
@@ -178,7 +186,7 @@
     <div class="large-8 large-offset-2 end columns">
       <div class="row">
         <div class="large-4 small-4 columns">
-          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+          <%= image_tag "tour3.png", :class => "tour-pic" %>
         </div>
         <div class="large-8 small-8 columns">
           <p class="tour-title">3. Approvers notified and provide feedback</p>
@@ -195,7 +203,7 @@
           <p class="tour-description">See status of each approval, comments, and more in the summary page. No more having to piece together multiple emails.</p>
         </div>
         <div class="large-4 small-4 columns">
-          <img src="http://placehold.it/200x200/ffffff/000000&text=tour" class="tour-pic">
+          <%= image_tag "tour4.png", :class => "tour-pic" %>
         </div>
       </div>
     </div>

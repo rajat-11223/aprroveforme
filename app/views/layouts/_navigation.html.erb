@@ -8,6 +8,7 @@
         <ul class="inline-list right">
 
                <% if user_signed_in? %>
+               <li><a href="https://docs.google.com/forms/d/1nW9f_sYa6ndNxXc-c9M8FtbUGiA4K1fUi4ohYkM9BHE/viewform">Feedback</a></li>
                <li><%= link_to 'Logout', signout_path, :class=>"login" %></li>
                  <% if current_user.has_role? :admin %>
                   <li><%= link_to 'Admin', users_path %></li>

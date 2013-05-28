@@ -22,7 +22,7 @@
           <% elsif @approval.link_type == "photo"  %>
             <%= image_tag "https://drive.google.com/uc?export=download&id=#{@approval.link_id}", :size => "600x600" %>
           <% else %>
-            <img src="http://placehold.it/600x600"> <!--- PLACEHOLDER IF SOMETHING IS NOT EMBEDDABLE -->
+            <%= link_to (image_tag "preview-not-available.png"), @approval.link, :target => "_blank"  %>
           <% end %>
         </div>
         
