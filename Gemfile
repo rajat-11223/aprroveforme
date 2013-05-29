@@ -32,3 +32,4 @@ gem "google-api-client"
 gem "workless"
 gem "httparty"
 gem "dynamic_form"
+gem 'daemons'

@@ -51,6 +51,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.1)
+    daemons (1.1.9)
     database_cleaner (0.9.1)
     debug_inspector (0.0.2)
     delayed_job (3.0.5)
@@ -222,6 +223,7 @@ DEPENDENCIES
   bootstrap-sass (>= 2.3.0.0)
   cancan (>= 1.6.8)
   coffee-rails (~> 3.2.1)
+  daemons
   database_cleaner (>= 0.9.1)
   delayed_job_active_record
   dynamic_form
