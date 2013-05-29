@@ -29,7 +29,7 @@ body a:hover {
     font-weight: 500;
     opacity: .8;
 }
-.button.primary:hover, .button.secondary:hover {
+.button.primary:hover, .button.secondary:hover, .button.approve:hover, .button.decline:hover {
     opacity: 1;
 }
 .text-divider {
@@ -240,6 +240,24 @@ p {
 }
 .approval-details.approved {
     color: green;
+}
+.button.approve {
+    background-color: #1ae659;
+    border: 0px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #000;
+    font-weight: 500;
+    opacity: .8;
+}
+.button.decline {
+    background-color: #e61a1a;
+    border: 0px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #000;
+    font-weight: 500;
+    opacity: .8;
 }
 
 /* Approval Form */
