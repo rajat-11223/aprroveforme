@@ -33,3 +33,4 @@ gem "workless"
 gem "httparty"
 gem "dynamic_form"
 gem 'daemons'
+gem 'newrelic_rpm'
