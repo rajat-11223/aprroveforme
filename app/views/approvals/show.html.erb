@@ -96,7 +96,7 @@
           <div class="row">
             <div class="large-12 columns">
               <%= link_to 'edit', edit_approval_path(@approval), :class=>"small button secondary" %> 
-              <%= button_to 'delete', @approval, method: :delete, :class=>"small button secondary" %> 
+              <%= button_to 'delete', @approval, method: :delete, :confirm => "Are you sure?", :class=>"destroy small button secondary" %> 
             </div>
           </div>
            <% end %>
@@ -108,5 +108,14 @@
   </div><br />
   <!--- END CONTENT -->
 
+<script type="text/javascript">
+  ;(function($){
+  $(function(){
+    $('input.destroy').click(function(){
+      return confirm($(this).attr('data-confirm'));
+    });
+  });
+})(jQuery);
+</script>
 
 
