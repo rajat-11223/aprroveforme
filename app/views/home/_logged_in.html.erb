@@ -145,7 +145,7 @@
 
 
 <!-- if you don't have any incoming or outgoing approvals, show some first run text. -->
-<% if @any_approvals.count==0 %>
+<% if @any_approvals.count < 4 %>
 
 <div class="row">
     <div class="large-3 large-offset-2 small-2 columns"><hr></div>
