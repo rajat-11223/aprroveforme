@@ -87,7 +87,7 @@ class ApprovalsController < ApplicationController
     
     # if an approver is approving
     if params[:approval][:approver]
-      @approver = @approval.approvers.where("email = ?", current_user.email).first
+      @approver = @approval.approvers.where("email = ? or email = ?", current_user.email, current_user.second_email).first
       @approver.status = params[:approval][:approver][:status]
       @approver.comments = params[:approval][:approver][:comments]
       @approver.save
