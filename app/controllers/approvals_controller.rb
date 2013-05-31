@@ -51,7 +51,11 @@ class ApprovalsController < ApplicationController
       @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
     end
 
-    @approval.approvers.each {|approver| @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader")} if @approval.link
+    @approval.approvers.each do |approver| 
+      @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader") if @approval.link
+      approver.generate_code
+    end
+
     
     respond_to do |format|
       if @approval.save
@@ -86,12 +90,19 @@ class ApprovalsController < ApplicationController
         params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
       end
 
-      @approval.approvers.each do |approver| 
-          @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader") 
-      end
+      
 
       respond_to do |format|
         if @approval.update_attributes(params[:approval])
+
+          # if any new approvers, add permissions and code
+          @approval.approvers.each do |approver| 
+            if approver.code == nil
+              @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader") 
+              approver.generate_code
+            end
+          end
+
           @approval.save
           format.html { redirect_to @approval, notice: 'Approval was successfully updated.' }
           format.json { head :no_content }
