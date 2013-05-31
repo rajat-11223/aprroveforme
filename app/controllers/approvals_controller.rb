@@ -17,6 +17,15 @@ class ApprovalsController < ApplicationController
   # GET /approvals/1.json
   def show
     @approval = Approval.find(params[:id])
+    @user = current_user
+
+    if params[:code]
+      approver = Approver.where("code = ?", params[:code]).first
+      if (approver.approval_id == @approval.id) and (@user.email != approver.email)
+        @user.set_second_email(approver.email)
+        @user.save
+      end
+    end
 
     respond_to do |format|
       format.html # show.html.erb

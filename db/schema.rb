@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130531030406) do
+ActiveRecord::Schema.define(:version => 20130531033434) do
 
   create_table "approvals", :force => true do |t|
     t.string   "title"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20130531030406) do
     t.string   "last_name"
     t.string   "refresh_token"
     t.string   "code"
+    t.string   "second_email"
   end
 
   create_table "users_roles", :id => false, :force => true do |t|

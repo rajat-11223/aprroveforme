@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   rolify
   attr_accessible :role_ids, :as => :admin
-  attr_accessible :provider, :uid, :name, :email, :picture, :token, :first_name, :last_name, :code
+  attr_accessible :provider, :uid, :name, :email, :picture, :token, :first_name, :last_name, :code, :second_email
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
       end
       UserMailer.delay.new_user(user.name, user.email)
     end
+  end
+
+  def set_second_email(email)
+    self.second_email = email
   end
 
   def google_auth 

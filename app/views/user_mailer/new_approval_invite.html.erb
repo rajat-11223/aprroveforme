@@ -438,7 +438,7 @@
                         Hi <%= @approver.name %>, <br><br>
 
 						<%= @owner_name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of 
-						<%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %>.<br><br>
+						<%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}&code=#{@approver.code}" %>.<br><br>
 
 						
 
@@ -457,7 +457,7 @@
                     <tbody>
                         <tr>
                             <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial;font-size: 16px;padding: 14px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                <a class="mcnButton " title="New" href="<%= "#{root_url}#{approval_path(@approval)}" %>" target="_self" style="font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #000000;word-wrap: break-word !important;">Review <%= @approval.title %></a>
+                                <a class="mcnButton " title="New" href="<%= "#{root_url}#{approval_path(@approval)}&code=#{@approver.code}" %>" target="_self" style="font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #000000;word-wrap: break-word !important;">Review <%= @approval.title %></a>
                             </td>
                         </tr>
                     </tbody>
