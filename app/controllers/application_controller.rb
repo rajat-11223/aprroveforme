@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
     end
 
     def authenticate_user!
+      if params["code"]
+       session[:code] = params["code"]
+      end
+
       if !current_user
         redirect_to root_url, :alert => 'You need to sign in for access to this page.'
       end

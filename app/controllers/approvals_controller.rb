@@ -19,12 +19,13 @@ class ApprovalsController < ApplicationController
     @approval = Approval.find(params[:id])
     @user = current_user
 
-    if params[:code]
-      approver = Approver.where("code = ?", params[:code]).first
+    if session[:code]
+      approver = Approver.where("code = ?", session[:code]).first
       if (approver.approval_id == @approval.id) and (@user.email != approver.email)
         @user.set_second_email(approver.email)
         @user.save
       end
+      session.delete(:code)
     end
 
     respond_to do |format|
