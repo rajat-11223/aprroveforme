@@ -1,6 +1,6 @@
 Hi <%= @owner.name %>, 
 
-<%= @approver.name %> has responded to  <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}" %> with <%= @approver.status %> and the following comments: "<%= @approver.comments %>"
+<%= @approver.name %> has responded to  <%= link_to @approval.title, approval_url(@approval) %> with <%= @approver.status %> and the following comments: "<%= @approver.comments %>"
 
 Sincerely,
 -The ApproveForMe Team

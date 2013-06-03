@@ -1,6 +1,6 @@
 Hi <%= @approver.name %>,
 
-<%= @owner_name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of <%= link_to @approval.title, "#{root_url}#{approval_path(@approval)}"  %>.
+<%= @owner_name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of <%= link_to @approval.title, "#{approval_url(@approval)}&?code=#{@approver.code}"  %>.
 
 You can read over the document, leave comments, and sign off at http://approveforme.com.
 
