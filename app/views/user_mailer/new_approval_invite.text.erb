@@ -2,9 +2,12 @@ Hi <%= @approver.name %>,
 
 <%= @owner_name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of <%= link_to @approval.title, "#{approval_url(@approval)}&?code=#{@approver.code}"  %>.
 
-You can read over the document, leave comments, and sign off at http://approveforme.com.
+You can read over the document, leave comments, and sign off at http://approveforme.com. 
+
+Do not forward this email. It is specific to you, so if someone else needs to review, please ask the person who created the approval to add them.
 
 Sincerely,
 -The ApproveForMe Team
 
-ApproveForMe simplifies your professional life by making it easier to create, track, and manage document signoffs.
+What is <a href="<%= root_url %>" >ApproveForMe</a>? It simplifies your professional life by making it easier to create, track, and manage document signoffs.
+

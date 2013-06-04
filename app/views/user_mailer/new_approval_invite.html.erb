@@ -438,10 +438,7 @@
                         Hi <%= @approver.name %>, <br><br>
 
 						<%= @owner_name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of 
-						<%= link_to @approval.title, "#{approval_url(@approval)}&?code=#{@approver.code}" %>.<br><br>
-
-						
-
+						<%= link_to @approval.title, "#{approval_url(@approval)}&?code=#{@approver.code}" %>.<br>
                         </td>
                     </tr>
                 </tbody></table>
@@ -457,7 +454,7 @@
                     <tbody>
                         <tr>
                             <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial;font-size: 16px;padding: 14px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                                <a class="mcnButton " title="New" href="<%= "#{approval_url(@approval)}&?code=#{@approver.code}" %>" target="_self" style="font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #000000;word-wrap: break-word !important;">Review <%= @approval.title %></a>
+                                <a class="mcnButton " title="New" href="<%= "#{approval_url(@approval)}&?code=#{@approver.code}" %>" target="_self" style="font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #000001;word-wrap: break-word !important;">Review <%= @approval.title %></a>
                             </td>
                         </tr>
                     </tbody>
@@ -477,10 +474,12 @@
                         
                         You can read over the document, leave comments, and sign off at <%= link_to "ApproveForMe.com", root_url %>.<br><br>
 
+                        Do not forward this email. It is specific to you, so if someone else needs to review, please ask the person who created the approval to add them. <br><br>
+
 						Sincerely,<br>
 						-The ApproveForMe Team<br><br>
 
-						PS: <a href="<%= root_url %>" >ApproveForMe</a> simplifies your professional life by making it easier to create, track, and manage document signoffs.
+						What is <a href="<%= root_url %>" >ApproveForMe</a>? It simplifies your professional life by making it easier to create, track, and manage document signoffs.
                         </td>
                     </tr>
                 </tbody></table>
