@@ -46,12 +46,13 @@
 
   <body>
 
+<div id="container">
     <%= render 'layouts/navigation' %>
 
     <%= render 'layouts/messages' %>
     <%= yield %>
     <%= render 'layouts/footer' %>
-
+</div>
     
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/H6yaFyp6VZJrQqdY8RxGg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>

@@ -323,3 +323,15 @@ label {
     color: #595959;
     line-height: 130%;
 }
+.login li {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+  background-image: url("https://www.google.com/images/srpr/logo4w.png");
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+}
