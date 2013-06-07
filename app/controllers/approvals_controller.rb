@@ -72,7 +72,9 @@ class ApprovalsController < ApplicationController
         format.html { redirect_to @approval, notice: 'Approval was successfully created.' }
         format.json { render json: @approval, status: :created, location: @approval }
         UserMailer.delay.my_new_approval(@approval)
-        UserMailer.delay.new_approval_invite(@approval)
+        @approval.approvers.each do |approver| 
+          UserMailer.delay.new_approval_invite(@approval, approver)
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @approval.errors, status: :unprocessable_entity }
@@ -110,6 +112,7 @@ class ApprovalsController < ApplicationController
             if approver.code == nil
               @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader") 
               approver.generate_code
+              UserMailer.delay.new_approval_invite(@approval, approver)
             end
           end
 

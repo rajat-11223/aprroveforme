@@ -19,17 +19,15 @@ def my_new_approval(approval)
 end
 
 # mail sent to approvers of a new approval
-def new_approval_invite(approval)
+def new_approval_invite(approval, approver)
 	@approval = approval
 	@owner_name = User.find(@approval.owner).name
 	@subject = @owner_name + " has requested your approval on " + @approval.title
-	# iterate through each approver to send an email
-	@approval.approvers.each do |approver| 
-		@approver = approver
-		@email = @approver.email
-		mail(:to => @email, :subject => @subject)
-	end
+	@approver = approver
+	@email = @approver.email
+	mail(:to => @email, :subject => @subject)
 end
+
 
 # mail sent whenever an approver responds
 def approval_update(approver)
