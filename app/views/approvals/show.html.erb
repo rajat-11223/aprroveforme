@@ -35,7 +35,9 @@
               <p class="approval-details"><strong>Deadline:</strong> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %></p>
               <p class="approval-details"><strong>Progress:</strong> <%= ratio_complete(@approval) %> responses</p>
               <div class="progress"><span class="meter" style="width:<%= percentage_complete(@approval) %>;"></span></div><br />
+              <% if approver = @approval.approvers.where("email = ? or email = ?", current_user.email, current_user.second_email).first %>
               <a href="#" role="button" class="button primary" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Respond</a>
+              <% end %>
               <%= link_to "Open File", @approval.link, :target=>"_blank", :class=>"button secondary"%>
               <!--- END DOCUMENT INFO -->
             </div>
