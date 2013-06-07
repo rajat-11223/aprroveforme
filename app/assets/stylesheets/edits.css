@@ -66,6 +66,16 @@ p {
 }
 
 /* Navigation */
+.nav-pic {
+    width: 25px;
+    margin-top: 12px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+.nav-image {
+width: 20px;
+    opacity: .3;
+}
 .top {
     background-color: #F4F4F4;
     margin-bottom: 25px;
