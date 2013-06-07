@@ -3,7 +3,11 @@ class UsersController < ApplicationController
   before_filter :correct_user?, :except => [:index]
 
   def index
-    @users = User.all
+    unless current_user.has_role? :admin
+      redirect_to root_url, :alert => "Access denied."
+    end
+      @users = User.all
+    
   end
 
     def edit
