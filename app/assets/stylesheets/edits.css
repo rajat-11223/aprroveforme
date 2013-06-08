@@ -184,6 +184,10 @@ p {
     border-top: 3px solid #dedede;
     color: #F4F4F4;
     margin-top: 15px;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
 }
 .text-footer, .text-footer a, .text-footer a:hover {
     font-size: 12px;
