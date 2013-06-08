@@ -199,7 +199,7 @@
       <div class="row">
         <div class="large-8 small-12 columns">
           <p class="tour-title">4. Everything in one place</p>
-          <p class="tour-description">See status of each approval, comments, and more in the summary page. No more having to piece together multiple emails.</p>
+          <p class="tour-description">See status of each approval, comments, and more in the summary page. No more having to piece together multiple email.</p>
         </div>
         <div class="large-4 hide-for-small columns">
           <%= image_tag "tour4.png", :class => "tour-pic" %>
@@ -208,5 +208,14 @@
     </div>
   </div><br />
   <!--- END THE NEW USER TOUR -->
+  <!--- START GET STARTED -->
+  <div class="row">
+    <div class="large-8 large-offset-2 end columns">
+      <div class="row">
+        <p class="center"><%= link_to "Ok, I got it. I'm ready to ceate a new approval.", new_approval_path, :class => "button primary create" %></p>
+      </div>
+    </div>
+  </div><br />
+  <!--- END GET STARTED -->
 
 <% end %>
