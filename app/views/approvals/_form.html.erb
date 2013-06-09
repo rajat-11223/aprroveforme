@@ -96,7 +96,8 @@
 
     // Create and render a Picker object for searching images.
     function createPicker() {
-         var view = new google.picker.View(google.picker.ViewId.DOCS);
+         var view = new google.picker.DocsView(google.picker.ViewId.DOCS);
+         view.setMode(google.picker.DocsViewMode.LIST);
           //view.setMimeTypes("image/png,image/jpeg,image/jpg");    
           var picker = new google.picker.PickerBuilder()
           //.enableFeature(google.picker.Feature.NAV_HIDDEN)
