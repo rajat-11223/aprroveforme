@@ -110,7 +110,7 @@ class ApprovalsController < ApplicationController
           # if any new approvers, add permissions and code
           @approval.approvers.each do |approver| 
             if approver.code == nil
-              @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader") 
+              @approval.update_permissions(@approval.link_id, current_user, approver, "reader") 
               approver.generate_code
               UserMailer.delay.new_approval_invite(@approval, approver)
             end
