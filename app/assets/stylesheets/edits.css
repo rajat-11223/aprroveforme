@@ -1,6 +1,7 @@
 /* Global */
 body {
     background-color: #fafafa;
+    padding-bottom:120px;   /* Height of the footer */
 }
 body a {
     color: #5e74c6;
@@ -10,6 +11,11 @@ body a:hover {
     color: #4A61D6;
     opacity: 1;
 }
+.container{
+    min-height:100%;
+    position:relative;
+}
+
 .button.primary {
     background-color: #ffcc00;
     border: 0px;
@@ -196,10 +202,11 @@ width: 20px;
     border-top: 3px solid #dedede;
     color: #F4F4F4;
     margin-top: 15px;
-    position: fixed;
-    bottom: 0px;
     left: 0px;
-    width: 100%;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:120px;   /* Height of the footer */
 }
 .text-footer, .text-footer a, .text-footer a:hover {
     font-size: 12px;
