@@ -9,6 +9,7 @@ class Ability
 
     can :create, Approval
     can [:read, :update], Approval, :approvers => {:email => user.email}
+    can [:read, :update], Approval, :approvers => {:email => user.secondary_email}
     can :manage, Approval, :owner => user.id
     can :manage, User, :user_id => user.id
 
