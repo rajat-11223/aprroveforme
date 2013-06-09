@@ -1,7 +1,5 @@
 <%= form_for @approval do |f| %>
 
-
-
 <div class="row">
 		<div class="large-8 large-offset-2 item-approval-form end columns">
 			<div class="row">
@@ -9,7 +7,7 @@
 					<p class="form-label">Title*</p>
 				</div>
 				<div class="large-10 small-9 columns">
-					<%= f.text_field :title, :placeholder => "Approval Title" %>
+					<%= f.text_field :title, :placeholder => "Title" %>
 				</div>
 			</div>
 			<div class="row">
@@ -17,7 +15,7 @@
 					<p class="form-label">Description</p>
 				</div>
 				<div class="large-10 small-9 columns">
-					<%= f.text_field :description, :placeholder => "What type of feedback do you want?" %>
+					<%= f.text_field :description, :placeholder => "Description" %>
 				</div>
 			</div>
 			<div class="row">
