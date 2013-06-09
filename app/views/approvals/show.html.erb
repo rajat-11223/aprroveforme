@@ -31,7 +31,7 @@
           <div class="row">
             <div class="large-12 item-approval-info columns">
               <!--- START DOCUMENT INFO -->
-              <p class="approval-details"><strong>Created by:</strong> <%= User.find(@approval.owner).name %><br /></p>
+              <p class="approval-details"><strong>Creator:</strong> <%= image_tag image_url(User.find(@approval.owner).email), :class=>"pic-approval-owner" %> <%= User.find(@approval.owner).name %><br /></p>
               <p class="approval-details"><strong>Deadline:</strong> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %></p>
               <p class="approval-details"><strong>Progress:</strong> <%= ratio_complete(@approval) %> responses</p>
               <div class="progress"><span class="meter" style="width:<%= percentage_complete(@approval) %>;"></span></div><br />

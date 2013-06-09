@@ -208,6 +208,12 @@ width: 20px;
 }
 
 /* Approval Page */
+.pic-approval-owner {
+    width: 15px;
+    margin-top: -2px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
 .item-approval-info {
     background-color: #fff;
     padding-top: 15px;
