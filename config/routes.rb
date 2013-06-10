@@ -1,4 +1,6 @@
 Workflow::Application.routes.draw do
+  get "faq/index"
+
   get "privacy/index"
 
   get "terms/index"
