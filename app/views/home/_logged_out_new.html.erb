@@ -9,7 +9,7 @@
     <div class="large-8 large-offset-2 end columns">
       <div class="row">
         <p class="center">
-          <a href="<%= signin_path %>" class="button primary large"><%= image_tag "/assets/google.png", :size=>"30x23"%> Get started for free</a><br /><br />
+          <a href="<%= signin_path %>" class="button primary large" id="login"><%= image_tag "/assets/google.png", :size=>"30x23"%> Get started for free</a><br /><br />
         </p> 
       </div>
     </div>
@@ -50,3 +50,9 @@
       </div>
     </div>
   </div>
+
+<!-- Mixpanel Conversion -->
+<script type="text/javascript">
+    var $container = $('#login');
+    $container = mixpanel.track("Login");
+</script>

@@ -75,7 +75,7 @@
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-2  columns">
-					<%= f.submit "Submit Document for Approval", :class => "button primary" %>  
+					<%= f.submit "Submit Document for Approval", :class => "button primary", :id =>"submit-approval" %>  
 				</div>
 			</div>
 		</div>
@@ -155,4 +155,10 @@ $(function() {
     $( "#datepicker" ).datepicker(  );
   });
 
+</script>
+
+<!-- Mixpanel Conversion -->
+<script type="text/javascript">
+    var $container = $('#submit-approval');
+    $container = mixpanel.track("Submit Approval");
 </script>

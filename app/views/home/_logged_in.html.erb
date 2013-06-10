@@ -3,7 +3,7 @@
     <div class="large-8 large-offset-2 end columns">
       <div class="row item-top">
         <p class="get-started"><strong>Let's get started!</strong> Don't worry, it's a lot easier than chasing everyone around.</p>
-        <%= link_to "Create New Approval", new_approval_path, :class => "button primary create" %>
+        <%= link_to "Create New Approval", new_approval_path, :class => "button primary create", :id =>"form" %>
       </div>
     </div>
   </div><br />
@@ -219,3 +219,9 @@
   <!--- END GET STARTED -->
 
 <% end %>
+
+<!-- Mixpanel Conversion -->
+<script type="text/javascript">
+    var $container = $('#form');
+    $container = mixpanel.track("Visit Form");
+</script>
