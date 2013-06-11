@@ -7,7 +7,7 @@
 					<p class="form-label">Title*</p>
 				</div>
 				<div class="large-10 small-9 columns">
-					<%= f.text_field :title, :placeholder => "Title" %>
+					<%= f.text_field :title, :placeholder => "Title", :id=>"result2" %>
 				</div>
 			</div>
 			<div class="row">
@@ -136,6 +136,10 @@
       
       //message = message + title
       document.getElementById('result').innerHTML = message;
+
+      //!-- if you want to prefill the title field with the doc title, uncomment below.
+      //var myTextField = document.getElementById('result2');
+      //myTextField.value = title;
     }
 
   
