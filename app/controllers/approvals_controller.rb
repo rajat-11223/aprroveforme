@@ -18,6 +18,7 @@ class ApprovalsController < ApplicationController
   def show
     @approval = Approval.find(params[:id])
     @user = current_user
+    3.times {@approval.tasks.build} if @approval.tasks.empty?
 
     if session[:code]
       approver = Approver.where("code = ?", session[:code]).first
@@ -46,9 +47,11 @@ class ApprovalsController < ApplicationController
     end
   end
 
+
   # GET /approvals/1/edit
   def edit
     @approval = Approval.find(params[:id])
+
 
   end
 
@@ -93,10 +96,16 @@ class ApprovalsController < ApplicationController
       @approver = @approval.approvers.where("email = ? or email = ?", current_user.email, current_user.second_email).first
       @approver.status = params[:approval][:approver][:status]
       @approver.comments = params[:approval][:approver][:comments]
+      @approval.tasks << Task.new(params[:approval][:tasks])
+      #params[:approval][:approver][:tasks].each do |task|
+      #  @approver.tasks << task
+      #end
       @approver.save
       UserMailer.delay.approval_update(@approver)
       UserMailer.delay.completed_approval(@approval) if percentage_complete(@approval) == "100%"
       redirect_to @approval, notice: 'Approval submitted'
+
+
     else
       if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
         params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")

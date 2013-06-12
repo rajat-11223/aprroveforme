@@ -1,4 +1,5 @@
 
+
 <% if approver.status == "Approved" %>
 
 <div class="row">
@@ -53,18 +54,21 @@
 
 <div id="myModal" class="reveal-modal">
   
+
   <div class="row">
     <h3>Do you approve <%= approver.approval.title %>?</h3>
   </div>
   
   <div class="row">
     <%= form_for approver.approval do |f| %>
-    <div class="large-12 columns">
-    <%= f.fields_for approver do |builder| %>
-      <%= builder.text_area :comments, :placeholder=>"Have any feedback?" %>
-      <% #builder.input :comments, :input_html => { :class=>"", :rows => "3" }, :placeholder => "Have any feedback?", :label => false %>
-    </div>
-    <% end %>
+    
+      <%= f.fields_for :tasks do |t| %>
+      <%= render 'task_form', :f => t %> 
+      <% end %>
+      <div class="add">
+      </div>
+      <%= button_to_add_fields('Add Task',f,:tasks) %>
+
     </div>
   </br>
     <div class="row">

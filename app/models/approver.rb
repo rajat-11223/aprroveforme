@@ -1,6 +1,7 @@
 class Approver < ActiveRecord::Base
   attr_accessible :email, :name, :required, :status, :comments, :code
   belongs_to :approval
+  
   include ActionView::Helpers::DateHelper
 
   def to_s

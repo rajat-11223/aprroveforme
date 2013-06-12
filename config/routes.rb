@@ -9,6 +9,7 @@ Workflow::Application.routes.draw do
 
   resources :approvals do
   	resources :approvers
+    resources :tasks
   end
 
 
