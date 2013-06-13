@@ -5,12 +5,12 @@ class ApprovalsController < ApplicationController
   # GET /approvals
   # GET /approvals.json
   def index
+    unless current_user.has_role? :admin
+      redirect_to root_url, :alert => "Access denied."
+    end
     @approvals = Approval.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @approvals }
-    end
+
   end
 
   # GET /approvals/1
