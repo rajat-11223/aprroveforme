@@ -3,8 +3,9 @@
 <table>
   <tr>
     <th>Title</th>
-    <th>Link</th>
+    <th>Owner</th>
     <th>Description</th>
+    <th>Approver Count</th>
     <th>Deadline</th>
     <th></th>
     <th></th>
@@ -14,8 +15,9 @@
 <% @approvals.each do |approval| %>
   <tr>
     <td><%= approval.title %></td>
-    <td><%= approval.link %></td>
+    <td><%= User.find(approval.owner).email %></td>
     <td><%= approval.description %></td>
+    <td><%= approval.approvers.count %></td>
     <td><%= approval.deadline %></td>
     <td><%= link_to 'Show', approval %></td>
     <td><%= link_to 'Edit', edit_approval_path(approval) %></td>
