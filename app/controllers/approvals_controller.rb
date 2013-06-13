@@ -10,10 +10,7 @@ class ApprovalsController < ApplicationController
     end
     @approvals = Approval.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @approvals }
-    end
+
   end
 
   # GET /approvals/1
