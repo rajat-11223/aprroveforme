@@ -1,33 +1,95 @@
+
 <div class="row">
-<h3>Users: <%= User.all.count %></h3>
+  <div class="large-3 large-offset-2 columns panel center">
+    <h1><%= User.all.count %></h1>
+    TOTAL USERS
+  </div>
+  <div class="large-3 large-offset-2 end columns panel center">
+    <h1><%= Approval.all.count %></h1>
+    TOTAL APPROVALS SENT
+  </div>
+</div>
+
+<div class="row">
+    <div class="large-3 large-offset-2 small-2 columns"><hr></div>
+    <div class="large-2 small-8 columns">
+      <p class="text-divider">ACQUISITION</p>
+    </div>
+    <div class="large-3 small-2 end columns"><hr></div>
+</div>
+
+<div class="row">
+  <div class="large-4 columns panel center">
+    <h4><%= User.where('created_at >= ?', Date.today).count %></h4>
+    DAILY NEW USERS
+  </div>
+  <div class="large-4 columns panel center">
+    <h4><%= User.where('created_at >= ?', 1.week.ago).count %></h4>
+    WEEKLY NEW USERS
+  </div>
+  <div class="large-4 columns panel center">
+    <h4><%= User.where('created_at >= ?', 1.month.ago).count %></h4>
+    MONTHLY NEW USERS
+  </div>
+</div>
+
+<div class="row">
+    <div class="large-3 large-offset-2 small-2 columns"><hr></div>
+    <div class="large-2 small-8 columns">
+      <p class="text-divider">ENGAGEMENT</p>
+    </div>
+    <div class="large-3 small-2 end columns"><hr></div>
+</div>
+
+<div class="row">
+  <div class="large-4 columns panel center">
+    <h4><%= User.where('updated_at >= ?', 1.month.ago).count %></h4>
+    MONTHLY ACTIVE USERS
+  </div>
+  <div class="large-4 columns panel center">
+    <h4><%= Approval.select(:owner).uniq.count %></h4>
+    USERS SENT APPROVAL
+  </div>
+  <div class="large-4 columns panel center">
+    <h4><%= Approver.select(:email).uniq.count %></h4>
+    USERS RECEIVED APPROVAL
+  </div>
+</div>
+
+
+
+<div class="row">
 <div class="large-12 columns">
-<table class="table table-condensed">
+<table class="table">
   <thead>
     <tr>
-      <th>Username</th>
+      <th colspan="2">Users</th>
       <th>Email</th>
       <th>Registered</th>
-      <th># of Approvals</th>
-      <th># Approvals Requested</th>
-      <th>Role</th>
-      <th></th>
-      <th></th>
+      <th>Sent</th>
+      <th>Received</th>
+      <th>Last Login</th>
+      <th colspan="2">Role</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
   <% @users.each do |user| %>
     <tr>
+      <td><%= image_tag user.picture, :style=>"width:35px" %></td>
       <td><%= link_to user.name, user %></td>
-      <td><%= user.email %></td>
+      <td><a href="mailto:<%= user.email %>" target="_blank"><%= user.email %></a></td>
       <td><%= user.created_at.to_date %></td>
       <td><%= Approval.where("owner = ?", user.id).count %></td>
       <td><%= Approver.where("email = ?", user.email).count %></td>
+      <td><%= user.updated_at.to_date %></td>
       <td><%= user.roles.first.name.titleize unless user.roles.first.nil? %></td>
+      
       <td>
-        <a data-toggle="modal" href="#role-options-<%= user.id %>" class="button tiny" type="button">Change role</a>
+        <a data-toggle="modal" href="#role-options-<%= user.id %>" class="button secondary tiny" type="button">Change role</a>
         <%= render user %>
       </td>
-      <td><%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user %></td>
+      <td><%= link_to("delete", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user %></td>
     </tr>
   <% end %>
   </tbody>

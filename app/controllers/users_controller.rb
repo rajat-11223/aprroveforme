@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       redirect_to root_url, :alert => "Access denied."
     end
       @users = User.all
-    
+
   end
 
     def edit
