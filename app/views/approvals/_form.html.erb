@@ -94,16 +94,13 @@
     //google.setOnLoadCallback(createPicker);
     google.load('picker', '1');
 
-    // Create and render a Picker object for searching images.
+    // Create and render a Picker object
     function createPicker() {
          var view = new google.picker.DocsView(google.picker.ViewId.DOCS);
          view.setMode(google.picker.DocsViewMode.LIST);
-          //view.setMimeTypes("image/png,image/jpeg,image/jpg");    
           var picker = new google.picker.PickerBuilder()
-          //.enableFeature(google.picker.Feature.NAV_HIDDEN)
-          //.enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
           .setAppId("<%= ENV['GOOGLE_ID']%>")
-          .setOAuthToken("<%= current_user.token %>") //Optional: The auth token used in the current Drive API session.
+          .setOAuthToken("<%= current_user.token %>") 
           .addView(view)
           .addView(new google.picker.DocsUploadView())
           .setCallback(pickerCallback)
