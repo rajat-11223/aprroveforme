@@ -15,7 +15,7 @@ ADMIN_PASSWORD: changeme
 OMNIAUTH_PROVIDER_KEY: Your_OmniAuth_Provider_Key
 OMNIAUTH_PROVIDER_SECRET: Your_OmniAuth_Provider_Secret
 ROLES: [admin, user, VIP]
-GOOGLE_SCOPE: https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.profile
+GOOGLE_SCOPE: https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install
 development:
  GOOGLE_ID: 107940143634.apps.googleusercontent.com
  GOOGLE_SECRET: n1adtCS9usCvQkxPzEspTYAA
