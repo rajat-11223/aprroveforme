@@ -7,7 +7,12 @@ class SessionsController < ApplicationController
 
   def create
     
-    if request.env["omniauth.auth"]
+    if params[:code]
+      # Preload API definitions
+      client = Google::APIClient.new
+      authorize_code(params[:code])
+      redirect '/'
+    else request.env["omniauth.auth"]
       auth = request.env["omniauth.auth"]
       user = User.where(:provider => auth['provider'], 
                         :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
@@ -23,13 +28,6 @@ class SessionsController < ApplicationController
         user.save
         redirect_to root_url
       end
-    elsif params[:code]
-      # Preload API definitions
-      client = Google::APIClient.new
-      authorize_code(params[:code])
-      redirect '/'
-    elsif params[:error] # User denied the oauth grant
-      halt 403
     end
 
   end
@@ -50,7 +48,8 @@ def authorize_code(code)
   api_client.authorization.fetch_access_token!
   # put the tokens in the session
   puts "debugging"
-  puts api_client
+  puts "api client: #{api_client}"
+  puts "auth: #{api_client.authorization}"
   session[:access_token] = api_client.authorization.access_token
   session[:refresh_token] = api_client.authorization.refresh_token
   session[:expires_in] = api_client.authorization.expires_in
