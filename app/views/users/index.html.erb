@@ -47,11 +47,11 @@
     MONTHLY ACTIVE USERS
   </div>
   <div class="large-4 columns panel center">
-    <h4>XX</h4>
+    <h4><%= Approval.select(:owner).uniq.to_a.count %></h4>
     MONTHLY ACTIVE SENDERS
   </div>
   <div class="large-4 columns panel center">
-    <h4>XX</h4>
+    <h4><%=  Approver.select(:email).uniq.to_a.count %></h4>
     MONTHLY ACTIVE RECEIVERS
   </div>
 </div>
