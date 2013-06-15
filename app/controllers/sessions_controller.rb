@@ -40,21 +40,14 @@ class SessionsController < ApplicationController
   # Exchanges the authorization code to fetch an access
   # and refresh token. Stores the retrieved tokens in the session.
   def authorize_code(code)
+    api_client = Google::APIClient.new
+    api_client.authorization.client_id = ENV['GOOGLE_ID']
+    api_client.authorization.client_secret = ENV['GOOGLE_SECRET']
+    api_client.authorization.scope = ENV['GOOGLE_SCOPE']
+    api_client.authorization.redirect_uri = ENV['REDIRECT_URI']
     api_client.authorization.code = code
     api_client.authorization.fetch_access_token!
-    puts api_client
-    auth = api_client
-    provider = "google_oauth2"
-    user = User.where(:provider => provider, 
-                        :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
-    # put the tokens in the session
-    session[:user_id] = user.id
-    session[:credentials] = api_client.authorization
-    user.token = auth["credentials"]["token"] || ""
-    user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
-    user.code = params["code"] || ""
-    user.save
-    redirect_to root_url
+    return api_client
   end
 
   def destroy
@@ -66,19 +59,6 @@ class SessionsController < ApplicationController
     redirect_to root_url, :alert => "Authentication error: #{params[:message].humanize}."
   end
 
-  # Exchanges the authorization code to fetch an access
-# and refresh token. Stores the retrieved tokens in the session.
-def authorize_code(code)
-  api_client.authorization.code = code
-  api_client.authorization.fetch_access_token!
-  # put the tokens in the session
-  puts "debugging"
-  puts "api client: #{api_client}"
-  puts "auth: #{api_client.authorization}"
-  session[:access_token] = api_client.authorization.access_token
-  session[:refresh_token] = api_client.authorization.refresh_token
-  session[:expires_in] = api_client.authorization.expires_in
-  session[:issued_at] = api_client.authorization.issued_at
-end
+
 
 end
