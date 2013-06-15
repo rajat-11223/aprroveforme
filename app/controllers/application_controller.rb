@@ -29,6 +29,11 @@ class ApplicationController < ActionController::Base
       if params["code"]
        session[:code] = params["code"]
       end
+      # Parse the state as JSON if present
+      if params[:state]
+        state = MultiJson.decode(params[:state])
+        session[:state] = state
+      end
 
       if !current_user
         redirect_to root_url, :alert => 'You need to sign in for access to this page.'
