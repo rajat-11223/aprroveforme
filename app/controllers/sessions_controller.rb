@@ -1,6 +1,10 @@
 class SessionsController < ApplicationController
 
   def new
+    # Parse the state as JSON if present
+    s = params[:state] || '{}'
+    state = MultiJson.decode(s)
+    session[:state] = state
     redirect_to '/auth/google_oauth2'
   end
 
@@ -19,7 +23,11 @@ class SessionsController < ApplicationController
         redirect_to edit_user_path(user), :alert => "Please enter your email address."
       else
         user.save
-        redirect_to root_url
+        if session[:state]['action'] == 'create'
+          redirect_to new_approval_path
+        else
+          redirect_to root_url
+        end
       end
   end
 
