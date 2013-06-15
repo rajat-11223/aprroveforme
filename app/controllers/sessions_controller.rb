@@ -6,13 +6,6 @@ class SessionsController < ApplicationController
 
 
   def create
-    
-    if params[:code]
-      # Preload API definitions
-      client = Google::APIClient.new
-      authorize_code(params[:code])
-      redirect '/'
-    else request.env["omniauth.auth"]
       auth = request.env["omniauth.auth"]
       user = User.where(:provider => auth['provider'], 
                         :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
@@ -28,8 +21,40 @@ class SessionsController < ApplicationController
         user.save
         redirect_to root_url
       end
+  end
+
+  def drive
+    # Preload API definitions
+    client = Google::APIClient.new
+    # handle possible callback from OAuth2 consent page.
+    if params[:code]
+      authorize_code(params[:code])
+    elsif params[:error] # User denied the oauth grant
+      halt 403
     end
 
+  end
+
+
+  ##
+  # Exchanges the authorization code to fetch an access
+  # and refresh token. Stores the retrieved tokens in the session.
+  def authorize_code(code)
+    api_client.authorization.code = code
+    api_client.authorization.fetch_access_token!
+    puts api_client
+    auth = api_client
+    provider = "google_oauth2"
+    user = User.where(:provider => provider, 
+                        :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
+    # put the tokens in the session
+    session[:user_id] = user.id
+    session[:credentials] = api_client.authorization
+    user.token = auth["credentials"]["token"] || ""
+    user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
+    user.code = params["code"] || ""
+    user.save
+    redirect_to root_url
   end
 
   def destroy
