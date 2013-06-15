@@ -56,7 +56,7 @@
   
 
   <div class="row">
-    <h3>Do you approve <%= approver.approval.title %>?</h3>
+    <p class="page-title">Do you approve <%= approver.approval.title %>?</p>
   </div>
   
   <div class="row">
@@ -73,7 +73,7 @@
   </br>
     <div class="row">
       <%= f.submit "Approved", :class => "button approve large-2 small-12 columns", :name => "approval[approver][status]", :value => "Approved" %>
-      <%= f.submit "Declined", :class => "button decline large-2 small-12 columns", :name => "approval[approver][status]", :value => "Declined" %>
+      <%= f.submit "Declined", :class => "button decline large-2 end small-12 columns", :name => "approval[approver][status]", :value => "Declined", :style => "margin-left: 10px;" %>
      
       
     </div>
