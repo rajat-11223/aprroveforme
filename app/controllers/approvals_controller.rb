@@ -42,6 +42,10 @@ class ApprovalsController < ApplicationController
     3.times {@approval.approvers.build} if @approval.approvers.empty?
     if session[:state] and (session[:state]['action'] == 'open')
       api_client = Google::APIClient.new
+      api_client.authorization.client_id = ENV['GOOGLE_ID']
+      api_client.authorization.client_secret = ENV['GOOGLE_SECRET']
+      api_client.authorization.code = current_user.code
+      api_client.authorization.fetch_access_token!
       file_id = session[:state]['ids']
       file = file_metadata(api_client, file_id)
       @approval.link = file.selfLink
