@@ -42,7 +42,7 @@ class ApprovalsController < ApplicationController
     3.times {@approval.approvers.build} if @approval.approvers.empty?
     if session[:state] and (session[:state]['action'] == 'open')
       api_client = Google::APIClient.new
-      file_id = session[:state]['ids'].first
+      file_id = session[:state]['ids']
       file = file_metadata(api_client, file_id)
       @approval.link = file.selfLink
       @approval.embed = file.embedLink
