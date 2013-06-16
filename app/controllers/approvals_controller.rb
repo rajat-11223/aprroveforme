@@ -43,7 +43,7 @@ class ApprovalsController < ApplicationController
     # if the doc is being opened from Google drive, pre-populate
     if session[:state] and (session[:state]['action'] == 'open')
       current_user.refresh_google
-      api_client = current_user.google_authf
+      api_client = current_user.google_auth
       file_id = session[:state]['ids']
       file = file_metadata(api_client, file_id)
       @approval.link_title = file.title
