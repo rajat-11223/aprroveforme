@@ -40,19 +40,17 @@ class ApprovalsController < ApplicationController
   def new
     @approval = Approval.new
     3.times {@approval.approvers.build} if @approval.approvers.empty?
+    # if the doc is being opened from Google drive, pre-populate
     if session[:state] and (session[:state]['action'] == 'open')
-      api_client = Google::APIClient.new
-      api_client.authorization.client_id = ENV['GOOGLE_ID']
-      api_client.authorization.client_secret = ENV['GOOGLE_SECRET']
-      api_client.authorization.code = current_user.code
-      api_client.authorization.fetch_access_token!
+      current_user.refresh_google
+      api_client = current_user.google_authf
       file_id = session[:state]['ids']
       file = file_metadata(api_client, file_id)
-      @approval.link = file.selfLink
-      @approval.embed = file.embedLink
       @approval.link_title = file.title
+      @approval.link = file.alternateLink
+      @approval.embed = file.embedLink
       @approval.link_id = file.id
-      @approval.link_type = mimeType
+      @approval.link_type = file.mimeType
     end
 
     respond_to do |format|
