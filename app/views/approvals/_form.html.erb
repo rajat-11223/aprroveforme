@@ -34,7 +34,14 @@
 					<a onclick="createPicker()" class="button primary" style="width:100%;">Select File</a>
 				</div>
 				<div class="large-6 small-5 columns">
-					<p class="form-file-name"><div id="result"><%=  (link_to @approval.link_title, @approval.link ) if @approval.link_title %></div></p>
+					<p class="form-file-name"><div id="result">
+						<%= f.hidden_field :link  if @approval.link %>
+						<%= f.hidden_field :embed if @approval.embed %>
+						<%= f.hidden_field :link_title if @approval.link_title %>
+						<%= f.hidden_field :link_id if @approval.link_id %>
+						<%= f.hidden_field :link_type if @approval.link_type %>
+						<%=  (link_to @approval.link_title, @approval.link ) if @approval.link_title %>
+					</div></p>
 				</div>
 				<label class="error"><%= error_message_on @approval, :link %></label>
 				
