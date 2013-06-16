@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
         redirect_to edit_user_path(user), :alert => "Please enter your email address."
       else
         user.save
-        if session[:state] and (session[:state]['action'] == 'create')
+        if session[:state] and (session[:state]['action'] == 'create' || 'open')
           redirect_to new_approval_path
         else
           redirect_to root_url

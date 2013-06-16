@@ -40,10 +40,32 @@ class ApprovalsController < ApplicationController
   def new
     @approval = Approval.new
     3.times {@approval.approvers.build} if @approval.approvers.empty?
+    if session[:state] and (session[:state]['action'] == 'open')
+      api_client = Google::APIClient.new
+      file_id = session[:state]['ids'].first
+      file = file_metadata(api_client, file_id)
+      @approval.link = file.selfLink
+      @approval.embed = file.embedLink
+      @approval.link_title = file.title
+      @approval.link_id = file.id
+      @approval.link_type = mimeType
+    end
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @approval }
+    end
+  end
+
+  def file_metadata(client, file_id)
+    drive = client.discovered_api('drive', 'v2')
+    result = client.execute(
+      :api_method => @drive.files.get,
+      :parameters => { 'fileId' => file_id })
+    if result.status == 200
+      return result.data
+    else
+      puts "An error occurred: #{result.data['error']['message']}"
     end
   end
 
