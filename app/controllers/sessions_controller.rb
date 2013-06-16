@@ -11,14 +11,6 @@ class SessionsController < ApplicationController
 
 
   def create
-      if params[:state]
-        s = params[:state] || '{}'
-        begin
-        state = MultiJson.decode(s)
-        session[:state] = state
-        rescue
-        end
-      end
       auth = request.env["omniauth.auth"]
       user = User.where(:provider => auth['provider'], 
                         :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
@@ -32,7 +24,7 @@ class SessionsController < ApplicationController
         redirect_to edit_user_path(user), :alert => "Please enter your email address."
       else
         user.save
-        if session[:state] and session[:state][:action] == 'create'
+        if session[:state] and (session[:state]['action'] == 'create')
           redirect_to new_approval_path
         else
           redirect_to root_url
