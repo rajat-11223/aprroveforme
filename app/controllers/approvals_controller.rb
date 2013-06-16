@@ -58,7 +58,7 @@ class ApprovalsController < ApplicationController
   end
 
   def file_metadata(client, file_id)
-    drive = client.discovered_api('drive', 'v2')
+    @drive = client.discovered_api('drive', 'v2')
     result = client.execute(
       :api_method => @drive.files.get,
       :parameters => { 'fileId' => file_id })
