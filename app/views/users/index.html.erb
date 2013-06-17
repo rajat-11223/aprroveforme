@@ -63,13 +63,13 @@
 <table class="table">
   <thead>
     <tr>
-      <th colspan="2">Users</th>
-      <th>Email</th>
-      <th>Registered</th>
-      <th>Sent</th>
-      <th>Received</th>
-      <th>Last Login</th>
-      <th colspan="2">Role</th>
+      <th colspan="2"><%= sortable "name" %></th>
+      <th><%= sortable "email" %></th>
+      <th><%= sortable "created_at" %></th>
+      <th><%= sortable "sent" %></th>
+      <th><%= sortable "received" %></th>
+      <th><%= sortable "updated_at", "last login" %></th>
+      <th colspan="2"><%= sortable "role" %></th>
       <th>Delete</th>
     </tr>
   </thead>
