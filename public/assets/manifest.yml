@@ -18,7 +18,7 @@ declined.png: declined-0362769d7290d4ae78cf7e06c6298134.png
 declined2.png: declined2-820f07265d5d1b0f152fde95836b0b15.png
 facebook.png: facebook-7a8ba0bb489c6a8c3e34870df2c47a11.png
 favicon.ico: favicon-1f08a3bbe17a6d2dbe4cdc404846b1f8.ico
-favicon.png: favicon-7813a5db1b9e27377adbe1f29d6368bf.png
+favicon.png: favicon-ab76880f0e967fb263443e03bee768bd.png
 feedback.png: feedback-65f252dc0c6374dcdfd2a7d4cf8bc439.png
 full-dashboard.png: full-dashboard-00042fcd243e25db4af6eb4e5b8253ba.png
 full-screenshot-homepage-nofade.png: full-screenshot-homepage-nofade-11475e4e5d303f80e8ff4181925d8aa8.png
@@ -35,6 +35,17 @@ lock.svg: lock-806bfa669fd8127b0aa30551b431171f.svg
 logo-old.png: logo-old-d0b5b597b780865850a1d7bff1dbb73e.png
 logo.png: logo-dec4f01b0c9a3a86cd6e9028e2631ab7.png
 logo.svg: logo-d476263f8caa4002d491614e281cad0a.svg
+logo/favicon.png: logo/favicon-ab76880f0e967fb263443e03bee768bd.png
+logo/icon-128-128.png: logo/icon-128-128-9a3062d36efc8f4189cba4e6606ccce2.png
+logo/icon-16-16.png: logo/icon-16-16-7c7ca96760a06fd9d69a8521d8d06bfc.png
+logo/icon-256-256.png: logo/icon-256-256-13350e7f296c6e2f7e03adde8eebedf2.png
+logo/icon-32-32.png: logo/icon-32-32-26af072244a4e29374f228bd12de2b5d.png
+logo/icon-64-64.png: logo/icon-64-64-158630de849301938c74b279dcade6fd.png
+logo/icon.png: logo/icon-160b20478932ba50d1449631dfe28800.png
+logo/icon.psd: logo/icon-a347a1d10b645f301e653a4bcd6b37c8.psd
+logo/profile-picture-blog.png: logo/profile-picture-blog-06395a3505ffb104d2f0fa807e7cd163.png
+logo/profile-picture.png: logo/profile-picture-c0b70a43cb30debb6f24a4ac7d55dd6e.png
+logo/profile-picture.psd: logo/profile-picture-ef67e9b5021a082abcbd0dc5cd57fcd2.psd
 logo2.svg: logo2-c3d96857ee22d20c5911aeb761cc8637.svg
 logout.png: logout-69423d1521c354ab68b6836174580aba.png
 open.png: open-455e39d836b6547fc624a167e9e12104.png
