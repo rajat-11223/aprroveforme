@@ -74,6 +74,7 @@
     </tr>
   </thead>
   <tbody>
+
   <% @users.each do |user| %>
     <tr>
       <td><%= image_tag user.picture, :style=>"width:35px" %></td>
@@ -94,5 +95,6 @@
   <% end %>
   </tbody>
 </table>
+<%= paginate @users, :remote => true %>
 </div>
 </div>

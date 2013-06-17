@@ -35,3 +35,4 @@ gem "dynamic_form"
 gem 'daemons'
 gem 'newrelic_rpm'
 gem 'exceptional'
+gem 'kaminari'
