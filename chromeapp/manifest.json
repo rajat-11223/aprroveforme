@@ -1,0 +1,17 @@
+{
+  "name": "ApproveForMe",
+  "description": "Easily create, track, and manage document approvals.",
+  "version": "1.0",
+  "manifest_version": 2,
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app": {
+    "urls": [
+      "http://www.ApproveForMe.com/"
+    ],
+    "launch": {
+      "web_url": "http://www.ApproveForMe.com/"
+    }
+  }
+}
