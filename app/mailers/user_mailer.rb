@@ -21,6 +21,7 @@ end
 # mail sent to approvers of a new approval
 def new_approval_invite(approval, approver)
 	@approval = approval
+	@owner = User.find(@approval.owner)
 	@owner_name = User.find(@approval.owner).name
 	@subject = @owner_name + " has requested your approval on " + @approval.title
 	@approver = approver

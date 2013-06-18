@@ -435,7 +435,7 @@
                         
                         <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;text-align: left;">
                         
-                        Hey <%= @name %>, <br><br>
+                        Hey <%= @owner.first_name %>, <br><br>
 
 						We've sent out <%= link_to @approval.title, approval_url(@approval) %> to all those you requested. You can check the status of your approval at any time by visiting <%= link_to "ApproveForMe.com", root_url %>.
 						<br>
