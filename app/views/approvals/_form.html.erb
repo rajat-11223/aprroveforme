@@ -106,7 +106,7 @@
          var view = new google.picker.DocsView(google.picker.ViewId.DOCS);
          view.setMode(google.picker.DocsViewMode.LIST);
           var picker = new google.picker.PickerBuilder()
-          .setAppId("<%= ENV['GOOGLE_ID']%>")
+          .setAppId("<%= ENV['APP_ID']%>")
           .setOAuthToken("<%= current_user.token %>") 
           .addView(view)
           .addView(new google.picker.DocsUploadView())
