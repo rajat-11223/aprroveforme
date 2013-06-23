@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
                         :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
       session[:user_id] = user.id
       session[:credentials] = auth["credentials"]
+      finished("user_signed_up") if user.token == nil
       user.token = auth["credentials"]["token"] || ""
       user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
       user.code = params["code"] || ""
@@ -25,8 +26,10 @@ class SessionsController < ApplicationController
       else
         user.save
         if session[:state] and (session[:state]['action'] == 'create' || 'open')
+          finished("google_drive_sign_in")
           redirect_to new_approval_path
         else
+          finished("user_signed_in")
           redirect_to root_url
         end
       end

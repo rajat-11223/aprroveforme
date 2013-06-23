@@ -1,0 +1,12 @@
+loggedout_title:
+  alternatives:
+    - Document Approvals Simplified.
+    - Document Workflows Simplified.
+    - Document Signoffs Simplified.
+my_second_experiment:
+  alternatives:
+    - name: a
+      percent: 67
+    - name: b
+      percent: 33
+  resettable: false
