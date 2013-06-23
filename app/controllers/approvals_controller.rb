@@ -96,7 +96,7 @@ class ApprovalsController < ApplicationController
     
     respond_to do |format|
       if @approval.save
-        finished("approval_created")
+        finished(:approval_created)
         format.html { redirect_to @approval, notice: 'Approval was successfully created.' }
         format.json { render json: @approval, status: :created, location: @approval }
         UserMailer.delay.my_new_approval(@approval)
@@ -126,7 +126,7 @@ class ApprovalsController < ApplicationController
       #  @approver.tasks << task
       #end
       @approver.save
-      finished("approver_approved")
+      finished(:approver_approved)
       UserMailer.delay.approval_update(@approver)
       UserMailer.delay.completed_approval(@approval) if percentage_complete(@approval) == "100%"
       redirect_to @approval, notice: 'Approval submitted'

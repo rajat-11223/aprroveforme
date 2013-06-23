@@ -3,6 +3,10 @@ loggedout_title:
     - Document Approvals Simplified.
     - Document Workflows Simplified.
     - Document Signoffs Simplified.
+  goals:
+  	- user_signed_up
+  	- approval_created
+  	- approver_approved
 my_second_experiment:
   alternatives:
     - name: a

@@ -211,6 +211,8 @@ GEM
       redis-namespace (>= 1.1.0)
       simple-random
       sinatra (>= 1.2.6)
+    split-analytics (0.3.0)
+      split (~> 0.3)
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -270,6 +272,7 @@ DEPENDENCIES
   sendgrid (>= 1.0.1)
   simple_form (>= 2.0.4)
   split
+  split-analytics
   sqlite3
   uglifier (>= 1.0.3)
   workless
