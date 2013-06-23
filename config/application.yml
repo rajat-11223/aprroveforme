@@ -22,6 +22,12 @@ development:
  REDIRECT_URI: http://localhost:3000/auth/google_oauth2/callback
  APP_ID: 107940143634
  REDISTOGO_URL: redis://localhost:6379
+test:
+ GOOGLE_ID: 107940143634.apps.googleusercontent.com
+ GOOGLE_SECRET: n1adtCS9usCvQkxPzEspTYAA
+ REDIRECT_URI: http://localhost:3000/auth/google_oauth2/callback
+ APP_ID: 107940143634
+ REDISTOGO_URL: redis://localhost:6379
 production:
  GOOGLE_ID: 107940143634-iel5h5i1tu4siqfct2tjqm68iou6oppe.apps.googleusercontent.com
  GOOGLE_SECRET: tdkWnSp3zoneFgGmm1rz3L_T

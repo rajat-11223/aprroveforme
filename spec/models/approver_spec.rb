@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe Approver do
-  pending "add some examples to (or delete) #{__FILE__}"
+  pending "has one approval"
+  pending "has a name"
+  pending "has an email address"
 end

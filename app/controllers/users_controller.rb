@@ -18,7 +18,9 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
-      redirect_to @user
+      @user.name = "#{@user.first_name} #{@user.last_name}"
+      @user.save
+      redirect_to root_url
     else
       render :edit
     end

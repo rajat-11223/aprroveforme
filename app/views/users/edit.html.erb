@@ -1,6 +1,30 @@
+<div class="row">
+		<p class="page-title">We need a little bit more information...</p>
+</div>
+</br>
 <%= form_for(@user) do |f| %>
-  <%= f.label :email %>
-  <%= f.text_field :email %>
+	<div class="row">
+		<div class="large-2 small-3 columns">
+  			<%= f.label "First Name" %>
+  		</div>
+  		<div class="large-10 small-9 columns">
+  		<%= f.text_field :first_name %>
+  		</div>
+  	</div>
   <br />
+  	<div class="row">
+  		<div class="large-2 small-3 columns">
+  			<%= f.label "Last Name" %>
+  		</div>
+  		<div class="large-10 small-9 columns">
+  		<%= f.text_field :last_name %>
+  		</div>
+  	</div>
+  <br />
+ <div class="row">
   <%= f.submit "Sign in" %>
+  </div>
 <% end %>
+
+
+</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>

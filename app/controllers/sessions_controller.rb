@@ -21,8 +21,8 @@ class SessionsController < ApplicationController
       user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
       user.code = params["code"] || ""
       user.add_role :admin if User.count == 1 # make the first user an admin
-      if user.email.blank?
-        redirect_to edit_user_path(user), :alert => "Please enter your email address."
+      if user.name.blank? || user.name == ""
+        redirect_to edit_user_path(user), :alert => "Please enter your name."
       else
         user.save
         if session[:state] and (session[:state]['action'] == 'create' || 'open')
