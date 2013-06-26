@@ -1,5 +1,8 @@
+
 <% if current_user %>
 	<%= render 'logged_in' %>
+<% elsif params[:intro] == "startup" %>
+	<%= render '/home/landing/startup' %>
 <% else %>
 	<%= render 'logged_out' %>
 <% end %>
