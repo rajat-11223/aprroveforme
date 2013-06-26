@@ -44,13 +44,13 @@ class ApprovalsController < ApplicationController
     if session[:state] and (session[:state]['action'] == 'open')
       current_user.refresh_google
       api_client = current_user.google_auth
-      file_id = (session[:state]['exportIds']).first ||
-      file = file_metadata(api_client, file_id) ||
-      @approval.link_title = file.title ||
-      @approval.link = file.alternateLink ||
-      @approval.embed = file.embedLink ||
-      @approval.link_id = file.id ||
-      @approval.link_type = file.mimeType ||
+      file_id = (session[:state]['exportIds']).first || ""
+      file = file_metadata(api_client, file_id) || ""
+      @approval.link_title = file.title || ""
+      @approval.link = file.alternateLink || ""
+      @approval.embed = file.embedLink || ""
+      @approval.link_id = file.id || ""
+      @approval.link_type = file.mimeType || ""
     end
 
     respond_to do |format|
