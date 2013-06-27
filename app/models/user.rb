@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
     client.authorization.client_secret = ENV['GOOGLE_SECRET']
     client.authorization.scope = ENV['GOOGLE_SCOPE']
     client.authorization.redirect_uri = ENV['REDIRECT_URI']
-    client.authorization.code = self.code.chomp
+    client.authorization.code = self.code.chomp || ""
     client.authorization.access_token = self.token
     client.authorization.refresh_token = self.refresh_token
     
