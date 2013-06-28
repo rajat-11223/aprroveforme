@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   attr_accessible :role_ids, :as => :admin
   attr_accessible :provider, :uid, :name, :email, :picture, :token, :first_name, :last_name, :code, :second_email
   validates :email, :picture, :presence => true
+  before_save { |user| user.email = user.email.downcase }
 
   def self.create_with_omniauth(auth)
     create! do |user|

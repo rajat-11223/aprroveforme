@@ -22,8 +22,8 @@ class ApprovalsController < ApplicationController
 
     if session[:code]
       approver = Approver.where("code = ?", session[:code]).first
-      if (approver.approval_id == @approval.id) and (@user.email != approver.email)
-        @user.set_second_email(approver.email)
+      if (approver.approval_id == @approval.id) and (@user.email != approver.email )
+        @user.set_second_email(approver.email.downcase)
         @user.save
       end
       session.delete(:code)
@@ -118,7 +118,7 @@ class ApprovalsController < ApplicationController
     
     # if an approver is approving
     if params[:approval][:approver]
-      @approver = @approval.approvers.where("email = ? or email = ?", current_user.email, current_user.second_email).first
+      @approver = @approval.approvers.where("email = ? or email= ?", current_user.email, current_user.second_email).first
       @approver.status = params[:approval][:approver][:status]
       @approver.comments = params[:approval][:approver][:comments]
       @approval.tasks << Task.new(params[:approval][:tasks])
