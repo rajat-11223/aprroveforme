@@ -4,6 +4,30 @@
 		<div class="large-8 large-offset-2 item-approval-form end columns">
 			<div class="row">
 				<div class="large-2 small-3 columns">
+					<p class="form-label">File*</p>
+				</div>
+				<div class="large-4 small-4 columns">
+					<a onclick="createPicker()" class="button primary" style="width:100%;">Select File</a>
+				</div>
+				<div class="large-6 small-5 columns">
+					<p class="form-file-name"><div id="result">
+						<%= f.hidden_field :link  if @approval.link %>
+						<%= f.hidden_field :embed if @approval.embed %>
+						<%= f.hidden_field :link_title if @approval.link_title %>
+						<%= f.hidden_field :link_id if @approval.link_id %>
+						<%= f.hidden_field :link_type if @approval.link_type %>
+						<%=  (link_to @approval.link_title, @approval.link ) if @approval.link_title %>
+					</div></p>
+				</div>
+				<label class="error"><%= error_message_on @approval, :link %></label>
+			</div>
+			<div class="row">
+				<div class="large-10 large-offset-2 small-12 columns">
+					<label for="perms" style="margin-top:-18px;"><input id="perms" name="perms" value="writer" type="checkbox"> Allow reviewers to edit this document.</label> 
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-2 small-3 columns">
 					<p class="form-label">Title*</p>
 				</div>
 				<div class="large-10 small-9 columns">
@@ -24,31 +48,6 @@
 				</div>
 				<div class="large-10 small-9 columns">
 					<%= f.text_field :deadline, :placeholder=>"MM/DD/YYYY", :id=>"datepicker", :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline), :as => :string %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-2 small-3 columns">
-					<p class="form-label">File*</p>
-				</div>
-				<div class="large-4 small-4 columns">
-					<a onclick="createPicker()" class="button primary" style="width:100%;">Select File</a>
-				</div>
-				<div class="large-6 small-5 columns">
-					<p class="form-file-name"><div id="result">
-						<%= f.hidden_field :link  if @approval.link %>
-						<%= f.hidden_field :embed if @approval.embed %>
-						<%= f.hidden_field :link_title if @approval.link_title %>
-						<%= f.hidden_field :link_id if @approval.link_id %>
-						<%= f.hidden_field :link_type if @approval.link_type %>
-						<%=  (link_to @approval.link_title, @approval.link ) if @approval.link_title %>
-					</div></p>
-				</div>
-				<label class="error"><%= error_message_on @approval, :link %></label>
-				
-			</div>
-			<div class="row">
-				<div class="large-10 large-offset-2 small-12 columns">
-					<label for="perms"><input id="perms" name="perms" value="writer" type="checkbox"> Grant approvers permissions to edit this document.</label> 
 				</div>
 			</div>
 			<div class="row">
@@ -142,8 +141,8 @@
       document.getElementById('result').innerHTML = message;
 
       //!-- if you want to prefill the title field with the doc title, uncomment below.
-      //var myTextField = document.getElementById('result2');
-      //myTextField.value = title;
+      var myTextField = document.getElementById('result2');
+      myTextField.value = title;
     }
 
   
