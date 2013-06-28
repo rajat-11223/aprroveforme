@@ -44,7 +44,11 @@ class ApprovalsController < ApplicationController
     if session[:state] and (session[:state]['action'] == 'open')
       current_user.refresh_google
       api_client = current_user.google_auth
-      file_id = (session[:state]['exportIds']).first || ""
+      if (session[:state]['exportIds'])
+        file_id = (session[:state]['exportIds']).first 
+      else
+        file_id = ""
+      end
       file = file_metadata(api_client, file_id) || ""
       @approval.link_title = file.title || ""
       @approval.link = file.alternateLink || ""
