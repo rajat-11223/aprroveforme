@@ -46,15 +46,17 @@ class ApprovalsController < ApplicationController
       api_client = current_user.google_auth
       if (session[:state]['exportIds'])
         file_id = (session[:state]['exportIds']).first 
-      else
-        file_id = ""
       end
-      file = file_metadata(api_client, file_id) || ""
-      @approval.link_title = file.title || ""
-      @approval.link = file.alternateLink || ""
-      @approval.embed = file.embedLink || ""
-      @approval.link_id = file.id || ""
-      @approval.link_type = file.mimeType || ""
+      if file_id
+        file = file_metadata(api_client, file_id) 
+        if file 
+          @approval.link_title = file.title 
+          @approval.link = file.defaultOpenWithLink
+          @approval.embed = file.embedLink 
+          @approval.link_id = file.id 
+          @approval.link_type = file.mimeType 
+        end
+      end
     end
 
     respond_to do |format|
