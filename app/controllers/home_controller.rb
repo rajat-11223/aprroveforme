@@ -4,7 +4,7 @@ class HomeController < ApplicationController
         if session[:code]
           approver = Approver.where("code = ?", session[:code]).first
           @user = current_user
-          if (@user.email.downcase != approver.email.downcase)
+          if approver and (@user.email.downcase != approver.email.downcase)
             @user.set_second_email(approver.email.downcase)
             @user.save
           end
