@@ -49,10 +49,10 @@ class ApprovalsController < ApplicationController
         file = file_metadata(api_client, file_id) 
         if file 
           @approval.link_title = file.title 
-          @approval.link = file.defaultOpenWithLink
           @approval.embed = file.embedLink 
           @approval.link_id = file.id 
           @approval.link_type = file.mimeType 
+          @approval.link = file.alternateLink
         end
       end
     end
