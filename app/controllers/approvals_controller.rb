@@ -44,13 +44,10 @@ class ApprovalsController < ApplicationController
     if session[:state] and (session[:state]['action'] == 'open')
       current_user.refresh_google
       api_client = current_user.google_auth
-      file_id = (session[:state]['exportIds'])
+      file_id = (session[:state]['exportIds'][0])
       if file_id
-        result = api_client.execute(
-          :api_method => @drive.files.get,
-          :parameters => { 'fileId' => file_id })
-        if result.status == 200
-          file = result.data
+        file = file_metadata(api_client, file_id) 
+        if file 
           @approval.link_title = file.title 
           @approval.link = file.defaultOpenWithLink
           @approval.embed = file.embedLink 
