@@ -8,7 +8,7 @@
     <div class="large-8 large-offset-2 end columns">
       <div class="row">
         <p class="center">
-          <a href="<%= signin_path %>" class="button primary large" id="login"><%= image_tag "/assets/google.png", :size=>"30x23"%> Get started for free</a><br /><br />
+          <a href="<%= signin_path %>" class="button primary large" id="login"><%= image_tag "/assets/google.png", :size=>"30x23"%> Get started for free</a><br />
         </p> 
       </div>
     </div>
@@ -16,39 +16,80 @@
   
   <div class="row">
     <div class="large-10 large-offset-1 end columns">
-      <p class="page-title"><%= image_tag "screenshot.png" %><p>
+      <%= image_tag "screenshot.png" %>
     </div>
   </div>
-  
+
   <div class="row">
-    <div class="large-12 columns">
-      <div class="row">
-        <div class="large-4 columns">
-          <p class="center"><%= image_tag "idea.svg" %></p>
-          <p class="sub-title center">Quick</p>
-          <p class="sub-description center">Quickly create approvals with just a few bits of information. From images to documents to spreadsheets, we've got you covered.</p>
-        </div>
-        <div class="large-4 columns">
-          <p class="center"><%= image_tag "check.svg" %></p>
-          <p class="sub-title center">Actionable</p>
-          <p class="sub-description center">We pull it all together so you can see the approval status, comments, and more without having to dig through emails.</p>
-        </div>
-        <div class="large-4 columns">
-          <p class="center"><%= image_tag "lock.svg" %></p>
-          <p class="sub-title center">Secure</p>
-          <p class="sub-description center">Your documents are securely hosted on Google Drive™. Documents not there? Don't worry, we make it easy to upload them.</p>
-        </div>
-      </div>
+    <div class="large-10 large-offset-1 end columns">
+      <p style="font-size:18px;">In addition to the document review dashboard, here are just some of the other features:<br /></p>
+      <p class="sub-title center">Real-Time Updates</p>
     </div>
-  </div><br />
-  
+  </div>
   <div class="row">
+        <div class="large-2 large-offset-2 columns">
+          <p class="center"><%= image_tag "realtime.png", :style => "width:80px;" %></p>
+        </div>
+        <div class="large-6 end columns">
+          <p class="sub-description">Catch a typo? Just make the change and it'll automatically be updated. With ApproveForMe there's no need to worry about keeping track of versions and attachments.</p>
+        </div>
+  </div><br /><br />
+
+  <div class="row">
+    <div class="large-10 large-offset-1 end columns">
+      <p class="sub-title center">Securely In The Cloud</p>
+    </div>
+  </div>
+  <div class="row">
+        <div class="large-6 small-8 large-offset-2 columns">
+          <p class="sub-description">Pick a document from Google Drive™ or upload one from your computer. Either way, it's just as easy as adding an attachment to an email, but without the need to, and stays on Google's servers.</p>
+        </div>
+        <div class="large-2 small-4 end columns">
+          <p class="center"><%= image_tag "cloud.png", :style => "width:150px;" %></p>
+        </div>
+  </div><br /><br />
+  <div class="row">
+    <div class="large-10 large-offset-1 end columns">
+      <p class="sub-title center">All Files Covered</p>
+    </div>
+  </div>
+  <div class="row">
+        <div class="large-2 small-4 large-offset-2 columns">
+          <p class="center"><%= image_tag "documents.png", :style => "width:80px;" %></p>
+        </div>
+        <div class="large-6 small-8 end columns">
+          <p class="sub-description">Whether you're a business person, designer, or spreadsheet junkie, all office file types (yes, even images and PDFs) are supported.</p>
+        </div>
+  </div><br /><br />
+
+<div style="background-color:#f4f4f4;padding-top:15px;margin-bottom:-20px;">
+<div class="row">
+    <div class="large-4 columns">
+      <p class="sub-title center">Freelancers</p>
+      <p class="center"><%= image_tag "freelancers.png" %></p>
+      <p class="sub-description center">Get quality, actionable feedback from clients so you can keep them happy.</p>
+    </div>
+    <div class="large-4 columns">
+      <p class="sub-title center">Startups</p>
+      <p class="center"><%= image_tag "startups.png" %></p>
+      <p class="sub-description center">Make sure founders stay on the same page to keep moving fast.</p>
+    </div>
+    <div class="large-4 columns">
+      <p class="sub-title center">Teams</p>
+      <p class="center"><%= image_tag "teams.png" %></p>
+      <p class="sub-description center">Get more done at work by reducing the number of back-and-forth emails.</p>
+    </div>
+  </div>
+    <div class="row">
     <div class="large-8 large-offset-2 end columns">
       <div class="row">
-        <p class="center"><%= link_to "Like what you see? Click here to get started now.", signin_path, :class=>"button secondary" %></p>
+        <p class="center"><%= link_to "Connect with Google to get started", signin_path, :class=>"button secondary" %></p>
       </div>
     </div>
   </div>
+</div><br />
+
+
 
 <!-- Mixpanel Conversion -->
 <script type="text/javascript">
