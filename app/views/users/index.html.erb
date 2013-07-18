@@ -98,3 +98,8 @@
 <%= paginate @users, :remote => true %>
 </div>
 </div>
+
+
+<% User.all.each do |x| %>
+<%= x.email %></br>
+<% end %>
