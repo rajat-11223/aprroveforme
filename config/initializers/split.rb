@@ -8,7 +8,7 @@ Split.configure do |config|
 	# This tests the header copy on the logged out page
 	# find the files for this test in home/tests
     "Logged out copy test" => {
-      :alternatives => ["home/tests/logged_out_header_control", "home/tests/logged_out_header_review", "home/tests/logged_out_header_workflow"],
+      :alternatives => ["home/tests/logged_out_header_control", "home/tests/logged_out_header_test"],
       :metric => :signed_in
     }
 
