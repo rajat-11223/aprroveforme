@@ -2,7 +2,7 @@
     <div class="large-3 small-3 columns"><%= f.text_field :name, :placeholder => "Name", :class=>"approvers-input"  %></div>
     <div class="large-6 small-6 columns"><%= f.text_field :email, :placeholder => "Email address", :class=>"approvers-input"  %></div>
     <div class="large-3 small-3 columns">
-      <%= f.select :required, options_for_select(["Required", "Optional"]) %>
+      <%= f.select(:required, ["Required", "Optional"]) %>
     </div>
 
 
