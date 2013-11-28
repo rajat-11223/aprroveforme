@@ -186,8 +186,8 @@ end
 
 
 def percentage_complete(approval)
-      @approver_count = approval.approvers.count
-      @approved_count = approval.approvers.where("status = ?", "Approved").count
+      @approver_count = approval.approvers.where("required = ?", "required").count
+      @approved_count = approval.approvers.where("(status = ?) and (required = ?)", "Approved", "required").count
 
       if @approver_count > 0
         return "#{((@approved_count*100)/@approver_count)}%"
