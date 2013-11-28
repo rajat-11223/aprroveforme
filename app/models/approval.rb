@@ -1,6 +1,6 @@
 class Approval < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
-  attr_accessible :deadline, :description, :link, :title, :approvers_attributes, :embed, :link_title, :link_id, :link_type, :tasks_attributes
+  attr_accessible :deadline, :description, :link, :title, :approvers_attributes, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :perms
   has_many :approvers, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
   validates :title, :deadline, :presence => true

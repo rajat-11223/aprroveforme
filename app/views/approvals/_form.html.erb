@@ -23,7 +23,8 @@
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-2 small-12 columns">
-					<label for="perms" style="margin-top:-18px;"><input id="perms" name="perms" value="writer" type="checkbox"> Allow reviewers to edit this document.</label> 
+					<label for="perms" style="margin-top:-18px;"><%= check_box("approval", "perms", {}, "writer", "reader") %>
+					Allow reviewers to edit this document.</label> 
 				</div>
 			</div>
 			<div class="row">

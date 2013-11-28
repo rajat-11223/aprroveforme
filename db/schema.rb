@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612051549) do
+ActiveRecord::Schema.define(:version => 20131128074241) do
 
   create_table "approvals", :force => true do |t|
     t.string   "title"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20130612051549) do
     t.string   "link_title"
     t.string   "link_id"
     t.string   "link_type"
+    t.string   "perms"
   end
 
   create_table "approvers", :force => true do |t|

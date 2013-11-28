@@ -93,7 +93,7 @@ class ApprovalsController < ApplicationController
     end
 
     @approval.approvers.each do |approver| 
-      @approval.update_permissions(@approval.link_id, current_user, approver, params[:perms] || "reader") if @approval.link
+      @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) if @approval.link
       approver.generate_code
     end
 
@@ -147,9 +147,10 @@ class ApprovalsController < ApplicationController
         if @approval.update_attributes(params[:approval])
 
           # if any new approvers, add permissions and code
+
           @approval.approvers.each do |approver| 
             if approver.code == nil
-              @approval.update_permissions(@approval.link_id, current_user, approver, "reader") 
+              @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) 
               approver.generate_code
               UserMailer.delay.new_approval_invite(@approval, approver)
             end
