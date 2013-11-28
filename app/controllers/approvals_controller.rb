@@ -39,6 +39,7 @@ class ApprovalsController < ApplicationController
   # GET /approvals/new.json
   def new
     @approval = Approval.new
+    @approval.perms = "reader"
     3.times {@approval.approvers.build} if @approval.approvers.empty?
     # if the doc is being opened from Google drive, pre-populate
     if session[:state] and (session[:state]['action'] == 'open')
