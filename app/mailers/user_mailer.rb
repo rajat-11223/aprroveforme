@@ -26,7 +26,7 @@ def new_approval_invite(approval, approver)
 	@subject = @owner_name + " has requested your approval on " + @approval.title
 	@approver = approver
 	@email = @approver.email
-	mail(:to => @email, :subject => @subject)
+	mail(:to => @email, :subject => @subject, :reply_to => @owner.email)
 end
 
 
@@ -36,7 +36,7 @@ def approval_update(approver)
 	@approval = @approver.approval
 	@owner = User.find(@approval.owner)
 	@subject = @approver.name + " has responded to " + @approval.title
-	mail(:to => @owner.email, :subject => @subject)
+	mail(:to => @owner.email, :subject => @subject, :reply_to => @approver.email)
 end
 
 # mail sent when an approval is 100%
