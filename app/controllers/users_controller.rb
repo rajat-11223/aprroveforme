@@ -7,7 +7,6 @@ class UsersController < ApplicationController
     unless current_user.has_role? :admin
       redirect_to root_url, :alert => "Access denied."
     end
-      @users_all = User.all
       @users = User.order(sort_column + " " + sort_direction).page params[:page]
     respond_to do |format|
       format.html
