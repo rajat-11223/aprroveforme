@@ -23,7 +23,7 @@
         <Cell><Data ss:Type="String">approvals responded to (30 days)</Data></Cell>
         <Cell><Data ss:Type="String">Last approval sent date</Data></Cell>
       </Row>
-    <% @users.all.each do |user| %>
+    <% @users_all.each do |user| %>
       <Row>
         <Cell><Data ss:Type="Number"><%= user.id %></Data></Cell>
         <Cell><Data ss:Type="String"><%= user.name %></Data></Cell>
