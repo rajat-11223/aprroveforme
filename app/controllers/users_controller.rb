@@ -8,6 +8,11 @@ class UsersController < ApplicationController
       redirect_to root_url, :alert => "Access denied."
     end
       @users = User.order(sort_column + " " + sort_direction).page params[:page]
+    respond_to do |format|
+      format.html
+      format.csv { send_data @users.to_csv }
+      format.xls # { send_data @users.to_csv(col_sep: "\t") }
+    end
 
   end
 
