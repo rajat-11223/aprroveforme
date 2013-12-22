@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131128074241) do
+ActiveRecord::Schema.define(:version => 20131221235701) do
 
   create_table "approvals", :force => true do |t|
     t.string   "title"
@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(:version => 20131128074241) do
     t.string   "email"
     t.string   "provider"
     t.string   "uid"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "picture"
     t.string   "token"
     t.string   "first_name"
@@ -90,6 +90,14 @@ ActiveRecord::Schema.define(:version => 20131128074241) do
     t.string   "refresh_token"
     t.string   "code"
     t.string   "second_email"
+    t.string   "email_domain"
+    t.integer  "approvals_sent"
+    t.integer  "approvals_received"
+    t.integer  "approvals_responded_to"
+    t.integer  "approvals_sent_30"
+    t.integer  "approvals_received_30"
+    t.integer  "approvals_responded_to_30"
+    t.datetime "last_sent_date"
   end
 
   create_table "users_roles", :id => false, :force => true do |t|
