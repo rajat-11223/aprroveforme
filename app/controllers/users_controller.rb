@@ -7,10 +7,11 @@ class UsersController < ApplicationController
     unless current_user.has_role? :admin
       redirect_to root_url, :alert => "Access denied."
     end
+      @users_all = User.all
       @users = User.order(sort_column + " " + sort_direction).page params[:page]
     respond_to do |format|
       format.html
-      format.csv { send_data @users.to_csv }
+      format.csv { send_data @users_all.to_csv }
       format.xls # { send_data @users.to_csv(col_sep: "\t") }
     end
 
