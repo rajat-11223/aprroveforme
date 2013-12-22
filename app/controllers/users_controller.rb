@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   def index
     unless current_user.has_role? :admin
       redirect_to root_url, :alert => "Access denied."
-    end
-      @users_all = User.all
+    end  
       @users = User.order(sort_column + " " + sort_direction).page params[:page]
+      @users_all = User.order(:updated_at)
     respond_to do |format|
       format.html
       format.csv { send_data @users_all.to_csv }
