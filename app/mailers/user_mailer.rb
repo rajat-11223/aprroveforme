@@ -36,7 +36,7 @@ def approval_update(approver)
 	@approval = @approver.approval
 	@owner = User.find(@approval.owner)
 	@subject = @approver.name + " has responded to " + @approval.title
-	mail(:to => @owner.email, :subject => @subject, :reply_to => @approver.email)
+	mail(:to => @owner.email, :subject => @subject)
 end
 
 # mail sent when an approval is 100%
