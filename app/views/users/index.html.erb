@@ -11,14 +11,6 @@
 </div>
 
 <div class="row">
-    <div class="large-3 large-offset-2 small-2 columns"><hr></div>
-    <div class="large-2 small-8 columns">
-      <p class="text-divider">ACQUISITION</p>
-    </div>
-    <div class="large-3 small-2 end columns"><hr></div>
-</div>
-
-<div class="row">
   <div class="large-4 columns panel center">
     <h4><%= User.where('created_at >= ?', Date.today).count %></h4>
     DAILY NEW USERS
@@ -34,39 +26,15 @@
 </div>
 
 <div class="row">
-    <div class="large-3 large-offset-2 small-2 columns"><hr></div>
-    <div class="large-2 small-8 columns">
-      <p class="text-divider">ENGAGEMENT</p>
-    </div>
-    <div class="large-3 small-2 end columns"><hr></div>
-</div>
-
-<div class="row">
-  <div class="large-4 columns panel center">
-    <h4><%= User.where('updated_at >= ?', 1.month.ago).count %></h4>
-    MONTHLY ACTIVE USERS
-  </div>
-  <div class="large-4 columns panel center">
-    <h4><%= Approval.select(:owner).uniq.to_a.count %></h4>
-    MONTHLY ACTIVE SENDERS
-  </div>
-  <div class="large-4 columns panel center">
-    <h4><%=  Approver.select(:email).uniq.to_a.count %></h4>
-    MONTHLY ACTIVE RECEIVERS
+  <div class="large-4 columns" style="margin-bottom:20px;">
+    Export to <%= link_to "CSV", users_path(format: "csv") %> or <%= link_to "Excel", users_path(format: "xls") %>
   </div>
 </div>
-
-
-<p>
-  Download:
-  <%= link_to "CSV", users_path(format: "csv") %> |
-  <%= link_to "Excel", users_path(format: "xls") %>
-</p>
 
 
 <div class="row">
 <div class="large-12 columns">
-<table class="table">
+<table class="table" style="width:100%;">
   <thead>
     <tr>
       <th colspan="2"><%= sortable "name" %></th>
@@ -75,7 +43,6 @@
       <th><%= sortable "sent" %></th>
       <th><%= sortable "received" %></th>
       <th><%= sortable "updated_at", "last login" %></th>
-      <th colspan="2"><%= sortable "role" %></th>
       <th>Delete</th>
     </tr>
   </thead>
@@ -90,12 +57,6 @@
       <td><%= Approval.where("owner = ?", user.id).count %></td>
       <td><%= Approver.where("email = ?", user.email).count %></td>
       <td><%= user.updated_at.to_date %></td>
-      <td><%= user.roles.first.name.titleize unless user.roles.first.nil? %></td>
-      
-      <td>
-        <a data-toggle="modal" href="#role-options-<%= user.id %>" class="button secondary tiny" type="button">Change role</a>
-        <%= render user %>
-      </td>
       <td><%= link_to("delete", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user %></td>
     </tr>
   <% end %>
