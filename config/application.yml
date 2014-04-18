@@ -29,8 +29,8 @@ test:
  APP_ID: 107940143634
  REDISTOGO_URL: redis://localhost:6379
 production:
- GOOGLE_ID: 107940143634-iel5h5i1tu4siqfct2tjqm68iou6oppe.apps.googleusercontent.com
- GOOGLE_SECRET: tdkWnSp3zoneFgGmm1rz3L_T
- REDIRECT_URI: http://www.approveforme.com/auth/google_oauth2/callback
- APP_ID: 107940143634
+ GOOGLE_ID: 79834970872-0i16kifmu100tf9af5orbqg8fm30o7ke.apps.googleusercontent.com
+ GOOGLE_SECRET: Xs-PuaCjK6iAtuLRUzj3f0NY
+ REDIRECT_URI: http://limitless-cove-8731.herokuapp.com/oauth2callback
+ APP_ID: 79834970872
  REDISTOGO_URL: redis://redistogo:808e3c04b0af3d8f5141fb00d8e6685f@beardfish.redistogo.com:9041/
