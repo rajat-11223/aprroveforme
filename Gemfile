@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 gem 'sqlite3', :group => :development
+gem 'mysql2', :group => :development
 gem 'pg', :group => :production
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -38,3 +39,6 @@ gem 'exceptional'
 gem 'kaminari'
 gem 'split', :require => 'split/dashboard'
 gem 'split-analytics'
+gem 'therubyracer', :platforms => :ruby
+gem 'debugger'
+gem 'braintree', '>= 2.16.0'

@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
       state = MultiJson.decode(s)
       session[:state] = state
     end
+    session[:plan_type]=params[:plan_type]
     redirect_to '/auth/google_oauth2'
   end
 
@@ -25,10 +26,39 @@ class SessionsController < ApplicationController
         redirect_to edit_user_path(user), :alert => "Please enter your name."
       else
         user.save
+
         if session[:state] and (session[:state]['action'] == 'create' || 'open')
           redirect_to new_approval_path
         else
-          redirect_to root_url
+          if session[:plan_type] == nil
+            if Subscription.all.collect(&:user_id).include? current_user.id
+              redirect_to root_url
+            else
+              redirect_to pricing_index_path
+            end  
+          else
+            if session[:plan_type]=="free"
+
+              if !Subscription.all.collect(&:user_id).include? current_user.id
+                Subscription.create(:plan_type=> session[:plan_type],:plan_date=>Date.today,:user_id=>current_user.id)
+                session[:plan_type]=nil
+                redirect_to root_url
+              else
+                @subscription=Subscription.find_by_user_id(current_user.id)
+                @subscription.plan_type= session[:plan_type]
+                @subscription.plan_date= Date.today
+                @subscription.save
+                session[:plan_type]=nil
+                session[:upgrade]=nil
+                respond_to do |format|
+                  format.html { redirect_to root_url, notice: 'Plan Downgrade Successfully.' }
+                end
+                
+              end  
+            else
+              redirect_to new_payment_path
+            end
+          end
         end
       end
   end

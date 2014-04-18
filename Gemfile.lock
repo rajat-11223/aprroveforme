@@ -41,6 +41,8 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (2.3.0.1)
       sass (~> 3.2)
+    braintree (2.30.0)
+      builder (>= 2.0.0)
     builder (3.0.4)
     cancan (1.6.9)
     coderay (1.0.9)
@@ -51,9 +53,16 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.1)
+    columnize (0.3.6)
     daemons (1.1.9)
     database_cleaner (0.9.1)
     debug_inspector (0.0.2)
+    debugger (1.6.6)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.3.2)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.3.2)
     delayed_job (3.0.5)
       activesupport (~> 3.0)
     delayed_job_active_record (0.4.4)
@@ -111,6 +120,7 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.2.0)
       addressable (~> 2.3)
+    libv8 (3.16.14.3)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -119,6 +129,7 @@ GEM
     multi_json (1.6.1)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
+    mysql2 (0.3.15)
     newrelic_rpm (3.6.2.96)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -169,6 +180,7 @@ GEM
     redis (3.0.4)
     redis-namespace (1.3.0)
       redis (~> 3.0.0)
+    ref (1.0.5)
     rolify (3.2.0)
     rspec-core (2.13.1)
     rspec-expectations (2.13.0)
@@ -218,6 +230,9 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.7)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.17.0)
     tilt (1.3.5)
     treetop (1.4.12)
@@ -244,10 +259,12 @@ DEPENDENCIES
   better_errors (>= 0.6.0)
   binding_of_caller (>= 0.7.1)
   bootstrap-sass (>= 2.3.0.0)
+  braintree (>= 2.16.0)
   cancan (>= 1.6.8)
   coffee-rails (~> 3.2.1)
   daemons
   database_cleaner (>= 0.9.1)
+  debugger
   delayed_job_active_record
   dynamic_form
   email_spec (>= 1.4.0)
@@ -260,6 +277,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   mail
+  mysql2
   newrelic_rpm
   omniauth (>= 1.1.3)
   omniauth-google-oauth2
@@ -274,6 +292,7 @@ DEPENDENCIES
   split
   split-analytics
   sqlite3
+  therubyracer
   uglifier (>= 1.0.3)
   workless
   zurb-foundation (~> 4.0.0)

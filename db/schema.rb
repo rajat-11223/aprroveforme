@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131221235701) do
+ActiveRecord::Schema.define(:version => 20140416070532) do
 
   create_table "approvals", :force => true do |t|
     t.string   "title"
@@ -66,6 +66,15 @@ ActiveRecord::Schema.define(:version => 20131221235701) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "subscriptions", :force => true do |t|
+    t.string   "plan_type"
+    t.date     "plan_date"
+    t.date     "renewable_date"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "tasks", :force => true do |t|
     t.text     "comment"

@@ -13,6 +13,8 @@ Workflow::Application.routes.draw do
   	resources :approvers
     resources :tasks
   end
+  match 'payments/new' => 'payments#new', :as => :new_payment
+  match 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
 
   mount Split::Dashboard, :at => 'split'
 
