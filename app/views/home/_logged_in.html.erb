@@ -9,7 +9,7 @@
         <%= link_to "Create New Approval", new_approval_path, :class => "button primary create", :id =>"form" %>
         <%else%>
         <br/>
-        <div>You have reached your the maximum limit of approval. Click here to Upgrade your plan and submit more approval requests</div>
+        <div>You have reached your the maximum limit of reviews. Click <%= link_to "here to Upgrade", pricing_index_path(:type=>"upgrade")%> your plan and submit more reviews requests</div>
         <% end %>
       </div>
     </div>

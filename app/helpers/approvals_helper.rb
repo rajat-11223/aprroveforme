@@ -31,32 +31,33 @@ module ApprovalsHelper
 	    
 	  end
     def plan_approval
-    	
-    	@subscription =  Subscription.find_by_user_id(current_user.id).plan_type
-    	if @subscription == "free"
-    		return "free"
-    	elsif @subscription == "professional"
-    		return "professional"
-    	else
-    		return "unlimited"
-    	end
+    	if !Subscription.find_by_user_id(current_user.id).nil?
+        	@subscription =  Subscription.find_by_user_id(current_user.id).plan_type
+        	if @subscription == "free"
+        		return "free"
+        	elsif @subscription == "professional"
+        		return "professional"
+        	else
+        		return "unlimited"
+        	end
+        end    
     		
     end
     def approval_accord_plan
     	
     	if plan_approval == "free"
     		@approval = Approval.find_all_by_owner(current_user.id)
-    		if @approval.count <=2
+    		if @approval.count <=1
     		   return true
     		else
     		   return false
     		end
     	elsif plan_approval == "professional"
     		@approval = Approval.find_all_by_owner(current_user.id)
-    		if @approval.count <= 19
+    		if @approval.count <= 5
     		   return true
     		else
-    		   return true
+    		   return false
     		end
     	else
     		return true

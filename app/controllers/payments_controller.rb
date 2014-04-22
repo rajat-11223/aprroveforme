@@ -15,7 +15,7 @@ class PaymentsController < ApplicationController
   end
 
   def confirm
-    
+    debugger
     @result = Braintree::TransparentRedirect.confirm(request.query_string)
     if @result.success?
 
@@ -28,10 +28,10 @@ class PaymentsController < ApplicationController
         session[:upgrade]=nil
         respond_to do |format|
           if session[:degrade]!="degrade"
-            format.html { redirect_to root_url, notice: 'Plan Upgrade Successfully.' }
+            format.html { redirect_to root_url, notice: 'Congratulations, you have successfully updated your plan.' }
           else
             session[:degrade]=nil
-            format.html { redirect_to root_url, notice: 'Plan Downgrade Successfully.' } 
+            format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' } 
           end
         end
       else  
@@ -52,9 +52,9 @@ class PaymentsController < ApplicationController
     if session[:plan_type]=="free"
     "00.00"
     elsif session[:plan_type] == "professional"
-    "29.00"
+    "1.00"
     else
-    "49.00"
+    "19.00"
   end
   end
 end

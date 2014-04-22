@@ -51,7 +51,7 @@ class SessionsController < ApplicationController
                 session[:plan_type]=nil
                 session[:upgrade]=nil
                 respond_to do |format|
-                  format.html { redirect_to root_url, notice: 'Plan Downgrade Successfully.' }
+                  format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' }
                 end
                 
               end  
