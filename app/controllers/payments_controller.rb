@@ -52,7 +52,7 @@ class PaymentsController < ApplicationController
     if session[:plan_type]=="free"
     "00.00"
     elsif session[:plan_type] == "professional"
-    "1.00"
+    "9.00"
     else
     "19.00"
   end
