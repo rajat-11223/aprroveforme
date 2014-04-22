@@ -32,5 +32,5 @@ production:
  GOOGLE_ID: 291418161965-gmlrl8jb64dvprch5pf8c7eg4j3b9tgh.apps.googleusercontent.com
  GOOGLE_SECRET: _JoKuvjEBXsHyaTwFjxWE7WS
  REDIRECT_URI: http://www.approveforme.com/oauth2callback
- APP_ID: rare-palace-558
+ APP_ID: 107940143634
  REDISTOGO_URL: redis://redistogo:808e3c04b0af3d8f5141fb00d8e6685f@beardfish.redistogo.com:9041/
