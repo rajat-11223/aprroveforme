@@ -31,6 +31,6 @@ test:
 production:
  GOOGLE_ID: 269614549025-5vnf7vuumjrakakukih1ls0nqig3rh67.apps.googleusercontent.com
  GOOGLE_SECRET: xb6wO07ADlQoIdDW3tK3I3vs
- REDIRECT_URI: https://www.limitless-cove-8731.herokuapp.com/oauth2callback
+ REDIRECT_URI: https://www.limitless-cove-8731.herokuapp.com/oauth2callback/
  APP_ID: 269614549025
  REDISTOGO_URL: redis://redistogo:808e3c04b0af3d8f5141fb00d8e6685f@beardfish.redistogo.com:9041/
