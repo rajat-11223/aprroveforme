@@ -85,4 +85,11 @@ module Workflow
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '2.0'
   end
+
+  
+  class Application < Rails::Application
+    config.google_verification = "google16deb60cae23dff7"
+  end
+
+
 end

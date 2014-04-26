@@ -16,6 +16,11 @@ Workflow::Application.routes.draw do
   match 'payments/new' => 'payments#new', :as => :new_payment
   match 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
 
+  match "/#{Rails.application.config.google_verification}.html",
+  to: proc { |env| [200, {},
+    ["google-site-verification:
+    #{Rails.application.config.google_verification}.html"]] }
+
   mount Split::Dashboard, :at => 'split'
 
   root :to => "home#index"

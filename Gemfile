@@ -40,5 +40,5 @@ gem 'kaminari'
 gem 'split', :require => 'split/dashboard'
 gem 'split-analytics'
 gem 'therubyracer', :platforms => :ruby
-# gem 'debugger'
+gem 'debugger'
 gem 'braintree', '>= 2.16.0'

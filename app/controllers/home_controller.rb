@@ -10,7 +10,11 @@ class HomeController < ApplicationController
           end
           session.delete(:code)
         end
-    	@my_approvals = Approval.where("owner = ? and deadline >= ?", current_user.id, Date.today+1)
+    	if current_user.has_role? :admin
+        @my_approvals = Approval.where("deadline >= ?",Date.today+1)        
+      else
+        @my_approvals = Approval.where("owner = ? and deadline >= ?", current_user.id, Date.today+1)       
+      end  
     	@my_completed_approvals = Approval.where("owner = ? and deadline < ?", current_user.id, Date.today+1)
     	@pending_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Pending", "")
     	@signedoff_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Approved", "Declined")
