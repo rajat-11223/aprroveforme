@@ -13,3 +13,14 @@ ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
       #{instance.error_message}</small></div>).html_safe
   end
 end
+
+# AK 4.13.18 Configure ActionMailer for SendGrid
+ActionMailer::Base.smtp_settings = {
+  :user_name => ENV["SENDGRID_USERNAME"],
+  :password => ENV["SENDGRID_PASSWORD"],
+  :domain => 'approveforme.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
+}
