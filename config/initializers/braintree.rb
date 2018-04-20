@@ -1,5 +1,5 @@
 
-Braintree::Configuration.environment = :production
+Braintree::Configuration.environment = :sandbox
 Braintree::Configuration.logger = Logger.new('log/braintree.log')
 Braintree::Configuration.merchant_id = '896h6fqr23smp2ny'
 Braintree::Configuration.public_key = 'tmmymh4jf4rvrgj4'
