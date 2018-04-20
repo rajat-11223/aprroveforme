@@ -1,7 +1,7 @@
 
 Braintree::Configuration.environment = :production
 Braintree::Configuration.logger = Logger.new('log/braintree.log')
-Braintree::Configuration.merchant_id = 'x7yv8pccsmyswyn6'
-Braintree::Configuration.public_key = 'hnh38djyn9nb5tkb'
-Braintree::Configuration.private_key = 'a24bb6e7c7bde18b6a5426f4936ec835'
+Braintree::Configuration.merchant_id = '896h6fqr23smp2ny'
+Braintree::Configuration.public_key = 'tmmymh4jf4rvrgj4'
+Braintree::Configuration.private_key = 'c4055c33c9a1d00241c530fa04e14638'
 #Braintree::Configuration.client_side_encryption_key = 'MIIBCgKCAQEAvQOqm8pslPSAGIbH72iixoLGnqJLm5wQYfRnRoAYSBsNmSh4kImFB6Us3xsMvHqbwEmoupYcRgZ/6mqLrqvaGGPif9ckcD07z+kG3EXFYj5ZQ1+gQH+LIL+aglZIBm2leJRgRSE3q3w9MvDtDyfAZrZfUNWy3u8FJ3BH2gbvl7Jvkpmhmkpn9w1CvCLMhE8OU/B3/rXdbRJJUdeDVbpGNseMOy1Xuk6FsEDG0W6AaOFrICmy1q5RYqvsyz/UEK05tNiZE0q17iv/zYviwSGykk2LO1DZpfiwhcqa8pd3oVTY95HPp0cWZTZ4Xq295z68hgf45K+MaKNRUHH5ofx3KQIDAQAB'
