@@ -2,9 +2,10 @@ class User < ApplicationRecord
   rolify
   validates :email, :picture, :presence => true
   before_save { |user| user.email = user.email.downcase }
- 
-  
- 
+
+  has_and_belongs_to_many :roles, :join_table => :users_roles
+  has_one :subscription, dependent: :destroy
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth['provider']

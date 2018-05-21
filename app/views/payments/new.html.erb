@@ -10,7 +10,7 @@
 <%= form_for :transaction,
      :params => @result && @result.params[:transaction],
      :errors => @result && @result.errors.for(:transaction),
-     :builder => ApplicationHelper::BraintreeFormBuilder,
+     # :builder => ApplicationHelper::BraintreeFormBuilder,
      :url => Braintree::TransparentRedirect.url,
      :html => {:autocomplete => "off"} do |f| -%>
   <div style="width:50%; margin-left: 25%;">

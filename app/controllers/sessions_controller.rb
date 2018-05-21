@@ -13,59 +13,64 @@ class SessionsController < ApplicationController
 
 
   def create
-      auth = request.env["omniauth.auth"]
-      user = User.where(:provider => auth['provider'], 
-                        :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
-      session[:user_id] = user.id
-      if user.customer_id.blank?
-        @customer = Braintree::Customer.create(email: user.email)
-        user.customer_id =  @customer.customer.id
-      end
-      session[:credentials] = auth["credentials"]
-       ab_finished(:signed_in)
-      user.token = auth["credentials"]["token"] || ""
-      user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
-      user.code = params["code"] || ""
-      user.add_role :admin if User.count == 1 # make the first user an admin
-      if user.name.blank? || user.name == ""
-        redirect_to edit_user_path(user), :alert => "Please enter your name."
-      else
-        user.save
+    auth = request.env["omniauth.auth"]
+    user = User.where(:provider => auth['provider'],
+                      :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
+    session[:user_id] = user.id
+    if user.customer_id.blank?
+      @customer = Braintree::Customer.create(email: user.email)
+      user.customer_id =  @customer.customer.id
+    end
 
-        if session[:state] and (session[:state]['action'] == 'create' || 'open')
-          redirect_to new_approval_path
+    if !Subscription.all.collect(&:user_id).include? user.id
+      Subscription.create(:plan_type=> 'free',:plan_date=>Date.today,:user_id=> user.id)
+    end
+    
+    session[:credentials] = auth["credentials"]
+    ab_finished(:signed_in)
+    user.token = auth["credentials"]["token"] || ""
+    user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
+    user.code = params["code"] || ""
+    user.add_role :admin if User.count == 1 # make the first user an admin
+    if user.name.blank? || user.name == ""
+      redirect_to edit_user_path(user), :alert => "Please enter your name."
+    else
+      user.save
+
+      if session[:state] and (session[:state]['action'] == 'create' || 'open')
+        redirect_to new_approval_path
+      else
+        if session[:plan_type] == nil
+          if Subscription.all.collect(&:user_id).include? current_user.id
+            redirect_to root_url
+          else
+            redirect_to pricing_index_path
+          end
         else
-          if session[:plan_type] == nil
-            if Subscription.all.collect(&:user_id).include? current_user.id
+          if session[:plan_type]=="free"
+
+            if !Subscription.all.collect(&:user_id).include? current_user.id
+              Subscription.create(:plan_type=> session[:plan_type],:plan_date=>Date.today,:user_id=>current_user.id)
+              session[:plan_type]=nil
               redirect_to root_url
             else
-              redirect_to pricing_index_path
-            end  
-          else
-            if session[:plan_type]=="free"
+              @subscription=Subscription.find_by_user_id(current_user.id)
+              @subscription.plan_type= session[:plan_type]
+              @subscription.plan_date= Date.today
+              @subscription.save
+              session[:plan_type]=nil
+              session[:upgrade]=nil
+              respond_to do |format|
+                format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' }
+              end
 
-              if !Subscription.all.collect(&:user_id).include? current_user.id
-                Subscription.create(:plan_type=> session[:plan_type],:plan_date=>Date.today,:user_id=>current_user.id)
-                session[:plan_type]=nil
-                redirect_to root_url
-              else
-                @subscription=Subscription.find_by_user_id(current_user.id)
-                @subscription.plan_type= session[:plan_type]
-                @subscription.plan_date= Date.today
-                @subscription.save
-                session[:plan_type]=nil
-                session[:upgrade]=nil
-                respond_to do |format|
-                  format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' }
-                end
-                
-              end  
-            else
-              redirect_to new_payment_path
             end
+          else
+            redirect_to new_payment_path
           end
         end
       end
+    end
   end
 
   def drive
