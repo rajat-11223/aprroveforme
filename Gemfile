@@ -1,18 +1,19 @@
 source 'https://rubygems.org'
-gem 'rails', '3.2.8'
+ruby "2.3.1"
+
+gem 'rails', '5.0'
 gem 'sqlite3', :group => :development
-gem 'mysql2', :group => :development
-gem 'pg', :group => :production
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-ui-rails'
-  gem 'zurb-foundation', '~> 4.0.0'
-end
+# gem 'mysql2', :group => :development
+gem 'pg', '~> 0.20.0'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
+gem 'jquery-ui-rails'
+gem 'zurb-foundation'
+gem 'jwt', '~>1.4.0'
 gem 'jquery-rails'
-gem "rspec-rails", ">= 2.12.2", :group => [:development, :test]
-gem "database_cleaner", ">= 0.9.1", :group => :test
+gem "rspec-rails", :group => [:development, :test]
+gem "database_cleaner", :group => :test
 gem "mail"
 gem "activesupport"
 gem "i18n"
@@ -24,7 +25,6 @@ gem "omniauth-google-oauth2"
 gem "cancan", ">= 1.6.8"
 gem "rolify", ">= 3.2.0"
 gem "simple_form", ">= 2.0.4"
-gem "quiet_assets", ">= 1.0.1", :group => :development
 gem "figaro", ">= 0.5.3"
 gem "better_errors", ">= 0.6.0", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
@@ -32,8 +32,10 @@ gem "delayed_job_active_record"
 gem 'google-api-client', '>= 0.4.4', :require => 'google/api_client'
 gem "workless"
 gem "httparty"
+# gem "quiet_assets", :group => :development
 gem "dynamic_form"
 gem 'daemons'
+gem 'mysql2'
 gem 'newrelic_rpm'
 gem 'exceptional'
 gem 'kaminari'
@@ -41,4 +43,23 @@ gem 'split', :require => 'split/dashboard'
 gem 'split-analytics'
 gem 'therubyracer', :platforms => :ruby
 # gem 'debugger'
+gem 'byebug'
 gem 'braintree', '>= 2.16.0'
+gem 'braintree-rails'
+gem 'multi_json'
+gem 'responders', '~> 2.0'
+
+gem 'rails-deprecated_sanitizer'
+gem 'activemodel-serializers-xml'
+
+gem 'record_tag_helper', '~> 1.0'
+group :development do
+  gem 'puma'
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'web-console', '>= 3.3.0'
+  gem 'rails-controller-testing'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+end

@@ -1,4 +1,4 @@
-class RemoveApproverFromTasks < ActiveRecord::Migration
+class RemoveApproverFromTasks < ActiveRecord::Migration[5.0]
   def up
     remove_column :tasks, :approver_id
   end

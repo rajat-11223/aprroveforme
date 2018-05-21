@@ -1,6 +1,5 @@
-class Approver < ActiveRecord::Base
-  attr_accessible :email, :name, :required, :status, :comments, :code
-  belongs_to :approval
+class Approver < ApplicationRecord
+  belongs_to :approval, inverse_of: :approvers
   before_save { |approver| approver.email = approver.email.downcase }
   
   include ActionView::Helpers::DateHelper

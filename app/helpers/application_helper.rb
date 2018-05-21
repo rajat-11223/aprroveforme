@@ -10,7 +10,26 @@ module ApplicationHelper
     end
     button_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"button secondary small")
   end
+  
+  def button_to_function(name, function=nil, html_options={})
+    message = "button_to_function is deprecated and will be removed from Rails 4.1. We recommend using Unobtrusive JavaScript instead. " +
+      "See http://guides.rubyonrails.org/working_with_javascript_in_rails.html#unobtrusive-javascript"
+    ActiveSupport::Deprecation.warn message
 
+    onclick = "#{"#{html_options[:onclick]}; " if html_options[:onclick]}#{function};"
+
+    tag(:input, html_options.merge(:type => 'button', :value => name, :onclick => onclick))
+  end
+ 
+  def gateway
+    @gateway ||= Braintree::Gateway.new(
+      :environment => :sandbox,
+      :merchant_id => '896h6fqr23smp2ny',
+      :public_key => 'swc9g7ffxxfgdb8b',
+      :private_key => 'bde545bb49e6ecbd4831b38d19e0faf3',
+    )
+  end
+  
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil

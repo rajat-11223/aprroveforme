@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  include ApplicationHelper
 
   def new
     if params[:state]
@@ -16,8 +17,12 @@ class SessionsController < ApplicationController
       user = User.where(:provider => auth['provider'], 
                         :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
       session[:user_id] = user.id
+      if user.customer_id.blank?
+        @customer = Braintree::Customer.create(email: user.email)
+        user.customer_id =  @customer.customer.id
+      end
       session[:credentials] = auth["credentials"]
-      finished(:signed_in)
+       ab_finished(:signed_in)
       user.token = auth["credentials"]["token"] || ""
       user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
       user.code = params["code"] || ""
@@ -98,6 +103,7 @@ class SessionsController < ApplicationController
   def failure
     redirect_to root_url, :alert => "Authentication error: #{params[:message]}."
   end
+
 
 
 

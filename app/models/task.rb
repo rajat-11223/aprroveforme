@@ -1,4 +1,3 @@
-class Task < ActiveRecord::Base
+class Task < ApplicationRecord
   belongs_to :approval
-  attr_accessible :comment, :status, :author, :approval_id
 end

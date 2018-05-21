@@ -1,11 +1,11 @@
 class ApprovalsController < ApplicationController
-  before_filter :authenticate_user!
-  load_and_authorize_resource
+  before_action :authenticate_user!
+  #load_and_authorize_resource
 
   # GET /approvals
   # GET /approvals.json
   def index
-    unless current_user.has_role? :admin
+    unless current_user.has_role? :admingit 
       redirect_to root_url, :alert => "Access denied."
     end
     @approvals = Approval.all
@@ -87,7 +87,7 @@ class ApprovalsController < ApplicationController
   # POST /approvals
   # POST /approvals.json
   def create
-    @approval = Approval.new(params[:approval])
+    @approval = Approval.new(approval_params)
     @approval.owner = current_user.id
     if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
       @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
@@ -101,12 +101,12 @@ class ApprovalsController < ApplicationController
     
     respond_to do |format|
       if @approval.save
-        finished(:approval_created)
+        ab_finished(:approval_created)
         format.html { redirect_to @approval, notice: 'Approval was successfully created.' }
         format.json { render json: @approval, status: :created, location: @approval }
-        UserMailer.delay.my_new_approval(@approval)
+        UserMailer.my_new_approval(@approval).deliver_later
         @approval.approvers.each do |approver| 
-          UserMailer.delay.new_approval_invite(@approval, approver)
+          UserMailer.new_approval_invite(@approval, approver).deliver_later
         end
       else
         format.html { render action: "new" }
@@ -131,9 +131,9 @@ class ApprovalsController < ApplicationController
       #  @approver.tasks << task
       #end
       @approver.save
-      finished(:approver_approved)
-      UserMailer.delay.approval_update(@approver)
-      UserMailer.delay.completed_approval(@approval) if percentage_complete(@approval) == "100%"
+      ab_finished(:approver_approved)
+      UserMailer.approval_update(@approver).deliver_later
+      UserMailer.completed_approval(@approval).deliver_later if percentage_complete(@approval) == "100%"
       redirect_to @approval, notice: 'Approval submitted'
 
 
@@ -145,7 +145,7 @@ class ApprovalsController < ApplicationController
       
 
       respond_to do |format|
-        if @approval.update_attributes(params[:approval])
+        if @approval.update_attributes(approval_params)
 
           # if any new approvers, add permissions and code
 
@@ -153,7 +153,7 @@ class ApprovalsController < ApplicationController
             if approver.code == nil
               @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) 
               approver.generate_code
-              UserMailer.delay.new_approval_invite(@approval, approver)
+              UserMailer.new_approval_invite(@approval, approver).deliver_later
             end
           end
 
@@ -181,6 +181,12 @@ class ApprovalsController < ApplicationController
       format.html { redirect_to root_url }
       format.json { head :no_content }
     end
+  end
+  
+  private 
+  
+  def approval_params
+    params.require(:approval).permit(:id,:deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :perms, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
   end
 end
 

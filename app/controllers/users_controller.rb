@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :correct_user?, :except => [:index]
+  before_action :authenticate_user!
+  before_action :correct_user?, :except => [:index]
   helper_method :sort_column, :sort_direction
 
   def index
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       @user.name = "#{@user.first_name} #{@user.last_name}"
       @user.save
       redirect_to root_url
@@ -46,5 +46,10 @@ class UsersController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
+  
+  def user_params
+    params.require(:user).permit(:provider, :uid, :name, :email, :picture, :token, :first_name, :last_name, :code, :second_email, :customer_id)
+  end
+  
 
 end

@@ -46,14 +46,14 @@ module ApprovalsHelper
     def approval_accord_plan
     	
     	if plan_approval == "free"
-    		@approval = Approval.find_all_by_owner(current_user.id)
+    		@approval = Approval.where(owner: current_user.id)
     		if @approval.count <=1
     		   return true
     		else
     		   return false
     		end
     	elsif plan_approval == "professional"
-    		@approval = Approval.find_all_by_owner(current_user.id)
+    		@approval = Approval.where(owner: current_user.id)
     		if @approval.count <= 5
     		   return true
     		else

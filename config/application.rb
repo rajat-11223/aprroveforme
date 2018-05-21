@@ -9,12 +9,7 @@ require 'google/api_client'
 require 'csv'
 
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-   Bundler.require(*Rails.groups(:assets => %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-end
+Bundler.require(:default, Rails.env)
 
 
 module Workflow
@@ -23,10 +18,10 @@ module Workflow
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.test_framework :rspec
-      
-      
-      
-      
+
+
+
+
       g.view_specs false
       g.helper_specs false
     end
@@ -75,18 +70,27 @@ module Workflow
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
-    config.active_record.whitelist_attributes = true
+    #config.load_defaults 5.0
 
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false
-    
 
+    # ActiveSupport.halt_callback_chains_on_return_false = false
+
+    config.action_mailer.perform_caching = true
+    config.action_mailer.deliver_later_queue_name = :new_queue_name
+    config.action_controller.forgery_protection_origin_check = true
+    config.action_controller.per_form_csrf_tokens = true
+    config.active_record.belongs_to_required_by_default = true
+    # config.active_record.raise_in_transactional_callbacks = true
+    config.i18n.enforce_available_locales = false
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '2.0'
+
   end
 
-  
+
   class Application < Rails::Application
     config.google_verification = "google16deb60cae23dff7"
   end

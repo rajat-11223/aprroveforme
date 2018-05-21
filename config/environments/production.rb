@@ -13,6 +13,8 @@ Workflow::Application.configure do
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
+  
+  config.assets.js_compressor = :uglifier
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
@@ -31,7 +33,7 @@ Workflow::Application.configure do
   config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -61,7 +63,7 @@ Workflow::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => 'www.approveforme.com' }
+  config.action_mailer.default_url_options = { :host => ENV["APP_HOST"] }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
@@ -72,12 +74,13 @@ Workflow::Application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
     port: 587,
-    domain: "approveforme.com",
+    domain: ENV["APP_DOMAIN"],
     authentication: "plain",
     user_name: ENV["SENDGRID_USERNAME"],
     password: ENV["SENDGRID_PASSWORD"],
     :enable_starttls_auto => true
   }
+  config.eager_load = true
 
 
   # Log the query plan for queries taking more than this (works

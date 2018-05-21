@@ -1,4 +1,4 @@
-class AddDocLinkToApproval < ActiveRecord::Migration
+class AddDocLinkToApproval < ActiveRecord::Migration[5.0]
   def change
     add_column :approvals, :link_title, :string
   end

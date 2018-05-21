@@ -15,7 +15,6 @@ class PaymentsController < ApplicationController
   end
 
   def confirm
-    
     @result = Braintree::TransparentRedirect.confirm(request.query_string)
     if @result.success?
 

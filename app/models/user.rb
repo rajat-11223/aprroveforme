@@ -1,10 +1,10 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   rolify
-  attr_accessible :role_ids, :as => :admin
-  attr_accessible :provider, :uid, :name, :email, :picture, :token, :first_name, :last_name, :code, :second_email
   validates :email, :picture, :presence => true
   before_save { |user| user.email = user.email.downcase }
-
+ 
+  
+ 
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth['provider']
@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
          user.first_name = auth['info']['first_name'] || ""
          user.last_name = auth['info']['last_name'] || ""
       end
-      UserMailer.delay.new_user(user.name, user.email)
+      UserMailer.new_user(user.name, user.email).deliver_later
     end
   end
 
