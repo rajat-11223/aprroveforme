@@ -1,5 +1,15 @@
 module ApplicationHelper
 
+  def plan_responses_limit
+    if current_user.subscription.plan_type == 'free'
+      '2'
+    elsif current_user.subscription.plan_type == 'professional'
+      '6'
+    else
+      'unlimited'
+    end
+  end
+
   def free_plan_compare
     if !Subscription.find_by_user_id(current_user.id).nil?
       if Subscription.find_by_user_id(current_user.id).plan_type == "free"
