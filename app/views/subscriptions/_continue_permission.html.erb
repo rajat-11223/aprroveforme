@@ -1,0 +1,12 @@
+<div id="myModal" class="reveal-modal small">
+  <h2>Change in Plan.</h2>
+  <p class="lead">Are you Sure You want to <%= continue_permission_decider(plan) %> your plan ?</p>
+  <a id="free" href="<%= new_subscription_path(:plan_type=> plan ) %>" class="button primary expand" style="background-color:<%= continue_permission_decider(plan) == 'Current' ? '#0029FF' : '#FFA500' %> !important;">Continue</a>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<script>
+    <% if continue_permission_decider(plan) != 'Current' %>
+    $('#myModal').foundation('reveal', 'open');
+    <% end %>
+</script>

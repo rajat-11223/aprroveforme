@@ -1,86 +1,71 @@
 <div class="row">
-	<div class="large-12 columns large-centered">
-		<h3>Pricing</h3>
-	</div>
-	<div class="row">
-		<!--AK 04.11.18 update grid-->
-		<div class="small-12 large-4 columns" >
-			<ul class="pricing-table">
-			  <li class="title">STARTER</li>
-			  <li class="price">FREE<br /></li>
-			  <li class="bullet-item">2 reviews/month</li>
-			  <li class="bullet-item">Online support</li>
-			    <% if current_user %>
-			      <% if !Subscription.find_by_user_id(current_user.id).nil? %>
-							<%if Subscription.find_by_user_id(current_user.id).plan_type == "free"%>
-								<li class="cta-button"><a href="#" class="button primary" style="background-color:#0029FF !important; color: white !important;">Current</a></li>
-								<%elsif Subscription.find_by_user_id(current_user.id).plan_type ==("professional")%>
-								<li class="cta-button"><a href="<%= signin_path(:plan_type=>'free') %>" class="button primary" style="background-color:#FFA500 !important;">Downgrade</a></li>
+  <div class="large-12 columns large-centered">
+    <h3>Pricing</h3>
+  </div>
+  <div class="row">
+    <!--AK 04.11.18 update grid-->
+    <div class="small-12 large-4 columns" >
+      <ul class="pricing-table">
+        <li class="title">STARTER</li>
+        <li class="price">FREE<br /></li>
+        <li class="bullet-item">2 reviews/month</li>
+        <li class="bullet-item">Online support</li>
+        <% if current_user %>
+          <li class="cta-button"><a data-id="free" href="#" class="button primary continue-change" style="background-color:<%= free_plan_compare == 'Current' ? '#0029FF' : '#FFA500' %> !important;"><%= free_plan_compare %></a></li>
+        <% else %>
+          <li class="cta-button"><a href="<%= signin_path(:plan_type=>'free') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
+        <% end %>
+      </ul>
+    </div>
 
-								<%elsif Subscription.find_by_user_id(current_user.id).plan_type ==("unlimited")%>
-								<li class="cta-button"><a href="<%= signin_path(:plan_type=>'free') %>" class="button primary" style="background-color:#FFA500 !important;">Downgrade</a></li>
-							<%end%>
-						<%else%>
-							<li class="cta-button"><a href="<%= signin_path(:plan_type=>'free') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-						<%end%>	
-			    <% else %>
-			    	<li class="cta-button"><a href="<%= signin_path(:plan_type=>'free') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-			    <% end %>
-			</ul>
-		</div>
-	
+    <div class="small-12 large-4 columns">
+      <ul class="pricing-table">
+        <li class="title">PROFESSIONAL</li>
+        <li class="price">$1.99<br /></li>
+        <li class="bullet-item">6 reviews/month</li>
+        <li class="bullet-item">Online support</li>
+        <%if current_user %>
+          <li class="cta-button"><a data-id="professional" href="#" class="button primary continue-change" style="background-color:<%= pro_plan_compare == 'Current' ? '#0029FF' : '#FFA500' %> !important;"><%= pro_plan_compare %></a></li>
+      <%else%>
+          <li class="cta-button"><a href="<%= signin_path(:plan_type=>'professional') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
+        <%end%>
+      </ul>
+    </div>
 
-
-		<div class="small-12 large-4 columns">
-			<ul class="pricing-table">
-			  <li class="title">PROFESSIONAL</li>
-			  <li class="price">$9<br /></li>
-			  <li class="bullet-item">6 reviews/month</li>
-			  <li class="bullet-item">Online support</li>
-			    <%if current_user %>
-			    	<% if !Subscription.find_by_user_id(current_user.id).nil? %>
-						  <%if Subscription.find_by_user_id(current_user.id).plan_type == "professional"%>
-						  <li class="cta-button"><a href="#" class="button primary" style="background-color:#0029FF !important; color: white !important;">Current</a></li>
-						  <%elsif Subscription.find_by_user_id(current_user.id).plan_type== "unlimited"%>
-						  <li class="cta-button"><a href="<%= signin_path(:plan_type=>'professional') %>" class="button primary" style="background-color:#FFA500 !important;">Downgrade</a></li>
-						  <%else%>
-						  <li class="cta-button"><a href="<%= signin_path(:plan_type=>'professional') %>" class="button primary" style="background-color:#FFA500 !important;">Upgrade</a></li>
-						  <%end%>
-						<%else%>
-							<li class="cta-button"><a href="<%= signin_path(:plan_type=>'professional') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-						<%end%>  
-          <%else%>
-            <li class="cta-button"><a href="<%= signin_path(:plan_type=>'professional') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-          <%end%>
-			</ul>
-		</div>
-		
-        <input type="hidden" id="nonce" name="payment_method_nonce" />
-	
-
-
-		<div class="small-12 large-4 columns">
-			<ul class="pricing-table">
-			  <li class="title">UNLIMITED</li>
-			  <li class="price">$19<br /></li>
-			  <li class="bullet-item">UNLIMITED reviews/month</li>
-			  <li class="bullet-item">Online support</li>
-			    <%if current_user%>
-				    <% if !Subscription.find_by_user_id(current_user.id).nil? %>
-						  <%if Subscription.find_by_user_id(current_user.id).plan_type == ("unlimited")%>
-						  <li class="cta-button"><a href="#" class="button primary" style="background-color:#0029FF !important; color: white !important; ">Current</a></li>
-						  <%elsif Subscription.find_by_user_id(current_user.id).plan_type== "professional"%>
-						  <li class="cta-button"><a href="<%= signin_path(:plan_type=>'unlimited') %>" class="button primary" style="background-color:#FFA500 !important;">Upgrade</a></li>
-						  <%else%>
-						  <li class="cta-button"><a href="<%= signin_path(:plan_type=>'unlimited') %>" class="button primary" style="background-color:#FFA500 !important;">Upgrade</a></li>
-						  <%end%>
-						<%else%>
-							<li class="cta-button"><a href="<%= signin_path(:plan_type=>'unlimited') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-						<%end%> 
-				<%else%>
-					<li class="cta-button"><a href="<%= signin_path(:plan_type=>'unlimited') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-				<%end%>   
-			</ul>
-		</div>
-	</div>
+    <div class="small-12 large-4 columns">
+      <ul class="pricing-table">
+        <li class="title">UNLIMITED</li>
+        <li class="price">$4.99<br /></li>
+        <li class="bullet-item">UNLIMITED reviews/month</li>
+        <li class="bullet-item">Online support</li>
+        <%if current_user%>
+          <li class="cta-button"><a data-id="unlimited" href="#" class="button primary continue-change" style="background-color:<%= unlimited_plan_compare == 'Current' ? '#0029FF' : '#FFA500' %> !important;"><%= unlimited_plan_compare %></a></li>
+        <%else%>
+          <li class="cta-button"><a href="<%= signin_path(:plan_type=>'unlimited') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
 </div>
+
+<div id="permissionModal"></div>
+
+<script>
+    $(".continue-change").click(function(){
+        var id = $(this).data('id');
+        continuePermission(id);
+    });
+    function continuePermission(id) {
+
+        $.ajax({
+            url: '/subscription/continue_permission',
+            type: 'GET',
+            data: {id: id},
+            success: function(data) {
+                    $("#permissionModal").html(data);
+            },
+            error: function(data){
+            }
+        });
+    }
+</script>

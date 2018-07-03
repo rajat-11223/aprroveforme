@@ -1,0 +1,54 @@
+<% if current_user %>
+  <div class="app-dashboard shrink-medium">
+    <div class="app-dashboard-body off-canvas-wrapper">
+      <div class="large-3 columns">
+        <%= render 'sidebar' %>
+      </div>
+      <div class="app-dashboard-body-content off-canvas-content large-9 columns" data-off-canvas-content>
+        <h4>Pending Approvals</h4>
+        <table class="dashboard-table">
+          <thead>
+          <tr>
+            <th><a href="#">Approver Name <i class="fa fa-caret-down"></i></a></th>
+            <th><a href="#">Document Name <i class="fa fa-caret-down"></i></a></th>
+            <th><a href="#">Deadline <i class="fa fa-caret-down"></i></a></th>
+            <th><a href="#">Action <i class="fa fa-caret-down"></i></a></th>
+          </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <% @pending_approvals.each do |approver| %>
+            <tr>
+              <td class="bold"><%= User.find(approver.approval.owner).name %></td>
+              <td><%= approver.approval.title %></td>
+              <td><%= approver.approval.deadline_in_words %></td>
+
+              <td class="listing-inquiry-status">
+
+                <div class="flex-container align-top">
+                  <div class="flex-child-grow">
+                    <h4 class="dashboard-table-text"><%= link_to 'View', approver.approval, class: 'button small round' %></h4>
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+        <% if @pending_approvals.empty? %>
+          <div class="center">
+            <h1>No Records</h1>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+<% elsif params[:intro] == "startup" %>
+  <%= render '/home/landing/startup' %>
+<% else %>
+  <%= render 'logged_out' %>
+<% end %>

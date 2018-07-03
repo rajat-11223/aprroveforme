@@ -81,7 +81,7 @@ p {
 /* Navigation */
 .nav-pic {
     width: 25px;
-    margin-top: 12px;
+    /*margin-top: 12px;*/
     -moz-border-radius: 25px;
     border-radius: 25px;
 }
@@ -109,7 +109,7 @@ width: 20px;
 }
 .logo {
     margin-bottom: 0px;
-    padding-top: 15px;
+    padding-top: 22px;
 }
 
 /* Dashboard */

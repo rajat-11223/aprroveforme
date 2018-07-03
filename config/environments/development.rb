@@ -20,6 +20,9 @@ Workflow::Application.configure do
   config.action_mailer.raise_delivery_errors = true
  # config.action_mailer.default :charset => "utf-8"
 
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+
   config.eager_load = false
   config.assets.quiet = true
 

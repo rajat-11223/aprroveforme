@@ -47,13 +47,16 @@ gem 'byebug'
 gem 'braintree', '>= 2.16.0'
 gem 'braintree-rails'
 gem 'multi_json'
+gem 'json'
 gem 'responders', '~> 2.0'
 
 gem 'rails-deprecated_sanitizer'
 gem 'activemodel-serializers-xml'
+gem 'sprockets-rails'
 
 gem 'record_tag_helper', '~> 1.0'
 group :development do
+  gem 'letter_opener'
   gem 'puma'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'

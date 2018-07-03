@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="large-9 push-3 columns">
+
+    <div class="row">
+      <div class="">
+        <p class="page-title">Completed Approvals</p>
+      </div>
+    </div>
+
+    <%= field_set_tag "Completed #{ @my_completed_approvals.count }" do -%>
+
+
+
+      <% @my_completed_approvals.each do |approval| %>
+        <div class="row">
+          <div class="large-12 end columns">
+            <div class="row item">
+              <div class="large-1 small-2 columns">
+                <p class="status-past">
+                  <% if percentage_complete(approval) == "100%" %> <!--- SHOW /DECLINED.PNG IF DOCUMENT DECLINED -->
+                    <img src="/assets/approved.png"></p>
+                  <% else %>
+                    <img src="/assets/declined.png"></p>
+                  <% end %>
+                  </div>
+              <div class="large-11 small-10 columns">
+                <p class="title"><%= link_to approval.title, approval %></p>
+                <p class="description"><i><%= approval.description %></i></p>
+                <p class="details">Deadline: <%= approval.deadline.to_date  %>, <%= approval.deadline_in_words %>.</p>
+              </div>
+            </div>
+          </div>
+        </div><br />
+      <% end %>
+
+
+    <% end -%>
+
+
+  </div>
+
+  <%= render 'shared/side_bar' %>
+
+</div>
+
+
+
+
+
+
+
+

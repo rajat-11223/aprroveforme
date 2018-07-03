@@ -1,4 +1,7 @@
+require 'json'
 class SessionsController < ApplicationController
+  require 'json'
+
   include ApplicationHelper
 
   def new
@@ -18,12 +21,13 @@ class SessionsController < ApplicationController
                       :uid => auth['uid'].to_s).first || User.create_with_omniauth(auth)
     session[:user_id] = user.id
     if user.customer_id.blank?
-      @customer = Braintree::Customer.create(email: user.email)
+      @customer = Braintree::Customer.create(email: user.email, first_name: user.first_name, last_name: user.last_name)
       user.customer_id =  @customer.customer.id
     end
 
     if !Subscription.all.collect(&:user_id).include? user.id
       Subscription.create(:plan_type=> 'free',:plan_date=>Date.today,:user_id=> user.id)
+      SubscriptionHistory.create(plan_type: 'free', plan_date: Time.now )
     end
     
     session[:credentials] = auth["credentials"]
@@ -58,6 +62,10 @@ class SessionsController < ApplicationController
               @subscription.plan_type= session[:plan_type]
               @subscription.plan_date= Date.today
               @subscription.save
+
+              # subscription history
+              SubscriptionHistory.create(plan_type: session[:plan_type], plan_date: Time.now )
+
               session[:plan_type]=nil
               session[:upgrade]=nil
               respond_to do |format|
@@ -66,7 +74,7 @@ class SessionsController < ApplicationController
 
             end
           else
-            redirect_to new_payment_path
+            redirect_to pricing_index_path
           end
         end
       end

@@ -52,11 +52,11 @@
 
 
 <div id="myModal" class="reveal-modal">
-  
+
   <div class="row">
     <p class="page-title">Do you approve <%= approver.approval.title %>?</p>
   </div>
-  
+
   <div class="row">
     <%= form_for approver.approval do |f| %>
     <div class="large-12 columns">
@@ -70,10 +70,10 @@
     <div class="row">
       <%= f.submit "Approved", :class => "button approve large-2 small-12 columns", :name => "approval[approver][status]", :value => "Approved" %>
       <%= f.submit "Declined", :class => "button decline large-2 end small-12 columns", :name => "approval[approver][status]", :value => "Declined", :style => "margin-left: 10px;" %>
-     
-      
+
+
     </div>
- 
+
   <% end %>
   <a class="close-reveal-modal">&#215;</a>
 </div>

@@ -1,9 +1,17 @@
-<p id="notice"><%#= notice %></p>
-
 <% if current_user %>
-	<%= render 'logged_in' %>
+  <div class="app-dashboard shrink-medium">
+    <div class="app-dashboard-body off-canvas-wrapper">
+      <div class="large-3 columns">
+        <%= render 'sidebar' %>
+      </div>
+      <div class="app-dashboard-body-content off-canvas-content large-9 columns" data-off-canvas-content>
+        <%= render 'dashboard' %>
+      </div>
+    </div>
+  </div>
+
 <% elsif params[:intro] == "startup" %>
-	<%= render '/home/landing/startup' %>
+  <%= render '/home/landing/startup' %>
 <% else %>
-	<%= render 'logged_out' %>
+  <%= render 'logged_out' %>
 <% end %>

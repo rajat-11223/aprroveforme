@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="large-9 push-3 columns">
+
+    <div class="row">
+      <div class="">
+        <p class="page-title">Current Subscription</p>
+      </div>
+    </div>
+
+    <%= field_set_tag "Subscription Info" do -%>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Current Plan:</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= current_user.subscription.plan_type %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Start Date</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= current_user.subscription.plan_date %>
+          <% if free_plan_compare != 'Current' %>
+            <%= link_to "Cancel Subscription", new_subscription_path(:plan_type=> 'free' ) ,:class=>"button primary right"%>
+          <% else %>
+            <%= link_to "Upgrade Subscription", pricing_index_path(:type=>"upgrade") ,:class=>"button primary right"%>
+        <% end %>
+        </div>
+      </div>
+    <% end -%>
+
+
+  </div>
+
+  <%= render 'shared/side_bar' %>
+
+</div>
+
+
+
+
+
+
+
+

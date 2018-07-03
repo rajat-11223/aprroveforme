@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="large-9 push-3 columns">
+
+    <div class="row">
+      <div class="">
+        <p class="page-title">Subscription History</p>
+      </div>
+    </div>
+
+    <% @subscription_histories.each do |s| %>
+    <%= field_set_tag "#{s.plan_date.strftime('%D')}" do -%>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Current Plan:</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= s.plan_type %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Start Date</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= s.plan_date %>
+        </div>
+      </div>
+    <% end -%>
+  <% end %>
+
+
+  </div>
+
+  <%= render 'shared/side_bar' %>
+
+</div>
+
+
+
+
+
+
+
+

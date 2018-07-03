@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180507194618) do
+ActiveRecord::Schema.define(version: 20180621020959) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "approvals", force: :cascade do |t|
     t.string   "title"
@@ -51,7 +54,7 @@ ActiveRecord::Schema.define(version: 20180507194618) do
     t.string   "queue"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -60,9 +63,19 @@ ActiveRecord::Schema.define(version: 20180507194618) do
     t.integer  "resource_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-    t.index ["name"], name: "index_roles_on_name"
-    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+    t.index ["name"], name: "index_roles_on_name", using: :btree
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id", using: :btree
+  end
+
+  create_table "subscription_histories", force: :cascade do |t|
+    t.string   "plan_type"
+    t.datetime "plan_date"
+    t.datetime "renewable_date"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["user_id"], name: "index_subscription_histories_on_user_id", using: :btree
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -106,14 +119,16 @@ ActiveRecord::Schema.define(version: 20180507194618) do
     t.integer  "approvals_responded_to_30"
     t.datetime "last_sent_date"
     t.string   "customer_id"
+    t.string   "braintree_subscription_id"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
-    t.index ["role_id"], name: "index_users_roles_on_role_id"
-    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
-    t.index ["user_id"], name: "index_users_roles_on_user_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id", using: :btree
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
+    t.index ["user_id"], name: "index_users_roles_on_user_id", using: :btree
   end
 
+  add_foreign_key "subscription_histories", "users"
 end

@@ -1,0 +1,45 @@
+<div class="large-3 pull-9 columns">
+  <div class="docs section-container accordion" data-section="accordion" data-options="one_up: false">
+    <section class="section <%= active_class([profile_account_path])%>">
+      <p class="title"><%= link_to 'Profile', profile_account_path %></p>
+    </section>
+
+    <section class="section <%= active_class([active_approvals_account_path,completed_approvals_account_path,
+                                              pending_approvars_account_path,signed_off_approvars_account_path])%>">
+      <p class="title"><a href="#">Approvals</a></p>
+      <div class="content">
+        <ul class="side-nav">
+          <li class="<%= active_class([active_approvals_account_path]) %>"><%= link_to 'Active', active_approvals_account_path %></li>
+          <li class="<%= active_class([completed_approvals_account_path]) %>"><%= link_to 'Completed', completed_approvals_account_path %></li>
+          <li class="<%= active_class([pending_approvars_account_path]) %>"><%= link_to 'Pending', pending_approvars_account_path %></li>
+          <li class="<%= active_class([signed_off_approvars_account_path]) %>"><%= link_to 'Signed Off', signed_off_approvars_account_path %></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section <%= active_class([payment_methods_account_path, update_card_account_path]) %>">
+      <p class="title"><%= link_to 'Payment Methods', payment_methods_account_path %></p>
+    </section>
+
+    <section class="section <%= active_class([current_subscription_account_path,subscription_histories_account_path]) %>">
+      <p class="title"><a href="#">Subscriptions</a></p>
+      <div class="content">
+        <ul class="side-nav">
+          <li class="<%= active_class([current_subscription_account_path]) %>"><%= link_to 'Current Subscription', current_subscription_account_path %></li>
+          <li class="<%= active_class([subscription_histories_account_path]) %>"><%= link_to 'Subscription Histories', subscription_histories_account_path %></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section <%= @page_title == 'FAQ' ? 'active': '' %>">
+      <p class="title"><%= link_to 'FAQ', faq_index_path %></p>
+    </section>
+
+
+    <!--<section class="section <%= @page_title == 'Support' ? 'active': '' %>">-->
+      <!--<p class="title">-->
+        <!--<a href="javascript:void(0)" data-uv-lightbox="classic_widget" data-uv-mode="full" data-uv-primary-color="#cc6d00" data-uv-link-color="#007dbf" data-uv-default-mode="feedback" data-uv-forum-id="199310" data-uv-scanned="true" id="uv-1">Support</a>-->
+      <!--</p>-->
+    <!--</section>-->
+  </div>
+</div>

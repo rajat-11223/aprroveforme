@@ -1,0 +1,72 @@
+
+
+
+<% if current_user %>
+  <div class="app-dashboard shrink-medium">
+    <div class="app-dashboard-body off-canvas-wrapper">
+      <div class="large-3 columns">
+        <%= render 'sidebar' %>
+      </div>
+      <div class="app-dashboard-body-content off-canvas-content large-9 columns" data-off-canvas-content>
+        <h4>PAST DOCUMENTS</h4>
+        <table class="dashboard-table">
+          <thead>
+          <tr>
+            <th><a href="#">Document Name <i class="fa fa-caret-down"></i></a></th>
+            <th><a href="#">Description <i class="fa fa-caret-down"></i></a></th>
+            <th><a href="#">Progress <i class="fa fa-caret-down"></i></a></th>
+            <th><a href="#">Deadline <i class="fa fa-caret-down"></i></a></th>
+            <th><a href="#">Action <i class="fa fa-caret-down"></i></a></th>
+          </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <% @my_completed_approvals.each do |approval| %>
+            <tr>
+              <td class="bold"><%= link_to approval.title, approval %></td>
+              <td><%= approval.description %></td>
+              <td><%= percentage_complete(approval) %></td>
+
+              <td class="listing-inquiry-status">
+
+                <div class="flex-container align-top">
+                  <div class="flex-child-grow">
+                    <h4 class="dashboard-table-text">
+                      <%= approval.deadline.to_date  %>
+                    </h4>
+                    <span class="dashboard-table-timestamp"><%= approval.deadline_in_words %></span>
+                  </div>
+                </div>
+
+              </td>
+
+
+              <td class="listing-inquiry-status">
+
+                <div class="flex-container align-top">
+                  <div class="flex-child-grow">
+                    <h4 class="dashboard-table-text"><%= link_to 'View', approval, class: 'button small round' %></h4>
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+        <% if @my_completed_approvals.empty? %>
+          <div class="center">
+            <h1>No Records</h1>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+<% elsif params[:intro] == "startup" %>
+  <%= render '/home/landing/startup' %>
+<% else %>
+  <%= render 'logged_out' %>
+<% end %>

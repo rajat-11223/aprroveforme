@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="large-9 push-3 columns">
+
+    <div class="row">
+      <div class="">
+        <p class="page-title">Profile</p>
+      </div>
+    </div>
+
+    <%= field_set_tag "Account Info" do -%>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">First Name:</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= current_user.first_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Last Name</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= current_user.last_name %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Email</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= current_user.email %>
+        </div>
+      </div>
+    <% end -%>
+
+
+  </div>
+
+  <%= render 'shared/side_bar' %>
+
+</div>
+
+
+
+
+
+
+
+

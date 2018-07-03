@@ -5,12 +5,10 @@ class ApprovalsController < ApplicationController
   # GET /approvals
   # GET /approvals.json
   def index
-    unless current_user.has_role? :admingit 
+    unless current_user.has_role? :admin
       redirect_to root_url, :alert => "Access denied."
     end
     @approvals = Approval.all
-
-
   end
 
   # GET /approvals/1
@@ -35,9 +33,31 @@ class ApprovalsController < ApplicationController
     end
   end
 
+  def plan_responses_limit
+    if current_user.subscription.plan_type == 'free'
+      2
+    else current_user.subscription.plan_type == 'professional'
+      6
+    end
+  end
+
   # GET /approvals/new
   # GET /approvals/new.json
   def new
+    if !current_user.subscription.present?
+      redirect_to pricing_index_path, notice: 'Please Subscribe a plan to continue creating Approvals'
+    end
+
+    if current_user.subscription.plan_type != 'unlimited'
+      user_subscription_date = current_user.subscription.plan_date
+      user_approvals = Approval.where(:owner => current_user.id, :created_at => user_subscription_date..(user_subscription_date + 30.days))
+
+      if user_approvals.count > plan_responses_limit
+        redirect_to pricing_index_path, notice: 'Please Upgrage Your plan to continue creating Approvals'
+      end
+    end
+
+
     @approval = Approval.new
     @approval.perms = "reader"
     3.times {@approval.approvers.build} if @approval.approvers.empty?
@@ -47,12 +67,12 @@ class ApprovalsController < ApplicationController
       api_client = current_user.google_auth
       file_id = (session[:state]['exportIds'][0])
       if file_id
-        file = file_metadata(api_client, file_id) 
-        if file 
-          @approval.link_title = file.title 
-          @approval.embed = file.embedLink 
-          @approval.link_id = file.id 
-          @approval.link_type = file.mimeType 
+        file = file_metadata(api_client, file_id)
+        if file
+          @approval.link_title = file.title
+          @approval.embed = file.embedLink
+          @approval.link_id = file.id
+          @approval.link_type = file.mimeType
           @approval.link = file.alternateLink
         end
       end
@@ -67,8 +87,8 @@ class ApprovalsController < ApplicationController
   def file_metadata(client, file_id)
     @drive = client.discovered_api('drive', 'v2')
     result = client.execute(
-      :api_method => @drive.files.get,
-      :parameters => { 'fileId' => file_id })
+        :api_method => @drive.files.get,
+        :parameters => { 'fileId' => file_id })
     if result.status == 200
       return result.data
     else
@@ -93,19 +113,19 @@ class ApprovalsController < ApplicationController
       @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
     end
 
-    @approval.approvers.each do |approver| 
+    @approval.approvers.each do |approver|
       @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) if @approval.link
       approver.generate_code
     end
 
-    
+
     respond_to do |format|
       if @approval.save
         ab_finished(:approval_created)
         format.html { redirect_to @approval, notice: 'Approval was successfully created.' }
         format.json { render json: @approval, status: :created, location: @approval }
         UserMailer.my_new_approval(@approval).deliver_later
-        @approval.approvers.each do |approver| 
+        @approval.approvers.each do |approver|
           UserMailer.new_approval_invite(@approval, approver).deliver_later
         end
       else
@@ -118,9 +138,9 @@ class ApprovalsController < ApplicationController
   # PUT /approvals/1
   # PUT /approvals/1.json
   def update
-    
+
     @approval = Approval.find(params[:id])
-    
+
     # if an approver is approving
     if params[:approval][:approver]
       @approver = @approval.approvers.where("email = ? or email= ?", current_user.email, current_user.second_email).first
@@ -142,16 +162,16 @@ class ApprovalsController < ApplicationController
         params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
       end
 
-      
+
 
       respond_to do |format|
         if @approval.update_attributes(approval_params)
 
           # if any new approvers, add permissions and code
 
-          @approval.approvers.each do |approver| 
+          @approval.approvers.each do |approver|
             if approver.code == nil
-              @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) 
+              @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms])
               approver.generate_code
               UserMailer.new_approval_invite(@approval, approver).deliver_later
             end
@@ -169,7 +189,7 @@ class ApprovalsController < ApplicationController
     end
   end
 
-  
+
 
   # DELETE /approvals/1
   # DELETE /approvals/1.json
@@ -182,9 +202,9 @@ class ApprovalsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  private 
-  
+
+  private
+
   def approval_params
     params.require(:approval).permit(:id,:deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :perms, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
   end
@@ -192,12 +212,12 @@ end
 
 
 def percentage_complete(approval)
-      @approver_count = approval.approvers.where("required = ?", "required").count
-      @approved_count = approval.approvers.where("(status = ?) and (required = ?)", "Approved", "required").count
+  @approver_count = approval.approvers.where("required = ?", "required").count
+  @approved_count = approval.approvers.where("(status = ?) and (required = ?)", "Approved", "required").count
 
-      if @approver_count > 0
-        return "#{((@approved_count*100)/@approver_count)}%"
-      else
-        return "0%"
-      end
+  if @approver_count > 0
+    return "#{((@approved_count*100)/@approver_count)}%"
+  else
+    return "0%"
   end
+end
