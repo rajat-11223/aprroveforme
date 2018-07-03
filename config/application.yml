@@ -13,8 +13,8 @@
  GOOGLE_SCOPE: https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install
 
  development:
-  GOOGLE_ID: 774193902329-c4lv9v3vlbm8ekusb46trsbjuem7hic0.apps.googleusercontent.com
-  GOOGLE_SECRET: LucUC0pzLgVMCO9Fk8Su6yNT
+  GOOGLE_ID: 107940143634-iel5h5i1tu4siqfct2tjqm68iou6oppe.apps.googleusercontent.com
+  GOOGLE_SECRET: tdkWnSp3zoneFgGmm1rz3L_T
   REDIRECT_URI: http://localhost:3000/auth/google_oauth2/callback
   APP_ID: 107940143634
   REDISTOGO_URL: redis://localhost:6379

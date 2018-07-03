@@ -82,5 +82,5 @@
 
 <% end -%>
 <script type="text/javascript" src="https://js.braintreegateway.com/v1/braintree.js"></script><script type="text/javascript">// <![CDATA[
-var braintree = Braintree.create('MIIBCgKCAQEAwBzA8vqz08Hk0jwjTfkRDtAwePIf4djb76Jiqjb9ElPYhPAqIO2zuz+Dy2zUY+Slqz7ezTBtxNSiEwxKKQPO5j01ghMHqOi10ZSBHFsP781ovayV8wnbPlLtiLsiQB2WWfyOcSu+eLQIjHUQNSDwW3vkdIrC26I0OY02MINCA6FwPRa6K9eC7yEg0FwT7S1R55pxdi5CC7IFwJ4USyhBkqnZ8elp29dHKl8cxMZIi+Ta1AxBB80ffPhJzLqWx5dgH85pHimltVVM++I5lruecYVWOOL8t0hlv7m1H3k3VVhudNZyi7WbHoVYvPijQ46D9ai6N5Y8ree3tghQ8eCf/QIDAQAB'); braintree.onSubmitEncryptForm('braintree-payment-form');
+var braintree = Braintree.create('<%= Braintree::ClientToken.generate %>'); braintree.onSubmitEncryptForm('braintree-payment-form');
 // ]]></script>

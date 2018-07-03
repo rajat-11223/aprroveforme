@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
   skip_before_action :verify_authenticity_token
+  require "braintree"
 
   def new
     session[:plan_type] = params[:plan_type]
@@ -7,7 +8,7 @@ class SubscriptionsController < ApplicationController
 
     if current_user.customer_id?
       customer = Braintree::Customer.find(current_user.customer_id)
-      if customer.payment_methods.present?
+      if customer.payment_methods.present? and current_user.subscription.plan_type != 'free'
         upgrade
       end
     end
@@ -47,6 +48,7 @@ class SubscriptionsController < ApplicationController
             :start_immediately => true
         }
     )
+
     current_user.update(braintree_subscription_id: result.subscription.id)
 
     if session[:upgrade] == "upgrade"
@@ -93,14 +95,15 @@ class SubscriptionsController < ApplicationController
       current_user.update(customer_id: customer.id)
     end
 
-    result = Braintree::Subscription.update(
-        current_user.braintree_subscription_id,
-        payment_method_token: customer.payment_methods.find{ |pm| pm.default? }.token,
-        id: SecureRandom.uuid,
-        plan_id: params[:plan_type],
-        :price => calculate_amount
+    begin
+      result = Braintree::Subscription.update(
+          current_user.braintree_subscription_id,
+          payment_method_token: customer.payment_methods.find{ |pm| pm.default? }.token,
+          id: SecureRandom.uuid,
+          plan_id: params[:plan_type],
+          :price => calculate_amount
 
-        )
+      )
 
     current_user.update(braintree_subscription_id: result.subscription.id)
 
@@ -123,6 +126,10 @@ class SubscriptionsController < ApplicationController
           format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' }
         end
       end
+    end
+
+    rescue Braintree::NotFoundError => e
+      redirect_to root_url, notice: e.message
     end
 
   end

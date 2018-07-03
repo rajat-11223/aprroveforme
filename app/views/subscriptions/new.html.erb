@@ -426,15 +426,22 @@
                           }
                           $('#container').append(html);
 
-                          $.post("/subscription",
+                          var jqxhr =  $.post("/subscription",
                               {
                                   payment_method_nonce: payload.nonce,
                                   plan_id: "<%= params[:plan_type] %>"
                               },
                               function(data, status){
+
+                              })
+                              .done(function() {
                                   $('.accordion').hide();
                                   $('.thankyou').show();
                                   $('#load').remove();
+                              })
+                              .fail(function() {
+                                  $('#load').remove();
+                                  alert( "Your Payment is Failed Try again" );
                               });
                       });
                   }, false);
