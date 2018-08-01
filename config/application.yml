@@ -38,8 +38,8 @@ production:
   APP_DOMAIN: approveforme.com
   SENDGRID_USERNAME: approveforme
   SENDGRID_PASSWORD: afm12345
-  GOOGLE_ID: 774193902329-c4lv9v3vlbm8ekusb46trsbjuem7hic0.apps.googleusercontent.com
-  GOOGLE_SECRET: LucUC0pzLgVMCO9Fk8Su6yNT
+  GOOGLE_ID: 107940143634-iel5h5i1tu4siqfct2tjqm68iou6oppe.apps.googleusercontent.com
+  GOOGLE_SECRET: tdkWnSp3zoneFgGmm1rz3L_T
   REDIRECT_URI: http://www.approveforme.com/auth/google_oauth2/callback
   APP_ID: 107940143634
   REDISTOGO_URL: redis://redistogo:808e3c04b0af3d8f5141fb00d8e6685f@beardfish.redistogo.com:9041/
