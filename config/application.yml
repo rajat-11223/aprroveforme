@@ -1,18 +1,18 @@
- # Add account credentials and API keys here.
- # See http://railsapps.github.com/rails-environment-variables.html
- # This file should be listed in .gitignore to keep your settings secret!
- # Each entry sets a local environment variable and overrides ENV variables in the Unix shell.
- # For example, setting:
+# Add account credentials and API keys here.
+# See http://railsapps.github.com/rails-environment-variables.html
+# This file should be listed in .gitignore to keep your settings secret!
+# Each entry sets a local environment variable and overrides ENV variables in the Unix shell.
+# For example, setting:
 
- ADMIN_NAME: First User
- ADMIN_EMAIL: user@example.com
- ADMIN_PASSWORD: changeme
- OMNIAUTH_PROVIDER_KEY: Your_OmniAuth_Provider_Key
- OMNIAUTH_PROVIDER_SECRET: Your_OmniAuth_Provider_Secret
- ROLES: [admin, user, VIP]
- GOOGLE_SCOPE: https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install
+ADMIN_NAME: First User
+ADMIN_EMAIL: user@example.com
+ADMIN_PASSWORD: changeme
+OMNIAUTH_PROVIDER_KEY: Your_OmniAuth_Provider_Key
+OMNIAUTH_PROVIDER_SECRET: Your_OmniAuth_Provider_Secret
+ROLES: [admin, user, VIP]
+GOOGLE_SCOPE: https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install
 
- development:
+development:
   GOOGLE_ID: 107940143634-iel5h5i1tu4siqfct2tjqm68iou6oppe.apps.googleusercontent.com
   GOOGLE_SECRET: tdkWnSp3zoneFgGmm1rz3L_T
   REDIRECT_URI: http://localhost:3000/auth/google_oauth2/callback
@@ -23,7 +23,7 @@
   BRAIN_TREE_PUBLIC_KEY: swc9g7ffxxfgdb8b
   BRAIN_TREE_PRIVATE_KEY: bde545bb49e6ecbd4831b38d19e0faf3
 
- test:
+test:
   GOOGLE_ID: 107940143634.apps.googleusercontent.com
   GOOGLE_SECRET: n1adtCS9usCvQkxPzEspTYAA
   REDIRECT_URI: http://localhost:3000/auth/google_oauth2/callback
@@ -33,13 +33,13 @@
   BRAIN_TREE_PUBLIC_KEY: swc9g7ffxxfgdb8b
   BRAIN_TREE_PRIVATE_KEY: bde545bb49e6ecbd4831b38d19e0faf3
 
- production:
+production:
   APP_HOST: www.approveforme.com
   APP_DOMAIN: approveforme.com
   SENDGRID_USERNAME: approveforme
   SENDGRID_PASSWORD: afm12345
-  GOOGLE_ID: 107940143634-iel5h5i1tu4siqfct2tjqm68iou6oppe.apps.googleusercontent.com
-  GOOGLE_SECRET: tdkWnSp3zoneFgGmm1rz3L_T
+  GOOGLE_ID: 774193902329-c4lv9v3vlbm8ekusb46trsbjuem7hic0.apps.googleusercontent.com
+  GOOGLE_SECRET: LucUC0pzLgVMCO9Fk8Su6yNT
   REDIRECT_URI: http://www.approveforme.com/auth/google_oauth2/callback
   APP_ID: 107940143634
   REDISTOGO_URL: redis://redistogo:808e3c04b0af3d8f5141fb00d8e6685f@beardfish.redistogo.com:9041/
