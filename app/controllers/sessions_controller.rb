@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
       Subscription.create(:plan_type=> 'free',:plan_date=>Date.today,:user_id=> user.id)
       SubscriptionHistory.create(plan_type: 'free', plan_date: Time.now )
     end
-    
+
     session[:credentials] = auth["credentials"]
     ab_finished(:signed_in)
     user.token = auth["credentials"]["token"] || ""
@@ -105,6 +105,10 @@ class SessionsController < ApplicationController
     api_client.authorization.redirect_uri = ENV['REDIRECT_URI']
     api_client.authorization.code = code
     api_client.authorization.fetch_access_token!
+    api-client.authorization.additional_parameters = {
+    "access_type" => "offline",         # offline access
+     "include_granted_scopes" => "true"  # incremental auth
+   }
     return api_client
   end
 

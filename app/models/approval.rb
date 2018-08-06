@@ -1,6 +1,6 @@
 class Approval < ApplicationRecord
   include ActionView::Helpers::DateHelper
-  belongs_to :user
+  belongs_to :user, foreign_key: "owner"
   has_many :approvers, :dependent => :destroy, inverse_of: :approval
   has_many :tasks, :dependent => :destroy
   validates :title, :deadline, :presence => true
@@ -14,7 +14,7 @@ class Approval < ApplicationRecord
 
     def require_one_approver
     	if approvers.empty?
-      		errors.add(:approvers, "You must include at least one approver. For each approver, please provide a name and email address so that we can contact them.") 
+      		errors.add(:approvers, "You must include at least one approver. For each approver, please provide a name and email address so that we can contact them.")
       	end
     end
 
@@ -32,14 +32,14 @@ class Approval < ApplicationRecord
       client = user.google_auth
       drive = client.discovered_api('drive', 'v2')# First retrieve the permission from the API.
 
-      
+
       new_permission = drive.permissions.insert.request_schema.new({
         'value' => approver.email,
         'type' => 'user',
         'role' => role,
         'withLink' => 'true'
       })
-   
+
       result = client.execute(
         :api_method => drive.permissions.insert,
         :body_object => new_permission,
@@ -55,5 +55,5 @@ class Approval < ApplicationRecord
       end
 
     end
- 
+
 end
