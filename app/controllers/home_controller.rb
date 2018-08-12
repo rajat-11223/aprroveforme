@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_filter :check_current_user, except: :index
+  before_action :check_current_user, except: :index
 
   def plan_responses_limit
     if current_user.subscription.plan_type == 'free'
