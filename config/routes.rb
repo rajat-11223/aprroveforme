@@ -1,11 +1,5 @@
 Workflow::Application.routes.draw do
-  resources :how_it_works, only: [ :index ]
-
-  get "pricing/index"
-  get "faq/index"
-  get "privacy/index"
-  get "terms/index"
-  get "about/index"
+  get "pricing", as: :pricing, to: "pricing#index"
 
   resources :approvals do
   	resources :approvers
@@ -70,5 +64,5 @@ Workflow::Application.routes.draw do
     end
   end
 
-  root :to => "home#index"
+  root to: "home#index"
 end
