@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  before_filter :check_current_user, except: :index
-  before_filter :session_code, except: :index
+  before_action :check_current_user, except: :index
+  before_action :session_code, except: :index
 
   def index
     if current_user
