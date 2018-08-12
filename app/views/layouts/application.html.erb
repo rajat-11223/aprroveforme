@@ -22,17 +22,10 @@
     <title><%= content_for?(:title) ? yield(:title) : "ApproveForMe" %></title>
     <meta name="Description" content="ApproveForMe is a free web-based tool that simplifies your professional life by making it easier to create, track, and manage document signoffs.">
 
-    <link rel="stylesheet" href="/assets/foundation.css"/>
-    <link rel="stylesheet" href="/assets/edits.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/zocial.css"/>
-    <meta name="verifyownership" content="79778f2d85e04ba5f49ddd47738772e6"/>
-
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    <script src="/assets/vendor/custom.modernizr.js"></script>
-    <!--<script src="/assets/Chart.js"></script>-->
+    <%= stylesheet_link_tag  'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"/>
-    <link rel="icon" type="image/png" href="/assets/favicon.png"/>
+    <link rel="icon" type="image/png" href="<%= asset_path("favicon.png") %>"/>
 
     <%= csrf_meta_tags %>
   </head>
@@ -49,16 +42,6 @@
       <%= render 'layouts/footer' %>
     </div>
 
-    <!-- A link to launch the Classic Widget -->
-    <!-- <script>
-      document.write('<script src=/assets/vendor/' + (
-        '__proto__' in {}
-          ? 'zepto'
-          : 'jquery'
-      ) + '.js><\/script>');
-    </script>
-
-    <script src="/assets/foundation.min.js"></script> -->
     <script>
       $(function () {
         $(document).foundation();
