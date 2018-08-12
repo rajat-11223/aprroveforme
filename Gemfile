@@ -43,7 +43,10 @@ gem "uglifier"
 gem "workless"
 gem "zurb-foundation"
 
+
 gem "rollbar", require: false
+gem "puma"
+gem "rack-timeout"
 
 group :development, :test do
   gem "rspec-rails"
@@ -58,7 +61,6 @@ group :development do
   gem "binding_of_caller", ">= 0.7.1"
   gem "better_errors", ">= 0.6.0"
   gem "letter_opener"
-  gem "puma"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
   gem "rails-controller-testing"
