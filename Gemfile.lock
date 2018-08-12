@@ -89,6 +89,10 @@ GEM
       activerecord (>= 3.0, < 5.3)
       delayed_job (>= 3.0, < 5)
     diff-lcs (1.3)
+    dotenv (2.5.0)
+    dotenv-rails (2.5.0)
+      dotenv (= 2.5.0)
+      railties (>= 3.2, < 6.0)
     dynamic_form (1.1.4)
     email_spec (2.2.0)
       htmlentities (~> 4.3.3)
@@ -99,6 +103,11 @@ GEM
     excon (0.62.0)
     execjs (2.7.0)
     extlib (0.9.16)
+    factory_bot (4.10.0)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.10.0)
+      factory_bot (~> 4.10.0)
+      railties (>= 3.0.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.23)
@@ -208,6 +217,11 @@ GEM
     platform-api (2.1.0)
       heroics (~> 0.0.23)
       moneta (~> 0.8.1)
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
     public_suffix (3.0.2)
     puma (3.11.4)
     rack (2.0.5)
@@ -370,8 +384,10 @@ DEPENDENCIES
   daemons
   database_cleaner
   delayed_job_active_record
+  dotenv-rails
   dynamic_form
   email_spec (>= 1.4.0)
+  factory_bot_rails
   figaro (>= 0.5.3)
   google-api-client (>= 0.4.4)
   httparty
@@ -389,6 +405,7 @@ DEPENDENCIES
   omniauth (>= 1.1.3)
   omniauth-google-oauth2
   pg (~> 0.20.0)
+  pry-rails
   puma
   rack-timeout
   rails (= 5.0)

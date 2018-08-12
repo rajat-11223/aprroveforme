@@ -49,12 +49,16 @@ gem "puma"
 gem "rack-timeout"
 
 group :development, :test do
+  gem "dotenv-rails", require: "dotenv/rails-now"
+  gem "pry-rails"
   gem "rspec-rails"
+  gem "factory_bot_rails"
 end
 
 group :test do
   gem "database_cleaner"
   gem "email_spec", ">= 1.4.0"
+  gem "rails-controller-testing"
 end
 
 group :development do
@@ -63,7 +67,6 @@ group :development do
   gem "letter_opener"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
-  gem "rails-controller-testing"
   gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"

@@ -1,6 +1,5 @@
 class ApprovalsController < ApplicationController
   before_action :authenticate_user!
-  #load_and_authorize_resource
 
   # GET /approvals
   # GET /approvals.json
@@ -8,6 +7,7 @@ class ApprovalsController < ApplicationController
     unless current_user.has_role? :admin
       redirect_to root_url, :alert => "Access denied."
     end
+
     @approvals = Approval.all
   end
 
@@ -100,8 +100,6 @@ class ApprovalsController < ApplicationController
   # GET /approvals/1/edit
   def edit
     @approval = Approval.find(params[:id])
-
-
   end
 
   # POST /approvals
@@ -115,9 +113,8 @@ class ApprovalsController < ApplicationController
 
     @approval.approvers.each do |approver|
       @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) if @approval.link
-      approver.generate_code
+      # approver.generate_code
     end
-
 
     respond_to do |format|
       if @approval.save
@@ -155,24 +152,19 @@ class ApprovalsController < ApplicationController
       UserMailer.approval_update(@approver).deliver_later
       UserMailer.completed_approval(@approval).deliver_later if percentage_complete(@approval) == "100%"
       redirect_to @approval, notice: 'Approval submitted'
-
-
     else
       if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
         params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
       end
 
-
-
       respond_to do |format|
         if @approval.update_attributes(approval_params)
-
           # if any new approvers, add permissions and code
 
           @approval.approvers.each do |approver|
             if approver.code == nil
               @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms])
-              approver.generate_code
+              # approver.generate_code
               UserMailer.new_approval_invite(@approval, approver).deliver_later
             end
           end
@@ -188,7 +180,6 @@ class ApprovalsController < ApplicationController
 
     end
   end
-
 
 
   # DELETE /approvals/1
