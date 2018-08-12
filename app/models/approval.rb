@@ -1,6 +1,4 @@
 class Approval < ApplicationRecord
-
-
   include ActionView::Helpers::DateHelper
 
   belongs_to :user, foreign_key: "owner"
