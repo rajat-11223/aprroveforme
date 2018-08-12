@@ -12,7 +12,6 @@ gem "coffee-rails"
 gem "daemons"
 gem "delayed_job_active_record"
 gem "dynamic_form"
-gem "exceptional"
 gem "figaro", ">= 0.5.3"
 gem "google-api-client", ">= 0.4.4", :require => "google/api_client"
 gem "httparty"
@@ -43,6 +42,8 @@ gem "therubyracer", :platforms => :ruby
 gem "uglifier"
 gem "workless"
 gem "zurb-foundation"
+
+gem "rollbar", require: false
 
 group :development, :test do
   gem "rspec-rails"

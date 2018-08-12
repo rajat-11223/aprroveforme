@@ -96,8 +96,6 @@ GEM
       mail (~> 2.7)
     erubi (1.7.1)
     erubis (2.7.0)
-    exceptional (2.0.33)
-      rack
     excon (0.62.0)
     execjs (2.7.0)
     extlib (0.9.16)
@@ -259,6 +257,8 @@ GEM
       railties (>= 4.2.0, < 5.3)
     retriable (1.4.1)
     rolify (5.2.0)
+    rollbar (2.16.4)
+      multi_json
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
     rspec-expectations (3.7.0)
@@ -371,7 +371,6 @@ DEPENDENCIES
   delayed_job_active_record
   dynamic_form
   email_spec (>= 1.4.0)
-  exceptional
   figaro (>= 0.5.3)
   google-api-client (>= 0.4.4)
   httparty
@@ -396,6 +395,7 @@ DEPENDENCIES
   record_tag_helper (~> 1.0)
   responders (~> 2.0)
   rolify (>= 3.2.0)
+  rollbar
   rspec-rails
   sass-rails
   sendgrid (>= 1.0.1)
