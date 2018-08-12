@@ -3,7 +3,7 @@ ruby "2.5.1"
 
 gem "activemodel-serializers-xml"
 gem "activesupport"
-gem "bootstrap-sass", ">= 2.3.0.0"
+# gem "bootstrap-sass", ">= 2.3.0.0"
 gem "braintree-rails"
 gem "braintree", ">= 2.16.0"
 gem "byebug"
