@@ -1,8 +1,15 @@
 class Approval < ApplicationRecord
+
+
   include ActionView::Helpers::DateHelper
+
   belongs_to :user, foreign_key: "owner"
+
   has_many :approvers, :dependent => :destroy, inverse_of: :approval
   has_many :tasks, :dependent => :destroy
+
+  scope :deadline_after_one_day_from_now, -> { where("deadline >= ?", 1.day.from_now ) }
+
   validates :title, :deadline, :presence => true
   validate do |approval|
     approval.errors[:link] << "Please select a file or upload a new one." if approval.link.blank?

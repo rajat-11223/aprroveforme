@@ -1,58 +1,51 @@
 class HomeController < ApplicationController
   before_filter :check_current_user, except: :index
-
-  def plan_responses_limit
-    if current_user.subscription.plan_type == 'free'
-      2
-    else current_user.subscription.plan_type == 'professional'
-    6
-    end
-  end
+  before_filter :session_code, except: :index
 
   def index
     if current_user
       session_code
 
-      if current_user.has_role? :admin
-        @my_approvals = Approval.where("deadline >= ?",Date.today+1)
-      else
-        @my_approvals = Approval.where("owner = ? and deadline >= ?", current_user.id, Date.today+1)
-      end
-      @my_completed_approvals = Approval.where("owner = ? and deadline < ?", current_user.id, Date.today+1)
-      @pending_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Pending", "")
-      @signedoff_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Approved", "Declined")
+      @my_approvals =
+        if current_user.has_role? :admin
+          Approval.deadline_after_one_day_from_now
+        else
+          Approval.deadline_after_one_day_from_now.where(owner: current_user.id)
+        end
+
+      @my_completed_approvals = Approval.where("owner = ? AND deadline < ?", current_user.id, Date.today+1)
+      @pending_approvals = Approver.where("(email = ? OR email = ?) AND (status = ? OR status = ?)", current_user.email.downcase, current_user.second_email, "Pending", "")
+      @signedoff_approvals = Approver.where("(email = ? OR email = ?) AND (status = ? OR status = ?)", current_user.email.downcase, current_user.second_email, "Approved", "Declined")
       @any_approvals = Approval.where("owner = ?", current_user.id)
-      @any_approvers = Approver.where("email = ? or email = ? ", current_user.email.downcase, current_user.second_email)
+      @any_approvers = Approver.where("email = ? OR email = ?", current_user.email.downcase, current_user.second_email)
 
       user_subscription_date = current_user.subscription.plan_date
-      @user_approvals = Approval.where(:owner => current_user.id, :created_at => user_subscription_date..(user_subscription_date + 30.days))
+      @user_approvals = Approval.where(owner: current_user.id).where(created_at: user_subscription_date..(user_subscription_date + 30.days))
     end
   end
 
   def pending_approvals
-    session_code
-    @pending_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Pending", "")
+    @pending_approvals = Approver.where("(email = ? OR email = ? ) AND (status = ? OR status = ?)", current_user.email.downcase, current_user.second_email, "Pending", "")
   end
 
   def open_approvals
-    session_code
-
-    if current_user.has_role? :admin
-      @my_approvals = Approval.where("deadline >= ?",Date.today+1)
-    else
-      @my_approvals = Approval.where("owner = ? and deadline >= ?", current_user.id, Date.today+1)
-    end
+    @my_approvals
+      if current_user.has_role? :admin
+        Approval.deadline_after_one_day_from_now
+      else
+        Approval.deadline_after_one_day_from_now.where(owner: current_user.id)
+      end
   end
 
   def past_documents
-    session_code
-    @my_completed_approvals = Approval.where("owner = ? and deadline < ?", current_user.id, Date.today+1)
+    @my_completed_approvals = Approval.where("owner = ? AND deadline < ?", current_user.id, Date.today+1)
   end
 
   def past_approvals
-    session_code
-    @signedoff_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Approved", "Declined")
+    @signedoff_approvals = Approver.where("(email = ? OR email = ?) AND (status = ? OR status = ?)", current_user.email.downcase, current_user.second_email, "Approved", "Declined")
   end
+
+  private
 
   def check_current_user
     if current_user == nil
@@ -71,5 +64,14 @@ class HomeController < ApplicationController
       session.delete(:code)
     end
   end
+
+  # def plan_responses_limit
+  #   case current_user.subscription.plan_type
+  #   when 'free'
+  #     2
+  #   when 'professional'
+  #     6
+  #   end
+  # end
 
 end

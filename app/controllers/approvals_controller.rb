@@ -8,6 +8,7 @@ class ApprovalsController < ApplicationController
     unless current_user.has_role? :admin
       redirect_to root_url, :alert => "Access denied."
     end
+
     @approvals = Approval.all
   end
 
@@ -34,9 +35,10 @@ class ApprovalsController < ApplicationController
   end
 
   def plan_responses_limit
-    if current_user.subscription.plan_type == 'free'
+    case current_user.subscription.plan_type
+    when 'free'
       2
-    else current_user.subscription.plan_type == 'professional'
+    when 'professional'
       6
     end
   end
@@ -56,7 +58,6 @@ class ApprovalsController < ApplicationController
         redirect_to pricing_index_path, notice: 'Please Upgrage Your plan to continue creating Approvals'
       end
     end
-
 
     @approval = Approval.new
     @approval.perms = "reader"
