@@ -185,7 +185,6 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mustermann (1.0.2)
-    mysql2 (0.5.1)
     newrelic_rpm (5.1.0.344)
     nio4r (1.2.1)
     nokogiri (1.8.3)
@@ -327,7 +326,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.3.13)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -387,7 +385,6 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   mail
   multi_json
-  mysql2
   newrelic_rpm
   omniauth (>= 1.1.3)
   omniauth-google-oauth2
@@ -408,7 +405,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sprockets-rails
-  sqlite3
   therubyracer
   uglifier
   web-console (>= 3.3.0)
@@ -416,7 +412,7 @@ DEPENDENCIES
   zurb-foundation
 
 RUBY VERSION
-   ruby 2.3.1p112
+   ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.1
+   1.16.3

@@ -24,7 +24,7 @@
 			<div class="row">
 				<div class="large-10 large-offset-2 small-12 columns">
 					<label for="perms" style="margin-top:-18px;"><%= check_box("approval", "perms", {}, "writer", "reader") %>
-					Allow reviewers to edit this document.</label> 
+					Allow reviewers to edit this document.</label>
 				</div>
 			</div>
 			<div class="row">
@@ -68,7 +68,7 @@
 						<div class="large-3 small-3 columns"><p class="form-label-approvers">Type</p></div>
 					</div>
 					<%= f.fields_for :approvers do |builder| %>
-				        <%= render 'approver_form', :f => builder %> 
+				        <%= render 'approver_form', :f => builder %>
 				      <% end %>
 				      <div class="add">
       				  </div>
@@ -77,12 +77,12 @@
       						<%= button_to_add_fields('Add Another Approver', f, :approvers ) %>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="row">
 				<div class="large-10 large-offset-2  columns">
-					<%= f.submit "Submit Document for Approval", :class => "button primary", :id =>"submit-approval" %>  
+					<%= f.submit "Submit Document for Approval", :class => "button primary", :id =>"submit-approval" %>
 				</div>
 			</div>
 		</div>
@@ -96,7 +96,7 @@
     <script src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
 
-    
+
     // Use the Google Loader script to load the google.picker script.
     //google.setOnLoadCallback(createPicker);
     google.load('picker', '1');
@@ -107,7 +107,7 @@
          view.setMode(google.picker.DocsViewMode.LIST);
           var picker = new google.picker.PickerBuilder()
           .setAppId("<%= ENV['APP_ID']%>")
-          .setOAuthToken("<%= current_user.token %>") 
+          .setOAuthToken("<%= current_user.token %>")
           .addView(view)
           .addView(new google.picker.DocsUploadView())
           .setCallback(pickerCallback)
@@ -115,7 +115,7 @@
        picker.setVisible(true);
 
     }
-    
+
 
     // A simple callback implementation.
     function pickerCallback(data) {
@@ -137,7 +137,7 @@
 
       // add HTML around this for title
       message = message + "<p class=\"form-file-name\">"+title+"</p>"
-      
+
       //message = message + title
       document.getElementById('result').innerHTML = message;
 
@@ -146,7 +146,7 @@
       myTextField.value = title;
     }
 
-  
+
     </script>
 
 
@@ -162,11 +162,4 @@ function add_fields(link, association, content) {
 $(function() {
     $( "#datepicker" ).datepicker(  );
   });
-
-</script>
-
-<!-- Mixpanel Conversion -->
-<script type="text/javascript">
-    var $container = $('#submit-approval');
-    $container = mixpanel.track("Submit Approval");
 </script>
