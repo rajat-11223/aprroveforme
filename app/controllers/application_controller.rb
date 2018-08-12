@@ -8,9 +8,10 @@ class ApplicationController < ActionController::Base
   private
     def current_user
       return unless session[:user_id]
+
       begin
         @current_user ||= User.find(session[:user_id])
-      rescue Exception => e
+      rescue ActiveRecord::RecordNotFound
         nil
       end
     end

@@ -41,12 +41,10 @@ class User < ApplicationRecord
     client.authorization.access_token = self.token
     client.authorization.refresh_token = self.refresh_token
 
-
-
     if client.authorization.refresh_token &&
         client.authorization.expired?
         client.authorization.fetch_access_token!
-     end
+    end
     return client
   end
 
@@ -61,7 +59,6 @@ class User < ApplicationRecord
       headers: {
         'Content-Type' => 'application/x-www-form-urlencoded'
       }
-
     }
 
     @response = HTTParty.post('https://accounts.google.com/o/oauth2/token', options)
@@ -75,18 +72,19 @@ class User < ApplicationRecord
   end
 
   def update_stats
-        self.email_domain = (self.email.split("@"))[1]
-        self.approvals_sent = Approval.where("owner = ?", self.id).count
-        self.approvals_received = Approver.where("email = ?", self.email).count
-        self.approvals_responded_to = Approver.where("email = ? and status != ? ", self.email, "").count
-        self.approvals_sent_30 = Approval.where("owner = ? and created_at > ?", self.id, 30.days.ago ).count
-        self.approvals_received_30 = Approver.where("email = ? and created_at > ?", self.email, 30.days.ago).count
-        self.approvals_responded_to_30 = Approver.where("email = ? and status != ? and created_at > ?", self.email, "", 30.days.ago).count
-        if Approval.where("owner = ?", self.id).last
-         self.last_sent_date = Approval.where("owner = ?", self.id).last.created_at
-        end
+    self.email_domain = (self.email.split("@"))[1]
+    self.approvals_sent = Approval.where("owner = ?", self.id).count
+    self.approvals_received = Approver.where("email = ?", self.email).count
+    self.approvals_responded_to = Approver.where("email = ? and status != ? ", self.email, "").count
+    self.approvals_sent_30 = Approval.where("owner = ? and created_at > ?", self.id, 30.days.ago ).count
+    self.approvals_received_30 = Approver.where("email = ? and created_at > ?", self.email, 30.days.ago).count
+    self.approvals_responded_to_30 = Approver.where("email = ? and status != ? and created_at > ?", self.email, "", 30.days.ago).count
 
-        self.save
+    if Approval.where("owner = ?", self.id).last
+      self.last_sent_date = Approval.where("owner = ?", self.id).last.created_at
+    end
+
+    self.save
   end
 
   def view_docs

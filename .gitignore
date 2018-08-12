@@ -67,3 +67,4 @@ pickle-email-*.html
 dump.rdb
 .env
 Procfile.dev
+examples.txt

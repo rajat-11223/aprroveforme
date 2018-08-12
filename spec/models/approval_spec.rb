@@ -1,33 +1,37 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Approval do
-	let!(:approval) { Approval.create }
-	subject { approval }
+  subject { create(:approval) }
 
-	it {should_not be_valid}
+  it 'valid' do
+    expect(subject).to be_valid
+  end
 
-	it "only has a title" do
-		approval.title = "test title"
-		approval.should_not be_valid
-	end
+  it "requires a title" do
+    subject.title = nil
+    expect(subject).to_not be_valid
+  end
 
-	it "has a title, deadline and file" do
-		approval.title = "test title"
-		approval.deadline = Time.now.to_datetime
-		approval.link = "www.google.com"
-		approval.should_not be_valid
-	end
+  it "requires a deadline" do
+    subject.deadline = nil
 
-	it "has an approver, title, deadline and file" do
-		approval.approvers << Approver.new(name: "Kim", email: "kimmanis@gmail.com")
-		approval.title = "test title"
-		approval.deadline = Time.now.to_datetime
-		approval.link = "www.google.com"
-		approval.should be_valid
-	end
+    expect(subject).to_not be_valid
+  end
 
+  it "requires a deadline in the future" do
+    subject.deadline = 1.day.ago
+    expect(subject).to_not be_valid
+  end
 
-  pending "has at least one approver"
+  it "requires a link" do
+    subject.link = nil
 
+    expect(subject).to_not be_valid
+  end
 
+  it "reques at least one approver" do
+    subject.approvers = []
+
+    expect(subject).to_not be_valid
+  end
 end

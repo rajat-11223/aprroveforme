@@ -12,7 +12,6 @@ gem "coffee-rails"
 gem "daemons"
 gem "delayed_job_active_record"
 gem "dynamic_form"
-gem "exceptional"
 gem "figaro", ">= 0.5.3"
 gem "google-api-client", ">= 0.4.4", :require => "google/api_client"
 gem "httparty"
@@ -45,23 +44,30 @@ gem "uglifier"
 gem "workless"
 gem "zurb-foundation"
 
+
+gem "rollbar", require: false
+gem "puma"
+gem "rack-timeout"
+
 group :development, :test do
+  gem "dotenv-rails", require: "dotenv/rails-now"
+  gem "pry-rails"
   gem "rspec-rails"
+  gem "factory_bot_rails"
 end
 
 group :test do
   gem "database_cleaner"
   gem "email_spec", ">= 1.4.0"
+  gem "rails-controller-testing"
 end
 
 group :development do
   gem "binding_of_caller", ">= 0.7.1"
   gem "better_errors", ">= 0.6.0"
   gem "letter_opener"
-  gem "puma"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
-  gem "rails-controller-testing"
   gem "listen", ">= 3.0.5", "< 3.2"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
