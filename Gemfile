@@ -16,6 +16,7 @@ gem "exceptional"
 gem "figaro", ">= 0.5.3"
 gem "google-api-client", ">= 0.4.4", :require => "google/api_client"
 gem "httparty"
+gem 'high_voltage', '~> 3.1'
 gem "i18n"
 gem "jquery-rails"
 gem "jquery-ui-rails"

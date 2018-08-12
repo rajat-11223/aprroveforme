@@ -51,7 +51,7 @@ class SessionsController < ApplicationController
           if Subscription.exists?(user_id: current_user.id)
             redirect_to root_url
           else
-            redirect_to pricing_index_path
+            redirect_to pricing_path
           end
         else
           if session[:plan_type] == "free"
@@ -75,7 +75,7 @@ class SessionsController < ApplicationController
               end
             end
           else
-            redirect_to pricing_index_path
+            redirect_to pricing_path
           end
         end
       end

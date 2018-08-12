@@ -47,7 +47,7 @@ class ApprovalsController < ApplicationController
   # GET /approvals/new.json
   def new
     if !current_user.subscription.present?
-      redirect_to pricing_index_path, notice: 'Please Subscribe a plan to continue creating Approvals'
+      redirect_to pricing_path, notice: 'Please Subscribe a plan to continue creating Approvals'
     end
 
     if current_user.subscription.plan_type != 'unlimited'
@@ -55,7 +55,7 @@ class ApprovalsController < ApplicationController
       user_approvals = Approval.where(:owner => current_user.id, :created_at => user_subscription_date..(user_subscription_date + 30.days))
 
       if user_approvals.count > plan_responses_limit
-        redirect_to pricing_index_path, notice: 'Please Upgrage Your plan to continue creating Approvals'
+        redirect_to pricing_path, notice: 'Please Upgrage Your plan to continue creating Approvals'
       end
     end
 

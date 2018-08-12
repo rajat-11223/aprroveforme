@@ -65,12 +65,12 @@
     <div class="large-9 small-12 columns">
 
       <ul class="inline-list right menu menu-hover-lines">
-        <li class="<%= active_class([how_it_works_path]) %>"><%= link_to "How It Works", how_it_works_path %></li>
+        <li class="<%= active_class([page_path('how-it-works')]) %>"><%= link_to "How It Works", page_path('how-it-works') %></li>
         <% if user_signed_in? %>
           <li class="<%= active_class([root_path,pending_approvals_home_index_path,open_approvals_home_index_path,
                                        past_documents_home_index_path,past_approvals_home_index_path]) %>"><a href="<%= root_url %>">Home</a></li>
-          <li class=""><a href="https://docs.google.com/forms/d/1nW9f_sYa6ndNxXc-c9M8FtbUGiA4K1fUi4ohYkM9BHE/viewform" target="_blank">Feedback</a></li>
-          <li class="<%= active_class([pricing_index_path]) %>"><%= link_to "My Plan",pricing_index_path(:type=>"upgrade") %></li>
+          <!-- <li class=""><a href="https://docs.google.com/forms/d/1nW9f_sYa6ndNxXc-c9M8FtbUGiA4K1fUi4ohYkM9BHE/viewform" target="_blank">Feedback</a></li> -->
+          <li class="<%= active_class([pricing_path]) %>"><%= link_to "My Plan",pricing_path(:type=>"upgrade") %></li>
 
           <li class="<%= active_class([profile_account_path,active_approvals_account_path,completed_approvals_account_path,
                                        pending_approvars_account_path,signed_off_approvars_account_path,payment_methods_account_path,
@@ -85,7 +85,7 @@
             <li class="<%= active_class([users_path]) %>"><%= link_to 'Admin', users_path %></li>
           <% end %>
         <% else %>
-          <li class="<%= active_class([pricing_index_path]) %>"><%= link_to 'Pricing', pricing_index_path %></li>
+          <li class="<%= active_class([pricing_path]) %>"><%= link_to 'Pricing', pricing_path %></li>
           <li><%= link_to 'Login or Signup', signin_path, :class=>"login" %></li>
         <% end %>
       </ul>

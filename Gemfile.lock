@@ -131,6 +131,7 @@ GEM
       excon
       moneta
       multi_json (>= 1.9.2)
+    high_voltage (3.1.0)
     htmlentities (4.3.4)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
@@ -376,6 +377,7 @@ DEPENDENCIES
   exceptional
   figaro (>= 0.5.3)
   google-api-client (>= 0.4.4)
+  high_voltage (~> 3.1)
   httparty
   i18n
   jquery-rails
