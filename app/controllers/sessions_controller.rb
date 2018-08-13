@@ -35,7 +35,6 @@ class SessionsController < ApplicationController
     user.token = auth["credentials"]["token"] || ""
     user.refresh_token = auth["credentials"]["refresh_token"] if auth["credentials"]["refresh_token"]
     user.code = params["code"] || ""
-    user.add_role :admin if User.count == 1 # make the first user an admin
     if user.name.blank? || user.name == ""
       redirect_to edit_user_path(user), :alert => "Please enter your name."
     else

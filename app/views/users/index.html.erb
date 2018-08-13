@@ -1,11 +1,10 @@
-
 <div class="row">
   <div class="large-3 large-offset-2 columns panel center">
-    <h1><%= User.all.count %></h1>
+    <h1><%= User.count %></h1>
     TOTAL USERS
   </div>
   <div class="large-3 large-offset-2 end columns panel center">
-    <h1><%= Approval.all.count %></h1>
+    <h1><%= Approval.count %></h1>
     TOTAL APPROVALS SENT
   </div>
 </div>
@@ -27,42 +26,43 @@
 
 <div class="row">
   <div class="large-4 columns" style="margin-bottom:20px;">
-    Export to <%= link_to "CSV", users_path(format: "csv") %> or <%= link_to "Excel", users_path(format: "xls") %>
+    Export to
+    <%= link_to "CSV", users_path(format: "csv") %>
   </div>
 </div>
 
-
 <div class="row">
-<div class="large-12 columns">
-<table class="table" style="width:100%;">
-  <thead>
-    <tr>
-      <th colspan="2"><%= sortable "name" %></th>
-      <th><%= sortable "email" %></th>
-      <th><%= sortable "created_at" %></th>
-      <th><%= sortable "sent" %></th>
-      <th><%= sortable "received" %></th>
-      <th><%= sortable "updated_at", "last login" %></th>
-      <th>Delete</th>
-    </tr>
-  </thead>
-  <tbody>
+  <div class="large-12 columns">
+    <table class="table" style="width:100%;">
+      <thead>
+        <tr>
+          <th colspan="2"><%= sortable "name" %></th>
+          <th><%= sortable "email" %></th>
+          <th><%= sortable "created_at" %></th>
+          <th><%= sortable "sent" %></th>
+          <th><%= sortable "received" %></th>
+          <th><%= sortable "updated_at", "last login" %></th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
 
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= image_tag user.picture, :style=>"width:35px" %></td>
-      <td><%= link_to user.name, user %></td>
-      <td><a href="mailto:<%= user.email %>" target="_blank"><%= user.email %></a></td>
-      <td><%= user.created_at.to_date %></td>
-      <td><%= Approval.where("owner = ?", user.id).count %></td>
-      <td><%= Approver.where("email = ?", user.email).count %></td>
-      <td><%= user.updated_at.to_date %></td>
-      <td><%= link_to("delete", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-<%= paginate @users, :remote => true %>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= image_tag user.picture, :style=>"width:35px" %></td>
+            <td><%= link_to user.name, user %></td>
+            <td>
+              <a href="mailto:<%= user.email %>" target="_blank"><%= user.email %></a>
+            </td>
+            <td><%= user.created_at.to_date %></td>
+            <td><%= Approval.where("owner = ?", user.id).count %></td>
+            <td><%= Approver.where("email = ?", user.email).count %></td>
+            <td><%= user.updated_at.to_date %></td>
+            <td><%= link_to("delete", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-mini') unless user == current_user %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @users, :remote => true %>
+  </div>
 </div>
-</div>
-
