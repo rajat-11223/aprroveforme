@@ -1,27 +1,20 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-
 require 'active_support/all'
-
-require 'google/api_client'
-
 require 'csv'
 
-
 Bundler.require(:default, Rails.env)
-
 
 module Workflow
   class Application < Rails::Application
 
+    ENV["ROLES"] ||= "admin user VIP"
+    ENV["GOOGLE_SCOPE"] ||= "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install"
+
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.test_framework :rspec
-
-
-
-
       g.view_specs false
       g.helper_specs false
     end
@@ -88,12 +81,6 @@ module Workflow
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '2.0'
 
-  end
-
-
-  class Application < Rails::Application
     config.google_verification = "google16deb60cae23dff7"
   end
-
-
 end

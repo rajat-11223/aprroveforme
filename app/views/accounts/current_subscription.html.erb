@@ -13,7 +13,7 @@
           <p class="form-label">Current Plan:</p>
         </div>
         <div class="large-10 small-9 columns" style="width: 477px;">
-          <%= current_user.subscription.plan_type %>
+          <%= @subscription.plan_type %>
         </div>
       </div>
       <div class="row">
@@ -21,7 +21,7 @@
           <p class="form-label">Start Date</p>
         </div>
         <div class="large-10 small-9 columns" style="width: 477px;">
-          <%= current_user.subscription.plan_date %>
+          <%= @subscription.plan_date %>
           <% if free_plan_compare != 'Current' %>
             <%= link_to "Cancel Subscription", new_subscription_path(:plan_type=> 'free' ) ,:class=>"button primary right"%>
           <% else %>
@@ -31,17 +31,8 @@
       </div>
     <% end -%>
 
-
   </div>
 
   <%= render 'shared/side_bar' %>
 
 </div>
-
-
-
-
-
-
-
-

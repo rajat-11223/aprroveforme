@@ -1,13 +1,8 @@
 class ApprovalsController < ApplicationController
-  before_action :authenticate_user!
-
   # GET /approvals
   # GET /approvals.json
   def index
-    unless current_user.has_role? :admin
-      redirect_to root_url, :alert => "Access denied."
-    end
-
+    authorize! :manage, :all
     @approvals = Approval.all
   end
 
@@ -15,15 +10,17 @@ class ApprovalsController < ApplicationController
   # GET /approvals/1.json
   def show
     @approval = Approval.find(params[:id])
+    authorize! :read, @approval
     @user = current_user
-    3.times {@approval.tasks.build} if @approval.tasks.empty?
+    3.times { @approval.tasks.build } if @approval.tasks.empty?
 
     if session[:code]
       approver = Approver.where("code = ?", session[:code]).first
+
       if (approver.approval_id == @approval.id) and (@user.email != approver.email )
-        @user.set_second_email(approver.email.downcase)
-        @user.save
+        current_user.update_attributes second_email: approver.email.downcase
       end
+
       session.delete(:code)
     end
 
@@ -57,10 +54,12 @@ class ApprovalsController < ApplicationController
       end
     end
 
+    @approval = Approval.new(perms: "reader", owner: current_user.id)
+    authorize! :create, @approval
 
-    @approval = Approval.new
-    @approval.perms = "reader"
-    3.times {@approval.approvers.build} if @approval.approvers.empty?
+    if @approval.approvers.empty?
+      3.times { @approval.approvers.build }
+    end
     # if the doc is being opened from Google drive, pre-populate
     if session[:state] and (session[:state]['action'] == 'open')
       current_user.refresh_google
@@ -107,10 +106,12 @@ class ApprovalsController < ApplicationController
   def create
     @approval = Approval.new(approval_params)
     @approval.owner = current_user.id
-    if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
-      @approval.deadline = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
-    end
 
+    deadline = params.dig(:approval, :deadline).match(/\d{2}\/\d{2}\/\d{4}/)
+    deadline.present? && @approval.deadline = DateTime.strptime(deadline.to_s, "%m/%d/%Y")
+
+    current_ability.can? :create, @approval
+    authorize! :create, @approval
     @approval.approvers.each do |approver|
       @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) if @approval.link
       # approver.generate_code
@@ -135,14 +136,14 @@ class ApprovalsController < ApplicationController
   # PUT /approvals/1
   # PUT /approvals/1.json
   def update
-
     @approval = Approval.find(params[:id])
+    autorize! :update, @approval
 
     # if an approver is approving
-    if params[:approval][:approver]
+    if params.dig(:approval, :approver)
       @approver = @approval.approvers.where("email = ? or email= ?", current_user.email, current_user.second_email).first
-      @approver.status = params[:approval][:approver][:status]
-      @approver.comments = params[:approval][:approver][:comments]
+      @approver.status = params.dig(:approval, :approver, :status)
+      @approver.comments = params.dig(:approval, :approver, :comments)
       @approval.tasks << Task.new(params[:approval][:tasks])
       #params[:approval][:approver][:tasks].each do |task|
       #  @approver.tasks << task
@@ -164,7 +165,7 @@ class ApprovalsController < ApplicationController
           @approval.approvers.each do |approver|
             if approver.code == nil
               @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms])
-              # approver.generate_code
+              # approver.generate_code0
               UserMailer.new_approval_invite(@approval, approver).deliver_later
             end
           end
@@ -186,10 +187,11 @@ class ApprovalsController < ApplicationController
   # DELETE /approvals/1.json
   def destroy
     @approval = Approval.find(params[:id])
-    @approval.destroy
+    authorize! :destroy, @approval
 
+    @approval.destroy
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to root_url, notice: "Approval was successfully deleted." }
       format.json { head :no_content }
     end
   end

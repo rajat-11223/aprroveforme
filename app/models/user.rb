@@ -3,7 +3,6 @@ class User < ApplicationRecord
   validates :email, :picture, :presence => true
   before_save { |user| user.email = user.email.downcase }
 
-  has_and_belongs_to_many :roles, :join_table => :users_roles
   has_many :approvals, dependent: :destroy
   has_one :subscription, dependent: :destroy
   has_one :payment_method, dependent: :destroy
@@ -25,10 +24,9 @@ class User < ApplicationRecord
     end
   end
 
-  def set_second_email(email)
-    self.second_email = email
+  def ability
+    @ability ||= Ability.new(self)
   end
-
 
   def google_auth
     # Create a new API client & load the Google Drive API
@@ -41,11 +39,11 @@ class User < ApplicationRecord
     client.authorization.access_token = self.token
     client.authorization.refresh_token = self.refresh_token
 
-    if client.authorization.refresh_token &&
-        client.authorization.expired?
-        client.authorization.fetch_access_token!
+    if client.authorization.refresh_token && client.authorization.expired?
+      client.authorization.fetch_access_token!
     end
-    return client
+
+    client
   end
 
   def refresh_google
@@ -87,35 +85,36 @@ class User < ApplicationRecord
     self.save
   end
 
-  def view_docs
-    client = self.google_auth
-    drive = client.discovered_api('drive', 'v2')
-    page_token = nil
-    doc_list = []
-
-    # params
-    @string = "title contains 'WhichBus'"
-
-    begin
-    if page_token.to_s != ''
-      parameters['pageToken'] = page_token
-    end
-    result = client.execute!(
-      :api_method => drive.files.list,
-      :parameters => {'q' => @string})
-    if result.status == 200
-        puts "success!"
-        files = result.data
-        #doc_list << files.items
-        files.items.each {|file| doc_list << file}
-        page_token = files.next_page_token
-    else
-        puts "An error occurred: #{result.data['error']['message']}"
-        page_token = nil
-    end
-    end while page_token.to_s != ''
-  doc_list
-  end
+  # def view_docs
+  #   client = self.google_auth
+  #   drive = client.discovered_api('drive', 'v2')
+  #   page_token = nil
+  #   doc_list = []
+  #
+  #   # params
+  #   search_string = "title contains 'WhichBus'"
+  #
+  #   begin
+  #     if page_token.to_s != ''
+  #       parameters['pageToken'] = page_token
+  #     end
+  #
+  #     result = drive.list_files(q: search_string)
+  #
+  #     if result.status == 200
+  #         puts "success!"
+  #         files = result.data
+  #         #doc_list << files.items
+  #         files.items.each {|file| doc_list << file}
+  #         page_token = files.next_page_token
+  #     else
+  #         puts "An error occurred: #{result.data['error']['message']}"
+  #         page_token = nil
+  #     end
+  #   end while page_token.to_s != ''
+  #
+  #   doc_list
+  # end
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|

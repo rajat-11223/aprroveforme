@@ -5,14 +5,14 @@
     </section>
 
     <section class="section <%= active_class([active_approvals_account_path,completed_approvals_account_path,
-                                              pending_approvars_account_path,signed_off_approvars_account_path])%>">
+                                              pending_approvals_account_path,signed_off_approvals_account_path])%>">
       <p class="title"><a href="#">Approvals</a></p>
       <div class="content">
         <ul class="side-nav">
           <li class="<%= active_class([active_approvals_account_path]) %>"><%= link_to 'Active', active_approvals_account_path %></li>
           <li class="<%= active_class([completed_approvals_account_path]) %>"><%= link_to 'Completed', completed_approvals_account_path %></li>
-          <li class="<%= active_class([pending_approvars_account_path]) %>"><%= link_to 'Pending', pending_approvars_account_path %></li>
-          <li class="<%= active_class([signed_off_approvars_account_path]) %>"><%= link_to 'Signed Off', signed_off_approvars_account_path %></li>
+          <li class="<%= active_class([pending_approvals_account_path]) %>"><%= link_to 'Pending', pending_approvals_account_path %></li>
+          <li class="<%= active_class([signed_off_approvals_account_path]) %>"><%= link_to 'Signed Off', signed_off_approvals_account_path %></li>
         </ul>
       </div>
     </section>

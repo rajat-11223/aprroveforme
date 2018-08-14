@@ -5,12 +5,20 @@ class ApplicationController < ActionController::Base
   helper_method :user_signed_in?
   helper_method :correct_user?
 
+  before_action :set_code
+
+  check_authorization
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, :alert => exception.message
+  end
+
   private
     def current_user
-      return unless session[:user_id]
+      return  unless session[:user_id]
 
       begin
-        @current_user ||= User.find(session[:user_id])
+        @current_user ||= User.includes(:subscription).find(session[:user_id])
       rescue ActiveRecord::RecordNotFound
         nil
       end
@@ -20,26 +28,9 @@ class ApplicationController < ActionController::Base
       current_user.present?
     end
 
-    def correct_user?
-      @user = User.find(params[:id])
-      unless current_user == @user
-        redirect_to root_url, :alert => "Access denied."
-      end
+    def set_code
+      return unless params["code"].present?
+
+      session[:code] = params["code"]
     end
-
-    def authenticate_user!
-      if params["code"]
-       session[:code] = params["code"]
-      end
-
-      if !current_user
-        redirect_to root_url, :alert => 'You need to sign in for access to this page.'
-      end
-    end
-
-
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_path, :alert => exception.message
-  end
-
 end

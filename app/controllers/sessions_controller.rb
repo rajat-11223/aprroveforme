@@ -1,6 +1,5 @@
-require 'json'
 class SessionsController < ApplicationController
-  require 'json'
+  skip_authorization_check
 
   include ApplicationHelper
 
@@ -89,7 +88,6 @@ class SessionsController < ApplicationController
     elsif params[:error] # User denied the oauth grant
       halt 403
     end
-
   end
 
 
@@ -113,14 +111,10 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_url, :notice => 'You have successfully signed out.'
+    redirect_to root_url, notice: 'You have successfully signed out.'
   end
 
   def failure
-    redirect_to root_url, :alert => "Authentication error: #{params[:message]}."
+    redirect_to root_url, alert: "Authentication error: #{params[:message]}."
   end
-
-
-
-
 end

@@ -1,14 +1,10 @@
 using FindItem
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :correct_user?, :except => [:index]
   helper_method :sort_column, :sort_direction
 
   def index
-    unless current_user.has_role? :admin
-      redirect_to root_url, :alert => "Access denied."
-    end
+    authorize! :manage, :all
 
     respond_to do |format|
       format.html { @users = User.order("#{sort_column} #{sort_direction}").page(params[:page]) }
@@ -18,22 +14,25 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    authorize! :edit, @user
   end
 
   def update
     @user = User.find(params[:id])
+    authorize! :edit, :user
+
     if @user.update_attributes(user_params)
       @user.name = "#{@user.first_name} #{@user.last_name}"
       @user.save
-      redirect_to root_url
+      redirect_to root_url, notice: "Successfully updated user"
     else
       render :edit
     end
   end
 
-
   def show
     @user = User.find(params[:id])
+    authorize! :read, @user
   end
 
   private

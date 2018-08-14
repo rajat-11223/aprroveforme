@@ -1,20 +1,24 @@
 class PaymentsController < ApplicationController
   def new
+    authorize! :create, Subscription.new(user: current_user)
+
     if !Subscription.all.collect(&:user_id).include? current_user.id
       @amount = calculate_amount
     else
       if session[:upgrade]== "upgrade"
        if  Subscription.find_by_user_id(current_user.id).plan_type == "unlimited"
         session[:degrade]="degrade"
-       end 
+       end
         @amount = calculate_amount
       else
       redirect_to root_url
       end
-    end  
+    end
   end
 
   def confirm
+    authorize! :update, current_user.subscription
+
     @result = Braintree::TransparentRedirect.confirm(request.query_string)
     if @result.success?
 
@@ -30,10 +34,10 @@ class PaymentsController < ApplicationController
             format.html { redirect_to root_url, notice: 'Congratulations, you have successfully updated your plan.' }
           else
             session[:degrade]=nil
-            format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' } 
+            format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' }
           end
         end
-      else  
+      else
         Subscription.create(:plan_type=>session[:plan_type],:plan_date=> Date.today,:user_id=> current_user.id)
         session[:plan_type]=nil
         redirect_to root_url

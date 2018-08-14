@@ -6,6 +6,8 @@ class SubscriptionsController < ApplicationController
     session[:plan_type] = params[:plan_type]
     @amount = calculate_amount
 
+    authorize! :edit, Subscription.new(user: current_user)
+
     if current_user.customer_id?
       customer = Braintree::Customer.find(current_user.customer_id)
       if customer.payment_methods.present? and current_user.subscription.plan_type != 'free'
@@ -15,10 +17,13 @@ class SubscriptionsController < ApplicationController
   end
 
   def continue_permission
+    authorize! :create, Subscription.new(user: current_user)
     render :partial => 'continue_permission', :locals => {:plan => params[:id]}
   end
 
   def create
+    authorize! :create, Subscription.new(user: current_user)
+
     if current_user.customer_id?
       Braintree::Customer.update(
           current_user.customer_id,
@@ -75,6 +80,8 @@ class SubscriptionsController < ApplicationController
   end
 
   def upgrade
+    authorize! :update, current_user.subscription
+
     if current_user.customer_id?
       Braintree::Customer.update(
           current_user.customer_id,

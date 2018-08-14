@@ -35,8 +35,8 @@ Workflow::Application.routes.draw do
       get :active_approvals
       get :completed_approvals
 
-      get :pending_approvars
-      get :signed_off_approvars
+      get :pending_approvals
+      get :signed_off_approvals
     end
   end
 
@@ -61,17 +61,18 @@ Workflow::Application.routes.draw do
 
   resources :home do
     collection do
+      get 'dashboard'
       get :pending_approvals
       get :open_approvals
       get :past_documents
       get :past_approvals
     end
   end
+
   resource :subscription do
     collection do
       get :upgrade
       get :continue_permission
     end
   end
-
 end

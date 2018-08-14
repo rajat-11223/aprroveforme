@@ -73,7 +73,7 @@
           <li class="<%= active_class([pricing_index_path]) %>"><%= link_to "My Plan",pricing_index_path(:type=>"upgrade") %></li>
 
           <li class="<%= active_class([profile_account_path,active_approvals_account_path,completed_approvals_account_path,
-                                       pending_approvars_account_path,signed_off_approvars_account_path,payment_methods_account_path,
+                                       pending_approvals_account_path,signed_off_approvals_account_path,payment_methods_account_path,
                                        update_card_account_path,current_subscription_account_path,subscription_histories_account_path]) %>">
             <%= link_to profile_account_path do %>
               <%= image_tag current_user.picture, :class=>"nav-pic" %> Account
@@ -81,7 +81,7 @@
           </li>
 
           <li><%= link_to (image_tag "logout.png", :class=>"nav-image", :title=>"Logout"), signout_path %></li>
-          <% if current_user.has_role? :admin %>
+          <% if can? :manage, :all %>
             <li class="<%= active_class([users_path]) %>"><%= link_to 'Admin', users_path %></li>
           <% end %>
         <% else %>

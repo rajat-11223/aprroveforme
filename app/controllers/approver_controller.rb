@@ -1,15 +1,17 @@
 class ApproverController < ApplicationController
-  before_action :authenticate_user!
   def show
     @approver = Approver.find(params[:id])
+    authorize! :read, @approver
   end
 
   def edit
     @approver = Approver.find(params[:id])
+    authorize! :edit, @approver
   end
 
   def update
     @approver = Approver.find(params[:id])
+    authorize! :update, @approver
 
     respond_to do |format|
       if @approver.update_attributes(approver_params)
@@ -21,7 +23,7 @@ class ApproverController < ApplicationController
       end
     end
   end
-  
+
   def approver_params
     params.require(:approver).permit(:id, :email, :name, :required, :status, :comments, :code)
   end

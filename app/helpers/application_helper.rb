@@ -1,10 +1,11 @@
 module ApplicationHelper
 
   def plan_responses_limit
-    if current_user.subscription.plan_type == 'free'
+    case current_user.subscription.plan_type
+    when 'free'
       '2'
-    elsif current_user.subscription.plan_type == 'professional'
-      '6'
+    when 'professional'
+      ''
     else
       'unlimited'
     end

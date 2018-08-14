@@ -73,7 +73,7 @@ GEM
       braintree (>= 2.28.0)
     builder (3.2.3)
     byebug (10.0.2)
-    cancan (1.6.10)
+    cancancan (2.2.0)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -115,8 +115,6 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.23)
-    figaro (1.1.1)
-      thor (~> 0.14)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     google-api-client (0.8.6)
@@ -387,7 +385,7 @@ DEPENDENCIES
   braintree (>= 2.16.0)
   braintree-rails
   byebug
-  cancan (>= 1.6.8)
+  cancancan (~> 2.0)
   coffee-rails
   daemons
   database_cleaner
@@ -396,7 +394,6 @@ DEPENDENCIES
   dynamic_form
   email_spec (>= 1.4.0)
   factory_bot_rails
-  figaro (>= 0.5.3)
   google-api-client (>= 0.4.4)
   httparty
   i18n
