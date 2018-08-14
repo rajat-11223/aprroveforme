@@ -3,7 +3,6 @@ ruby "2.5.1"
 
 gem "activemodel-serializers-xml"
 gem "activesupport"
-gem "bootstrap-sass", ">= 2.3.0.0"
 gem "braintree-rails"
 gem "braintree", ">= 2.16.0"
 gem "byebug"
@@ -14,6 +13,7 @@ gem "delayed_job_active_record"
 gem "dynamic_form"
 gem "google-api-client", ">= 0.4.4", :require => "google/api_client"
 gem "httparty"
+gem 'high_voltage', '~> 3.1'
 gem "i18n"
 gem "jquery-rails"
 gem "jquery-ui-rails"
@@ -27,7 +27,7 @@ gem "omniauth-google-oauth2"
 gem "omniauth", ">= 1.1.3"
 gem "pg", "~> 0.20.0"
 gem "rails-deprecated_sanitizer"
-gem "rails", "5.2"
+gem "rails", "5.2.1"
 gem "record_tag_helper", "~> 1.0"
 gem "responders", "~> 2.0"
 gem "rolify", ">= 3.2.0"
@@ -55,7 +55,6 @@ group :development, :test do
 end
 
 group :test do
-  gem "database_cleaner"
   gem "email_spec", ">= 1.4.0"
   gem "rails-controller-testing"
 end

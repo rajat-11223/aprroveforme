@@ -123,8 +123,9 @@ class SubscriptionsController < ApplicationController
       # subscription history
       SubscriptionHistory.create(plan_type: session[:plan_type], plan_date: Time.now )
 
-      session[:plan_type]=nil
-      session[:upgrade]=nil
+      session[:plan_type] = nil
+      session[:upgrade] = nil
+
       respond_to do |format|
         if session[:degrade] != "degrade"
           format.html { redirect_to root_url, notice: 'Congratulations, you have successfully updated your plan.' }
@@ -145,10 +146,10 @@ class SubscriptionsController < ApplicationController
   protected
 
   def calculate_amount
-    # in a real app this be calculated from a shopping cart, determined by the product, etc.
-    if session[:plan_type]=="free"
+    case session[:plan_type]
+    when "free"
       "00.00"
-    elsif session[:plan_type] == "professional"
+    when "professional"
       "1.99"
     else
       "4.99"

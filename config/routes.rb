@@ -1,15 +1,5 @@
 Workflow::Application.routes.draw do
-  resources :how_it_works, only: [ :index ]
-
-  get "pricing/index"
-
-  get "faq/index"
-
-  get "privacy/index"
-
-  get "terms/index"
-
-  get "about/index"
+  get "pricing", as: :pricing, to: "pricing#index"
 
   resources :approvals do
   	resources :approvers
@@ -46,13 +36,12 @@ Workflow::Application.routes.draw do
   get 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
 
   get "/#{Rails.application.config.google_verification}.html",
-  to: proc { |env| [200, {},
-    ["google-site-verification: #{Rails.application.config.google_verification}.html"]] }
+      to: proc { |env| [200, {}, ["google-site-verification: #{Rails.application.config.google_verification}.html"]] }
 
   mount Split::Dashboard, :at => 'split'
 
-  root :to => "home#index"
   resources :users, :only => [:index, :show, :edit, :update ]
+
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin' => 'sessions#new', :as => :signin
   get '/signout' => 'sessions#destroy', :as => :signout
@@ -75,4 +64,9 @@ Workflow::Application.routes.draw do
       get :continue_permission
     end
   end
+
+  # Static Pages
+  get "/*id" => 'pages#show', as: :page, format: false
+
+  root to: "home#index"
 end

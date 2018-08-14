@@ -7,56 +7,66 @@ module ApplicationHelper
     when 'professional'
       ''
     else
-      'unlimited'
+      "unlimited"
     end
   end
 
   def free_plan_compare
-    if !Subscription.find_by_user_id(current_user.id).nil?
-      if Subscription.find_by_user_id(current_user.id).plan_type == "free"
-        'Current'
-      elsif Subscription.find_by_user_id(current_user.id).plan_type == "professional"
-        'Downgrade'
-      elsif Subscription.find_by_user_id(current_user.id).plan_type == "unlimited"
-        'Downgrade'
+    subscription = Subscription.find_by(user_id: current_user.id)
+
+    if subscription
+      case subscription.plan_type
+      when "free"
+        "Current"
+      when "professional"
+        "Downgrade"
+      when "unlimited"
+        "Downgrade"
       end
     else
-      'Get Started'
+      "Get Started"
     end
   end
 
   def pro_plan_compare
-    if !Subscription.find_by_user_id(current_user.id).nil?
-      if Subscription.find_by_user_id(current_user.id).plan_type == "professional"
-        'Current'
-      elsif Subscription.find_by_user_id(current_user.id).plan_type == "unlimited"
-        'Downgrade'
-      else
-        'Upgrade'
+    subscription = Subscription.find_by(user_id: current_user.id)
+
+    if subscription
+      case subscription.plan_type
+      when "free"
+        "Downgrade"
+      when "professional"
+        "Current"
+      when "unlimited"
+        "Downgrade"
       end
     else
-      'Get Started'
+      "Get Started"
     end
   end
 
   def unlimited_plan_compare
-    if !Subscription.find_by_user_id(current_user.id).nil?
-      if Subscription.find_by_user_id(current_user.id).plan_type == "unlimited"
-        'Current'
-      elsif Subscription.find_by_user_id(current_user.id).plan_type == "professional"
-        'Upgrade'
-      else
-        'Upgrade'
+    subscription = Subscription.find_by(user_id: current_user.id)
+
+    if subscription
+      case subscription.plan_type
+      when "free"
+        "Downgrade"
+      when "professional"
+        "Downgrade"
+      when "unlimited"
+        "Current"
       end
     else
-      'Get Started'
+      "Get Started"
     end
   end
 
   def continue_permission_decider(id)
-    if id == 'free'
+    case id
+    when "free"
       free_plan_compare
-    elsif id == 'professional'
+    when "professional"
       pro_plan_compare
     else
       unlimited_plan_compare
@@ -64,7 +74,7 @@ module ApplicationHelper
   end
 
   def active_class(array)
-    array.include?(request.path) ? 'active' : ''
+    array.include?(request.path) ? "active" : ""
   end
 
   def button_to_add_fields(name, f, association)
@@ -86,17 +96,18 @@ module ApplicationHelper
 
     onclick = "#{"#{html_options[:onclick]}; " if html_options[:onclick]}#{function};"
 
-    tag(:input, html_options.merge(:type => 'button', :value => name, :onclick => onclick))
+    tag(:input, html_options.merge(:type => "button", :value => name, :onclick => onclick))
   end
 
-  def gateway
-    @gateway ||= Braintree::Gateway.new(
-        :environment => :sandbox,
-        :merchant_id => '896h6fqr23smp2ny',
-        :public_key => 'swc9g7ffxxfgdb8b',
-        :private_key => 'bde545bb49e6ecbd4831b38d19e0faf3',
-        )
-  end
+  # TODO: Determine if this is needed
+  # def gateway
+  #   @gateway ||= Braintree::Gateway.new(
+  #       :environment => :sandbox,
+  #       :merchant_id => "896h6fqr23smp2ny",
+  #       :public_key => "swc9g7ffxxfgdb8b",
+  #       :private_key => "bde545bb49e6ecbd4831b38d19e0faf3",
+  #   )
+  # end
 
   def sortable(column, title = nil)
     title ||= column.titleize
@@ -104,6 +115,7 @@ module ApplicationHelper
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     link_to title, {:sort => column, :direction => direction}, {:class => css_class}
   end
+
   class BraintreeFormBuilder < ActionView::Helpers::FormBuilder
     include ActionView::Helpers::AssetTagHelper
     include ActionView::Helpers::TagHelper

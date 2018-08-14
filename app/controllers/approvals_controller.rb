@@ -31,9 +31,10 @@ class ApprovalsController < ApplicationController
   end
 
   def plan_responses_limit
-    if current_user.subscription.plan_type == 'free'
+    case current_user.subscription.plan_type
+    when 'free'
       2
-    else current_user.subscription.plan_type == 'professional'
+    when 'professional'
       6
     end
   end
@@ -42,7 +43,7 @@ class ApprovalsController < ApplicationController
   # GET /approvals/new.json
   def new
     if !current_user.subscription.present?
-      redirect_to pricing_index_path, notice: 'Please Subscribe a plan to continue creating Approvals'
+      redirect_to pricing_path, notice: 'Please Subscribe a plan to continue creating Approvals'
     end
 
     if current_user.subscription.plan_type != 'unlimited'
@@ -50,7 +51,7 @@ class ApprovalsController < ApplicationController
       user_approvals = Approval.where(:owner => current_user.id, :created_at => user_subscription_date..(user_subscription_date + 30.days))
 
       if user_approvals.count > plan_responses_limit
-        redirect_to pricing_index_path, notice: 'Please Upgrage Your plan to continue creating Approvals'
+        redirect_to pricing_path, notice: 'Please Upgrage Your plan to continue creating Approvals'
       end
     end
 
@@ -60,6 +61,7 @@ class ApprovalsController < ApplicationController
     if @approval.approvers.empty?
       3.times { @approval.approvers.build }
     end
+
     # if the doc is being opened from Google drive, pre-populate
     if session[:state] and (session[:state]['action'] == 'open')
       current_user.refresh_google
@@ -94,7 +96,6 @@ class ApprovalsController < ApplicationController
       puts "An error occurred: #{result.data['error']['message']}"
     end
   end
-
 
   # GET /approvals/1/edit
   def edit
@@ -182,7 +183,6 @@ class ApprovalsController < ApplicationController
     end
   end
 
-
   # DELETE /approvals/1
   # DELETE /approvals/1.json
   def destroy
@@ -202,7 +202,6 @@ class ApprovalsController < ApplicationController
     params.require(:approval).permit(:id,:deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :perms, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
   end
 end
-
 
 def percentage_complete(approval)
   @approver_count = approval.approvers.where("required = ?", "required").count

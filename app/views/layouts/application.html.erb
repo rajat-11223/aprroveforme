@@ -1,121 +1,56 @@
 <!DOCTYPE html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<!--[if IE 7 ]> <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]> <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+  <!--<![endif]-->
   <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117323183-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <%= render 'layouts/google_analytics' %>
+    <meta charset="utf-8"/>
 
-      gtag('config', 'UA-117323183-1');
-    </script>
+    <!-- Uncomment to make IE8 render like IE7 -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
 
-  	<meta charset="utf-8" />
-
-  	<!-- Uncomment to make IE8 render like IE7 -->
-  	<!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
-
-  	<!-- Set the viewport width to device width for mobile -->
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!-- AK 04.11.18 Adding meta to upgrade insecure requests -->
     <% if Rails.env.production? %>
       <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <% end %>
 
-  	<title><%= content_for?(:title) ? yield(:title) : "ApproveForMe" %></title>
-    <META NAME="Description" CONTENT="ApproveForMe is a free web-based tool that simplifies your professional life by making it easier to create, track, and manage document signoffs.">
+    <title><%= content_for?(:title) ? yield(:title) : "ApproveForMe" %></title>
+    <meta name="Description" content="ApproveForMe is a free web-based tool that simplifies your professional life by making it easier to create, track, and manage document signoffs.">
 
-    <link rel="stylesheet" href="/assets/foundation.css" />
-    <link rel="stylesheet" href="/assets/edits.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/zocial.css" />
-    <meta name="verifyownership" content="79778f2d85e04ba5f49ddd47738772e6"/>
-
-
-    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="//code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    <script src="/assets/vendor/custom.modernizr.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <%= stylesheet_link_tag  'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"/>
+    <link rel="icon" type="image/png" href="<%= asset_path("favicon.png") %>"/>
 
     <%= csrf_meta_tags %>
   </head>
 
   <body>
 
-<div id="container">
+    <div id="container">
 
-    <%= render 'layouts/navigation' %>
+      <%= render 'layouts/navigation' %>
+      <%= render 'layouts/messages' %>
 
-    <%= render 'layouts/messages' %>
-    <%= yield %>
+      <%= yield %>
 
-    <%= render 'layouts/footer' %>
-</div>
+      <%= render 'layouts/footer' %>
+    </div>
 
-<!-- A link to launch the Classic Widget -->
-<script>
-  document.write('<script src=/assets/vendor/'
-    + ('__proto__' in {} ? 'zepto' : 'jquery')
-    + '.js><\/script>');
-</script>
+    <script>
+      $(function () {
+        $(document).foundation();
+      })
+    </script>
 
- <script src="/assets/foundation.min.js"></script>
- <script>
-  $(function(){
-    $(document).foundation();
-  })
-</script>
-
-<script>
-// Include the UserVoice JavaScript SDK (only needed once on a page)
-UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/H6yaFyp6VZJrQqdY8RxGg.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
-
-//
-// UserVoice Javascript SDK developer documentation:
-// https://www.uservoice.com/o/javascript-sdk
-//
-
-// Set colors
-UserVoice.push(['set', {
-  accent_color: '#808283',
-  trigger_color: 'white',
-  trigger_background_color: 'rgba(46, 49, 51, 0.6)'
-}]);
-
-// Identify the user and pass traits
-// To enable, replace sample data with actual user traits and uncomment the line
-UserVoice.push(['identify', {
-  //email:      'john.doe@example.com', // User’s email address
-  //name:       'John Doe', // User’s real name
-  //created_at: 1364406966, // Unix timestamp for the date the user signed up
-  //id:         123, // Optional: Unique id of the user (if set, this should not change)
-  //type:       'Owner', // Optional: segment your users by type
-  //account: {
-  //  id:           123, // Optional: associate multiple users with a single account
-  //  name:         'Acme, Co.', // Account name
-  //  created_at:   1364406966, // Unix timestamp for the date the account was created
-  //  monthly_rate: 9.99, // Decimal; monthly rate of the account
-  //  ltv:          1495.00, // Decimal; lifetime value of the account
-  //  plan:         'Enhanced' // Plan name for the account
-  //}
-}]);
-
-// Add default trigger to the bottom-right corner of the window:
-// AK 4.11.18 Updated position
-UserVoice.push(['addTrigger', { mode: 'satisfaction', trigger_position: 'bottom-left' }]);
-
-// Or, use your own custom trigger:
-//UserVoice.push(['addTrigger', '#id', { mode: 'satisfaction' }]);
-
-// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
-UserVoice.push(['autoprompt', {}]);
-</script>
+    <%= render "layouts/user_voice" %>
 
   </body>
 </html>
