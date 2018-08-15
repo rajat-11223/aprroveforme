@@ -32,8 +32,8 @@
             <!--- START DOCUMENT INFO -->
             <p class="approval-details">
               <strong>Creator:</strong>
-              <%= image_tag image_url(User.find(@approval.owner).email), class: "pic-approval-owner" %>
-              <%= User.find(@approval.owner).name %><br/>
+              <%= image_tag image_url(@approval.owner_user.email), class: "pic-approval-owner" %>
+              <%= @approval.owner_user.name %><br/>
             </p>
             <p class="approval-details">
               <strong>Deadline:</strong>

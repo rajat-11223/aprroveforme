@@ -16,7 +16,7 @@
                 <img src="/assets/action.png">
               </div>
               <div class="large-11 small-10 columns">
-                <p class="details"><%= User.find(approver.approval.owner).name %> requested your approval. You have <strong><%= approver.approval.deadline_in_words %></strong> to respond.</p>
+                <p class="details"><%= approver.approval.owner_user.name %> requested your approval. You have <strong><%= approver.approval.deadline_in_words %></strong> to respond.</p>
                 <p class="title"><%= link_to approver.approval.title, approver.approval %></p><br />
               </div>
             </div>

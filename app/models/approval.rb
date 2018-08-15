@@ -2,7 +2,6 @@
   include ActionView::Helpers::DateHelper
   include CreationDateScopes
 
-  belongs_to :user, foreign_key: "owner"
   has_many :approvers, dependent: :destroy, inverse_of: :approval
   has_many :tasks, dependent: :destroy
 
@@ -16,6 +15,8 @@
   scope :deadline_is_in_future, -> { where("deadline >= ?", 1.day.from_now.beginning_of_day) }
   scope :deadline_is_past, -> { where("deadline < ?", 1.day.from_now.beginning_of_day) }
   scope :for_owner, -> (owner_id) { where(owner: owner_id) }
+
+  belongs_to :owner_user, class_name: "User", foreign_key: "owner"
 
   accepts_nested_attributes_for :approvers,
                                 reject_if: proc { |attributes| attributes['name'].blank? || attributes['email'].blank? },

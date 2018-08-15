@@ -19,7 +19,7 @@
           </tbody>
           <% @pending_approvals.each do |approver| %>
             <tr>
-              <td class="bold"><%= User.find(approver.approval.owner).name %></td>
+              <td class="bold"><%= approver.approval.owner_user.name %></td>
               <td><%= approver.approval.title %></td>
               <td><%= approver.approval.deadline_in_words %></td>
 

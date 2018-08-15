@@ -437,7 +437,7 @@
 
                         Hi <%= @approver.name %>, <br><br>
 
-						<%= @owner_name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of
+						<%= @owner.name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of
 						<%= link_to @approval.title, "#{approval_url(@approval)}&?code=#{@approver.code}" %>.<br>
                         </td>
                     </tr>
@@ -474,7 +474,7 @@
 
                         You can read over the document, leave comments, and sign off at <%= link_to "ApproveForMe.com", approval_url(@approval, code: @approver.code) %>.<br><br>
 
-                        This is your personal invite to review, so please don't forward this email. If someone else needs to review, please ask <%= @owner_name %> to add them.<br><br>
+                        This is your personal invite to review, so please don't forward this email. If someone else needs to review, please ask <%= @owner.name %> to add them.<br><br>
 
 						Sincerely,<br>
 						-The ApproveForMe Team<br><br>

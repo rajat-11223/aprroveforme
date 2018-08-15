@@ -27,8 +27,8 @@
             <td><%= approver.approval.description %></td>
             <td><%= approver.status %></td>
             <td>
-              <%= image_tag image_url(User.find(approver.approval.owner).email), :class=>"pic-details" %>
-              <%= User.find(approver.approval.owner).name %>
+              <%= image_tag image_url(approver.approval.owner_user.email), class: "pic-details" %>
+              <%= approver.approval.owner_user.name %>
             </td>
 
             <td class="listing-inquiry-status">
