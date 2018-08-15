@@ -3,7 +3,7 @@
 <div id="confirmPlanChange" class="reveal-modal small">
   <h2>Change in Plan</h2>
   <p class="lead">
-    Are you sure you want to <u><%= plan_compare(to: plan).downcase %></u> your plan?
+    Are you sure you want to <u><%= plan_compare(to: plan).downcase %></u> to the <%= plan %> plan?
   </p>
   <%= link_to "Continue", new_subscription_path(plan_type: plan), class: "button primary expand", style: "background-color: #FFA500;" %>
   <a class="close-reveal-modal">&#215;</a>

@@ -19,11 +19,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    authorize! :edit, @user
+    authorize! :update, @user
 
-    if @user.update_attributes(user_params)
-      @user.name = "#{@user.first_name} #{@user.last_name}"
-      @user.save
+    name = user_params[:name].presence ||
+            [user_params[:first_name], user_params[:last_name]].join(" ")
+
+    if @user.update_attributes!(user_params.merge(name: name))
       redirect_to root_url, notice: "Successfully updated user"
     else
       render :edit

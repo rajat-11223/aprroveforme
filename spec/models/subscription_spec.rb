@@ -1,26 +1,26 @@
 require 'rails_helper'
 
 describe Subscription do
-  subject { create(:subscription) }
+  subject { create(:user, :with_subscription) }
 
   it 'valid' do
-    expect(subject).to be_valid
+    expect(subject.subscription).to be_valid
   end
 
   it "requires a user" do
-    subject.user = nil
-    expect(subject).to_not be_valid
+    subject.subscription.user = nil
+    expect(subject.subscription).to_not be_valid
   end
 
   it "requires a plan_type" do
-    subject.plan_type = nil
+    subject.subscription.plan_type = nil
 
-    expect(subject).to_not be_valid
+    expect(subject.subscription).to_not be_valid
   end
 
   it "requires a plan_date" do
-    subject.plan_date = nil
+    subject.subscription.plan_date = nil
 
-    expect(subject).to_not be_valid
+    expect(subject.subscription).to_not be_valid
   end
 end

@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_many :approvals, dependent: :destroy
   has_one :payment_method, dependent: :destroy
-  has_one :subscription, dependent: :destroy, autosave: false
+  has_one :subscription, autosave: true, required: false, class_name: 'SubscriptionHistory'
   has_many :subscription_histories, dependent: :destroy
 
   def self.create_with_omniauth(auth)

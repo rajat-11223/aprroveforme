@@ -9,8 +9,14 @@ FactoryBot.define do
     name { "Mrs. Admin" }
     email { "admin@takeovertheworld.com" }
     after(:create) do |user|
-
       user.add_role :admin
+    end
+  end
+
+  trait :with_subscription do
+    after(:create) do |user|
+      create(:subscription_history, user: user)
+      user.reload
     end
   end
 

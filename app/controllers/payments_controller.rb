@@ -1,12 +1,10 @@
 class PaymentsController < ApplicationController
   def new
-    authorize! :create, Subscription.new(user: current_user)
+    authorize! :create, current_user.subscription
     @amount = calculate_amount
 
-    if Subscription.exist?(user_id: current_user.id)
+    if current_user.subscription.present?
       if session[:upgrade] == "upgrade"
-        current_user.reload
-
         session[:degrade] = "degrade" if (current_user.subscription.plan_type == "unlimited")
       else
         redirect_to root_url
@@ -22,8 +20,6 @@ class PaymentsController < ApplicationController
 
     if @result.success?
       if session[:upgrade] == "upgrade"
-        current_user.reload
-
         current_user.subscription.update_attributes! plan_type: session[:plan_type],
                                                      plan_date: Date.today
         session.delete(:plan_type)
@@ -38,10 +34,7 @@ class PaymentsController < ApplicationController
 
         redirect_to root_url, notice: msg
       else
-        current_user.reload
-        current_user.subscription.update_attributes! plan_type: session[:plan_type], plan_date: Date.today
-
-        SubscriptionHistory.create!(user: current_user, plan_type: session[:plan_type], plan_date: Date.today)
+        current_user.subscription_histories.create!(user: current_user, plan_type: session[:plan_type], plan_date: Time.now)
         session[:plan_type] = nil
 
         redirect_to root_url

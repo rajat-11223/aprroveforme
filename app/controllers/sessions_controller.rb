@@ -25,9 +25,9 @@ class SessionsController < ApplicationController
       user.customer_id = customer.customer.id
     end
 
-    if !Subscription.exists?(user_id: current_user.id)
-      Subscription.create!(plan_type: 'free', plan_date: Date.today, user: user)
-      SubscriptionHistory.create!(plan_type: 'free', plan_date: Date.today, user: user)
+    if !user.subscription.present?
+      user.subscription_histories.create!(plan_type: 'free', plan_date: Time.now, user: user)
+      user.reload
     end
 
     # Credentials
@@ -42,8 +42,6 @@ class SessionsController < ApplicationController
     if !user.name.present?
       redirect_to edit_user_path(user), alert: "Please enter your name."
     else
-      user.reload
-
       if ['create', 'open'].include? session[:state]['action'].to_s
         redirect_to new_approval_url
       else

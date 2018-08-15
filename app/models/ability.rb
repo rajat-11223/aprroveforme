@@ -35,9 +35,8 @@ class Ability
     can [:read, :approve, :decline], Approval, approvers: { email: user.email }
     can [:read, :approve, :decline], Approval, approvers: { email: user.second_email }
 
-    can [:read, :create, :update], Subscription, user_id: user.id
-    can [:read], SubscriptionHistory, user_id: user.id
+    can [:create, :read], SubscriptionHistory, user_id: user.id
     can :manage, Approval, owner: user.id
-    can :manage, User, id: user.id
+    can [:create, :read, :update], User, id: user.id
   end
 end

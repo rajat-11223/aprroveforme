@@ -7,7 +7,7 @@ class SubscriptionsController < ApplicationController
     session[:plan_type] = params[:plan_type]
     @amount = calculate_amount
 
-    authorize! :edit, Subscription.new(user: current_user)
+    authorize! :create, current_user.subscription
 
     if current_user.customer_id?
       customer = Braintree::Customer.find(current_user.customer_id)
@@ -18,50 +18,49 @@ class SubscriptionsController < ApplicationController
   end
 
   def continue_permission
-    authorize! :create, Subscription.new(user: current_user)
+    authorize! :create, current_user.subscription
     render partial: 'continue_permission', locals: { plan: params[:id] }
   end
 
   def create
-    authorize! :create, Subscription.new(user: current_user)
+    authorize! :create, current_user.subscription
 
-    braintree_customer = fetch_or_create_braintree_customer
     plan_type = session[:plan_type]
+    Subscription.transaction do
+      braintree_customer = fetch_or_create_braintree_customer
 
-    # Create subscription for user
-    payment_method_token = braintree_customer.payment_methods.find{ |pm| pm.default? }.token
-    braintree_subscription = Braintree::Subscription.create!(
-      payment_method_token: payment_method_token,
-      price: calculate_amount,
-      plan_id: plan_type,
-      options: {
-        start_immediately: true
-      }
-    )
+      # Create subscription for user
+      payment_method_token = braintree_customer.payment_methods.find{ |pm| pm.default? }.token
+      braintree_subscription = Braintree::Subscription.create!(
+        payment_method_token: payment_method_token,
+        price: calculate_amount,
+        plan_id: plan_type,
+        options: {
+          start_immediately: true
+        }
+      )
 
-    current_user.reload
-    current_user.update_attributes! braintree_subscription_id: braintree_subscription.id
-    current_user.subscription.update_attributes! plan_type: plan_type, plan_date: Date.today
+      current_user.update_attributes! braintree_subscription_id: braintree_subscription.id
 
-    # subscription history
-    SubscriptionHistory.create!(plan_type: session[:plan_type], plan_date: Date.today, user: current_user)
+      # subscription history
+      current_user.subscription_histories.create!(plan_type: plan_type, plan_date: Time.new)
+    end
 
     redirect_to root_url, notice: "We have successfully changed your plan to #{plan_type}."
   end
 
   def upgrade
-    authorize! :update, current_user.subscription
+    authorize! :create, current_user.subscription
 
-    braintree_customer = fetch_or_create_braintree_customer
     plan_type = params.require(:plan_type)
-    braintree_subscription = fetch_or_create_braintree_subscription(customer: braintree_customer, plan_type: plan_type)
 
-    # Update current subscription
-    current_user.reload
-    current_user.subscription.update_attributes plan_type: plan_type, plan_date: Date.today
+    Subscription.transaction do
+      braintree_customer = fetch_or_create_braintree_customer
+      braintree_subscription = fetch_or_create_braintree_subscription(customer: braintree_customer, plan_type: plan_type)
 
-    # Create subscription history
-    SubscriptionHistory.create!(plan_type: plan_type, plan_date: Date.today, user: current_user)
+      # Create subscription history
+      current_user.subscription_histories.create!(plan_type: plan_type, plan_date: Time.now)
+    end
 
     session.delete(:plan_type)
     session.delete(:upgrade)
@@ -122,7 +121,6 @@ class SubscriptionsController < ApplicationController
 
     subscription.tap do |subscription|
       current_user.update(braintree_subscription_id: subscription.id)
-      current_user.reload
     end
 
   rescue Braintree::NotFoundError => e

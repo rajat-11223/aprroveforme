@@ -11,18 +11,13 @@
         <li class="price">FREE<br /></li>
         <li class="bullet-item">2 reviews/month</li>
         <li class="bullet-item">Online support</li>
-        <% if current_user %>
-          <li class="cta-button">
-            <a data-id="free"
-               href="#"
-               class="button primary continue-change"
-               style="background-color:<%= plan_compare(to: :free) == 'Current' ? '#0029FF' : '#FFA500' %> !important;">
-               <%= plan_compare(to: :free) %>
-            </a>
-          </li>
-        <% else %>
-          <li class="cta-button"><a href="<%= signin_path(plan_type: 'free') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-        <% end %>
+        <li class="cta-button">
+          <% if current_user %>
+             <%= upgrade_or_downgrade_button(plan: :free) %>
+          <% else %>
+            <%= sign_up_button(plan: :free) %>
+          <% end %>
+        </li>
       </ul>
     </div>
 
@@ -32,19 +27,13 @@
         <li class="price">$1.99/mo<br /></li>
         <li class="bullet-item">6 reviews/month</li>
         <li class="bullet-item">Online support</li>
-        <%if current_user %>
-          <li class="cta-button">
-            <a data-id="professional"
-               href="#"
-               class="button primary continue-change"
-               style="background-color:<%= plan_compare(to: :professional) == 'Current' ? '#0029FF' : '#FFA500' %> !important;">
-               <%= plan_compare(to: :professional) %>
-             </a>
-          </li>
-        <%else%>
-          <li class="cta-button">
-            <a href="<%= signin_path(plan_type: 'professional') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
-        <%end%>
+        <li class="cta-button">
+          <%if current_user %>
+            <%= upgrade_or_downgrade_button(plan: :professional) %>
+          <% else %>
+            <%= sign_up_button(plan: :professional, color: "e95b0c") %>
+          <% end %>
+        </li>
       </ul>
     </div>
 
@@ -54,22 +43,13 @@
         <li class="price">$4.99/mo<br /></li>
         <li class="bullet-item">UNLIMITED reviews/month</li>
         <li class="bullet-item">Online support</li>
-        <%if current_user%>
-          <li class="cta-button">
-            <a data-id="unlimited"
-               href="#"
-               class="button primary continue-change"
-               style="background-color:<%= plan_compare(to: :unlimited) == 'Current' ? '#0029FF' : '#FFA500' %> !important;">
-               <%= plan_compare(to: :unlimited) %>
-            </a>
-          </li>
-        <%else%>
-          <li class="cta-button">
-            <a href="<%= signin_path(plan_type: 'unlimited') %>" class="button primary" style="background-color:#FFA500 !important;">
-              <%= plan_compare(to: :unlimited) %>
-            </a>
-          </li>
-        <%end%>
+        <li class="cta-button">
+          <%if current_user%>
+            <%= upgrade_or_downgrade_button(plan: :unlimited) %>
+          <%else%>
+            <%= sign_up_button(plan: :unlimited) %>
+          <%end%>
+        </li>
       </ul>
     </div>
   </div>

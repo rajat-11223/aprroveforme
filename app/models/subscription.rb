@@ -1,5 +1,3 @@
 class Subscription < ApplicationRecord
-  belongs_to :user
-  validates_presence_of :plan_type
-  validates_presence_of :plan_date
+  # TODO: Drop this class and table from the database
 end

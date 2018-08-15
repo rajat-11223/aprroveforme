@@ -1,5 +1,28 @@
 module ApplicationHelper
 
+  def sign_up_button(plan:, color: "ffa500")
+    link_to "Get Started", signin_path(plan_type: plan),
+                           class: "button primary",
+                           style: "background-color: ##{color} !important;"
+  end
+
+  def upgrade_or_downgrade_button(plan:, on_color: "ffa500", current_color: "2787cd")
+    on_plan = plan_compare(to: plan)
+
+    if on_plan != 'Current'
+      link_to on_plan, "#", data: { id: plan },
+                            class: "button primary continue-change",
+                            style: "background-color: ##{on_color}"
+    else
+      content_tag :span, data: { id: plan },
+                         class: "button primary continue-change",
+                         style: "background-color: ##{current_color}" do
+                           on_plan
+                         end
+
+    end
+  end
+
   def plan_responses_limit
     case current_user.subscription.plan_type
     when "free"
@@ -24,6 +47,7 @@ module ApplicationHelper
   end
 
   def plan_compare(to:)
+    current_user.reload
     subscription = current_user.try(:subscription)
     to = to.to_sym
     if subscription.present?
@@ -43,11 +67,9 @@ module ApplicationHelper
   end
 
   def active_class(array)
-    if array.include?(request.path)
-      "active"
-    else
-      ""
-    end
+    return unless array.include?(request.path)
+
+    "active"
   end
 
   def button_to_add_fields(name, f, association)

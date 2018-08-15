@@ -102,7 +102,7 @@ class AccountsController < ApplicationController
   end
 
   def subscription_histories
-    authorize! :read, current_user
+    authorize! :read, current_user.subscription
 
     @subscription_histories = current_user.subscription_histories
   end
