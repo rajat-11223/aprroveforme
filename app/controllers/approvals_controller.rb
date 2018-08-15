@@ -16,7 +16,7 @@ class ApprovalsController < ApplicationController
     @approval = Approval.includes(:approvers).find(params[:id])
     authorize! :read, @approval
 
-    3.times { @approval.tasks.build } if @approval.tasks.empty?
+    # 3.times { @approval.tasks.build } if @approval.tasks.empty?
 
     if session[:code]
       approver = @approval.approvers.find {|a| a.code == session[:code] }
@@ -132,43 +132,46 @@ class ApprovalsController < ApplicationController
   # PUT /approvals/1.json
   def update
     @approval = Approval.includes(:approvers).find(params[:id])
-    authorize! :update, @approval
 
     # if an approver is approving
     if params.dig(:approval, :approver)
+      authorize! :approve, @approval
       @approver = @approval.approvers.for_email(current_user.email, current_user.second_email).first
-      @approver.status = params.dig(:approval, :approver, :status)
-      @approver.comments = params.dig(:approval, :approver, :comments)
-      @approval.tasks << Task.new(params[:approval][:tasks])
+      @approver.update_attributes! status: params.dig(:approval, :approver, :status),
+                                   comments: params.dig(:approval, :approver, :comments),
+
+      # @approval.tasks << Task.new(params[:approval][:tasks])
       #params[:approval][:approver][:tasks].each do |task|
       #  @approver.tasks << task
       #end
-      @approver.save
       ab_finished(:approver_approved)
       UserMailer.approval_update(@approver).deliver_later
 
-      if @approval.complete?
-        UserMailer.completed_approval(@approval).deliver_later
-      end
+      UserMailer.completed_approval(@approval).deliver_later if @approval.complete?
 
       redirect_to @approval, notice: 'Approval submitted'
     else
+      authorize! :update, @approval
+
       if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
-        params[:approval][:deadline] = DateTime.strptime(params[:approval][:deadline], "%m/%d/%Y")
+        params[:approval][:deadline] = DateTime.strptime(params.dig(:approval, :deadline), "%m/%d/%Y")
       end
 
       respond_to do |format|
         if @approval.update_attributes(approval_params)
           # if any new approvers, add permissions and code
 
-          @approval.approvers.select {|a| !a.code.present? }.each do |approver|
-            @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms])
+          approvers_without_codes = @approval.approvers.select {|a| !a.code.present? }
+          approvers_without_codes.each do |approver|
+            @approval.update_permissions(@approval.link_id,
+                                         current_user,
+                                         approver, params.dig(:approval, :perms)
             approver.generate_code
+            @approval.save
 
             UserMailer.new_approval_invite(@approval, approver).deliver_later
           end
 
-          @approval.save
           format.html { redirect_to @approval, notice: 'Approval was successfully updated.' }
           format.json { head :no_content }
         else
