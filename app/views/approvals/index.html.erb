@@ -15,7 +15,7 @@
 <% @approvals.each do |approval| %>
   <tr>
     <td><%= approval.title %></td>
-    <td><%= approval.owner_user.email %></td>
+    <td><%= approval.user.email %></td>
     <td><%= approval.description %></td>
     <td><%= approval.approvers.count %></td>
     <td><%= approval.deadline %></td>

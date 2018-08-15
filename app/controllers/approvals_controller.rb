@@ -138,7 +138,7 @@ class ApprovalsController < ApplicationController
       authorize! :approve, @approval
       @approver = @approval.approvers.for_email(current_user.email, current_user.second_email).first
       @approver.update_attributes! status: params.dig(:approval, :approver, :status),
-                                   comments: params.dig(:approval, :approver, :comments),
+                                   comments: params.dig(:approval, :approver, :comments)
 
       # @approval.tasks << Task.new(params[:approval][:tasks])
       #params[:approval][:approver][:tasks].each do |task|
@@ -165,7 +165,7 @@ class ApprovalsController < ApplicationController
           approvers_without_codes.each do |approver|
             @approval.update_permissions(@approval.link_id,
                                          current_user,
-                                         approver, params.dig(:approval, :perms)
+                                         approver, params.dig(:approval, :perms))
             approver.generate_code
             @approval.save
 

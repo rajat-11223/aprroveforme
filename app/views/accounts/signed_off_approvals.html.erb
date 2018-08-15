@@ -24,8 +24,8 @@
                 <p class="title"><%= link_to approver.approval.title, approver.approval %></p>
                 <p class="description"><i><%= approver.approval.description %></i></p>
                 <p class="details">
-                  Created by <%= image_tag image_url(approver.approval.owner_user.email), class: "pic-details" %>
-                  <%= approver.approval.owner_user.name %>.
+                  Created by <%= image_tag image_url(approver.approval.user.email), class: "pic-details" %>
+                  <%= approver.approval.user.name %>.
                   Deadline: <%= approver.approval.deadline.to_date  %>, <%= approver.approval.deadline_in_words %>.
                 </p>
               </div>

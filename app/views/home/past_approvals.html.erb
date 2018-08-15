@@ -27,8 +27,8 @@
             <td><%= approver.approval.description %></td>
             <td><%= approver.status %></td>
             <td>
-              <%= image_tag image_url(approver.approval.owner_user.email), class: "pic-details" %>
-              <%= approver.approval.owner_user.name %>
+              <%= image_tag image_url(approver.approval.user.email), class: "pic-details" %>
+              <%= approver.approval.user.name %>
             </td>
 
             <td class="listing-inquiry-status">
