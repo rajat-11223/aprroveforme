@@ -57,7 +57,6 @@ class SubscriptionsController < ApplicationController
     braintree_subscription = fetch_or_create_braintree_subscription(customer: braintree_customer, plan_type: plan_type)
 
     # Update current subscription
-    binding.pry
     current_user.reload
     current_user.subscription.update_attributes plan_type: plan_type, plan_date: Date.today
 
