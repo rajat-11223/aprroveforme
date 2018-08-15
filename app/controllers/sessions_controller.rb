@@ -33,48 +33,26 @@ class SessionsController < ApplicationController
     # Credentials
     session[:credentials] = auth.dig("credentials")
     ab_finished(:signed_in)
-    user.token = auth.dig("credentials", "token") || ""
-    user.refresh_token = auth.dig("credentials", "refresh_token") if auth.dig("credentials", "refresh_token")
-    user.code = params["code"] || ""
+    user.update_attributes! token: auth.dig("credentials", "token") || "",
+                            refresh_token: auth.dig("credentials", "refresh_token") || user.refresh_token,
+                            code: params["code"] || ""
+
+    session[:state] ||= {}
 
     if !user.name.present?
       redirect_to edit_user_path(user), alert: "Please enter your name."
     else
-      user.save!
+      user.reload
 
-      redirect_to new_approval_path
-      # if session[:state].present? and ['create', 'open'].include?(session[:state]['action'].to_s)
-      #   redirect_to new_approval_path
-      # else
-      #   case session[:plan_type]
-      #   when nil
-      #     subscription = Subscription.find_by(user_id: current_user.id)
-      #     if subscription.present?
-      #       redirect_to_redirection_path
-      #     else
-      #       pricing_path
-      #     end
-      #   when "free"
-      #     subscription = Subscription.find_by(user_id: current_user.id)
-      #
-      #     if !subscription.present?
-      #       Subscription.create!(plan_type: "free", plan_date: Date.today, user: current_user)
-      #       session[:plan_type] = nil
-      #       redirect_to root_url
-      #     else
-      #       subscription.update_attributes plan_type: session[:plan_type], plan_date: Date.today
-      #
-      #       # subscription history
-      #       SubscriptionHistory.create!(plan_type: session[:plan_type], plan_date: Time.now, user: current_user)
-      #
-      #       session[:plan_type] = nil
-      #       session[:upgrade] = nil
-      #       redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.'
-      #     end
-      #   else
-      #     pricing_path
-      #   end
-      # end
+      if ['create', 'open'].include? session[:state]['action'].to_s
+        redirect_to new_approval_url
+      else
+        if user.subscription.plan_type == "free"
+          redirect_to pricing_url
+        else
+          redirect_to_redirection_path
+        end
+      end
     end
   end
 
