@@ -55,6 +55,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'codacy-coverage'
   gem "email_spec", ">= 1.4.0"
   gem "rails-controller-testing"
 end
