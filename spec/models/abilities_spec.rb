@@ -32,6 +32,8 @@ describe "Abilities" do
   context "when standard user" do
     let(:user){ create(:user) }
     let(:approval) { create(:approval, owner: user.id)}
+    let(:subscription) { create(:subscription, user: user) }
+    let(:subscription_history) { create(:subscription_history, user: user) }
 
     it { expect_to_be_able_to(:read, user) }
     it { expect_to_be_able_to(:update, user) }
@@ -47,6 +49,16 @@ describe "Abilities" do
     it { expect_to_not_be_able_to(:read, other_approval) }
     it { expect_to_not_be_able_to(:update, other_approval) }
     it { expect_to_not_be_able_to(:destroy, other_approval) }
+
+    it { expect_to_be_able_to(:read, subscription) }
+    it { expect_to_be_able_to(:create, subscription) }
+    it { expect_to_be_able_to(:update, subscription) }
+    it { expect_to_not_be_able_to(:destroy, subscription) }
+
+    it { expect_to_be_able_to(:read, subscription_history) }
+    it { expect_to_not_be_able_to(:create, subscription_history) }
+    it { expect_to_not_be_able_to(:update, subscription_history) }
+    it { expect_to_not_be_able_to(:destroy, subscription_history) }
   end
 
   def expect_to_be_able_to(perm, model)

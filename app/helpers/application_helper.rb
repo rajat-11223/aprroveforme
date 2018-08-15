@@ -2,79 +2,52 @@ module ApplicationHelper
 
   def plan_responses_limit
     case current_user.subscription.plan_type
-    when 'free'
-      '2'
-    when 'professional'
-      ''
+    when "free"
+      "2"
+    when "professional"
+      "6"
     else
       "unlimited"
     end
   end
 
   def free_plan_compare
-    subscription = Subscription.find_by(user_id: current_user.id)
-
-    if subscription
-      case subscription.plan_type
-      when "free"
-        "Current"
-      when "professional"
-        "Downgrade"
-      when "unlimited"
-        "Downgrade"
-      end
-    else
-      "Get Started"
-    end
+    { free: "Current", professional: "Upgrade", unlimited: "Upgrade" }
   end
 
-  def pro_plan_compare
-    subscription = Subscription.find_by(user_id: current_user.id)
-
-    if subscription
-      case subscription.plan_type
-      when "free"
-        "Downgrade"
-      when "professional"
-        "Current"
-      when "unlimited"
-        "Downgrade"
-      end
-    else
-      "Get Started"
-    end
+  def professional_plan_compare
+    { free: "Downgrade", professional: "Current", unlimited: "Upgrade" }
   end
 
   def unlimited_plan_compare
-    subscription = Subscription.find_by(user_id: current_user.id)
+    { free: "Downgrade", professional: "Downgrade", unlimited: "Current" }
+  end
 
-    if subscription
-      case subscription.plan_type
-      when "free"
-        "Downgrade"
-      when "professional"
-        "Downgrade"
-      when "unlimited"
-        "Current"
+  def plan_compare(to:)
+    subscription = current_user.try(:subscription)
+    to = to.to_sym
+    if subscription.present?
+      case subscription.try(:plan_type).try(:to_sym)
+      when :free
+        free_plan_compare[to]
+      when :professional
+        professional_plan_compare[to]
+      when :unlimited
+        unlimited_plan_compare[to]
+      else
+        free_plan_compare[to]
       end
     else
       "Get Started"
-    end
-  end
-
-  def continue_permission_decider(id)
-    case id
-    when "free"
-      free_plan_compare
-    when "professional"
-      pro_plan_compare
-    else
-      unlimited_plan_compare
     end
   end
 
   def active_class(array)
-    array.include?(request.path) ? "active" : ""
+    if array.include?(request.path)
+      "active"
+    else
+      ""
+    end
   end
 
   def button_to_add_fields(name, f, association)
@@ -99,21 +72,11 @@ module ApplicationHelper
     tag(:input, html_options.merge(:type => "button", :value => name, :onclick => onclick))
   end
 
-  # TODO: Determine if this is needed
-  # def gateway
-  #   @gateway ||= Braintree::Gateway.new(
-  #       :environment => :sandbox,
-  #       :merchant_id => "896h6fqr23smp2ny",
-  #       :public_key => "swc9g7ffxxfgdb8b",
-  #       :private_key => "bde545bb49e6ecbd4831b38d19e0faf3",
-  #   )
-  # end
-
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    link_to title, {:sort => column, :direction => direction}, {:class => css_class}
+    link_to title, {sort: column, direction: direction}, {class: css_class}
   end
 
   class BraintreeFormBuilder < ActionView::Helpers::FormBuilder
@@ -152,7 +115,7 @@ module ApplicationHelper
     def validation_errors(method)
       if @braintree_errors && @braintree_errors.on(method).any?
         @braintree_errors.on(method).map do |error|
-          content_tag("div", ERB::Util.h(error.message), {:style => "color: red;"})
+          content_tag("div", ERB::Util.h(error.message), {style: "color: red;"})
         end.join
       else
         ""

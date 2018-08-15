@@ -39,7 +39,10 @@ class PaymentsController < ApplicationController
           end
         end
       else
-        Subscription.create!(plan_type: session[:plan_type], plan_date: Date.today, user_id: current_user.id)
+        # Subscription.create!(plan_type: session[:plan_type], plan_date: Date.today, user_id: current_user.id)
+        binding.pry
+        current_user.subscription.update_attributes! plan_type: session[:plan_type], plan_date: Date.today
+        SubscriptionHistory.create!(user: current_user, plan_type: session[:plan_type], plan_date: Date.today)
         session[:plan_type] = nil
         redirect_to root_url
       end

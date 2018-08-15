@@ -58,7 +58,7 @@ Workflow::Application.routes.draw do
     end
   end
 
-  resource :subscription do
+  resource :subscription, only: [:new, :create] do
     collection do
       get :upgrade
       get :continue_permission

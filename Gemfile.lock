@@ -60,7 +60,7 @@ GEM
     bindex (0.5.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    braintree (2.88.0)
+    braintree (2.90.0)
       builder (>= 2.0.0)
     braintree-rails (1.3.0)
       activemodel (>= 3.0)
@@ -376,7 +376,7 @@ DEPENDENCIES
   activesupport
   better_errors (>= 0.6.0)
   binding_of_caller (>= 0.7.1)
-  braintree (>= 2.16.0)
+  braintree (>= 2.90.0)
   braintree-rails
   byebug
   cancancan (~> 2.0)

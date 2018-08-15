@@ -1,11 +1,11 @@
 class User < ApplicationRecord
   rolify
-  validates :email, :picture, :presence => true
+  validates :email, :picture, presence: true
   before_save { |user| user.email = user.email.downcase }
 
   has_many :approvals, dependent: :destroy
-  has_one :subscription, dependent: :destroy
   has_one :payment_method, dependent: :destroy
+  has_one :subscription, dependent: :destroy, autosave: false
   has_many :subscription_histories, dependent: :destroy
 
   def self.create_with_omniauth(auth)
@@ -14,11 +14,11 @@ class User < ApplicationRecord
       user.uid = auth['uid']
       if auth['info']
         puts auth.to_s
+        user.first_name = auth['info']['first_name'] || ""
+        user.last_name = auth['info']['last_name'] || ""
          user.name = auth['info']['name'] || ""
-         user.email = auth['info']['email'] || ""
-         user.picture = auth['info']['image'] || "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email.downcase.strip)}?d=mm"
-         user.first_name = auth['info']['first_name'] || ""
-         user.last_name = auth['info']['last_name'] || ""
+        user.email = auth['info']['email'] || ""
+        user.picture = auth['info']['image'] || "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email.downcase.strip)}?d=mm"
       end
       UserMailer.new_user(user.name, user.email).deliver_later
     end

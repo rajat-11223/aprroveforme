@@ -82,5 +82,10 @@ module Workflow
     config.assets.version = '2.0'
 
     config.google_verification = "google16deb60cae23dff7"
+
+    $braintree_gateway = Braintree::Gateway.new(environment: :sandbox,
+                                                merchant_id: '896h6fqr23smp2ny',
+                                                public_key: 'hhg4bfh3g89sn97h',
+                                                private_key: 'ffe101ec4c0d91ecad7471b7206a8062')
   end
 end
