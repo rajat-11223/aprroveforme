@@ -5,9 +5,12 @@ class SessionsController < ApplicationController
 
   def new
     if params[:state]
-      s = params[:state] || '{}'
-      state = MultiJson.decode(s)
-      session[:state] = state
+      session[:state] =
+        begin
+          JSON.parse(params[:state] || '{}')
+        rescue JSON::ParserError
+          {}
+        end
     end
 
     session[:plan_type] = params[:plan_type]
