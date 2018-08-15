@@ -3,78 +3,83 @@
     <p class="page-title">Payment: $<%= h @amount %></p>
   </div>
 </div>
+
 <% if @result -%>
   <div style="color: red;"><%= h @result.errors.size %>
     error(s)</div>
 <% end -%>
 
-<%= form_for :transaction, :params => @result && @result.params[:transaction], :errors => @result && @result.errors.for(:transaction), # :builder => ApplicationHelper::BraintreeFormBuilder, :url => Braintree::TransparentRedirect.url, :html =>
-{:autocomplete => "off"} do |f| -%>
-<div style="width:50%; margin-left: 25%;">
-  <%= field_set_tag "Customer" do -%>
-  <%= f.fields_for :customer do |c| -%>
-  <div class="row">
+<%= form_for :transaction, params: @result && @result.params[:transaction],
+                           errors: @result && @result.errors.for(:transaction), # :builder => ApplicationHelper::BraintreeFormBuilder, :url => Braintree::TransparentRedirect.url, :html =>
+                           { autocomplete: "off" } do |f| -%>
+  <div style="width:50%; margin-left: 25%;">
+    <%= field_set_tag "Customer" do -%>
+      <%= f.fields_for :customer do |c| -%>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">First Name</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= c.text_field :first_name , :placeholder => "First Name"%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Last Name</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= c.text_field :last_name , :placeholder => "Last Name"%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-2 small-3 columns" style="width: 142px;">
+          <p class="form-label">Email</p>
+        </div>
+        <div class="large-10 small-9 columns" style="width: 477px;">
+          <%= c.text_field :email , :placeholder => "Email"%>
+        </div>
+      </div>
+    <% end -%>
+  <% end -%>
+  </div>
+  <div style="width:50%; margin-left: 25%;">
+  <%= field_set_tag "Credit Card" do -%>
+    <%= f.fields_for :credit_card do |c| -%>
+    <div class="row">
     <div class="large-2 small-3 columns" style="width: 142px;">
-      <p class="form-label">First Name</p>
+      <p class="form-label">Number</p>
     </div>
     <div class="large-10 small-9 columns" style="width: 477px;">
-      <%= c.text_field :first_name , :placeholder => "First Name"%>
+      <%= c.text_field :number , :placeholder => "Number"%>
     </div>
-  </div>
-  <div class="row">
+    </div>
+    <div class="row">
     <div class="large-2 small-3 columns" style="width: 142px;">
-      <p class="form-label">Last Name</p>
+      <p class="form-label">Expiration Date</p>
     </div>
     <div class="large-10 small-9 columns" style="width: 477px;">
-      <%= c.text_field :last_name , :placeholder => "Last Name"%>
+      <%= c.text_field :expiration_date , :placeholder => "(MM/YY)"%>
     </div>
-  </div>
-  <div class="row">
+    </div>
+    <div class="row">
     <div class="large-2 small-3 columns" style="width: 142px;">
-      <p class="form-label">Email</p>
+      <p class="form-label">CVV</p>
     </div>
     <div class="large-10 small-9 columns" style="width: 477px;">
-      <%= c.text_field :email , :placeholder => "Email"%>
+      <%= c.text_field :cvv , :placeholder => "CVV"%>
     </div>
+    </div>
+    <% end -%>
+  <% end -%>
   </div>
-<% end -%>
-<% end -%>
-</div>
-<div style="width:50%; margin-left: 25%;">
-<%= field_set_tag "Credit Card" do -%>
-<%= f.fields_for :credit_card do |c| -%>
-<div class="row">
-<div class="large-2 small-3 columns" style="width: 142px;">
-  <p class="form-label">Number</p>
-</div>
-<div class="large-10 small-9 columns" style="width: 477px;">
-  <%= c.text_field :number , :placeholder => "Number"%>
-</div>
-</div>
-<div class="row">
-<div class="large-2 small-3 columns" style="width: 142px;">
-  <p class="form-label">Expiration Date</p>
-</div>
-<div class="large-10 small-9 columns" style="width: 477px;">
-  <%= c.text_field :expiration_date , :placeholder => "(MM/YY)"%>
-</div>
-</div>
-<div class="row">
-<div class="large-2 small-3 columns" style="width: 142px;">
-  <p class="form-label">CVV</p>
-</div>
-<div class="large-10 small-9 columns" style="width: 477px;">
-  <%= c.text_field :cvv , :placeholder => "CVV"%>
-</div>
-</div>
-<% end -%>
-<% end -%>
-</div>
 
-<%= hidden_field_tag :tr_data, Braintree::TransparentRedirect.transaction_data( :redirect_url => confirm_payment_url, :transaction => {:type => "sale", :amount => @amount} ) %>
-<%= f.submit "Submit" ,:class=>"button primary" ,:style=>"margin-left: 25%;"%>
-
+  <%= hidden_field_tag :tr_data,
+    Braintree::TransparentRedirect.transaction_data( redirect_url: confirm_payment_url,
+                                                     transaction: { type: "sale",
+                                                                    amount: @amount } ) %>
+  <%= f.submit "Submit" ,:class=>"button primary" ,:style=>"margin-left: 25%;"%>
 <% end -%>
+
 <script type="text/javascript" src="https://js.braintreegateway.com/v1/braintree.js"></script>
 <script type="text/javascript">// <![CDATA[
 var braintree = Braintree.create('<%= Braintree::ClientToken.generate %>'); braintree.onSubmitEncryptForm('braintree-payment-form');

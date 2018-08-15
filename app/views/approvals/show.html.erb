@@ -1,60 +1,73 @@
 <!-- approval title -->
-  <div class="row">
-    <div class="large-12 columns">
-      <p class="page-title"><%= @approval.title %></p>
-      <p class="approval-description"><%= @approval.description %></p>
-    </div>
+<div class="row">
+  <div class="large-12 columns">
+    <p class="page-title"><%= @approval.title %></p>
+    <p class="approval-description"><%= @approval.description %></p>
   </div>
+</div>
 
 <!-- if you have been asked to approve, show alert (code separated out in view/approvals/_response) -->
 <% if approver = @approval.approvers.where("email = ? or email = ?", current_user.email, current_user.second_email).first %>
-  <%= render "response", :approver => approver %>
+  <%= render "response", approver: approver %>
 <% end %>
 
-
 <!--- START CONTENT -->
-  <div class="row">
-    <div class="large-12 columns">
-      <div class="row">
-        <div class="large-8 embed small-2 hide-for-small columns hide-for-">
-          <% if @approval.embed != ("undefined" || nil )  %>
-            <iframe src="<%= @approval.embed %>" style="width:600px; height:600px;" frameborder="0"></iframe>
-          <% elsif @approval.link_type == "photo"  %>
-            <%= image_tag "https://drive.google.com/uc?export=download&id=#{@approval.link_id}", :size => "600x600" %>
-          <% else %>
-            <%= link_to (image_tag "preview-not-available.png"), @approval.link, :target => "_blank"  %>
-          <% end %>
-        </div>
-        
-        <!--- START RIGHT COLUMN -->
-        <div class="large-4 small-12 columns">
-          <div class="row">
-            <div class="large-12 item-approval-info columns">
-              <!--- START DOCUMENT INFO -->
-              <p class="approval-details"><strong>Creator:</strong> <%= image_tag image_url(User.find(@approval.owner).email), :class=>"pic-approval-owner" %> <%= User.find(@approval.owner).name %><br /></p>
-              <p class="approval-details"><strong>Deadline:</strong> <%= @approval.deadline.to_date %>, <%= @approval.deadline_in_words %></p>
-              <p class="approval-details"><strong>Progress:</strong> <%= ratio_complete(@approval) %> required responses</p>
-              <div class="progress"><span class="meter" style="width:<%= percentage_complete(@approval) %>;"></span></div><br />
-              <% if approver = @approval.approvers.where("email = ? or email = ?", current_user.email, current_user.second_email).first %>
-              <a href="#" role="button" class="button primary" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Respond</a>
-              <% end %>
-              <%= link_to "Open File", @approval.link, :target=>"_blank", :class=>"button secondary"%>
-              <!--- END DOCUMENT INFO -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-4 small-3 columns"><hr></div>
-            <div class="large-4 small-6 columns">
-              <p class="text-divider">APPROVERS</p>
-            </div>
-            <div class="large-4 small-3 columns"><hr></div>
-          </div>
-          <!--- START APPROVERS -->
-          <div class="row">
-            <div class="large-12 item-approval-info columns">
+<div class="row">
+  <div class="large-12 columns">
+    <div class="row">
+      <div class="large-8 embed small-2 hide-for-small columns hide-for-">
+        <% if @approval.embed != "undefined"  %>
+          <iframe src="<%= @approval.embed %>" style="width:600px; height:600px;" frameborder="0"></iframe>
+        <% elsif @approval.link_type == "photo"  %>
+          <%= image_tag "https://drive.google.com/uc?export=download&id=#{@approval.link_id}", size: "600x600" %>
+        <% else %>
+          <%= link_to image_tag("preview-not-available.png"), @approval.link, target: "_blank" %>
+        <% end %>
+      </div>
 
-              <!--- APPROVER REPEAT -->
-              <% @approval.approvers.each do |approver| %>
+      <!--- START RIGHT COLUMN -->
+      <div class="large-4 small-12 columns">
+        <div class="row">
+          <div class="large-12 item-approval-info columns">
+            <!--- START DOCUMENT INFO -->
+            <p class="approval-details">
+              <strong>Creator:</strong>
+              <%= image_tag image_url(User.find(@approval.owner).email), class: "pic-approval-owner" %>
+              <%= User.find(@approval.owner).name %><br/>
+            </p>
+            <p class="approval-details">
+              <strong>Deadline:</strong>
+              <%= @approval.deadline.to_date %>,
+              <%= @approval.deadline_in_words %></p>
+            <p class="approval-details">
+              <strong>Progress:</strong>
+              <%= @approval.ratio_complete %>
+              required responses</p>
+            <div class="progress">
+              <span class="meter" style="width: <%= @approval.percentage_complete %>;"></span>
+            </div>
+            <br/>
+            <% if @approval.approvers.find_by("email = ? or email = ?", current_user.email, current_user.second_email) %>
+              <a href="#" role="button" class="button primary" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Respond</a>
+            <% end %>
+
+            <%= link_to "Open File", @approval.link, :target=>"_blank", :class=>"button secondary"%>
+            <!--- END DOCUMENT INFO -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-4 small-3 columns"><hr></div>
+          <div class="large-4 small-6 columns">
+            <p class="text-divider">APPROVERS</p>
+          </div>
+          <div class="large-4 small-3 columns"><hr></div>
+        </div>
+        <!--- START APPROVERS -->
+        <div class="row">
+          <div class="large-12 item-approval-info columns">
+
+            <!--- APPROVER REPEAT -->
+            <% @approval.approvers.each do |approver| %>
               <div class="row">
                 <div class="large-3 small-3 columns"><%= image_tag image_url(approver.email), :class=>"approvers-pic" %></div>
                 <div class="large-9 small-9 columns">
@@ -63,61 +76,62 @@
                       <p class="approver-name"><%= approver.name %></p>
                     </div>
                     <div class="large-6 small-5 columns">
-                      <% if approver.status == "Approved" %>
-                      <p class="approval-details approved">Approved</p> <!--- APPROVED -->
-                      <% elsif approver.status == "Declined" %>
-                      <p class="approval-details declined">Declined</p> <!--- DECLINED -->
-                      <% else %>
-                      <p class="approval-details">No Response</p> <!--- NO RESPONSE -->
-                      <% end %>
-                      
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="large-12 columns">
-                      <p class="approval-details">
-                        <% if approver.comments && approver.comments != "" %>
-                        <%= approver.comments %>
-                        <% else approver.comments %>
-                        No comments
-                        <% end %>
-                     </p>
-                    </div>
-                  </div>
-                </div>
-              </div><br />
-              <% end %>
 
-             
+                      <% case approver.status %>
+                        <% when "Approved" %>
+                        <p class="approval-details approved">Approved</p>
+                        <!--- APPROVED -->
+                        <% when "Declined" %>
+                          <p class="approval-details declined">Declined</p>
+                          <!--- DECLINED -->
+                        <% else %>
+                          <p class="approval-details">No Response</p>
+                          <!--- NO RESPONSE -->
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="large-12 columns">
+                        <p class="approval-details">
+                          <% if approver.comments.present? %>
+                            <%= approver.comments %>
+                          <% else approver.comments %>
+                            No comments
+                          <% end %>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div><br/>
+              <% end %>
             </div>
-          </div><br />
+          </div><br/>
           <!--- END APPROVERS -->
-          
+
           <!--- START EDIT / DELETE BUTTON -->
-          <% if can? :manage, @approval %>
           <div class="row">
             <div class="large-12 columns">
-              <%= link_to 'edit', edit_approval_path(@approval), :class=>"small button secondary" %> 
-              <%= button_to 'delete', @approval, method: :delete, :confirm => "Are you sure?", :class=>"destroy small button secondary" %> 
+              <% if can?(:edit, @approval) %>
+                <%= link_to 'edit', edit_approval_path(@approval), class: "small button secondary" %>
+              <% end %>
+              <% if can?(:delete, @approval) %>
+                <%= button_to 'delete', @approval, method: :delete, confirm: "Are you sure?", class: "destroy small button secondary" %>
+              <% end %>
             </div>
           </div>
-           <% end %>
           <!--- END EDIT / DELETE BUTTON -->
         </div>
         <!--- END RIGHT COLUMN -->
       </div>
     </div>
-  </div><br />
-  <!--- END CONTENT -->
+  </div>
+</div>
+<!--- END CONTENT -->
 
 <script type="text/javascript">
-  ;(function($){
-  $(function(){
-    $('input.destroy').click(function(){
+  $(document).ready(function () {
+    $('input.destroy').click(function () {
       return confirm($(this).attr('data-confirm'));
     });
   });
-})(jQuery);
 </script>
-
-

@@ -28,6 +28,22 @@ class ApplicationController < ActionController::Base
       current_user.present?
     end
 
+    def require_user!(message: "You need to sign in")
+      return if current_user
+      save_redirection_url!
+
+      redirect_to root_path, notice: message
+    end
+
+    def save_redirection_url!
+      session[:redirection_url] = request.url
+    end
+
+    def redirect_to_redirection_path
+      redirection_url = session.delete(:redirection_url)
+      redirect_to(redirection_url || root_url)
+    end
+
     def set_code
       return unless params["code"].present?
 

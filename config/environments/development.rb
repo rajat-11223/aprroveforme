@@ -49,7 +49,7 @@ Workflow::Application.configure do
   config.action_view.raise_on_missing_translations = true
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { host: 'localhost:5000' }
+  config.action_mailer.default_url_options = { host: 'http://approveforme.lvh.me:5000' }
 
   # change to true to allow email to be sent during development
   config.action_mailer.raise_delivery_errors = true

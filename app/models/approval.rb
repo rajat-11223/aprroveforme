@@ -1,5 +1,6 @@
  class Approval < ApplicationRecord
   include ActionView::Helpers::DateHelper
+  include CreationDateScopes
 
   belongs_to :user, foreign_key: "owner"
   has_many :approvers, dependent: :destroy, inverse_of: :approval
@@ -7,26 +8,28 @@
 
   validates :title, presence: true
   validates :deadline, presence: true
-  # validates :deadline, format: { with: /\d{2}\/\d{2}\/\d{4}/,
-  #                                message: "The date must be in the format MM/DD/YYYY and must be a date in the future." },
-  #                      unless: Proc.new { |a| a.deadline && a.deadline.to_date >= Date.today }
 
   validate :deadline_in_future
   validate :require_one_approver
   validate :require_link
+
+  scope :deadline_is_in_future, -> { where("deadline >= ?", 1.day.from_now.beginning_of_day) }
+  scope :deadline_is_past, -> { where("deadline < ?", 1.day.from_now.beginning_of_day) }
+  scope :for_owner, -> (owner_id) { where(owner: owner_id) }
 
   accepts_nested_attributes_for :approvers,
                                 reject_if: proc { |attributes| attributes['name'].blank? || attributes['email'].blank? },
                                 allow_destroy: true
 
   def deadline_in_words
-    string = distance_of_time_in_words_to_now(self.deadline).humanize
+    to_append =
+      if self.deadline > Time.now
+        " remaining"
+      else
+        " ago"
+      end
 
-    if self.deadline > Time.now
-      string << " remaining"
-    else
-      string << " ago"
-    end
+    distance_of_time_in_words_to_now(self.deadline).humanize + to_append
   end
 
   def update_permissions(file_id, user, approver, role = 'reader')
@@ -45,16 +48,44 @@
                             body_object: new_permission,
                             parameters: { 'fileId' => file_id, 'sendNotificationEmails'=>'false' })
     if result.status == 200
-      return result.data
+      result.data
     # elsif result.status == 401 # token has expired
     #   user.refresh_google
     #   update_permissions(file_id, user, approver, role)
     else
-      puts "An error occurred when setting permissions: #{result.data['error']['message']}"
+      Rails.logger.error "[Error] occurred when setting permissions: #{result.data['error']['message']}"
     end
   end
 
+  # TODO: review whether required is cap
+  def percentage_complete
+    percent =
+      if required_approver_count > 0
+        (required_approved_count / required_approver_count) * 100
+      else
+        0
+      end
+    "#{percent}%"
+  end
+
+  def ratio_complete
+    "#{required_approved_count}/#{required_approver_count}"
+  end
+
+  def complete?
+    required_approver_count == required_approved_count
+  end
+
+
     private
+
+    def required_approver_count
+      approvers.required.count
+    end
+
+    def required_approved_count
+      approvers.approved.required.count
+    end
 
     def require_one_approver
       return unless approvers.empty?
@@ -69,7 +100,7 @@
     end
 
     def deadline_in_future
-      return if deadline.present? && deadline.to_date >= Date.today
+      return if deadline.present? && deadline.beginning_of_day >= Date.today.end_of_day
 
       errors.add(:deadline, "Please select a deadline in the future")
     end

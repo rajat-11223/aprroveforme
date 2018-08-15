@@ -2,16 +2,17 @@ class PaymentsController < ApplicationController
   def new
     authorize! :create, Subscription.new(user: current_user)
 
-    if !Subscription.all.collect(&:user_id).include? current_user.id
+    if !Subscription.exist?(user_id: current_user.id)
       @amount = calculate_amount
     else
       if session[:upgrade]== "upgrade"
-       if  Subscription.find_by_user_id(current_user.id).plan_type == "unlimited"
-        session[:degrade]="degrade"
-       end
+        if Subscription.find_by(user_id: current_user.id).plan_type == "unlimited"
+          session[:degrade]="degrade"
+        end
+
         @amount = calculate_amount
       else
-      redirect_to root_url
+        redirect_to root_url
       end
     end
   end
@@ -22,29 +23,29 @@ class PaymentsController < ApplicationController
     @result = Braintree::TransparentRedirect.confirm(request.query_string)
     if @result.success?
 
-      if session[:upgrade]== "upgrade"
-        @subscription=Subscription.find_by_user_id(current_user.id)
-        @subscription.plan_type= session[:plan_type]
-        @subscription.plan_date= Date.today
+      if session[:upgrade] == "upgrade"
+        @subscription = Subscription.find_by(user_id: current_user.id)
+        @subscription.plan_type = session[:plan_type]
+        @subscription.plan_date = Date.today
         @subscription.save
-        session[:plan_type]=nil
-        session[:upgrade]=nil
-        respond_to do |format|
-          if session[:degrade]!="degrade"
-            format.html { redirect_to root_url, notice: 'Congratulations, you have successfully updated your plan.' }
+        session[:plan_type] = nil
+        session[:upgrade] = nil
+
+          if session[:degrade] != "degrade"
+            redirect_to root_url, notice: 'Congratulations, you have successfully updated your plan.'
           else
-            session[:degrade]=nil
-            format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' }
+            session[:degrade] = nil
+            redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.'
           end
         end
       else
-        Subscription.create(:plan_type=>session[:plan_type],:plan_date=> Date.today,:user_id=> current_user.id)
-        session[:plan_type]=nil
+        Subscription.create!(plan_type: session[:plan_type], plan_date: Date.today, user_id: current_user.id)
+        session[:plan_type] = nil
         redirect_to root_url
       end
     else
       @amount = calculate_amount
-      render :action => "new"
+      render action: "new"
     end
   end
 
@@ -52,12 +53,13 @@ class PaymentsController < ApplicationController
 
   def calculate_amount
     # in a real app this be calculated from a shopping cart, determined by the product, etc.
-    if session[:plan_type]=="free"
-    "00.00"
-    elsif session[:plan_type] == "professional"
-    "9.00"
+    case session[:plan_type]
+    when "free"
+      "0.00"
+    when "professional"
+      "1.99"
     else
-    "19.00"
-  end
+      "4.99"
+    end
   end
 end

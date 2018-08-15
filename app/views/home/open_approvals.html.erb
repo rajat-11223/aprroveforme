@@ -23,15 +23,15 @@
             <tr>
               <td class="bold"><%= link_to approval.title, approval %></td>
               <td><%= approval.deadline.to_date  %>, <strong><%= approval.deadline_in_words %></td>
-              <td><%= percentage_complete(approval)  %></td>
+              <td><%= approval.percentage_complete  %></td>
 
               <td class="listing-inquiry-status">
 
                 <div class="flex-container align-top">
                   <div class="flex-child-grow">
                     <h4 class="dashboard-table-text">
-                      <div class="progress"><span class="meter" style="width:<%= percentage_complete(approval) %>;"></span></div>
-                      <p class="progress-details"><%= ratio_complete(approval) %> responses</p>
+                      <div class="progress"><span class="meter" style="width: <%= approval.percentage_complete %>;"></span></div>
+                      <p class="progress-details"><%= approval.ratio_complete %> responses</p>
                     </h4>
                     <!--<span class="dashboard-table-timestamp">03/04/2017</span>-->
                   </div>

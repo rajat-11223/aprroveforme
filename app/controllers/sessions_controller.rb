@@ -14,11 +14,10 @@ class SessionsController < ApplicationController
     redirect_to '/auth/google_oauth2'
   end
 
-
   def create
     auth = request.env["omniauth.auth"]
     user = User.find_by(provider: auth['provider'], uid: auth['uid'].to_s) ||
-             User.create_with_omniauth(auth)
+            User.create_with_omniauth(auth)
     session[:user_id] = user.id
 
     if user.customer_id.blank?
@@ -43,39 +42,38 @@ class SessionsController < ApplicationController
     else
       user.save!
 
-      if session[:state] and (session[:state]['action'] == 'create' || 'open')
+      if session[:state].present? and ['create', 'open'].include?(session[:state]['action'].to_s)
         redirect_to new_approval_path
       else
-        if session[:plan_type] == nil
-          if Subscription.exists?(user_id: current_user.id)
+        case session[:plan_type]
+        when nil
+          subscription = Subscription.find_by(user_id: current_user.id)
+          if subscription.present?
+            redirect_to_redirection_path
+          else
+            pricing_path
+          end
+        when "free"
+          subscription = Subscription.find_by(user_id: current_user.id)
+
+          if !subscription.present?
+            Subscription.create!(plan_type: "free", plan_date: Date.today, user: current_user)
+            session[:plan_type] = nil
             redirect_to root_url
           else
-            redirect_to pricing_path
+            subscription.plan_type = session[:plan_type]
+            subscription.plan_date = Date.today
+            subscription.save!
+
+            # subscription history
+            SubscriptionHistory.create!(plan_type: session[:plan_type], plan_date: Time.now, user: current_user)
+
+            session[:plan_type] = nil
+            session[:upgrade] = nil
+            redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.'
           end
         else
-          if session[:plan_type] == "free"
-            if !Subscription.exists?(user_id: current_user.id)
-              Subscription.create!(plan_type: session[:plan_type], plan_date: Date.today, user: current_user)
-              session[:plan_type] = nil
-              redirect_to root_url
-            else
-              @subscription = Subscription.find_by(user_id: current_user.id)
-              @subscription.plan_type = session[:plan_type]
-              @subscription.plan_date = Date.today
-              @subscription.save!
-
-              # subscription history
-              SubscriptionHistory.create!(plan_type: session[:plan_type], plan_date: Time.now, user: current_user)
-
-              session[:plan_type] = nil
-              session[:upgrade] = nil
-              respond_to do |format|
-                format.html { redirect_to root_url, notice: 'Congratulations, you have successfully downgraded your plan.' }
-              end
-            end
-          else
-            redirect_to pricing_path
-          end
+          pricing_path
         end
       end
     end
@@ -83,7 +81,7 @@ class SessionsController < ApplicationController
 
   def drive
     # Preload API definitions
-    client = Google::APIClient.new
+    client = GoogleApiWrapper.new
 
     # handle possible callback from OAuth2 consent page.
     if params[:code]
@@ -98,7 +96,7 @@ class SessionsController < ApplicationController
   # Exchanges the authorization code to fetch an access
   # and refresh token. Stores the retrieved tokens in the session.
   def authorize_code(code)
-    api_client = Google::APIClient.new
+    api_client = GoogleApiWrapper.new
 
     api_client.authorization.client_id = ENV['GOOGLE_ID']
     api_client.authorization.client_secret = ENV['GOOGLE_SECRET']

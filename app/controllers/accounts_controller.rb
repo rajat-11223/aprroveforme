@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  before_action :require_user!
   skip_before_action :verify_authenticity_token, only: [:add_new_payment_method]
 
   def profile
@@ -66,22 +67,25 @@ class AccountsController < ApplicationController
 
   def active_approvals
     authorize! :read, Approval.new(owner: current_user.id)
-    @my_approvals = Approval.where("owner = ? and deadline >= ?", current_user.id, Date.today + 1)
+    @my_approvals = Approval.for_owner(current_user.id).deadline_is_in_future
   end
 
   def completed_approvals
     authorize! :read, Approval.new(owner: current_user.id)
-    @my_completed_approvals = Approval.where("owner = ? and deadline < ?", current_user.id, Date.today+1)
+    @my_completed_approvals = Approval.for_owner(current_user.id).deadline_is_past
   end
 
   def pending_approvals
     authorize! :read, Approval.new(owner: current_user.id)
-    @pending_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Pending", "")
+    @pending_approvals = Approver.pending
+                                 .for_email(current_user.email.downcase, current_user.second_email)
   end
 
   def signed_off_approvals
     authorize! :read, Approval.new(owner: current_user.id)
-    @signedoff_approvals = Approver.where("(email = ? or email = ? ) and (status = ? or status = ?)", current_user.email.downcase, current_user.second_email, "Approved", "Declined")
+
+    @signedoff_approvals = Approver.approved_or_declined
+                                   .for_email(current_user.email.downcase, current_user.second_email)
   end
 
   def current_subscription

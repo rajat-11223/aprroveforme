@@ -24,7 +24,11 @@ describe Approver do
     expect(subject).to_not be_valid
   end
 
-  it "generates random code" do
+  it "generates random code, when asked" do
+    expect(subject.code).to_not be_present
+
+    subject.generate_code
+
     expect(subject.code).to be_present
     expect(subject.code).to be_a(String)
     expect(subject.code.size).to eq(50)

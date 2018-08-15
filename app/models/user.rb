@@ -30,7 +30,7 @@ class User < ApplicationRecord
 
   def google_auth
     # Create a new API client & load the Google Drive API
-    client = Google::APIClient.new
+    client = GoogleApiWrapper.new
     client.authorization.client_id = ENV['GOOGLE_ID']
     client.authorization.client_secret = ENV['GOOGLE_SECRET']
     client.authorization.scope = ENV['GOOGLE_SCOPE']
@@ -70,17 +70,16 @@ class User < ApplicationRecord
   end
 
   def update_stats
-    self.email_domain = (self.email.split("@"))[1]
-    self.approvals_sent = Approval.where("owner = ?", self.id).count
-    self.approvals_received = Approver.where("email = ?", self.email).count
-    self.approvals_responded_to = Approver.where("email = ? and status != ? ", self.email, "").count
-    self.approvals_sent_30 = Approval.where("owner = ? and created_at > ?", self.id, 30.days.ago ).count
-    self.approvals_received_30 = Approver.where("email = ? and created_at > ?", self.email, 30.days.ago).count
-    self.approvals_responded_to_30 = Approver.where("email = ? and status != ? and created_at > ?", self.email, "", 30.days.ago).count
+    self.email_domain = self.email.split("@").try(:last)
+    self.approvals_sent = Approval.for_owner(self.id).count
+    self.approvals_received = Approver.for_email(self.email).count
+    self.approvals_responded_to = Approver.for_email(self.email).approved_or_declined.count
+    self.approvals_sent_30 = Approval.for_owner(self.id).from_this_month.count
+    self.approvals_received_30 = Approver.for_email(self.email).from_this_month.count
+    self.approvals_responded_to_30 = Approver.for_email(self.email).approved_or_declined.from_this_month.count
 
-    if Approval.where("owner = ?", self.id).last
-      self.last_sent_date = Approval.where("owner = ?", self.id).last.created_at
-    end
+    last_approval = Approval.for_owner(self.id).last
+    self.last_sent_date if last_approval.present?
 
     self.save
   end

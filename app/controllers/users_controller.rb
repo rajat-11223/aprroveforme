@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    authorize! :edit, :user
+    authorize! :edit, @user
 
     if @user.update_attributes(user_params)
       @user.name = "#{@user.first_name} #{@user.last_name}"

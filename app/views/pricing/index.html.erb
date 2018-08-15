@@ -2,6 +2,7 @@
   <div class="large-12 columns large-centered">
     <h3>Pricing</h3>
   </div>
+
   <div class="row">
     <!--AK 04.11.18 update grid-->
     <div class="small-12 large-4 columns" >
@@ -21,12 +22,12 @@
     <div class="small-12 large-4 columns">
       <ul class="pricing-table">
         <li class="title">PROFESSIONAL</li>
-        <li class="price">$1.99<br /></li>
+        <li class="price">$1.99/mo<br /></li>
         <li class="bullet-item">6 reviews/month</li>
         <li class="bullet-item">Online support</li>
         <%if current_user %>
           <li class="cta-button"><a data-id="professional" href="#" class="button primary continue-change" style="background-color:<%= pro_plan_compare == 'Current' ? '#0029FF' : '#FFA500' %> !important;"><%= pro_plan_compare %></a></li>
-      <%else%>
+        <%else%>
           <li class="cta-button"><a href="<%= signin_path(:plan_type=>'professional') %>" class="button primary" style="background-color:#FFA500 !important;">Get Started</a></li>
         <%end%>
       </ul>
@@ -35,7 +36,7 @@
     <div class="small-12 large-4 columns">
       <ul class="pricing-table">
         <li class="title">UNLIMITED</li>
-        <li class="price">$4.99<br /></li>
+        <li class="price">$4.99/mo<br /></li>
         <li class="bullet-item">UNLIMITED reviews/month</li>
         <li class="bullet-item">Online support</li>
         <%if current_user%>
@@ -51,21 +52,23 @@
 <div id="permissionModal"></div>
 
 <script>
-    $(".continue-change").click(function(){
-        var id = $(this).data('id');
-        continuePermission(id);
-    });
-    function continuePermission(id) {
+  $(".continue-change").click(function(){
+    var id = $(this).data('id');
+    continuePermission(id);
+  });
 
-        $.ajax({
-            url: '/subscription/continue_permission',
-            type: 'GET',
-            data: {id: id},
-            success: function(data) {
-                    $("#permissionModal").html(data);
-            },
-            error: function(data){
-            }
-        });
-    }
+  function continuePermission(id) {
+    $.ajax({
+        url: '/subscription/continue_permission',
+        type: 'GET',
+        data: {id: id},
+        success: function(data) {
+          $("#permissionModal").html(data);
+        },
+        error: function(data){
+          console.log("ERROR in #continuePermission");
+          console.log(data);
+        }
+    });
+  }
 </script>
