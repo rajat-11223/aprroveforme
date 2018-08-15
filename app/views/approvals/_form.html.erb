@@ -1,153 +1,147 @@
 <%= form_for @approval do |f| %>
 
 <div class="row">
-		<div class="large-8 large-offset-2 item-approval-form end columns">
-			<div class="row">
-				<div class="large-2 small-3 columns">
-					<p class="form-label">File*</p>
-				</div>
-				<div class="large-4 small-4 columns">
-					<a onclick="createPicker()" class="button primary" style="width:100%;">Select File</a>
-				</div>
-				<div class="large-6 small-5 columns">
-					<p class="form-file-name"><div id="result">
-						<%= f.hidden_field :link  if @approval.link %>
-						<%= f.hidden_field :embed if @approval.embed %>
-						<%= f.hidden_field :link_title if @approval.link_title %>
-						<%= f.hidden_field :link_id if @approval.link_id %>
-						<%= f.hidden_field :link_type if @approval.link_type %>
-						<%=  (link_to @approval.link_title, @approval.link ) if @approval.link_title %>
-					</div></p>
-				</div>
-				<label class="error"><%= error_message_on @approval, :link %></label>
-			</div>
-			<div class="row">
-				<div class="large-10 large-offset-2 small-12 columns">
-					<label for="perms" style="margin-top:-18px;"><%= check_box("approval", "perms", {}, "writer", "reader") %>
-					Allow reviewers to edit this document.</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-2 small-3 columns">
-					<p class="form-label">Title*</p>
-				</div>
-				<div class="large-10 small-9 columns">
-					<%= f.text_field :title, :placeholder => "Title", :id=>"result2" %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-2 small-3 columns">
-					<p class="form-label">Description</p>
-				</div>
-				<div class="large-10 small-9 columns">
-					<%= f.text_field :description, :placeholder => "Description" %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-2 small-3 columns">
-					<p class="form-label">Deadline*</p>
-				</div>
-				<div class="large-10 small-9 columns">
-					<%= f.text_field :deadline, :placeholder=>"MM/DD/YYYY", :id=>"datepicker", :value => (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline), :as => :string %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-2 hide-for-small columns">
-					<p class="form-label">Approvers*</p>
-				</div>
-				<div class="large-10 small-12 columns">
-					<div class="row show-for-small">
-						<div class="small-12 columns">
-							<p class="form-label">Approvers*</p>
-						</div>
-					</div>
-					<div class="row">
-						<label class="error"><%= error_message_on @approval, :approvers %></label>
-						<div class="large-3 small-3 columns"><p class="form-label-approvers">Name</p></div>
-						<div class="large-6 small-6 columns"><p class="form-label-approvers">Email Address</p></div>
-						<div class="large-3 small-3 columns"><p class="form-label-approvers">Type</p></div>
-					</div>
-					<%= f.fields_for :approvers do |builder| %>
-				        <%= render 'approver_form', :f => builder %>
-				      <% end %>
-				      <div class="add">
-      				  </div>
-					<div class="row">
-						<div class="large-12 columns">
-      						<%= button_to_add_fields('Add Another Approver', f, :approvers ) %>
-						</div>
-					</div>
+  <div class="large-8 large-offset-2 item-approval-form end columns">
+    <div class="row">
+      <div class="large-2 small-3 columns">
+        <p class="form-label">File*</p>
+      </div>
+      <div class="large-4 small-4 columns">
+        <a onclick="createPicker()" class="button primary" style="width:100%;">Select File</a>
+      </div>
+      <div class="large-6 small-5 columns">
+        <p class="form-file-name">
+          <div id="result">
+            <%= f.hidden_field :link if @approval.link %>
+            <%= f.hidden_field :embed if @approval.embed %>
+            <%= f.hidden_field :link_title if @approval.link_title %>
+            <%= f.hidden_field :link_id if @approval.link_id %>
+            <%= f.hidden_field :link_type if @approval.link_type %>
+            <%= (link_to @approval.link_title, @approval.link ) if @approval.link_title %>
+          </div>
+        </p>
+      </div>
+      <label class="error"><%= error_message_on @approval, :link %></label>
+    </div>
+    <div class="row">
+      <div class="large-10 large-offset-2 small-12 columns">
+        <label for="perms" style="margin-top:-18px;"><%= check_box("approval", "perms", {}, "writer", "reader") %>
+          Allow reviewers to edit this document.</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-2 small-3 columns">
+        <p class="form-label">Title*</p>
+      </div>
+      <div class="large-10 small-9 columns">
+        <%= f.text_field :title, :placeholder => "Title", :id=>"result2" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-2 small-3 columns">
+        <p class="form-label">Description</p>
+      </div>
+      <div class="large-10 small-9 columns">
+        <%= f.text_area :description, placeholder: "Description", rows: 15  %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-2 small-3 columns">
+        <p class="form-label">Deadline*</p>
+      </div>
+      <div class="large-10 small-9 columns">
+        <%= f.text_field :deadline, placeholder: "MM/DD/YYYY", id: "datepicker", value: (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline), as: :string %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="large-2 hide-for-small columns">
+        <p class="form-label">Approvers*</p>
+      </div>
+      <div class="large-10 small-12 columns">
+        <div class="row show-for-small">
+          <div class="small-12 columns">
+            <p class="form-label">Approvers*</p>
+          </div>
+        </div>
+        <div class="row">
+          <label class="error"><%= error_message_on @approval, :approvers %></label>
+          <div class="large-3 small-3 columns">
+            <p class="form-label-approvers">Name</p>
+          </div>
+          <div class="large-6 small-6 columns">
+            <p class="form-label-approvers">Email Address</p>
+          </div>
+          <div class="large-3 small-3 columns">
+            <p class="form-label-approvers">Type</p>
+          </div>
+        </div>
+        <%= f.fields_for :approvers do |builder| %>
+        <%= render 'approver_form', :f => builder %>
+      <% end %>
+      <div class="add"></div>
+      <div class="row">
+        <div class="large-12 columns">
+          <%= button_to_add_fields('Add Another Approver', f, :approvers ) %>
+        </div>
+      </div>
 
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-10 large-offset-2  columns">
-					<%= f.submit "Submit Document for Approval", :class => "button primary", :id =>"submit-approval" %>
-				</div>
-			</div>
-		</div>
-	</div><br />
-
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-10 large-offset-2  columns">
+      <%= f.submit "Submit Document for Approval", :class => "button primary", :id =>"submit-approval" %>
+    </div>
+  </div>
+</div>
+</div><br/>
 
 <% end %>
 
+<!-- The standard Google Loader script. -->
+<script src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
 
- <!-- The standard Google Loader script. -->
-    <script src="http://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+// Use the Google Loader script to load the google.picker script. google.setOnLoadCallback(createPicker);
+google.load('picker', '1');
 
+// Create and render a Picker object
+function createPicker() {
+var view = new google.picker.DocsView(google.picker.ViewId.DOCS);
+view.setMode(google.picker.DocsViewMode.LIST);
+var picker = new google.picker.PickerBuilder().setAppId("<%= ENV['APP_ID']%>").setOAuthToken("<%= current_user.token %>").addView(view).addView(new google.picker.DocsUploadView()).setCallback(pickerCallback).build();
+picker.setVisible(true);
 
-    // Use the Google Loader script to load the google.picker script.
-    //google.setOnLoadCallback(createPicker);
-    google.load('picker', '1');
+}
 
-    // Create and render a Picker object
-    function createPicker() {
-         var view = new google.picker.DocsView(google.picker.ViewId.DOCS);
-         view.setMode(google.picker.DocsViewMode.LIST);
-          var picker = new google.picker.PickerBuilder()
-          .setAppId("<%= ENV['APP_ID']%>")
-          .setOAuthToken("<%= current_user.token %>")
-          .addView(view)
-          .addView(new google.picker.DocsUploadView())
-          .setCallback(pickerCallback)
-          .build();
-       picker.setVisible(true);
+// A simple callback implementation.
+function pickerCallback(data) {
+var url = 'nothing';
+if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+  var doc = data[google.picker.Response.DOCUMENTS][0];
+  url = doc[google.picker.Document.URL];
+  title = doc.name;
+  id = doc.id;
+  type = doc.type;
+  embed = doc[google.picker.Document.EMBEDDABLE_URL];
+}
 
-    }
+var message = "<input id=\"approval_link\" name=\"approval[link]\" type=\"hidden\" value=\"" + url + "\">";
+message = message + "<input id=\"approval_embed\" name=\"approval[embed]\" type=\"hidden\" value=\"" + embed + "\">";
+message = message + "<input id=\"approval_link_title\" name=\"approval[link_title]\" type=\"hidden\" value=\"" + title + "\">";
+message = message + "<input id=\"approval_link_id\" name=\"approval[link_id]\" type=\"hidden\" value=\"" + id + "\">";
+message = message + "<input id=\"approval_link_type\" name=\"approval[link_type]\" type=\"hidden\" value=\"" + type + "\">";
 
+// add HTML around this for title
+message = message + "<p class=\"form-file-name\">" + title + "</p>"
 
-    // A simple callback implementation.
-    function pickerCallback(data) {
-      var url = 'nothing';
-      if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
-        var doc = data[google.picker.Response.DOCUMENTS][0];
-        url = doc[google.picker.Document.URL];
-        title = doc.name;
-        id = doc.id;
-        type = doc.type;
-        embed = doc[google.picker.Document.EMBEDDABLE_URL ];
-      }
+//message = message + title
+document.getElementById('result').innerHTML = message;
 
-      var message = "<input id=\"approval_link\" name=\"approval[link]\" type=\"hidden\" value=\"" + url + "\">";
-      message = message + "<input id=\"approval_embed\" name=\"approval[embed]\" type=\"hidden\" value=\"" + embed + "\">";
-      message = message + "<input id=\"approval_link_title\" name=\"approval[link_title]\" type=\"hidden\" value=\"" + title + "\">";
-      message = message + "<input id=\"approval_link_id\" name=\"approval[link_id]\" type=\"hidden\" value=\"" + id + "\">";
-      message = message + "<input id=\"approval_link_type\" name=\"approval[link_type]\" type=\"hidden\" value=\"" + type + "\">";
-
-      // add HTML around this for title
-      message = message + "<p class=\"form-file-name\">"+title+"</p>"
-
-      //message = message + title
-      document.getElementById('result').innerHTML = message;
-
-      //!-- if you want to prefill the title field with the doc title, uncomment below.
-      var myTextField = document.getElementById('result2');
-      myTextField.value = title;
-    }
-
-
-    </script>
+//!-- if you want to prefill the title field with the doc title, uncomment below.
+var myTextField = document.getElementById('result2');
+myTextField.value = title;
+}
+</script>
 
 
 <script type="text/javascript">
