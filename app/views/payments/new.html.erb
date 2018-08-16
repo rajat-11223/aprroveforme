@@ -9,9 +9,9 @@
     error(s)</div>
 <% end -%>
 
-<%= form_for :transaction, params: @result && @result.params[:transaction],
-                           errors: @result && @result.errors.for(:transaction), # :builder => ApplicationHelper::BraintreeFormBuilder, :url => Braintree::TransparentRedirect.url, :html =>
-                           { autocomplete: "off" } do |f| -%>
+<%= form_for(:transaction, :params => (@result && @result.params[:transaction]),
+                           :errors => (@result && @result.errors.for(:transaction)),
+                           :autocomplete => "off" ) do |f| %>
   <div style="width:50%; margin-left: 25%;">
     <%= field_set_tag "Customer" do -%>
       <%= f.fields_for :customer do |c| -%>

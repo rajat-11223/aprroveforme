@@ -1,0 +1,105 @@
+version: 2
+jobs:
+  build:
+    parallelism: 1
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          PGHOST: 127.0.0.1
+          PGUSER: approveforme
+          RAILS_ENV: test
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_USER: approveforme
+          POSTGRES_DB: approveforme_test
+          POSTGRES_PASSWORD: ""
+      - image: redis:4.0
+    environment:
+      - DATABASE_URL: "postgres://approveforme@localhost:5432/approveforme_test"
+        REDISTOGO_URL: redis://localhost:6379
+        BRAIN_TREE_ENV: sandbox
+        BRAIN_TREE_MERCHANT_ID: 896h6fqr23smp2ny
+        BRAIN_TREE_PUBLIC_KEY: hhg4bfh3g89sn97h
+        BRAIN_TREE_PRIVATE_KEY: ffe101ec4c0d91ecad7471b7206a8062
+        REDIRECT_URI: http://approveforme.lvh.me:5000/auth/google_oauth2/callback
+        GOOGLE_ID: 107940143634-mied1cvqssluehq4t1q3jaa6qi9obesv.apps.googleusercontent.com
+        GOOGLE_SECRET: MuN9fGHDQloWhCgEOTly5nfF
+        APP_ID: 107940143634
+        CODACY_PROJECT_TOKEN: "a622d579565045af994e27ff139ab0ea"
+        CODACY_RUN_LOCAL: true
+
+    steps:
+      - checkout
+
+      # Which version of bundler?
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - approve_for_me-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - approve_for_me-bundle-v2-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: approve_for_me-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Install Rake and Brakeman
+          command: gem install bundler rake brakeman
+
+      - run:
+          name: Wait for Postgres
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Wait for Redis
+          command: dockerize -wait tcp://localhost:6379 -timeout 1m
+
+      - run:
+          name: Install PostgresClient
+          command: sudo apt install postgresql-client
+
+      # - run:
+      #     name: Install phantomjs
+      #     command: |
+      #       sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+      #       sudo chmod ugo+x /usr/local/bin/phantomjs
+
+      - run:
+          name: Database setup
+          command: bundle exec rake db:schema:load --trace
+
+      - run:
+          name: Bundler Audit
+          command: bundle exec bundle-audit check --update
+
+      - run:
+          name: Brakeman
+          command: brakeman --exit-on-warn --progress --run-all-checks
+
+      # Run rspec
+      - run:
+          name: "Run Tests"
+          command: |
+            bundle exec rspec --color \
+                              --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+      # Save test results for timing analysis
+      - store_test_results:
+          path: test_results

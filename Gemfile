@@ -49,12 +49,14 @@ group :development, :test do
   gem "pry-rails"
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "bundle-audit"
 end
 
 group :test do
   gem 'codacy-coverage'
   gem "email_spec", ">= 1.4.0"
   gem "rails-controller-testing"
+  gem "rspec_junit_formatter"
 end
 
 group :development do
