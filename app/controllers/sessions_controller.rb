@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     end
 
     session[:plan_type] = params[:plan_type]
-    redirect_to '/auth/google_oauth2'
+    redirect_to '/auth/google_oauth2?prompt=select_account'
   end
 
   def create
