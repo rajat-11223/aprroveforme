@@ -1,6 +1,7 @@
 class PricingController < ApplicationController
   skip_authorization_check
-  include ApplicationHelper
+
+  before_action :disable_turbolinks_cache
 
   def index
     session[:upgrade] = params[:type]

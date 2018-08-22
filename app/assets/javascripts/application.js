@@ -1,5 +1,22 @@
 //= require jquery
+//= require jquery-ui/widgets/datepicker
 //= require jquery_ujs
+//= require turbolinks
+//= require user_voice
+//= require approvals
 //= require foundation
-//= require jquery-ui-1.10.2.custom
-//= require vendor/custom.modernizr.js
+
+
+function ready() {
+  if (window.foundationInitialized == true) {
+    // Early exit when site has already initialized
+    return;
+  } else {
+    window.foundationInitialized = true;
+    console.log("Initialize foundation");
+    $(document).foundation();
+  }
+}
+
+document.addEventListener("turbolinks:load", ready);
+$( document ).ready(ready);

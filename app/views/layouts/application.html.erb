@@ -24,9 +24,11 @@
     <title><%= content_for?(:title) ? yield(:title) : "ApproveForMe" %></title>
     <meta name="Description" content="ApproveForMe is a free web-based tool that simplifies your professional life by making it easier to create, track, and manage document signoffs.">
 
+    <%= turbolinks_cache_control_meta_tag %>
     <%= stylesheet_link_tag  'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"/>
+
     <link rel="icon" type="image/png" href="<%= asset_path("favicon.png") %>"/>
 
     <%= csrf_meta_tags %>
@@ -41,14 +43,5 @@
 
       <%= render 'layouts/footer' %>
     </div>
-
-    <script>
-      $(function () {
-        $(document).foundation();
-      })
-    </script>
-
-    <%= render "layouts/user_voice" %>
-
   </body>
 </html>

@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  include TurbolinksCacheControl
+
   helper_method :current_user
   helper_method :user_signed_in?
   helper_method :correct_user?

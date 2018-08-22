@@ -1,8 +1,6 @@
 class SessionsController < ApplicationController
   skip_authorization_check
 
-  include ApplicationHelper
-
   def new
     if params[:state]
       session[:state] =
@@ -29,9 +27,12 @@ class SessionsController < ApplicationController
     end
 
     if !user.subscription.present?
-      user.subscription_histories.create!(plan_type: 'free', plan_date: Time.now, user: user)
+      user.subscription_histories.create!(plan_type: 'free', plan_date: Time.now)
+      user.save
       user.reload
     end
+
+    # TODO: update users first_name, last_name, photo, etc.
 
     # Credentials
     session[:credentials] = auth.dig("credentials")

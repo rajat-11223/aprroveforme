@@ -351,6 +351,9 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    turbolinks (5.1.1)
+      turbolinks-source (~> 5.1)
+    turbolinks-source (5.1.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.10)
@@ -368,6 +371,8 @@ GEM
       platform-api
       rails
       rush
+    zocial-rails (1.0.6)
+      railties (>= 3.1)
     zurb-foundation (4.3.2)
       sass (>= 3.2.0)
 
@@ -424,9 +429,11 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sprockets-rails
+  turbolinks (~> 5.1.0)
   uglifier
   web-console (>= 3.3.0)
   workless
+  zocial-rails
   zurb-foundation
 
 RUBY VERSION

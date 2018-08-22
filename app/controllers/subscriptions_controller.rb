@@ -3,6 +3,8 @@ require "braintree"
 class SubscriptionsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  before_action :disable_turbolinks_cache, only: [:new]
+
   def new
     session[:plan_type] = params[:plan_type]
     @amount = calculate_amount

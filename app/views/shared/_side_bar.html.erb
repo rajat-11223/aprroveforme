@@ -1,7 +1,7 @@
 <div class="large-3 pull-9 columns">
   <div class="docs section-container accordion" data-section="accordion" data-options="one_up: false">
     <section class="section <%= active_class([profile_account_path])%>">
-      <p class="title"><%= link_to 'Profile', profile_account_path %></p>
+      <p class="title"><%= link_to 'Profile', profile_account_path, data: { turbolinks: false } %></p>
     </section>
 
     <section class="section <%= active_class([active_approvals_account_path,completed_approvals_account_path,
@@ -20,7 +20,7 @@
     </section>
 
     <section class="section <%= active_class([payment_methods_account_path, update_card_account_path]) %>">
-      <p class="title"><%= link_to 'Payment Methods', payment_methods_account_path %></p>
+      <p class="title"><%= link_to 'Payment Methods', payment_methods_account_path, data: { turbolinks: false } %></p>
     </section>
 
     <section class="section <%= active_class([current_subscription_account_path,subscription_histories_account_path]) %>">

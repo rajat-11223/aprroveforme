@@ -35,9 +35,11 @@ gem "simple_form", ">= 2.0.4"
 gem "split-analytics"
 gem "split", require: "split/dashboard"
 gem "sprockets-rails"
+gem "turbolinks", "~> 5.1.0"
 gem "uglifier"
 gem "workless"
 gem "zurb-foundation"
+gem "zocial-rails"
 
 
 gem "rollbar", require: false

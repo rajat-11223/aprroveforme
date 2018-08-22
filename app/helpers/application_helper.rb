@@ -1,16 +1,20 @@
 module ApplicationHelper
+  def turbolinks_cache_control_meta_tag
+    tag :meta, name: 'turbolinks-cache-control', content: @turbolinks_cache_control || 'cache'
+  end
 
   def sign_up_button(plan:, color: "ffa500")
     link_to "Get Started", signin_path(plan_type: plan),
                            class: "button primary",
-                           style: "background-color: ##{color} !important;"
+                           style: "background-color: ##{color} !important;",
+                           data: { turbolinks: false }
   end
 
   def upgrade_or_downgrade_button(plan:, on_color: "ffa500", current_color: "2787cd")
     on_plan = plan_compare(to: plan)
 
     if on_plan != 'Current'
-      link_to on_plan, "#", data: { id: plan },
+      link_to on_plan, "#", data: { id: plan, turbolinks: false },
                             class: "button primary continue-change",
                             style: "background-color: ##{on_color}"
     else

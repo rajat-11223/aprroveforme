@@ -56,25 +56,3 @@
 </div>
 
 <div id="permissionModal"></div>
-
-<script>
-  $(".continue-change").click(function(){
-    var id = $(this).data('id');
-    continuePermission(id);
-  });
-
-  function continuePermission(id) {
-    $.ajax({
-        url: '/subscription/continue_permission',
-        type: 'GET',
-        data: {id: id},
-        success: function(data) {
-          $("#permissionModal").html(data);
-        },
-        error: function(data){
-          console.log("ERROR in #continuePermission");
-          console.log(data);
-        }
-    });
-  }
-</script>

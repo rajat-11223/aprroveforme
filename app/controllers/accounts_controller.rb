@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
   end
 
   def add_new_payment_method
-    authorize! :update, current_user.subscription
+    authorize! :create, current_user.subscription
 
     result = Braintree::Customer.update(
       current_user.customer_id,
@@ -28,14 +28,14 @@ class AccountsController < ApplicationController
   end
 
   def delete_payment_method
-    authorize! :update, current_user.subscription
+    authorize! :create, current_user.subscription
 
     Braintree::PaymentMethod.delete(params[:id])
     redirect_to payment_methods_account_path, notice: 'Payment method was successfully deleted.'
   end
 
   def set_default_payment_method
-    authorize! :update, current_user.subscription
+    authorize! :create, current_user.subscription
 
     result = Braintree::PaymentMethod.update(
       params[:id],
@@ -48,11 +48,11 @@ class AccountsController < ApplicationController
   end
 
   def update_card
-    authorize! :update, current_user.subscription
+    authorize! :create, current_user.subscription
   end
 
   def update_card_post
-    authorize! :update, current_user.subscription
+    authorize! :create, current_user.subscription
     customer = Braintree::Customer.find(current_user.customer_id)
 
     @result = Braintree::CreditCard.update(customer.credit_cards.first.token,

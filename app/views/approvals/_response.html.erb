@@ -39,7 +39,7 @@
           <p class="center"><img src="/assets/action.png"></p>
         </div>
         <div class="large-11 small-10 columns">
-          <p class="title-approval-alert"><%= User.find(approver.approval.owner).name %>
+          <p class="title-approval-alert"><%= approver.approval.user.name %>
             has requested your approval.
             <a href="#" role="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Click here to respond</a>.</p><br/>
         </div>
