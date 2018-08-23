@@ -9,7 +9,6 @@ development:
 
 test:
   <<: *default
-  username: approveforme
   database: approveforme_test
 
 production:
