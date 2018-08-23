@@ -1,23 +1,22 @@
-<div class="bottom">
-  <div class="row">
-    <div class="large-4 small-5 columns">
+<footer>
+  <div class="grid-x">
+    <div class="cell large-offset-2 large-2 small-5">
       <p>Copyright © <%= Time.now.year %> ApproveForMe</p>
     </div>
-    <div class="large-8 small-7 columns">
-      <ul class="inline-list text-footer right">
+
+    <div class="cell large-8 small-7">
+      <ul class="menu align-right">
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "About", page_path("about") %></li>
         <li><%= link_to "FAQs", page_path("faq") %>
         <li>
-          <a href="javascript:void(0)" data-uv-lightbox="classic_widget" data-uv-mode="full" data-uv-primary-color="#cc6d00" data-uv-link-color="#007dbf" data-uv-default-mode="feedback" data-uv-forum-id="199310">Support</a>
+          <a href="mailto:team@approveforme.com" data-uv-trigger id="support-link">Support</a>
         </li>
         <li><%= link_to "Terms", page_path("terms") %></li>
         <li><%= link_to "Privacy", page_path("privacy") %></li>
-        <li>
-          <a href="https://www.facebook.com/pages/Approve-For-Me/229770000502677" target="_blank" class="zocial facebook icon" style="font-size:12px;"></a>
-          <a href="https://twitter.com/approveforme" target="_blank" class="zocial twitter icon" style="font-size:12px;"></a>
-        </li>
+        <li><a href="https://www.facebook.com/pages/Approve-For-Me/229770000502677" target="_blank" class="zocial facebook icon" style="font-size:12px;"></a></li>
+        <li><a href="https://twitter.com/approveforme" target="_blank" class="zocial twitter icon" style="font-size:12px;"></a></li>
       </ul>
     </div>
   </div>
-</div>
+</footer>

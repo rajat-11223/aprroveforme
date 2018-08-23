@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  layout "application", only: [:index]
+
   before_action :set_second_email
   before_action :require_user!, except: [:index]
 
@@ -11,12 +13,7 @@ class HomeController < ApplicationController
   def dashboard
     authorize! :read, Approval.new(owner: current_user.id)
 
-    base_approvals =
-      if can? :manage, :all
-        Approval.scoped
-      else
-        Approval.for_owner(current_user.id)
-      end
+    base_approvals = Approval.for_owner(current_user.id)
 
     @my_approvals = base_approvals.deadline_is_in_future
     @my_completed_approvals = base_approvals.deadline_is_past

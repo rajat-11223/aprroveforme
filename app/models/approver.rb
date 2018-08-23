@@ -33,4 +33,8 @@ class Approver < ApplicationRecord
   scope :declined, -> { where(status: "Declined") }
   scope :pending, -> { where(status: "").or(Approver.where(status: "Pending")) }
   scope :approved_or_declined, -> { approved.or(Approver.declined) }
+
+  def has_responded?
+    ["Approved", "Declined"].include? self.status
+  end
 end

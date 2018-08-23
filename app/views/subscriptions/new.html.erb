@@ -267,14 +267,11 @@
 </style>
 
 <!-- Add animations on Braintree Hosted Fields events -->
-
 <!-- Some test Card numbers 4111 1111 1111 1111: Visa 5555 5555 5555 4444: MasterCard 3714 496353 98431: American Express -->
 
-<!--[if IE 9]> <style> header { margin-top: 1em; text-align: center; } #brain-tree-form { margin: 0 auto; padding-top: 2em; } .bg-illustration { z-index: -1; } #button-pay { margin: 1em auto 0; display: block; } .cardinfo-exp-date, .cardinfo-cvv {
-width: 45%; float: left; } .cardinfo-wrapper { overflow: hidden; } </style> <![endif]-->
 
-<div class="section-container accordion" data-section="accordion">
-  <section class="section active" data-id="card">
+<ul class="accordion" data-accordion data-multi-expand="true">
+  <li class="acordion-item" data-accordion-item >
     <p class="title">
       <a href="#card-info" style="text-align:  center;font-size: xx-large;">Pay With Card</a>
     </p>
@@ -425,19 +422,19 @@ width: 45%; float: left; } .cardinfo-wrapper { overflow: hidden; } </style> <![e
       </div>
 
     </div>
-  </section>
+  </li>
 
-  <section class="section active" data-id="paypal">
+  <li class="acordion-item" data-accordion-item="paypal">
     <p class="title">
-      <a href="#paypal-info" style="text-align:  center;font-size: xx-large;">Pay With Paypal</a>
+      <a href="#paypal-info" class="accordion-title" style="text-align:  center;font-size: xx-large;">Pay With Paypal</a>
     </p>
-    <div class="content" data-slug="paypal-info">
+    <div class="accordion-content" data-tab-content id="paypal-info">
 
       <div id="paypal-section">
-        <div class="row">
-          <div class="large-8 large-offset-1 end columns">
+        <div class="grid-x">
+          <div class="large-8 large-offset-1 end cell">
             <div style="width:50%; margin-left: 40%;">
-              <div id="paypal-container" class="large-5 columns"></div>
+              <div id="paypal-container" class="large-5 cell"></div>
               <p style="font-size: 22px; line-height: 1.8">
                 <strong>Click to Continue</strong>
               </p>
@@ -473,7 +470,7 @@ width: 45%; float: left; } .cardinfo-wrapper { overflow: hidden; } </style> <![e
       </div>
 
     </div>
-  </section>
+  </li>
 </div>
 
 <div class="thankyou" style="display: none">

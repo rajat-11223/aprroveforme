@@ -69,41 +69,10 @@ class AccountsController < ApplicationController
     end
   end
 
-  def active_approvals
-    authorize! :read, Approval.new(owner: current_user.id)
-
-    @my_approvals = Approval.for_owner(current_user.id).deadline_is_in_future
-  end
-
-  def completed_approvals
-    authorize! :read, Approval.new(owner: current_user.id)
-
-    @my_completed_approvals = Approval.for_owner(current_user.id).deadline_is_past
-  end
-
-  def pending_approvals
-    authorize! :read, Approval.new(owner: current_user.id)
-
-    @pending_approvals = Approver.pending
-                                 .for_email(current_user.email.downcase, current_user.second_email)
-  end
-
-  def signed_off_approvals
-    authorize! :read, Approval.new(owner: current_user.id)
-
-    @signedoff_approvals = Approver.approved_or_declined
-                                   .for_email(current_user.email.downcase, current_user.second_email)
-  end
-
   def current_subscription
     @subscription = current_user.subscription
+    @subscription_histories = current_user.subscription_histories
 
     authorize! :read, @subscription
-  end
-
-  def subscription_histories
-    authorize! :read, current_user.subscription
-
-    @subscription_histories = current_user.subscription_histories
   end
 end

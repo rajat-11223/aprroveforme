@@ -1,48 +1,30 @@
 <% case approver.status %>
 <% when "Approved" %>
-
-  <div class="row">
-    <div class="large-10 large-offset-1 end columns">
-      <div class="row item action-past">
-        <div class="large-1 small-2 columns">
-          <p class="center"><img src="/assets/approved.png"></p>
-        </div>
-        <div class="large-11 small-10 columns">
-          <p class="title-approval-alert">You have approved this.
-            <a href="#" role="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a>.</p><br/>
-        </div>
+  <div class="grid-x">
+    <div class="large-6 large-offset-3 cell">
+        <div class="callout small text-center item action-past">
+          <h5>You have approved. <img src="/assets/approved.png"></h5>
+          <p><button class="button" data-open="approvalModal">Update Response</button></p>
       </div>
     </div>
   </div>
 
 <% when "Declined" %>
-
-  <div class="row">
-    <div class="large-10 large-offset-1 end columns">
-      <div class="row item action-past">
-        <div class="large-1 small-2 columns">
-          <p class="center"><img src="/assets/declined.png"></p>
-        </div>
-        <div class="large-11 small-10 columns">
-          <p class="title-approval-alert">You have declined this.
-            <a href="#" role="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Update your response</a>.</p><br/>
-        </div>
+  <div class="grid-x">
+    <div class="large-6 large-offset-3 cell">
+        <div class="callout small text-center item action-past">
+          <h5>You have declined. <img src="/assets/declined.png"></h5>
+          <p><button class="button" data-open="approvalModal">Update Response</button></p>
       </div>
     </div>
   </div>
-
 <% else %>
-  <div class="row">
-    <div class="large-10 large-offset-1 end columns">
-      <div class="row item action">
-        <div class="large-1 small-2 columns">
-          <p class="center"><img src="/assets/action.png"></p>
-        </div>
-        <div class="large-11 small-10 columns">
-          <p class="title-approval-alert"><%= approver.approval.user.name %>
-            has requested your approval.
-            <a href="#" role="button" data-toggle="modal" data-backdrop="false" data-reveal-id="myModal">Click here to respond</a>.</p><br/>
-        </div>
+  <!--  Pending -->
+  <div class="grid-x">
+    <div class="large-6 large-offset-3 cell">
+        <div class="callout small text-center item action-past">
+          <h5><%= approver.approval.user.name %> has requested your approval. <img src="/assets/action.png"></h5>
+          <p><button class="button" data-open="approvalModal">Respond</button></p>
       </div>
     </div>
   </div>
@@ -50,29 +32,32 @@
 
 <br/>
 
-
-<div id="myModal" class="reveal-modal">
+<div id="approvalModal" class="reveal" data-reveal>
   <%= form_for approver.approval do |f| %>
-    <div class="row">
-      <p class="page-title">
-        Do you approve <%= approver.approval.title %>?
-      </p>
+    <div class="grid-x">
+      <h4>
+        Do you approve '<%= approver.approval.title %>'?
+      </h4>
     </div>
 
-    <div class="row">
-      <div class="large-12 columns">
+    <div class="grid-x">
+      <div class="large-12 cell">
         <%= f.fields_for approver do |builder| %>
-          <%= builder.text_area :comments, placeholder: "Have any feedback?" %>
+          <%= builder.text_area :comments, placeholder: "Have any feedback?", rows: 8 %>
         <% end %>
       </div>
     </div>
 
     </br>
 
-    <div class="row">
-      <%= f.submit "Approved", class: "button approve large-2 small-12 columns", name: "approval[approver][status]", value: "Approved" %>
-      <%= f.submit "Declined", class: "button decline large-2 end small-12 columns", name: "approval[approver][status]", value: "Declined", style: "margin-left: 10px;" %>
+    <div class="grid-x">
+      <div class="cell auto text-center">
+        <%= f.submit "Approved", class: "button approve", name: "approval[approver][status]", value: "Approved" %>
+        <%= f.submit "Declined", class: "button decline", name: "approval[approver][status]", value: "Declined", style: "margin-left: 10px;" %>
+      </div>
     </div>
   <% end %>
-  <a class="close-reveal-modal">&#215;</a>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>

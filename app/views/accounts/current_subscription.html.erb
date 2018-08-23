@@ -1,38 +1,52 @@
-<div class="row">
-  <div class="large-9 push-3 columns">
+<h3>Current Subscription</h3>
 
-    <div class="row">
-      <div class="">
-        <p class="page-title">Current Subscription</p>
+<%= field_set_tag "Subscription Info" do -%>
+  <div class="grid-x">
+    <div class="large-2 small-3 cell" style="width: 142px;">
+      <p class="form-label">Current Plan:</p>
+    </div>
+    <div class="large-10 small-9 cell" style="width: 477px;">
+      <%= @subscription.plan_type %>
+    </div>
+  </div>
+  <div class="grid-x">
+    <div class="large-2 small-3 cell" style="width: 142px;">
+      <p class="form-label">Start Date</p>
+    </div>
+    <div class="large-10 small-9 cell" style="width: 477px;">
+      <%= @subscription.plan_date.to_formatted_s(:long_ordinal) %> <br />
+    </div>
+  </div>
+  <div class="grid-x">
+    <div class="cell auto">
+      <% if free_plan_compare != 'Current' %>
+        <%= link_to "Cancel Subscription", new_subscription_path(plan_type: 'free' ), class: "button primary right"%>
+      <% else %>
+        <%= link_to "Upgrade Subscription", pricing_path(type: "upgrade"), class: "button primary right"%>
+    <% end %>
+    </div>
+  </div>
+<% end -%>
+
+<h3>Subscription History</h3>
+
+<% @subscription_histories.each do |s| %>
+  <%= field_set_tag "Plan Change" do -%>
+    <div class="grid-x">
+      <div class="large-2 small-3 cell" style="width: 142px;">
+        <p class="form-label">Plan:</p>
+      </div>
+      <div class="large-10 small-9 cell" style="width: 477px;">
+        <%= s.plan_type %>
       </div>
     </div>
-
-    <%= field_set_tag "Subscription Info" do -%>
-      <div class="row">
-        <div class="large-2 small-3 columns" style="width: 142px;">
-          <p class="form-label">Current Plan:</p>
-        </div>
-        <div class="large-10 small-9 columns" style="width: 477px;">
-          <%= @subscription.plan_type %>
-        </div>
+    <div class="grid-x">
+      <div class="large-2 small-3 cell" style="width: 142px;">
+        <p class="form-label">Start Date</p>
       </div>
-      <div class="row">
-        <div class="large-2 small-3 columns" style="width: 142px;">
-          <p class="form-label">Start Date</p>
-        </div>
-        <div class="large-10 small-9 columns" style="width: 477px;">
-          <%= @subscription.plan_date %>
-          <% if free_plan_compare != 'Current' %>
-            <%= link_to "Cancel Subscription", new_subscription_path(plan_type: 'free' ), class: "button primary right"%>
-          <% else %>
-            <%= link_to "Upgrade Subscription", pricing_path(type: "upgrade"), class: "button primary right"%>
-        <% end %>
-        </div>
+      <div class="large-10 small-9 cell" style="width: 477px;">
+        <%= s.plan_date.to_formatted_s(:long_ordinal) %>
       </div>
-    <% end -%>
-
-  </div>
-
-  <%= render 'shared/side_bar' %>
-
-</div>
+    </div>
+  <% end -%>
+<% end %>

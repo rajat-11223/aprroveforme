@@ -1,71 +1,83 @@
-<div class="app-dashboard shrink-medium">
-  <div class="app-dashboard-body off-canvas-wrapper">
-    <div class="large-3 columns">
-      <%= render 'sidebar' %>
-    </div>
-    <div class="app-dashboard-body-content off-canvas-content large-9 columns" data-off-canvas-content>
+<%= content_for :main do %>
+  <h4>Past Approvals</h4>
+  <table class="dashboard-table">
+    <thead>
+      <tr>
+        <th>
+          <a href="#">Document Name
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Description
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Status
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Created By
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Deadline
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Action
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <% @signedoff_approvals.each do |approver| %>
 
+      <tr>
+        <td class="bold"><%= link_to approver.approval.title, approver.approval %></td>
+        <td><%= approver.approval.description %></td>
+        <td><%= approver.status %></td>
+        <td>
+          <%= image_tag image_url(approver.approval.user.email), class: "pic-details" %>
+          <%= approver.approval.user.name %>
+        </td>
 
-      <h4>Past Approvals</h4>
-      <table class="dashboard-table">
-        <thead>
-        <tr>
-          <th><a href="#">Document Name <i class="fa fa-caret-down"></i></a></th>
-          <th><a href="#">Description <i class="fa fa-caret-down"></i></a></th>
-          <th><a href="#">Status <i class="fa fa-caret-down"></i></a></th>
-          <th><a href="#">Created By <i class="fa fa-caret-down"></i></a></th>
-          <th><a href="#">Deadline <i class="fa fa-caret-down"></i></a></th>
-          <th><a href="#">Action <i class="fa fa-caret-down"></i></a></th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        <% @signedoff_approvals.each do |approver| %>
+        <td class="listing-inquiry-status">
 
-          <tr>
-            <td class="bold"><%= link_to approver.approval.title, approver.approval %></td>
-            <td><%= approver.approval.description %></td>
-            <td><%= approver.status %></td>
-            <td>
-              <%= image_tag image_url(approver.approval.user.email), class: "pic-details" %>
-              <%= approver.approval.user.name %>
-            </td>
+          <div class="flex-container align-top">
+            <div class="flex-child-grow">
+              <h4 class="dashboard-table-text">
+                <%= approver.approval.deadline.to_date %>
+              </h4>
+              <span class="dashboard-table-timestamp"><%= approver.approval.deadline_in_words %></span>
+            </div>
+          </div>
 
-            <td class="listing-inquiry-status">
+        </td>
 
-              <div class="flex-container align-top">
-                <div class="flex-child-grow">
-                  <h4 class="dashboard-table-text">
-                    <%= approver.approval.deadline.to_date  %>
-                  </h4>
-                  <span class="dashboard-table-timestamp"><%= approver.approval.deadline_in_words %></span>
-                </div>
-              </div>
+        <td class="listing-inquiry-status">
 
-            </td>
+          <div class="flex-container align-top">
+            <div class="flex-child-grow">
+              <h4 class="dashboard-table-text"><%= link_to 'View', approver.approval, class: 'button small round' %></h4>
+            </div>
+          </div>
 
+        </td>
 
-            <td class="listing-inquiry-status">
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
 
-              <div class="flex-container align-top">
-                <div class="flex-child-grow">
-                  <h4 class="dashboard-table-text"><%= link_to 'View', approver.approval, class: 'button small round' %></h4>
-                </div>
-              </div>
-
-            </td>
-
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-
-      <% if @signedoff_approvals.empty? %>
-        <div class="center">
-          <h1>No Records</h1>
-        </div>
-      <% end %>
-
-    </div>
+  <% if @signedoff_approvals.empty? %>
+  <div class="text-center">
+    <h3>No Records</h3>
   </div>
-</div>
+  <% end %>
+<% end %>

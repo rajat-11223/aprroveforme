@@ -9,9 +9,82 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require normalize
  *= require foundation_and_overrides
- *= require foundation
  *= require zocial
- *= require edits
+ *= require_tree ./components
+ *= require_tree ./pages
 */
+
+// body a {
+//   color: #5e74c6;
+//   opacity: 0.9;
+// }
+//
+// body a:hover {
+//   color: #4A61D6;
+//   opacity: 1;
+// }
+//
+// .button.primary {
+//   background-color: #ffcc00;
+//   border: 0;
+//   border-radius: 3px;
+//   color: #000;
+//   font-weight: 500;
+//   opacity: 0.8;
+// }
+//
+// .button.secondary {
+//   background-color: #dedede;
+//   border: 0;
+//   border-radius: 3px;
+//   color: #000;
+//   font-weight: 500;
+//   opacity: 0.8;
+// }
+//
+// .button.approve:hover,
+// .button.decline:hover,
+// .button.primary:hover,
+// .button.secondary:hover {
+//   opacity: 1;
+// }
+//
+// .text-divider {
+//   text-align: center;
+//   color: #7b7b7b;
+//   padding-top: 8px;
+//   font-weight: 200;
+//   font-size: 15px;
+// }
+//
+// p {
+//   font-size: 13px;
+// }
+//
+// .progress {
+//   border: 1px solid #dedede;
+//   margin-bottom: 0;
+//   margin-top: 0;
+//   padding: 0;
+//   -moz-border-radius: 2px;
+//   border-radius: 2px;
+//   height: 20px;
+// }
+//
+// .progress .meter {
+//   background-color: #dedede;
+// }
+//
+// .text-divider {
+//   font-size: 14px;
+// }
+//
+// .center {
+//   text-align: center;
+// }
+//
+// .page-title {
+//   font-size: 20px;
+//   margin-bottom: 5px;
+// }

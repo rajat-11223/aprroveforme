@@ -29,7 +29,15 @@
     <div class="grid-container content">
       <%= render "layouts/messages" %>
 
-      <%= yield %>
+      <div class="grid-x">
+        <div class="cell large-3 sidebar">
+          <%= render 'home/sidebar' %>
+        </div>
+
+        <div class="cell large-9 main">
+          <%= yield :main %>
+        </div>
+      </div>
     </div>
     <%= render "layouts/footer" %>
   </body>

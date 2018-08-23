@@ -1,75 +1,77 @@
-<div class="row">
-  <div class="large-3 large-offset-2 small-2 columns"><hr></div>
-  <div class="large-2 small-8 columns">
-    <p class="text-divider">HOW IT WORKS</p>
+<div class="grid-x grid-margin-x">
+  <div class="large-2 large-offset-2 small-2 cell"><hr /></div>
+  <div class="large-4 small-8 cell text-center" >
+    <h2>HOW IT WORKS</h2>
   </div>
-  <div class="large-3 small-2 end columns"><hr></div>
+  <div class="large-2 small-2 end cell"><hr /></div>
 </div>
 
 <!--- BEGIN THE NEW USER TOUR -->
-<div class="row">
-  <div class="large-8 large-offset-2 end columns">
-    <div class="row">
-      <div class="large-4 hide-for-small columns">
-        <%= image_tag "tour1.png", :class => "tour-pic" %>
+<div class="grid-x">
+  <div class="cell large-offset-3 large-6">
+    <div class="grid-x grid-margin-x">
+      <div class="cell large-4 hide-for-small-only">
+        <%= image_tag "tour1.png", class: "tour-pic" %>
       </div>
-      <div class="large-8 small-12 columns">
+      <div class="cell large-8 small-12">
         <p class="tour-title">1. Create your approval</p>
         <p class="tour-description">It's easy! Just give it a title, a deadline and a list of people who need to approve. If you like, you can include a longer description too.</p>
       </div>
     </div>
   </div>
 </div><br/>
-<div class="row">
-  <div class="large-8 large-offset-2 end columns">
-    <div class="row">
-      <div class="large-8 small-12 columns">
+
+<div class="grid-x">
+  <div class="large-6 large-offset-3 cell">
+    <div class="grid-x grid-margin-x">
+      <div class="large-8 small-12 cell">
         <p class="tour-title">2. Add your document</p>
         <p class="tour-description">Select your document from Google Drive. Don't worry, if it's not already there, you'll be able to quickly upload it and we'll automatically set the permissions. You can give approvers write access too if you'd like them to be able to edit the file.</p>
       </div>
-      <div class="large-4 hide-for-small columns">
+      <div class="large-4 hide-for-small-only cell">
         <%= image_tag "tour2.png", :class => "tour-pic" %>
       </div>
     </div>
   </div>
 </div><br/>
-<div class="row">
-  <div class="large-8 large-offset-2 end columns">
-    <div class="row">
-      <div class="large-4 hide-for-small columns">
+<div class="grid-x">
+  <div class="large-6 large-offset-3 cell">
+    <div class="grid-x grid-margin-x">
+      <div class="large-4 hide-for-small-only cell">
         <%= image_tag "tour3.png", :class => "tour-pic" %>
       </div>
-      <div class="large-8 small-12 columns">
+      <div class="large-8 small-12 cell">
         <p class="tour-title">3. Approvers notified and provide feedback</p>
         <p class="tour-description">Each approver will receive an email asking them to approve your document. When they click through, they'll be able to open up the doc, add any comments, and click "approve" or "decline."</p>
       </div>
     </div>
   </div>
 </div><br/>
-<div class="row">
-  <div class="large-8 large-offset-2 end columns">
-    <div class="row">
-      <div class="large-8 small-12 columns">
+<div class="grid-x">
+  <div class="large-6 large-offset-3 end cell">
+    <div class="grid-x grid-margin-x">
+      <div class="large-8 small-12 cell">
         <p class="tour-title">4. Everything in one place</p>
         <p class="tour-description">See status of each approval, comments, and more in the summary page. No more having to piece together multiple emails.</p>
       </div>
-      <div class="large-4 hide-for-small columns">
+      <div class="large-4 hide-for-small-only cell">
         <%= image_tag "tour4.png", :class => "tour-pic" %>
       </div>
     </div>
   </div>
 </div><br/>
 <!--- END THE NEW USER TOUR -->
+
 <!--- START GET STARTED -->
-<div class="row">
-  <div class="large-8 large-offset-2 end columns">
-    <div class="row">
-      <% if user_signed_in? %>
-        <p class="center"><%= link_to "Ok, I got it. I'm ready to create a new approval.", new_approval_path, :class => "button primary create" %></p>
+<div class="grid-x">
+  <div class="cell auto">
+    <p class="text-center">
+      <% if can? :create, Approval.new(user: current_user) %>
+        <%= link_to "Ok, got it. Create a new approval.", new_approval_path, class: "button primary create" %>
       <% else %>
-        <p class="center"><%= link_to "Lets Get Started.", signin_path, :class => "button primary create" %></p>
+        <%= link_to "Lets Get Started", signin_path, class: "button primary create" %>
       <% end %>
-    </div>
+    </p>
   </div>
 </div><br/>
 <!--- END GET STARTED -->

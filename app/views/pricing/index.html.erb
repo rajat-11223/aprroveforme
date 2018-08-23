@@ -1,57 +1,56 @@
-<div class="row">
-  <div class="large-12 columns large-centered">
+<div class="grid-x">
+  <div class="cell large-12 text-center">
     <h3>Pricing</h3>
   </div>
+</div>
 
-  <div class="row">
-    <!--AK 04.11.18 update grid-->
-    <div class="small-12 large-4 columns" >
-      <ul class="pricing-table">
-        <li class="title">STARTER</li>
-        <li class="price">FREE<br /></li>
-        <li class="bullet-item">2 reviews/month</li>
-        <li class="bullet-item">Online support</li>
-        <li class="cta-button">
-          <% if current_user %>
-             <%= upgrade_or_downgrade_button(plan: :free) %>
-          <% else %>
-            <%= sign_up_button(plan: :free) %>
-          <% end %>
-        </li>
-      </ul>
-    </div>
+<div class="grid-x">
+  <div class="cell small-12 large-4" >
+    <ul class="pricing-table">
+      <li class="title">STARTER</li>
+      <li class="price">FREE<br /></li>
+      <li class="bullet-item">2 reviews/month</li>
+      <li class="bullet-item">Online support</li>
+      <li class="cta-button">
+        <% if current_user %>
+           <%= upgrade_or_downgrade_button(plan: :free) %>
+        <% else %>
+          <%= sign_up_button(plan: :free) %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
 
-    <div class="small-12 large-4 columns">
-      <ul class="pricing-table">
-        <li class="title">PROFESSIONAL</li>
-        <li class="price">$1.99/mo<br /></li>
-        <li class="bullet-item">6 reviews/month</li>
-        <li class="bullet-item">Online support</li>
-        <li class="cta-button">
-          <%if current_user %>
-            <%= upgrade_or_downgrade_button(plan: :professional) %>
-          <% else %>
-            <%= sign_up_button(plan: :professional, color: "e95b0c") %>
-          <% end %>
-        </li>
-      </ul>
-    </div>
+  <div class="cell small-12 large-4">
+    <ul class="pricing-table">
+      <li class="title">PROFESSIONAL</li>
+      <li class="price">$1.99/mo<br /></li>
+      <li class="bullet-item">6 reviews/month</li>
+      <li class="bullet-item">Online support</li>
+      <li class="cta-button">
+        <%if current_user %>
+          <%= upgrade_or_downgrade_button(plan: :professional) %>
+        <% else %>
+          <%= sign_up_button(plan: :professional, color: "e95b0c") %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
 
-    <div class="small-12 large-4 columns">
-      <ul class="pricing-table">
-        <li class="title">UNLIMITED</li>
-        <li class="price">$4.99/mo<br /></li>
-        <li class="bullet-item">UNLIMITED reviews/month</li>
-        <li class="bullet-item">Online support</li>
-        <li class="cta-button">
-          <%if current_user%>
-            <%= upgrade_or_downgrade_button(plan: :unlimited) %>
-          <%else%>
-            <%= sign_up_button(plan: :unlimited) %>
-          <%end%>
-        </li>
-      </ul>
-    </div>
+  <div class="cell small-12 large-4">
+    <ul class="pricing-table">
+      <li class="title">UNLIMITED</li>
+      <li class="price">$4.99/mo<br /></li>
+      <li class="bullet-item">UNLIMITED reviews/month</li>
+      <li class="bullet-item">Online support</li>
+      <li class="cta-button">
+        <%if current_user%>
+          <%= upgrade_or_downgrade_button(plan: :unlimited) %>
+        <%else%>
+          <%= sign_up_button(plan: :unlimited) %>
+        <%end%>
+      </li>
+    </ul>
   </div>
 </div>
 

@@ -1,50 +1,30 @@
-<div class="row">
-  <div class="large-9 push-3 columns">
+<h3>Profile</h3>
 
-    <div class="row">
-      <div class="">
-        <p class="page-title">Profile</p>
-      </div>
+<%= field_set_tag "Account Info" do -%>
+  <div class="grid-x">
+    <div class="large-2 small-3 cell" style="width: 142px;">
+      <p class="form-label">First Name:</p>
     </div>
-
-    <%= field_set_tag "Account Info" do -%>
-      <div class="row">
-        <div class="large-2 small-3 columns" style="width: 142px;">
-          <p class="form-label">First Name:</p>
-        </div>
-        <div class="large-10 small-9 columns" style="width: 477px;">
-          <%= current_user.first_name %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-3 columns" style="width: 142px;">
-          <p class="form-label">Last Name</p>
-        </div>
-        <div class="large-10 small-9 columns" style="width: 477px;">
-          <%= current_user.last_name %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-3 columns" style="width: 142px;">
-          <p class="form-label">Email</p>
-        </div>
-        <div class="large-10 small-9 columns" style="width: 477px;">
-          <%= current_user.email %>
-        </div>
-      </div>
-    <% end -%>
-
-
+    <div class="large-10 small-9 cell" style="width: 477px;">
+      <%= current_user.first_name %>
+    </div>
   </div>
+  <div class="grid-x">
+    <div class="large-2 small-3 cell" style="width: 142px;">
+      <p class="form-label">Last Name</p>
+    </div>
+    <div class="large-10 small-9 cell" style="width: 477px;">
+      <%= current_user.last_name %>
+    </div>
+  </div>
+  <div class="grid-x">
+    <div class="large-2 small-3 cell" style="width: 142px;">
+      <p class="form-label">Email</p>
+    </div>
+    <div class="large-10 small-9 cell" style="width: 477px;">
+      <%= current_user.email %>
+    </div>
+  </div>
+<% end -%>
 
-  <%= render 'shared/side_bar' %>
-
-</div>
-
-
-
-
-
-
-
-
+<p>You may not change this information here. Please login to Google / GSuite, change your contact information and then log out/log back into this service. We update your details everytime you login.</p>

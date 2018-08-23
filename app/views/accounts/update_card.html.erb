@@ -1,7 +1,7 @@
-<div class="row">
-  <div class="large-9 push-3 columns">
+<div class="grid-x">
+  <div class="large-9 push-3 cell">
 
-    <div class="row">
+    <div class="grid-x">
       <div class="">
         <p class="page-title">Update Card</p>
       </div>
@@ -10,27 +10,27 @@
     <%= form_tag update_card_post_account_path, :html => {:autocomplete => "off"} do |f| %>
       <div>
         <%= field_set_tag "Card Info" do -%>
-          <div class="row">
-            <div class="large-2 small-3 columns" style="width: 142px;">
+          <div class="grid-x">
+            <div class="large-2 small-3 cell" style="width: 142px;">
               <p class="form-label">Number</p>
             </div>
-            <div class="large-10 small-9 columns" style="width: 477px;">
+            <div class="large-10 small-9 cell" style="width: 477px;">
               <%= text_field_tag :number %>
             </div>
           </div>
-          <div class="row">
-            <div class="large-2 small-3 columns" style="width: 142px;">
+          <div class="grid-x">
+            <div class="large-2 small-3 cell" style="width: 142px;">
               <p class="form-label">Expiration Date</p>
             </div>
-            <div class="large-10 small-9 columns" style="width: 477px;">
+            <div class="large-10 small-9 cell" style="width: 477px;">
               <%= text_field_tag :expiration_date %>
             </div>
           </div>
-          <div class="row">
-            <div class="large-2 small-3 columns" style="width: 142px;">
+          <div class="grid-x">
+            <div class="large-2 small-3 cell" style="width: 142px;">
               <p class="form-label">CVV</p>
             </div>
-            <div class="large-10 small-9 columns" style="width: 477px;">
+            <div class="large-10 small-9 cell" style="width: 477px;">
               <%= text_field_tag :cvv %>
             </div>
           </div>

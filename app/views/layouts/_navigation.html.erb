@@ -1,96 +1,34 @@
-<style>
-  .menu-hover-lines {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 1px;
-    transition: all 0.35s ease;
-  }
+<div class="top-bar">
+  <div class="top-bar-left">
+    <ul class="menu">
+      <li class="menu-text"><%= link_to (image_tag "logo.png"), root_url %></li>
+    </ul>
+  </div>
 
-  .menu-hover-lines li a {
-    padding: 0.75rem 0;
-    color: rgba(10, 10, 10, 0.5);
-    position: relative;
-    margin-left: 1rem;
-  }
-
-  .menu-hover-lines li:first-child a {
-    margin-left: 0;
-  }
-
-  .menu-hover-lines li.active > a {
-    background-color: transparent;
-  }
-
-  .menu-hover-lines a:before,
-  .menu-hover-lines a::after {
-    height: 3px;
-    position: absolute;
-    content: '';
-    transition: all 0.35s ease;
-    background-color: #FECB2F;
-    width: 0;
-  }
-
-  .menu-hover-lines a::before {
-    top: 0;
-    left: 0;
-  }
-
-  .menu-hover-lines a::after {
-    bottom: 0;
-    right: 0;
-  }
-
-  .menu-hover-lines a:hover,
-  .menu-hover-lines li.active > a {
-    color: #0a0a0a;
-    transition: all 0.35s ease;
-  }
-
-  .menu-hover-lines a:hover::before,
-  .menu-hover-lines .active a::before,
-  .menu-hover-lines a:hover::after,
-  .menu-hover-lines .active a::after {
-    width: 100%;
-  }
-</style>
-
-<!--- START NAVIGATION -->
-<div class="top">
-  <div class="row">
-    <div class="large-3 small-12 columns">
-      <p class="logo"><%= link_to (image_tag "logo.png"), root_url %></a></p>
-    </div>
-    <div class="large-9 small-12 columns">
-
-      <ul class="inline-list right menu menu-hover-lines">
-        <li class="<%= active_class([page_path('how-it-works')]) %>"><%= link_to "How It Works", page_path('how-it-works') %></li>
-        <% if user_signed_in? %>
-          <li class="<%= active_class([root_path,pending_approvals_home_index_path,open_approvals_home_index_path,
-                                       past_documents_home_index_path,past_approvals_home_index_path]) %>"><a href="<%= root_url %>">Home</a></li>
-          <!-- <li class=""><a href="https://docs.google.com/forms/d/1nW9f_sYa6ndNxXc-c9M8FtbUGiA4K1fUi4ohYkM9BHE/viewform" target="_blank">Feedback</a></li> -->
-          <li class="<%= active_class([pricing_path]) %>"><%= link_to "My Plan",pricing_path(:type=>"upgrade") %></li>
-
-          <li class="<%= active_class([profile_account_path,active_approvals_account_path,completed_approvals_account_path,
-                                       pending_approvals_account_path,signed_off_approvals_account_path,payment_methods_account_path,
-                                       update_card_account_path,current_subscription_account_path,subscription_histories_account_path]) %>">
-            <%= link_to profile_account_path do %>
-              <%= image_tag current_user.picture, :class=>"nav-pic" %> Account
+  <div class="top-bar-right">
+    <ul class="menu menu-hover-lines" data-dropdown-menu>
+      <li><%= link_to "Home", root_url %></li>
+      <li><%= link_to "How It Works", page_path("how-it-works") %></li>
+      <% if user_signed_in? %>
+        <li>
+          <%= image_tag current_user.picture, class: "nav-pic" %>
+          <ul class="menu">
+            <li class="menu-text"><%= current_user.email %></li>
+            <li><%= link_to "Account", profile_account_path %></li>
+            <li><%= link_to "Change Plan",pricing_path(type: "upgrade") %></li>
+            <li><%= link_to "My Subscription", current_subscription_account_path %></li>
+            <li><%= link_to "Payment Methods", payment_methods_account_path %></li>
+            <li><hr /></li>
+            <% if can? :manage, :all %>
+              <li><%= link_to "Admin", users_path %></li>
             <% end %>
-          </li>
-
-          <li><%= link_to (image_tag "logout.png", :class=>"nav-image", :title=>"Logout"), signout_path %></li>
-          <% if can? :manage, :all %>
-            <li class="<%= active_class([users_path]) %>"><%= link_to 'Admin', users_path %></li>
-          <% end %>
-        <% else %>
-          <li class="<%= active_class([pricing_path]) %>"><%= link_to 'Pricing', pricing_path %></li>
-          <li><%= link_to 'Login or Signup', signin_path, :class=>"login" %></li>
-        <% end %>
-      </ul>
-    </div>
-
+            <li><%= link_to "Log out", signout_path %></li>
+          </ul>
+        </li>
+      <% else %>
+        <li><%= link_to "Pricing", pricing_path %></li>
+        <li><%= link_to "Login or Signup", signin_path, :class=>"login" %></li>
+      <% end %>
+    </ul>
   </div>
 </div>
-<!--- END NAVIGATION -->

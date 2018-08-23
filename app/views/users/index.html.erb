@@ -1,39 +1,39 @@
-<div class="row">
-  <div class="large-3 large-offset-2 columns panel center">
-    <h1><%= User.count %></h1>
+<div class="grid-x">
+  <div class="large-3 large-offset-2 cell panel center">
+    <h2><%= User.count %></h2>
     TOTAL USERS
   </div>
-  <div class="large-3 large-offset-2 end columns panel center">
-    <h1><%= Approval.count %></h1>
+  <div class="large-3 large-offset-2 end cell panel center">
+    <h2><%= Approval.count %></h2>
     TOTAL APPROVALS SENT
   </div>
 </div>
 
-<div class="row">
-  <div class="large-4 columns panel center">
+<div class="grid-x">
+  <div class="large-4 cell panel center">
     <h4><%= User.where('created_at >= ?', Date.today).count %></h4>
     DAILY NEW USERS
   </div>
-  <div class="large-4 columns panel center">
+  <div class="large-4 cell panel center">
     <h4><%= User.where('created_at >= ?', 1.week.ago).count %></h4>
     WEEKLY NEW USERS
   </div>
-  <div class="large-4 columns panel center">
+  <div class="large-4 cell panel center">
     <h4><%= User.where('created_at >= ?', 1.month.ago).count %></h4>
     MONTHLY NEW USERS
   </div>
 </div>
 
-<div class="row">
-  <div class="large-4 columns" style="margin-bottom:20px;">
+<div class="grid-x">
+  <div class="large-4 cell" style="margin-bottom:20px;">
     Export to
     <%= link_to "CSV", users_path(format: "csv") %>
   </div>
 </div>
 
-<div class="row">
-  <div class="large-12 columns">
-    <table class="table" style="width:100%;">
+<div class="grid-x">
+  <div class="auto cell">
+    <table class="table">
       <thead>
         <tr>
           <th colspan="2"><%= sortable "name" %></th>
@@ -42,7 +42,7 @@
           <th><%= sortable "sent" %></th>
           <th><%= sortable "received" %></th>
           <th><%= sortable "updated_at", "last login" %></th>
-          <th>Delete</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -56,7 +56,7 @@
             </td>
             <td><%= user.created_at.to_date %></td>
             <td><%= Approval.for_owner(user.id).count %></td>
-            <td><%= Approver.for_email(user.email, user.second_email).count %></td>
+            <td><%= Approver.by_user(user).count %></td>
             <td><%= user.updated_at.to_date %></td>
             <td><%= link_to_if(user != current_user, "delete", user_path(user), data: { confirm: "Are you sure you want to delete '#{user.name}'?" },
                                                                                 method: :delete,

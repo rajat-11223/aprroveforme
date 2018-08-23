@@ -1,72 +1,77 @@
-<% if current_user %>
-  <div class="app-dashboard shrink-medium">
-    <div class="app-dashboard-body off-canvas-wrapper">
-      <div class="large-3 columns">
-        <%= render 'sidebar' %>
-      </div>
-      <div class="app-dashboard-body-content off-canvas-content large-9 columns" data-off-canvas-content>
+<%= content_for(:main) do %>
+  <h4>Open Approvals</h4>
+  <table class="dashboard-table">
+    <thead>
+      <tr>
+        <th>
+          <a href="#">Document Name
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Deadline
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Progress
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Responces
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+        <th>
+          <a href="#">Action
+            <i class="fa fa-caret-down"></i>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <% @my_approvals.each do |approval| %>
+      <tr>
+        <td class="bold"><%= link_to approval.title, approval %></td>
+        <td><%= approval.deadline.to_date %>,
+          <strong><%= approval.deadline_in_words %></td>
+          <td><%= approval.percentage_complete %></td>
 
-        <h4>Open Approvals</h4>
-        <table class="dashboard-table">
-          <thead>
-          <tr>
-            <th><a href="#">Document Name <i class="fa fa-caret-down"></i></a></th>
-            <th><a href="#">Deadline <i class="fa fa-caret-down"></i></a></th>
-            <th><a href="#">Progress <i class="fa fa-caret-down"></i></a></th>
-            <th><a href="#">Responces <i class="fa fa-caret-down"></i></a></th>
-            <th><a href="#">Action <i class="fa fa-caret-down"></i></a></th>
-          </tr>
-          </thead>
-          <tbody>
-          </tbody>
-          <% @my_approvals.each do |approval| %>
-            <tr>
-              <td class="bold"><%= link_to approval.title, approval %></td>
-              <td><%= approval.deadline.to_date  %>, <strong><%= approval.deadline_in_words %></td>
-              <td><%= approval.percentage_complete  %></td>
+          <td class="listing-inquiry-status">
 
-              <td class="listing-inquiry-status">
+            <div class="flex-container align-top">
+              <div class="flex-child-grow">
+                <h4 class="dashboard-table-text">
+                  <div class="progress">
+                    <span class="meter" style="width: <%= approval.percentage_complete %>;"></span></div>
+                  <p class="progress-details"><%= approval.ratio_complete %>
+                    responses</p>
+                </h4>
+                <!--<span class="dashboard-table-timestamp">03/04/2017</span>-->
+              </div>
+            </div>
 
-                <div class="flex-container align-top">
-                  <div class="flex-child-grow">
-                    <h4 class="dashboard-table-text">
-                      <div class="progress"><span class="meter" style="width: <%= approval.percentage_complete %>;"></span></div>
-                      <p class="progress-details"><%= approval.ratio_complete %> responses</p>
-                    </h4>
-                    <!--<span class="dashboard-table-timestamp">03/04/2017</span>-->
-                  </div>
-                </div>
+          </td>
 
-              </td>
+          <td class="listing-inquiry-status">
 
-              <td class="listing-inquiry-status">
+            <div class="flex-container align-top">
+              <div class="flex-child-grow">
+                <h4 class="dashboard-table-text"><%= link_to 'View', approval, class: 'button small round' %></h4>
+              </div>
+            </div>
 
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-                <div class="flex-container align-top">
-                  <div class="flex-child-grow">
-                    <h4 class="dashboard-table-text"><%= link_to 'View', approval, class: 'button small round' %></h4>
-                  </div>
-                </div>
-
-
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-
-        <% if @my_approvals.empty? %>
-          <div class="center">
-            <h1>No Records</h1>
-          </div>
-        <% end %>
-
-      </div>
+  <% if @my_approvals.empty? %>
+    <div class="text-center">
+      <h3>No Records</h3>
     </div>
-  </div>
+  <% end %>
 
-<% elsif params[:intro] == "startup" %>
-  <%= render '/home/landing/startup' %>
-<% else %>
-  <%= render 'logged_out' %>
 <% end %>

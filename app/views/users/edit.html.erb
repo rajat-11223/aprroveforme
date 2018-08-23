@@ -1,27 +1,27 @@
-<div class="row">
+<div class="grid-x">
 		<p class="page-title">We need a little bit more information...</p>
 </div>
 </br>
 <%= form_for(@user) do |f| %>
-	<div class="row">
-		<div class="large-2 small-3 columns">
+	<div class="grid-x">
+		<div class="large-2 small-3 cell">
   			<%= f.label "First Name" %>
   		</div>
-  		<div class="large-10 small-9 columns">
+  		<div class="large-10 small-9 cell">
   		<%= f.text_field :first_name %>
   		</div>
   	</div>
   <br />
-  	<div class="row">
-  		<div class="large-2 small-3 columns">
+  	<div class="grid-x">
+  		<div class="large-2 small-3 cell">
   			<%= f.label "Last Name" %>
   		</div>
-  		<div class="large-10 small-9 columns">
+  		<div class="large-10 small-9 cell">
   		<%= f.text_field :last_name %>
   		</div>
   	</div>
   <br />
- <div class="row">
+ <div class="grid-x">
   <%= f.submit "Sign in" %>
   </div>
 <% end %>
