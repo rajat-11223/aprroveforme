@@ -1,4 +1,4 @@
-document.addEventListener "turbolinks:load", ->  
+document.addEventListener "turbolinks:load", ->
   # Include the UserVoice JavaScript SDK (only needed once on a page)
   UserVoice = window.UserVoice or []
   do ->
@@ -22,10 +22,11 @@ document.addEventListener "turbolinks:load", ->
     }
   ]
   # Identify the user and pass traits To enable, replace sample data with actual user traits and uncomment the line
-  UserVoice.push [
-    'identify'
-    {}
-  ]
+  # UserVoice.push [
+  #   'identify'
+  #   {}
+  # ]
+
   # Add default trigger to the bottom-right corner of the window: AK 4.11.18 Updated position
   UserVoice.push [
     'addTrigger'
@@ -34,6 +35,7 @@ document.addEventListener "turbolinks:load", ->
       trigger_position: 'bottom-left'
     }
   ]
+
   # Or, use your own custom trigger: UserVoice.push(['addTrigger', '#id', { mode: 'satisfaction' }]); Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
   UserVoice.push [
     'autoprompt'

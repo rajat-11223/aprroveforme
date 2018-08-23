@@ -3,7 +3,6 @@ Split.redis = REDIS
 # how to ignore bots and ourselves in split tests
 Split.configure do |config|
 
-
 	config.experiments = {
 	# This tests the header copy on the logged out page
 	# find the files for this test in home/tests
@@ -13,7 +12,7 @@ Split.configure do |config|
     }
 
 
-  }	
+  }
   # bot config
   #config.robot_regex = /my_custom_robot_regex/ # or
   #config.bots['newbot'] = "Description for bot with 'newbot' user agent, which will be added to config.robot_regex for exclusion"
