@@ -20,7 +20,7 @@
   <div class="grid-x">
     <div class="cell auto">
       <% if free_plan_compare != 'Current' %>
-        <%= link_to "Cancel Subscription", new_subscription_path(plan_type: 'free' ), class: "button primary right"%>
+        <%= link_to "Cancel Subscription", new_subscription_path(plan_type: "lite" ), class: "button primary right"%>
       <% else %>
         <%= link_to "Upgrade Subscription", pricing_path(type: "upgrade"), class: "button primary right"%>
     <% end %>

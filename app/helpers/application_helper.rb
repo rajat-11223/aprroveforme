@@ -18,18 +18,16 @@ module ApplicationHelper
                             class: "button primary continue-change",
                             style: "background-color: ##{on_color}"
     else
-      content_tag :span, data: { id: plan },
+      content_tag :span, on_plan, data: { id: plan },
                          class: "button primary continue-change",
-                         style: "background-color: ##{current_color}" do
-                           on_plan
-                         end
+                         style: "background-color: ##{current_color}"
 
     end
   end
 
   def plan_responses_limit
     case current_user.subscription.plan_type
-    when "free"
+    when "lite"
       "2"
     when "professional"
       "6"
@@ -39,15 +37,15 @@ module ApplicationHelper
   end
 
   def free_plan_compare
-    { free: "Current", professional: "Upgrade", unlimited: "Upgrade" }
+    { lite: "Current", professional: "Upgrade", unlimited: "Upgrade" }
   end
 
   def professional_plan_compare
-    { free: "Downgrade", professional: "Current", unlimited: "Upgrade" }
+    { lite: "Downgrade", professional: "Current", unlimited: "Upgrade" }
   end
 
   def unlimited_plan_compare
-    { free: "Downgrade", professional: "Downgrade", unlimited: "Current" }
+    { lite: "Downgrade", professional: "Downgrade", unlimited: "Current" }
   end
 
   def plan_compare(to:)
@@ -56,7 +54,7 @@ module ApplicationHelper
     to = to.to_sym
     if subscription.present?
       case subscription.try(:plan_type).try(:to_sym)
-      when :free
+      when :lite
         free_plan_compare[to]
       when :professional
         professional_plan_compare[to]

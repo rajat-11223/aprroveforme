@@ -205,7 +205,7 @@ class ApprovalsController < ApplicationController
   def plan_responses_limit
     @plan_responses_limit ||=
       case current_user.subscription.plan_type
-      when 'free'
+      when "lite"
         2
       when 'professional'
         6

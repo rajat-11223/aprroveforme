@@ -5,10 +5,10 @@ class MoveSubscriptionToSubscriptionHistories < ActiveRecord::Migration[5.2]
       next unless subscription.user_id.present?
 
       plan_type =
-       if ["free", "professional", "unlimited"].include?(subscription.plan_type)
+       if ["lite", "professional", "unlimited"].include?(subscription.plan_type)
          subscription.plan_type
        else
-         "free"
+         "lite"
        end
 
       sh = SubscriptionHistory.create user_id: subscription.user_id,

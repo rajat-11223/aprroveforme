@@ -50,7 +50,7 @@ class PaymentsController < ApplicationController
   def calculate_amount
     # in a real app this be calculated from a shopping cart, determined by the product, etc.
     case session[:plan_type]
-    when "free"
+    when "lite"
       "0.00"
     when "professional"
       "1.99"

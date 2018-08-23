@@ -13,7 +13,7 @@ class SubscriptionsController < ApplicationController
 
     if current_user.customer_id?
       customer = Braintree::Customer.find(current_user.customer_id)
-      if customer.payment_methods.present? and current_user.subscription.plan_type != 'free'
+      if customer.payment_methods.present? and current_user.subscription.plan_type != "lite"
         upgrade
       end
     end
@@ -132,7 +132,7 @@ class SubscriptionsController < ApplicationController
 
   def calculate_amount
     case params[:plan_type]
-    when "free"
+    when "lite"
       "00.00"
     when "professional"
       "1.99"

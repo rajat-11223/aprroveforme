@@ -7,15 +7,15 @@
 <div class="grid-x">
   <div class="cell small-12 large-4" >
     <ul class="pricing-table">
-      <li class="title">STARTER</li>
+      <li class="title">LITE</li>
       <li class="price">FREE<br /></li>
       <li class="bullet-item">2 reviews/month</li>
       <li class="bullet-item">Online support</li>
       <li class="cta-button">
         <% if current_user %>
-           <%= upgrade_or_downgrade_button(plan: :free) %>
+           <%= upgrade_or_downgrade_button(plan: :lite) %>
         <% else %>
-          <%= sign_up_button(plan: :free) %>
+          <%= sign_up_button(plan: :lite) %>
         <% end %>
       </li>
     </ul>

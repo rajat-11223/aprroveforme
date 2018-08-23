@@ -1,12 +1,12 @@
 FactoryBot.define do
   factory :subscription_history do
-    plan_type { ["free", "professional", "unlimited"].sample }
+    plan_type { ["lite", "professional", "unlimited"].sample }
     plan_date { 1.month.from_now }
     renewable_date { 1.year.from_now }
     user
 
-    trait :free do
-      plan_type "free"
+    trait :lite do
+      plan_type "lite"
     end
 
     trait :professional do

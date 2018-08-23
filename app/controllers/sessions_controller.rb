@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
     end
 
     if !user.subscription.present?
-      user.subscription_histories.create!(plan_type: 'free', plan_date: Time.now)
+      user.subscription_histories.create!(plan_type: "lite", plan_date: Time.now)
       user.save
       user.reload
     end
@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
       if ['create', 'open'].include? session[:state]['action'].to_s
         redirect_to new_approval_url
       else
-        if user.subscription.plan_type == "free"
+        if user.subscription.plan_type == "lite"
           redirect_to pricing_url
         else
           redirect_to_redirection_path
