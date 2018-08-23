@@ -87,7 +87,7 @@ jobs:
 
       - run:
           name: Brakeman
-          command: brakeman --exit-on-warn --progress --run-all-checks
+          command: brakeman --exit-on-warn --progress --run-all-checks -i ./config/brakeman.ignore
 
       # Run rspec
       - run:
