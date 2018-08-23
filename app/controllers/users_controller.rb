@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     authorize! :manage, :all
 
     respond_to do |format|
-      format.html { @users = User.order("#{sort_column} #{sort_direction}").page(params[:page]) }
+      format.html { @users = User.order(sort_column => sort_direction).page(params[:page]) }
       format.csv { send_data User.to_csv }
     end
   end
@@ -39,11 +39,13 @@ class UsersController < ApplicationController
   private
 
   def sort_column
-    User.column_names.find_item(params[:sort]) || "name"
+    @sort_column ||=
+      User.column_names.find_item(params[:sort]) || "name"
   end
 
   def sort_direction
-    %w[asc desc].find_item(params[:direction]) || "asc"
+    @sort_direction ||=
+      %w[asc desc].find_item(params[:direction]) || "asc"
   end
 
   def user_params
