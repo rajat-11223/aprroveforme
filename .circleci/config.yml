@@ -30,6 +30,7 @@ jobs:
         APP_ID: 107940143634
         CODACY_PROJECT_TOKEN: "a622d579565045af994e27ff139ab0ea"
         CODACY_RUN_LOCAL: true
+        ROLLBAR_ACCESS_TOKEN: 8515b6b943774027a4cd32bd514625a1
 
     steps:
       - checkout

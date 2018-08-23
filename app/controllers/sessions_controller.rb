@@ -17,8 +17,16 @@ class SessionsController < ApplicationController
 
   def create
     auth = request.env["omniauth.auth"]
+
+    if auth['provider'] != 'google_oauth2'
+      Rollbar.warning("Unsupported OAuth provider", omniauth_details: auth)
+      redirect_to root_path, notice: "We don't support that provider"
+      return
+    end
+
     user = User.find_by(provider: auth['provider'], uid: auth['uid'].to_s) ||
             User.create_with_omniauth(auth)
+
     session[:user_id] = user.id
 
     if user.customer_id.blank?

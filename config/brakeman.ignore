@@ -1,26 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Weak Hash",
-      "warning_code": 90,
-      "fingerprint": "071720736f53b7df68bd1b30fefd9dac32c1100511137126623e194ee9f57416",
-      "check_name": "WeakHash",
-      "message": "Weak hashing algorithm (MD5) used",
-      "file": "app/models/user.rb",
-      "line": 21,
-      "link": "https://brakemanscanner.org/docs/warning_types/weak_hash/",
-      "code": "Digest::MD5.hexdigest((auth[\"info\"][\"email\"] or \"\").downcase.strip)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "User",
-        "method": "User.create_with_omniauth"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "28f87275f6b6d9c2d6a95b2e2893ec2ad1f0f547d0c36129ce94b7ab0d259ce5",
@@ -120,26 +100,6 @@
       "note": ""
     },
     {
-      "warning_type": "Weak Hash",
-      "warning_code": 90,
-      "fingerprint": "a19b7f25142b59ee4efa6b31eb0c44ef03a81311e123052e8e8fae58053c3f30",
-      "check_name": "WeakHash",
-      "message": "Weak hashing algorithm (MD5) used",
-      "file": "app/helpers/approver_helper.rb",
-      "line": 10,
-      "link": "https://brakemanscanner.org/docs/warning_types/weak_hash/",
-      "code": "Digest::MD5.hexdigest(email.downcase.strip)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ApproverHelper",
-        "method": "image_url"
-      },
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "c4d24d913b2ae47be6a5e6e64c823ac5353aef0f072c49f2285f419021bc33bd",
@@ -179,6 +139,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-08-23 10:05:48 -0400",
+  "updated": "2018-08-23 11:27:34 -0400",
   "brakeman_version": "4.3.1"
 }

@@ -12,14 +12,16 @@ class User < ApplicationRecord
     create! do |user|
       user.provider = auth['provider']
       user.uid = auth['uid']
-      if auth['info']
-        puts auth.to_s
-        user.first_name = auth['info']['first_name'] || ""
-        user.last_name = auth['info']['last_name'] || ""
-         user.name = auth['info']['name'] || ""
-        user.email = auth['info']['email'] || ""
-        user.picture = auth['info']['image'] || "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email.downcase.strip)}?d=mm"
+      info = auth['info']
+
+      if info.present?
+        user.assign_attributes first_name: info['first_name'] || "",
+                               last_name: info['last_name'] || "",
+                               name: info['name'] || "",
+                               email: info['email'] || "",
+                               picture: info['image'] || GravatarUrl.generate(info['email'])
       end
+    end.tap do |user|
       UserMailer.new_user(user.name, user.email).deliver_later
     end
   end

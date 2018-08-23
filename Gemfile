@@ -54,6 +54,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "capybara"
   gem "codacy-coverage"
   gem "email_spec", ">= 1.4.0"
   gem "rails-controller-testing"

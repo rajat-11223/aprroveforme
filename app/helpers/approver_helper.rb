@@ -2,13 +2,12 @@ module ApproverHelper
 
   # takes in the email address and returns the gravatar URL
   def image_url(email)
-    user = User.where("email = ?", email).first
+    user = User.find_by(email: email)
 
-    if user && user.picture && user.picture != ""
+    if user && user.picture.present?
       user.picture
     else
-      "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email.downcase.strip)}?d=mm"
+      GravatarUrl.generate(email)
     end
   end
-
 end
