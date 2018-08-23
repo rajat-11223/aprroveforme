@@ -18,10 +18,10 @@ class ApprovalsController < ApplicationController
 
     # 3.times { @approval.tasks.build } if @approval.tasks.empty?
 
-    if session[:code]
+    if session[:code].present?
       approver = @approval.approvers.find {|a| a.code == session[:code] }
 
-      if (approver.approval_id == @approval.id) and (current_user.email != approver.email )
+      if approver.present? && (approver.approval_id == @approval.id) and (current_user.email != approver.email )
         current_user.update_attributes second_email: approver.email.downcase
       end
 
@@ -136,7 +136,7 @@ class ApprovalsController < ApplicationController
     # if an approver is approving
     if params.dig(:approval, :approver)
       authorize! :approve, @approval
-      @approver = @approval.approvers.for_email(current_user.email, current_user.second_email).first
+      @approver = @approval.approvers.by_user(current_user).first
       @approver.update_attributes! status: params.dig(:approval, :approver, :status),
                                    comments: params.dig(:approval, :approver, :comments)
 

@@ -18,7 +18,7 @@ class HomeController < ApplicationController
     @my_approvals = base_approvals.deadline_is_in_future
     @my_completed_approvals = base_approvals.deadline_is_past
 
-    base_approver = Approver.for_email(current_user.email, current_user.second_email)
+    base_approver = Approver.by_user(current_user)
     @pending_approvals = base_approver.pending
     @signedoff_approvals = base_approver.approved_or_declined
     # @any_approvals = Approval.where("owner = ?", current_user.id)
@@ -32,7 +32,7 @@ class HomeController < ApplicationController
     authorize! :read, Approval.new(owner: current_user.id)
 
     @pending_approvals = Approver.pending
-                                 .for_email(current_user.email, current_user.second_email)
+                                 .by_user(current_user)
   end
 
   def open_approvals
@@ -51,7 +51,7 @@ class HomeController < ApplicationController
     authorize! :read, Approval.new(owner: current_user.id)
 
     @signedoff_approvals = Approver.approved_or_declined
-                                   .for_email(current_user.email, current_user.second_email)
+                                   .by_user(current_user)
   end
 
   private

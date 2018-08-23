@@ -72,11 +72,11 @@ class User < ApplicationRecord
   def update_stats
     self.email_domain = self.email.split("@").try(:last)
     self.approvals_sent = Approval.for_owner(self.id).count
-    self.approvals_received = Approver.for_email(self.email).count
-    self.approvals_responded_to = Approver.for_email(self.email).approved_or_declined.count
+    self.approvals_received = Approver.by_user(self).count
+    self.approvals_responded_to = Approver.by_user(self).approved_or_declined.count
     self.approvals_sent_30 = Approval.for_owner(self.id).from_this_month.count
-    self.approvals_received_30 = Approver.for_email(self.email).from_this_month.count
-    self.approvals_responded_to_30 = Approver.for_email(self.email).approved_or_declined.from_this_month.count
+    self.approvals_received_30 = Approver.by_user(self).from_this_month.count
+    self.approvals_responded_to_30 = Approver.by_user(self).approved_or_declined.from_this_month.count
 
     last_approval = Approval.for_owner(self.id).last
     self.last_sent_date if last_approval.present?

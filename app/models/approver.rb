@@ -26,6 +26,8 @@ class Approver < ApplicationRecord
     end
   end
 
+  scope :by_user, -> (user) { for_email(user.email, user.second_email) }
+
   scope :required, -> { where(required: "Required") }
   scope :optional, -> { where(required: "Optional") }
 
