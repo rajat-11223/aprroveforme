@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :correct_user?
 
   before_action :set_code
+  before_action :setup_gon
 
   check_authorization
 
@@ -50,5 +51,10 @@ class ApplicationController < ActionController::Base
       return unless params["code"].present?
 
       session[:code] = params["code"]
+    end
+
+    def setup_gon
+      gon.push googleAppId: ENV.fetch("APP_ID"),
+               googleUserToken: current_user.try(:token)
     end
 end

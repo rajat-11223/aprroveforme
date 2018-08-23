@@ -2,14 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-closeCallouts = ->
-  $('.callout').trigger('close')
-
 document.addEventListener "turbolinks:load", ->
-  setTimeout ->
-    closeCallouts()
-  , 4000
-
   if $("#datepicker").length > 0
     $("#datepicker").datepicker({minDate: '+1D'})
 
@@ -34,4 +27,4 @@ document.addEventListener "turbolinks:load", ->
           modal.open()
         error: (data) ->
           console.log("ERROR in #continuePermission")
-          console.log(data);
+          console.log(data)

@@ -20,10 +20,6 @@ jobs:
     environment:
       - DATABASE_URL: "postgres://approveforme@localhost:5432/approveforme_test"
         REDISTOGO_URL: redis://localhost:6379
-        BRAIN_TREE_ENV: sandbox
-        BRAIN_TREE_MERCHANT_ID: 896h6fqr23smp2ny
-        BRAIN_TREE_PUBLIC_KEY: hhg4bfh3g89sn97h
-        BRAIN_TREE_PRIVATE_KEY: ffe101ec4c0d91ecad7471b7206a8062
         REDIRECT_URI: http://approveforme.lvh.me:5000/auth/google_oauth2/callback
         GOOGLE_ID: 107940143634-mied1cvqssluehq4t1q3jaa6qi9obesv.apps.googleusercontent.com
         GOOGLE_SECRET: MuN9fGHDQloWhCgEOTly5nfF

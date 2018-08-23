@@ -7,10 +7,17 @@
 //= require jstz
 //= require browser_timezone_rails/set_time_zone
 //= require user_voice
+//= require initialize_app
+//= require approval_google_picker
 //= require approvals
 
-function initializeFoundation() {
+ApproveForMe.initializeFoundation = function() {
   $(function(){ $(document).foundation(); });
 }
 
-document.addEventListener("turbolinks:load", initializeFoundation);
+ApproveForMe.closeCallouts = function() {
+  setTimeout(function() { $('.callout').trigger('close') }, 4000);
+}
+
+document.addEventListener("turbolinks:load", ApproveForMe.initializeFoundation);
+document.addEventListener("turbolinks:load", ApproveForMe.closeCallouts);

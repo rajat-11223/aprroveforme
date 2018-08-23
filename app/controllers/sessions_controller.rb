@@ -30,8 +30,8 @@ class SessionsController < ApplicationController
     session[:user_id] = user.id
 
     if user.customer_id.blank?
-      customer = Braintree::Customer.create(email: user.email, first_name: user.first_name, last_name: user.last_name)
-      user.customer_id = customer.customer.id
+      # customer = Braintree::Customer.create(email: user.email, first_name: user.first_name, last_name: user.last_name)
+      # user.customer_id = customer.customer.id
     end
 
     if !user.subscription.present?

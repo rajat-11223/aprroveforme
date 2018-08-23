@@ -6,7 +6,7 @@
           <p class="form-label">File*</p>
         </div>
         <div class="large-4 small-4 cell">
-          <a id="file-selector" onclick="createPicker()" class="button primary" style="width:100%;">Select File</a>
+          <a id="file-selector" onclick="ApproveForMe.google.createFilePicker()" class="button primary" style="width:100%;">Select File</a>
         </div>
         <div class="large-offset-1 large-4 small-5 cell">
           <p class="form-file-name">
@@ -89,59 +89,4 @@
     </div>
   </div>
   </div>
-
 <% end %>
-
-<!-- The standard Google Loader script. -->
-<script src="http://www.google.com/jsapi"></script>
-<script type="text/javascript">
-  // Use the Google Loader script to load the google.picker script. google.setOnLoadCallback(createPicker);
-  google.load('picker', '1');
-
-  // Create and render a Picker object
-  function createPicker() {
-    var view = new google.picker.DocsView(google.picker.ViewId.DOCS);
-    view.setMode(google.picker.DocsViewMode.LIST);
-    var picker = new google.picker.PickerBuilder().setAppId("<%= ENV['APP_ID']%>").setOAuthToken("<%= current_user.token %>").addView(view).addView(new google.picker.DocsUploadView()).setCallback(pickerCallback).build();
-    picker.setVisible(true);
-  }
-
-  // A simple callback implementation.
-  function pickerCallback(data) {
-    var url = 'nothing';
-
-    if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
-      var doc = data[google.picker.Response.DOCUMENTS][0];
-      url = doc[google.picker.Document.URL];
-      title = doc.name;
-      id = doc.id;
-      type = doc.type;
-      embed = doc[google.picker.Document.EMBEDDABLE_URL];
-    }
-
-    var message = "<input id=\"approval_link\" name=\"approval[link]\" type=\"hidden\" value=\"" + url + "\">";
-    message = message + "<input id=\"approval_embed\" name=\"approval[embed]\" type=\"hidden\" value=\"" + embed + "\">";
-    message = message + "<input id=\"approval_link_title\" name=\"approval[link_title]\" type=\"hidden\" value=\"" + title + "\">";
-    message = message + "<input id=\"approval_link_id\" name=\"approval[link_id]\" type=\"hidden\" value=\"" + id + "\">";
-    message = message + "<input id=\"approval_link_type\" name=\"approval[link_type]\" type=\"hidden\" value=\"" + type + "\">";
-
-    // add HTML around this for title
-    message = message + "<p class=\"form-file-name\">Filename: " + title + "</p>"
-
-    //message = message + title
-    document.getElementById('result').innerHTML = message;
-    document.getElementById('file-selector').text = "Replace File";
-
-    //!-- if you want to prefill the title field with the doc title, uncomment below.
-    var myTextField = document.getElementById('result2');
-      myTextField.value = title;
-    }
-
-  function add_fields(link, association, content) {
-    var new_id = new Date().getTime();
-    var regexp = new RegExp("new_" + association, "g");
-    //document.body.insertBefore(content.replace(regexp, new_id), $('div#insert'));
-    $("div.add").before(content.replace(regexp, new_id));
-    //$(link).before(content.replace(regexp, new_id));
-  }
-</script>
