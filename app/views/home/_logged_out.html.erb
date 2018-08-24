@@ -7,9 +7,8 @@
 <div class="grid-x">
   <div class="cell auto">
     <p class="text-center">
-      <%= link_to signin_path, class: "button primary large", id: "login" do %>
-        <%= image_tag "/assets/google.png", size: "30x23" %>
-        Get started for free
+      <%= link_to signin_path, id: "login" do %>
+        <%= image_tag "google/sign-in/btn_google_signin_dark_focus_web@2x.png" %>
       <% end%>
     </p>
   </div>
@@ -57,6 +56,20 @@
   </div>
 </div>
 
+<div class="grid-x">
+  <div class="cell auto text-center">
+    <h3>Works with GSuite Apps</h3>
+  </div>
+</div>
+<div class="grid-x grid-x-margin text-center">
+  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_docs_128px.png" %></div>
+  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_drive_128px.png" %></div>
+  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_forms_128px.png" %></div>
+  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_keep_128px.png" %></div>
+  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_sheets_128px.png" %></div>
+  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_slides_128px.png" %></div>
+</div>
+
 <hr />
 
 <div class="grid-x">
@@ -80,7 +93,9 @@
 <hr />
 
 <div class="grid-x">
-  <div class="cell auto">
-    <p class="text-center"><%= link_to "Connect with Google to get started", signin_path, :class=>"button secondary" %></p>
+  <div class="cell auto text-center">
+    <%= link_to signin_path, id: "login" do %>
+      <%= image_tag "google/sign-in/btn_google_signin_dark_focus_web@2x.png" %>
+    <% end%>
   </div>
 </div>
