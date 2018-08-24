@@ -27,7 +27,8 @@
         </li>
       <% else %>
         <li><%= link_to "Pricing", pricing_path %></li>
-        <li><%= link_to "Login or Signup", signin_path, :class=>"login" %></li>
+        <li><%= link_to "Login", signin_path, class: "login" %></li>
+        <li><%= link_to "Sign Up Free", signin_path, class: "sign-up" %></li>
       <% end %>
     </ul>
   </div>

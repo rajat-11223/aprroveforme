@@ -16,7 +16,7 @@ describe "Signup" do
 
   it 'enables me to signup' do
     visit root_path
-    click_link "Login or Signup"
+    click_link "Sign Up Free"
     expect(page).to have_current_path(pricing_path)
 
     user = User.find_by(uid: 123545)
@@ -37,7 +37,7 @@ describe "Signup" do
 
     it 'enables me to sign up and sets picture to gravatar' do
       visit root_path
-      click_link "Login or Signup"
+      click_link "Sign Up Free"
       expect(page).to have_current_path(pricing_path)
 
       user = User.find_by(uid: 123545)
@@ -52,7 +52,7 @@ describe "Signup" do
 
     it 'redirects to home page and shows me an error' do
       visit root_path
-      click_link "Login or Signup"
+      click_link "Sign Up Free"
       expect(page).to have_current_path(root_path)
       expect(page).to have_content("Authentication error: invalid_credentials")
     end
@@ -65,7 +65,7 @@ describe "Signup" do
 
     it 'redirects to home page and shows me an error' do
       visit root_path
-      click_link "Login or Signup"
+      click_link "Sign Up Free"
       expect(page).to have_current_path(root_path)
       expect(page).to have_content("We don't support that provider")
     end

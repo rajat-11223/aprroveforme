@@ -35,7 +35,7 @@ describe "Navigate to static page" do
     before do
       mock_omniauth_provider!(user: user)
       visit root_path
-      click_link "Login or Signup"
+      click_link "Login"
     end
 
     it 'home' do

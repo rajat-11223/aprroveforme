@@ -9,10 +9,9 @@
   a {
     color: $medium-gray;
     text-align: center;
-    padding-top: 4px 8px;
-    border-radius: 3px;
-    margin-top: 10px;
-    font-size: 13px;
+    padding-top: .25rem .5rem;
+    margin-top: .75rem;
+    font-size: .75rem;
   }
 
   $menu-hover-lines-transition: all 0.35s ease;
@@ -99,5 +98,15 @@
     width: $pic-width;
     margin: 0rem 2rem;
     border-radius: $pic-width;
+  }
+
+  li .sign-up {
+    background-color: $primary-color;
+    padding: 0.75rem !important;
+  }
+  li .login {
+    background-color: $secondary-color;
+    color: $white !important;
+    padding: 0.75rem !important;
   }
 }
