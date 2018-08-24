@@ -13,8 +13,11 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'codacy-coverage'
-Codacy::Reporter.start
+
+if ENV["CI"] == "true"
+  require 'codacy-coverage'
+  Codacy::Reporter.start
+end
 
 RSpec.configure do |config|
   config.filter_run :focus => true
