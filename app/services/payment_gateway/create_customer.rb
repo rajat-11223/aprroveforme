@@ -5,7 +5,7 @@ module PaymentGateway
     end
 
     def call(token = nil)
-      raise "Already have customer" if user.customer_id?
+      raise "Already have customer" if user.payment_customer?
 
       attrs = { email: user.email, description: user.name }
       attrs[:source] = token if token.present?
