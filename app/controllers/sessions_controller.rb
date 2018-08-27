@@ -18,6 +18,8 @@ class SessionsController < ApplicationController
 
   def create
     auth = request.env["omniauth.auth"]
+    Rails.logger.info("Creating session with auth:")
+    Rails.logger.info(auth)
 
     if auth['provider'] != 'google_oauth2'
       Rollbar.warning("Unsupported OAuth provider", omniauth_details: auth)
@@ -25,30 +27,34 @@ class SessionsController < ApplicationController
       return
     end
 
+    Rails.logger.info("Find or create user")
     user = User.find_by(provider: auth['provider'], uid: auth['uid'].to_s) ||
             User::CreateFromOmniauth.new(auth).call
 
+    Rails.logger.info("Sync User with google info")
+    Google::SyncUser.new(user).call(auth)
+
     session[:user_id] = user.id
 
+    Rails.logger.info("Create Stripe Customer")
     if !user.payment_customer?
       PaymentGateway::CreateCustomer.new(user).call
     end
 
+    Rails.logger.info("Create Stripe Subscription")
     if !user.subscription.present?
       PaymentGateway::CreateSubscription.new(user).call(name: "lite", interval: "monthly")
       user.reload
     end
 
-    Google::SyncUser.new(user).call(auth)
-
     # Credentials
+    Rails.logger.info("Setup credentials")
+    session[:state] ||= {}
     session[:credentials] = auth.dig("credentials")
     ab_finished(:signed_in)
     user.update_attributes! token: auth.dig("credentials", "token") || "",
                             refresh_token: auth.dig("credentials", "refresh_token") || user.refresh_token,
                             code: params["code"] || ""
-
-    session[:state] ||= {}
 
     if !user.name.present?
       redirect_to edit_user_path(user), alert: "Please enter your name."
