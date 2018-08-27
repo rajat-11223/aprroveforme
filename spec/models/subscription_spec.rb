@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Subscription do
+describe "Subscription" do
   subject { create(:user, :with_subscription) }
 
   it 'valid' do
