@@ -1,0 +1,66 @@
+default: &default
+  lite:
+    name: Lite
+    reviews_each_month: 2
+    reviews_each_month_in_words: 2
+    order: 1
+    monthly:
+      identifier: plan_DTIkcAtbqCDfXV
+      price: 0
+      price_in_words: FREE
+    yearly:
+      identifier: plan_DTIlyIz8yKRWg2
+      price: 0
+      price_in_words: FREE
+  professional:
+    name: Professional
+    reviews_each_month: 6
+    reviews_each_month_in_words: 6
+    order: 2
+    monthly:
+      identifier: plan_DTImhtH6M35W2j
+      price: 200
+      price_in_words: $2/mo
+    yearly:
+      identifier: plan_DTImTvSDRQYraG
+      price: 2000
+      price_in_words: $20/yr
+  unlimited:
+    name: Unlimited
+    reviews_each_month: 1000000
+    reviews_each_month_in_words: Unlimited
+    order: 3
+    monthly:
+      identifier: plan_DTIoNcoR76M1AE
+      price: 500
+      price_in_words: $5/mo
+    yearly:
+      identifier: plan_DTIoxM2Si5Mq9d
+      price: 5500
+      price_in_words: $55/yr
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  lite:
+    monthly:
+      identifier:
+    yearly:
+      identifier:
+  professional:
+    monthly:
+      identifier:
+    yearly:
+      identifier:
+  unlimited:
+    monthly:
+      identifier:
+    yearly:
+      identifier:

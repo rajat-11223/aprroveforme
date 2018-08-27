@@ -4,36 +4,30 @@ module ApplicationHelper
   end
 
   def sign_up_button(plan:, color: "ffa500")
-    link_to "Get Started", signin_path(plan_type: plan),
+    link_to "Get Started", signin_path(plan_name: plan[:name], plan_interval: plan[:interval]),
                            class: "button primary",
                            style: "background-color: ##{color} !important;",
                            data: { turbolinks: false }
   end
 
   def upgrade_or_downgrade_button(plan:, on_color: "ffa500", current_color: "2787cd")
-    on_plan = plan_compare(to: plan)
+    on_plan = plan_compare(to: plan[:name])
 
     if on_plan != 'Current'
-      link_to on_plan, "#", data: { id: plan, turbolinks: false },
+      link_to on_plan, "#", data: { name: plan[:name], interval: plan[:interval], turbolinks: false },
                             class: "button primary continue-change",
                             style: "background-color: ##{on_color}"
     else
-      content_tag :span, on_plan, data: { id: plan },
-                         class: "button primary continue-change",
+      link_to 'Current', dashboard_home_index_path,
+                         data: { name: plan[:name], interval: plan[:interval] },
+                         class: "button primary",
                          style: "background-color: ##{current_color}"
 
     end
   end
 
   def plan_responses_limit
-    case current_user.subscription.plan_type
-    when "lite"
-      "2"
-    when "professional"
-      "6"
-    else
-      "unlimited"
-    end
+    Plans::List[current_user.subscription.plan_name]["reviews_each_month_in_words"]
   end
 
   def free_plan_compare
@@ -53,7 +47,7 @@ module ApplicationHelper
     subscription = current_user.try(:subscription)
     to = to.to_sym
     if subscription.present?
-      case subscription.try(:plan_type).try(:to_sym)
+      case subscription.try(:plan_name).try(:to_sym)
       when :lite
         free_plan_compare[to]
       when :professional
@@ -68,8 +62,8 @@ module ApplicationHelper
     end
   end
 
-  def active_class(array)
-    return unless array.include?(request.path)
+  def active_class(paths)
+    return unless Array(paths).include?(request.path)
 
     "active"
   end
@@ -101,49 +95,5 @@ module ApplicationHelper
     css_class = column == sort_column ? "current #{sort_direction}" : nil
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     link_to title, {sort: column, direction: direction}, {class: css_class}
-  end
-
-  class BraintreeFormBuilder < ActionView::Helpers::FormBuilder
-    include ActionView::Helpers::AssetTagHelper
-    include ActionView::Helpers::TagHelper
-
-    def initialize(object_name, object, template, options, proc)
-      super
-      @braintree_params = @options[:params]
-      @braintree_errors = @options[:errors]
-    end
-
-    def fields_for(record_name, *args, &block)
-      options = args.extract_options!
-      options[:builder] = BraintreeFormBuilder
-      options[:params] = @braintree_params && @braintree_params[record_name]
-      options[:errors] = @braintree_errors && @braintree_errors.for(record_name)
-      new_args = args + [options]
-      super record_name, *new_args, &block
-    end
-
-    def text_field(method, options = {})
-      has_errors = @braintree_errors && @braintree_errors.on(method).any?
-      field = super(method, options.merge(:value => determine_value(method)))
-      result = content_tag("div", field, :class => has_errors ? "fieldWithErrors" : "")
-      result.safe_concat validation_errors(method)
-      result
-    end
-
-    protected
-
-    def determine_value(method)
-      @braintree_params[method] if @braintree_params
-    end
-
-    def validation_errors(method)
-      if @braintree_errors && @braintree_errors.on(method).any?
-        @braintree_errors.on(method).map do |error|
-          content_tag("div", ERB::Util.h(error.message), {style: "color: red;"})
-        end.join
-      else
-        ""
-      end
-    end
   end
 end

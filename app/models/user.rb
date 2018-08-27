@@ -8,24 +8,6 @@ class User < ApplicationRecord
   has_one :subscription, autosave: true, required: false, class_name: 'SubscriptionHistory'
   has_many :subscription_histories, dependent: :destroy
 
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.provider = auth['provider']
-      user.uid = auth['uid']
-      info = auth['info']
-
-      if info.present?
-        user.assign_attributes first_name: info['first_name'] || "",
-                               last_name: info['last_name'] || "",
-                               name: info['name'] || "",
-                               email: info['email'] || "",
-                               picture: info['image'] || GravatarUrl.generate(info['email'])
-      end
-    end.tap do |user|
-      UserMailer.new_user(user.name, user.email).deliver_later
-    end
-  end
-
   def ability
     @ability ||= Ability.new(self)
   end
@@ -86,6 +68,16 @@ class User < ApplicationRecord
     self.last_sent_date if last_approval.present?
 
     self.save
+  end
+
+  def payment_customer
+    return unless customer_id.to_s.start_with?("cus_")
+
+    @payment_customer ||= Stripe::Customer.retrieve(self.customer_id)
+  end
+
+  def payment_customer?
+    !!payment_customer
   end
 
   # def view_docs

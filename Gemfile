@@ -21,6 +21,7 @@ gem "high_voltage", "~> 3.1"
 gem "httparty"
 gem "jquery-rails"
 gem "jquery-ui-rails"
+gem "js_cookie_rails"
 gem "json"
 gem "jwt", "~>1.4.0"
 gem "kaminari"
@@ -56,10 +57,12 @@ end
 
 group :test do
   gem "capybara"
+  gem "chromedriver-helper"
   gem "codacy-coverage"
   gem "email_spec", ">= 1.4.0"
   gem "rails-controller-testing"
   gem "rspec_junit_formatter"
+  gem "selenium-webdriver"
 end
 
 group :development do

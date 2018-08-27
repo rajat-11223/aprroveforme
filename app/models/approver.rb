@@ -5,6 +5,9 @@ class Approver < ApplicationRecord
   include ActionView::Helpers::DateHelper
   include CreationDateScopes
 
+  validates_presence_of :name
+  validates_presence_of :email
+
   def to_s
     string = "Your approval is #{self.required}. ".humanize
     string << self.approval.deadline_in_words

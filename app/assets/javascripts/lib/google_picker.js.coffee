@@ -29,7 +29,7 @@ ApproveForMe.google.pickerCallback = (data) ->
   message = "#{message} <input id=\"approval_link_id\" name=\"approval[link_id]\" type=\"hidden\" value=\"#{id}\">"
   message = "#{message} <input id=\"approval_link_type\" name=\"approval[link_type]\" type=\"hidden\" value=\"#{type}\">"
   # add HTML around this for title
-  message = "#{message} <p class=\"form-file-name\">Filename: #{title}\"</p>"
+  message = "#{message} <p class=\"form-file-name\">Filename: \"#{title}\"</p>"
 
   document.getElementById("result").innerHTML = message
   document.getElementById("file-selector").text = "Replace File"

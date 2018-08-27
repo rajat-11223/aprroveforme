@@ -1,101 +1,66 @@
-<style>
-  @import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
-  @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
-</style>
-  <div class="grid-x">
-    <div class="">
-      <%= link_to  '#', :class=>"button secondary right add-payment-method" do %>
-        <i class="fa fa-plus"></i>
-      <% end %>
-      <p class="page-title">Payment Methods</p>
-    </div>
+<div class="grid-x grid-margin-x">
+  <div class="auto">
+    <h3>Payment Methods</h3>
   </div>
-
-  <% @customer.credit_cards.each do |c| %>
-    <%= field_set_tag "Card Info" do -%>
-      <div class="grid-x">
-        <div class="large-2 small-3 cell" style="width: 142px;">
-          <p class="form-label">Number Last4:</p>
-        </div>
-        <div class="large-10 small-9 cell" style="width: 477px;">
-          <%= c.last_4 %>
-        </div>
-      </div>
-      <div class="grid-x">
-        <div class="large-2 small-3 cell" style="width: 142px;">
-          <p class="form-label">Expiration Date</p>
-        </div>
-        <div class="large-10 small-9 cell" style="width: 477px;">
-          <%= c.expiration_month %>/<%= c.expiration_year%>
-        </div>
-      </div>
-      <div class="grid-x">
-        <div class="large-2 small-3 cell" style="width: 142px;">
-          <p class="form-label">Type</p>
-        </div>
-        <div class="large-10 small-9 cell" style="width: 477px;">
-          <%= image_tag c.image_url %>
-
-          <% if @customer.payment_methods.find{ |pm| pm.default? }.token == c.token %>
-            <%= link_to 'Default', '#' ,:class=>"button default right" %>
-          <% else %>
-            <%= link_to 'Set Default', set_default_payment_method_account_path(id: c.token) ,:class=>"button default right" %>
-          <% end %>
-
-          <%= link_to update_card_account_path ,:class=>"button primary right" do %>
-            <i class="fa fa-edit"></i>
-          <% end %>
-          <%= link_to  delete_payment_method_account_path(id: c.token) ,:class=>"button alert right" do %>
-            <i class="fa fa-trash"></i>
-          <% end %>
-        </div>
-      </div>
-    <% end -%>
-    <br>
-  <% end %>
-
-  <br>
-
-
-  <% @customer.paypal_accounts.each do |c| %>
-    <%= field_set_tag "Paypal Account Info" do -%>
-      <div class="grid-x">
-        <div class="large-2 small-3 cell" style="width: 142px;">
-          <p class="form-label">Email</p>
-        </div>
-        <div class="large-10 small-9 cell" style="width: 477px;">
-          <%= c.email %>
-        </div>
-      </div>
-      <div class="grid-x">
-        <div class="large-2 small-3 cell" style="width: 142px;">
-          <p class="form-label">Type</p>
-        </div>
-        <div class="large-10 small-9 cell" style="width: 477px;">
-          <%= image_tag c.image_url %>
-
-          <% if @customer.payment_methods.find{ |pm| pm.default? }.token == c.token %>
-            <%= link_to 'Default', '#' ,:class=>"button default right" %>
-          <% else %>
-            <%= link_to 'Set Default', set_default_payment_method_account_path(id: c.token) ,:class=>"button default right" %>
-          <% end %>
-
-          <%= link_to  delete_payment_method_account_path(id: c.token) ,:class=>"button alert right" do %>
-            <i class="fa fa-trash"></i>
-          <% end %>
-        </div>
-      </div>
-    <% end -%>
-    <br>
-<% end %>
-
-<div id="myModal" class="reveal-modal small">
-  <%= render 'add_payment_method' %>
-  <a class="close-reveal-modal">&#215;</a>
+  <div class="cell auto">
+    <%= link_to '#', class: "button secondary right add-payment-method" do %>
+      <i class="fas fa-plus"></i>
+    <% end %>
+  </div>
 </div>
 
-<script>
-    $(".add-payment-method").click(function(){
-        $('#myModal').foundation('reveal', 'open');
-    });
-</script>
+<%- card_data = @customer.sources.data %>
+
+<% card_data.each do |card| %>
+  <%= field_set_tag "Card Info" do -%>
+    <div class="grid-x">
+      <div class="large-2 small-3 cell" style="width: 142px;">
+        <p class="form-label">Number Last4:</p>
+      </div>
+      <div class="large-10 small-9 cell" style="width: 477px;">
+        <%= card.last4 %>
+      </div>
+    </div>
+    <div class="grid-x">
+      <div class="large-2 small-3 cell" style="width: 142px;">
+        <p class="form-label">Expiration Date</p>
+      </div>
+
+      <div class="large-10 small-9 cell" style="width: 477px;">
+        <%= card.exp_month %>/<%= card.exp_year %>
+      </div>
+    </div>
+    <div class="grid-x">
+      <div class="large-2 small-3 cell" style="width: 142px;">
+        <p class="form-label">Type</p>
+      </div>
+      <div class="large-10 small-9 cell" style="width: 477px;">
+        <%= card.brand %>
+
+        <%- if @customer.sources.find{ |s| s.id ==  @customer.default_source }.id == card.id %>
+          <%= content_tag :span, 'Default', class: "button default right" %>
+        <% else %>
+          <%= link_to 'Set Default', set_default_payment_method_account_path(id: card.id), class: "button default right" %>
+        <% end %>
+
+        <%= link_to delete_payment_method_account_path(id: card.id), class: "button alert right" do %>
+          <i class="fas fa-trash"></i>
+        <% end %>
+      </div>
+    </div>
+  <% end -%>
+  <br>
+<% end %>
+
+<% if card_data.empty? %>
+  <h5>No payment method found</h5>
+  <%= link_to "Add one now", "#", class: "add-payment-method" %>
+<% end %>
+
+<div class="reveal" id="addPaymentMethod" data-reveal>
+  <%= render partial: 'stripe/add_card_form', locals: { submit_path: add_new_payment_method_account_path,
+                                                       submit_button_text: "Add Card" } %>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

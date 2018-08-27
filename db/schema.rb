@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_23_170751) do
+ActiveRecord::Schema.define(version: 2018_08_24_211047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,12 +69,15 @@ ActiveRecord::Schema.define(version: 2018_08_23_170751) do
   end
 
   create_table "subscription_histories", id: :serial, force: :cascade do |t|
-    t.string "plan_type"
     t.datetime "plan_date"
     t.datetime "renewable_date"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "plan_name", null: false
+    t.string "plan_interval", null: false
+    t.string "plan_identifier", null: false
+    t.string "subscription_identifier", null: false
     t.index ["user_id"], name: "index_subscription_histories_on_user_id"
   end
 
@@ -119,7 +122,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_170751) do
     t.integer "approvals_responded_to_30"
     t.datetime "last_sent_date"
     t.string "customer_id"
-    t.string "braintree_subscription_id"
+    t.string "stripe_subscription_id"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|

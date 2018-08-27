@@ -1,11 +1,11 @@
-<% return if plan_compare(to: plan) == "Current" %>
+<% return if plan_compare(to: name) == "Current" %>
 
 <div class="reveal" id="confirmPlanChange" data-reveal>
   <h2>Change in Plan</h2>
   <p class="lead">
-    Are you sure you want to <u><%= plan_compare(to: plan).downcase %></u> to the <%= plan %> plan?
+    Are you sure you want to <u><%= plan_compare(to: name).downcase %></u> to the <%= name %> plan, billed <%= interval %>?
   </p>
-  <%= link_to "Continue", new_subscription_path(plan_type: plan), class: "button primary expand", style: "background-color: #FFA500;" %>
+  <%= link_to "Continue", new_subscription_path(plan_name: name, plan_interval: interval), class: "button primary expand", style: "background-color: #FFA500;" %>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>

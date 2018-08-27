@@ -1,4 +1,4 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
+  # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'rails_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
@@ -29,18 +29,22 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include OmniauthHelpers, type: :system
+  config.include StripeHelpers, type: :system, js: true
 
   config.before(:each, type: :system) do
+    Capybara.default_max_wait_time = 10
     mock_omniauth_provider!
     driven_by :rack_test
   end
 
   config.after(:each, type: :system) do
-    cleanup_omniauth!
+    cleanup_omniauth!(provider: :default)
+    cleanup_omniauth!(provider: :google_oauth2)
   end
 
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless
+    # driven_by :selenium_chrome
   end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

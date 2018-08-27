@@ -14,12 +14,12 @@ describe Approver do
     expect(subject).to_not be_valid
   end
 
-  xit 'requires a name' do
+  it 'requires a name' do
     subject.name = nil
     expect(subject).to_not be_valid
   end
 
-  xit 'requires a email' do
+  it 'requires an email' do
     subject.email = nil
     expect(subject).to_not be_valid
   end

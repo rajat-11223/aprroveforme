@@ -203,17 +203,7 @@ class ApprovalsController < ApplicationController
   end
 
   def plan_responses_limit
-    @plan_responses_limit ||=
-      case current_user.subscription.plan_type
-      when "lite"
-        2
-      when 'professional'
-        6
-      when 'unlimited'
-        10_000_000_000
-      else
-        0
-      end
+    Plans::List[current_user.subscription.plan_name].dig("reviews_each_month")
   end
 
   def require_user_or_code!

@@ -1,5 +1,10 @@
 module OmniauthHelpers
 
+  def sign_in_as(user, provider: :google_oauth2)
+    mock_omniauth_provider!(provider: provider, user: user)
+    visit oauth_callback_path(provider: provider)
+  end
+
   def self.mock_user
     OpenStruct.new uid: "123545",
                    first_name: "Mock",
@@ -12,6 +17,10 @@ module OmniauthHelpers
   def mock_omniauth_failure!(provider: :google_oauth2)
     setup_test_mode!
 
+    cleanup_omniauth!(provider: provider)
+    cleanup_omniauth!(provider: :default)
+
+    OmniAuth.config.mock_auth.delete(:default)
     OmniAuth.config.mock_auth[provider] = :invalid_credentials
   end
 
@@ -35,7 +44,7 @@ module OmniauthHelpers
   end
 
   def cleanup_omniauth!(provider: :google_oauth2)
-    OmniAuth.config.mock_auth[provider] = nil
+    OmniAuth.config.mock_auth[provider] = {}
   end
 
   private

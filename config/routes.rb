@@ -15,9 +15,6 @@ Workflow::Application.routes.draw do
       post :add_new_payment_method
       get :set_default_payment_method
 
-      get :update_card
-      post :update_card_post
-
       get :current_subscription
       get :subscription_histories
       get :manage_subscription
@@ -30,10 +27,10 @@ Workflow::Application.routes.draw do
     end
   end
 
-  get 'payments_methods' => 'payments#index', :as => :payment_methods
-  get 'payments_method/update' => 'payments#update', :as => :payment_method_update
-  post 'payments' => 'payments#create', :as => :payment
-  get 'payments/confirm' => 'payments#confirm', :as => :confirm_payment
+  # get 'payments_methods' => 'payments#index', as: :payment_methods
+  # get 'payments_method/update' => 'payments#update', as: :payment_method_update
+  # post 'payments' => 'payments#create', as: :payment
+  # get 'payments/confirm' => 'payments#confirm', as: :confirm_payment
 
   get "/#{Rails.application.config.google_verification}.html",
       to: proc { |env| [200, {}, ["google-site-verification: #{Rails.application.config.google_verification}.html"]] }
@@ -42,7 +39,7 @@ Workflow::Application.routes.draw do
 
   resources :users, :only => [:index, :show, :edit, :update ]
 
-  get '/auth/:provider/callback' => 'sessions#create'
+  get '/auth/:provider/callback' => 'sessions#create', as: :oauth_callback
   get '/signin' => 'sessions#new', :as => :signin
   get '/signout' => 'sessions#destroy', :as => :signout
   get '/auth/failure' => 'sessions#failure'
@@ -58,11 +55,8 @@ Workflow::Application.routes.draw do
     end
   end
 
-  resource :subscription, only: [:new, :create] do
-    collection do
-      get :upgrade
-      get :continue_permission
-    end
+  resource :subscription, only: [:new, :create, :update] do
+    get :continue_permission, on: :collection
   end
 
   # Static Pages

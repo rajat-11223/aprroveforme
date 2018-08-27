@@ -12,8 +12,8 @@ describe Subscription do
     expect(subject.subscription).to_not be_valid
   end
 
-  it "requires a plan_type" do
-    subject.subscription.plan_type = nil
+  it "requires a plan_name" do
+    subject.subscription.plan_name = nil
 
     expect(subject.subscription).to_not be_valid
   end

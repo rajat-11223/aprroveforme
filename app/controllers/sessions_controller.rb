@@ -11,7 +11,8 @@ class SessionsController < ApplicationController
         end
     end
 
-    session[:plan_type] = params[:plan_type]
+    session[:plan_name] = params[:plan_name]
+    session[:plan_interval] = params[:plan_interval]
     redirect_to '/auth/google_oauth2?prompt=select_account'
   end
 
@@ -25,22 +26,20 @@ class SessionsController < ApplicationController
     end
 
     user = User.find_by(provider: auth['provider'], uid: auth['uid'].to_s) ||
-            User.create_with_omniauth(auth)
+            User::CreateFromOmniauth.new(auth).call
 
     session[:user_id] = user.id
 
-    if user.customer_id.blank?
-      # customer = Braintree::Customer.create(email: user.email, first_name: user.first_name, last_name: user.last_name)
-      # user.customer_id = customer.customer.id
+    if !user.payment_customer?
+      PaymentGateway::CreateCustomer.new(user).call
     end
 
     if !user.subscription.present?
-      user.subscription_histories.create!(plan_type: "lite", plan_date: Time.now)
-      user.save
+      PaymentGateway::CreateSubscription.new(user).call(name: "lite", interval: "monthly")
       user.reload
     end
 
-    # TODO: update users first_name, last_name, photo, etc.
+    Google::SyncUser.new(user).call(auth)
 
     # Credentials
     session[:credentials] = auth.dig("credentials")
@@ -57,7 +56,7 @@ class SessionsController < ApplicationController
       if ['create', 'open'].include? session[:state]['action'].to_s
         redirect_to new_approval_url
       else
-        if user.subscription.plan_type == "lite"
+        if user.subscription.plan_name == "lite"
           redirect_to pricing_url
         else
           redirect_to_redirection_path

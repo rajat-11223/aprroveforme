@@ -4,53 +4,48 @@
   </div>
 </div>
 
-<div class="grid-x">
-  <div class="cell small-12 large-4" >
-    <ul class="pricing-table">
-      <li class="title">LITE</li>
-      <li class="price">FREE<br /></li>
-      <li class="bullet-item">2 reviews/month</li>
-      <li class="bullet-item">Online support</li>
-      <li class="cta-button">
-        <% if current_user %>
-           <%= upgrade_or_downgrade_button(plan: :lite) %>
-        <% else %>
-          <%= sign_up_button(plan: :lite) %>
-        <% end %>
-      </li>
-    </ul>
-  </div>
+<div class="grid-x grid-margin-x">
+  <% Plans::List.new.ordered.each do |short_name, details| %>
+    <div class="cell large-4 small-12">
+      <ul class="pricing-table">
+        <li class="title"><%= details["name"] %></li>
+        <li class="price monthly-details"><%= details.dig("monthly", "price_in_words") %></li>
+        <li class="price yearly-details hide"><%= details.dig("yearly", "price_in_words") %></li>
+        <li class="bullet-item"><%= details["reviews_each_month_in_words"] %> reviews/month</li>
+        <li class="bullet-item">Online support</li>
+        <li class="cta-button monthly-details">
+          <% if current_user %>
+             <%= upgrade_or_downgrade_button(plan: {name: short_name, interval: :monthly}) %>
+          <% else %>
+            <%= sign_up_button(plan: { name: short_name, interval: :monthly }) %>
+          <% end %>
+        </li>
+        <li class="cta-button yearly-details hide">
+          <% if current_user %>
+             <%= upgrade_or_downgrade_button(plan: {name: short_name, interval: :yearly}) %>
+          <% else %>
+            <%= sign_up_button(plan: { name: short_name, interval: :yearly }) %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+</div>
 
-  <div class="cell small-12 large-4">
-    <ul class="pricing-table">
-      <li class="title">PROFESSIONAL</li>
-      <li class="price">$1.99/mo<br /></li>
-      <li class="bullet-item">6 reviews/month</li>
-      <li class="bullet-item">Online support</li>
-      <li class="cta-button">
-        <%if current_user %>
-          <%= upgrade_or_downgrade_button(plan: :professional) %>
-        <% else %>
-          <%= sign_up_button(plan: :professional, color: "e95b0c") %>
-        <% end %>
-      </li>
-    </ul>
+<div class="row">
+  <div class="column text-right">
+    <h4>Monthly</h4>
   </div>
-
-  <div class="cell small-12 large-4">
-    <ul class="pricing-table">
-      <li class="title">UNLIMITED</li>
-      <li class="price">$4.99/mo<br /></li>
-      <li class="bullet-item">UNLIMITED reviews/month</li>
-      <li class="bullet-item">Online support</li>
-      <li class="cta-button">
-        <%if current_user%>
-          <%= upgrade_or_downgrade_button(plan: :unlimited) %>
-        <%else%>
-          <%= sign_up_button(plan: :unlimited) %>
-        <%end%>
-      </li>
-    </ul>
+  <div class="column large-1 text-center">
+    <div class="switch">
+      <input class="switch-input" id="pricingIntervalSwitch" type="checkbox" name="pricingIntervalSwitch">
+      <label class="switch-paddle" for="pricingIntervalSwitch">
+        <span class="show-for-sr">Monthly</span>
+      </label>
+    </div>
+  </div>
+  <div class="column text-left">
+    <h4>Yearly</h4>
   </div>
 </div>
 

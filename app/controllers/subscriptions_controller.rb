@@ -4,138 +4,68 @@ class SubscriptionsController < ApplicationController
   before_action :disable_turbolinks_cache, only: [:new]
 
   def new
-    session[:plan_type] = params[:plan_type]
-    @amount = calculate_amount
+    session[:plan_name] = params[:plan_name]
+    session[:plan_interval] = params[:plan_interval]
 
     authorize! :create, current_user.subscription
 
-    if current_user.customer_id?
-      customer = Braintree::Customer.find(current_user.customer_id)
-      if customer.payment_methods.present? and current_user.subscription.plan_type != "lite"
-        upgrade
-      end
+    if current_user.payment_customer? &&
+        !PaymentGateway::FetchCards.new(current_user).call.empty?
+          current_user.subscription.plan_name != "lite"
+      update
     end
   end
 
   def continue_permission
     authorize! :create, current_user.subscription
-    render partial: 'continue_permission', locals: { plan: params[:id] }
+    render partial: 'continue_permission', locals: { name: params[:name], interval: params[:interval] }
   end
 
   def create
     authorize! :create, current_user.subscription
 
-    plan_type = session[:plan_type]
-    Subscription.transaction do
-      braintree_customer = fetch_or_create_braintree_customer
+    plan_name = params.require(:plan_name)
+    plan_interval = params.require(:plan_interval)
 
-      # Create subscription for user
-      payment_method_token = braintree_customer.payment_methods.find{ |pm| pm.default? }.token
-      braintree_subscription = Braintree::Subscription.create!(
-        payment_method_token: payment_method_token,
-        price: calculate_amount,
-        plan_id: plan_type,
-        options: {
-          start_immediately: true
-        }
-      )
+    SubscriptionHistory.transaction do
+      customer = fetch_or_create_customer
 
-      current_user.update_attributes! braintree_subscription_id: braintree_subscription.id
-
-      # subscription history
-      current_user.subscription_histories.create!(plan_type: plan_type, plan_date: Time.new)
+      PaymentGateway::CreateSubscription.new(user).call(name: plan_name,
+                                                        interval: plan_interval)
     end
 
-    redirect_to root_url, notice: "We have successfully changed your plan to #{plan_type}."
+    redirect_to root_url, notice: "We have successfully changed your plan to #{plan_name}."
   end
 
-  def upgrade
+  def update
     authorize! :create, current_user.subscription
 
-    plan_type = params.require(:plan_type)
+    plan_name = params.require(:plan_name)
+    plan_interval = params.require(:plan_interval)
 
-    Subscription.transaction do
-      braintree_customer = fetch_or_create_braintree_customer
-      braintree_subscription = fetch_or_create_braintree_subscription(customer: braintree_customer, plan_type: plan_type)
+    SubscriptionHistory.transaction do
+      customer = fetch_or_create_customer
 
-      # Create subscription history
-      current_user.subscription_histories.create!(plan_type: plan_type, plan_date: Time.now)
+      PaymentGateway::UpdateSubscription.new(current_user).call(name: plan_name,
+                                                                interval: plan_interval)
     end
 
-    session.delete(:plan_type)
+    session.delete(:plan_name)
+    session.delete(:plan_interval)
     session.delete(:upgrade)
-    session.delete(:degrate)
+    session.delete(:degrade)
 
-    redirect_to root_url, notice: "We have successfully changed your plan to #{plan_type}."
-  rescue Braintree::NotFoundError => e
-    Rollbar.error(e)
-    redirect_to root_url, notice: e.message
+    redirect_to root_url, notice: "We have successfully changed your plan to #{plan_name}, being billed #{plan_interval}."
   end
 
   protected
 
-  def fetch_or_create_braintree_customer
+  def fetch_or_create_customer
     @customer ||=
-      begin
-        result =
-          if current_user.customer_id?
-            Braintree::Customer.update(current_user.customer_id,
-                                       first_name: current_user.first_name,
-                                       last_name: current_user.last_name,
-                                       payment_method_nonce: params[:payment_method_nonce])
-
-          else
-            Braintree::Customer.create(email: current_user.email,
-                                       first_name: current_user.first_name,
-                                       last_name: current_user.last_name,
-                                       payment_method_nonce: params[:payment_method_nonce])
-          end
-
-        result.customer.tap do |customer|
-          current_user.update_attributes(customer_id: customer.id)
-        end
-      end
-  end
-
-  def fetch_or_create_braintree_subscription(customer:, plan_type:)
-    payment_method_token = customer.payment_methods.find { |pm| pm.default? }.token
-
-    subscription =
-      if current_user.braintree_subscription_id?
-        Braintree::Subscription.update!(
-          current_user.braintree_subscription_id,
-          payment_method_token: payment_method_token,
-          plan_id: plan_type,
-          price: calculate_amount,
-          options: {
-            prorate_charges: true
-          })
+      if current_user.payment_customer?
+        PaymentGateway::SyncCustomer.new(current_user).call
       else
-        Braintree::Subscription.create!(payment_method_token: payment_method_token,
-                                        plan_id: plan_type,
-                                        price: calculate_amount,
-                                        options: {
-                                          start_immediately: true
-                                        })
+        PaymentGateway::CreateCustomer.new(current_user).call
       end
-
-    subscription.tap do |subscription|
-      current_user.update(braintree_subscription_id: subscription.id)
-    end
-
-  rescue Braintree::NotFoundError => e
-    Rollbar.error(e)
-    redirect_to root_url, notice: e.message
-  end
-
-  def calculate_amount
-    case params[:plan_type]
-    when "lite"
-      "00.00"
-    when "professional"
-      "1.99"
-    else
-      "4.99"
-    end
   end
 end

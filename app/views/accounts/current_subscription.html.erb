@@ -6,7 +6,7 @@
       <p class="form-label">Current Plan:</p>
     </div>
     <div class="large-10 small-9 cell" style="width: 477px;">
-      <%= @subscription.plan_type %>
+      <%= @subscription.plan_name %> / <%= @subscription.plan_interval %>
     </div>
   </div>
   <div class="grid-x">
@@ -19,9 +19,7 @@
   </div>
   <div class="grid-x">
     <div class="cell auto">
-      <% if free_plan_compare != 'Current' %>
-        <%= link_to "Cancel Subscription", new_subscription_path(plan_type: "lite" ), class: "button primary right"%>
-      <% else %>
+      <% if free_plan_compare == 'Current' %>
         <%= link_to "Upgrade Subscription", pricing_path(type: "upgrade"), class: "button primary right"%>
     <% end %>
     </div>
@@ -37,7 +35,7 @@
         <p class="form-label">Plan:</p>
       </div>
       <div class="large-10 small-9 cell" style="width: 477px;">
-        <%= s.plan_type %>
+        <%= s.plan_name %> / <%= s.plan_interval %>
       </div>
     </div>
     <div class="grid-x">
