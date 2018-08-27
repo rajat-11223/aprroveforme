@@ -33,7 +33,7 @@ class Deploy < Thor
   def copy_prod_to_staging
     puts "Copy from production to staging"
     heroku_snapshot :production
-    heroku "pg:copy #{ app :production }::HEROKU_POSTGRESQL_TEAL_URL DATABASE_URL --app #{ app :staging } --confirm #{ app :staging }", nil
+    heroku "pg:copy #{ app :production }::DATABASE DATABASE_URL --app #{ app :staging } --confirm #{ app :staging }", nil
   end
 
   desc "copy_prod_to_local", "copies production data to local"
@@ -100,7 +100,11 @@ class Deploy < Thor
 
 
   def app(stage)
-    "approveforme-#{ stage }"
+    if stage.to_sym == :production
+      "approveforme"
+    else
+      "approveforme-#{ stage }"
+    end
   end
 
   def app_url(stage)
