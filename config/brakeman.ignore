@@ -3,6 +3,25 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
+      "fingerprint": "1ba5db94f24f4bfb74bdaf90e364ee394b6387630d414135015c7aa49398535e",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in link_to href",
+      "file": "app/views/approvals/show.html.erb",
+      "line": 55,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(\"Open File\", Approval.includes(:approvers).find(params[:id]).link, :target => \"_blank\", :class => \"button secondary\")",
+      "render_path": [{"type":"controller","class":"ApprovalsController","method":"show","line":32,"file":"app/controllers/approvals_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "approvals/show"
+      },
+      "user_input": "Approval.includes(:approvers).find(params[:id]).link",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
       "fingerprint": "28f87275f6b6d9c2d6a95b2e2893ec2ad1f0f547d0c36129ce94b7ab0d259ce5",
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in link_to href",
@@ -139,6 +158,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-08-23 11:27:34 -0400",
+  "updated": "2018-08-27 10:54:12 -0400",
   "brakeman_version": "4.3.1"
 }
