@@ -16,30 +16,30 @@ ActiveRecord::Schema.define(version: 2018_08_24_211047) do
   enable_extension "plpgsql"
 
   create_table "approvals", id: :serial, force: :cascade do |t|
-    t.string "title"
-    t.string "link"
+    t.string "title", limit: 255
+    t.string "link", limit: 255
     t.text "description"
     t.datetime "deadline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "owner"
-    t.string "embed"
-    t.string "link_title"
-    t.string "link_id"
-    t.string "link_type"
-    t.string "perms"
+    t.string "embed", limit: 255
+    t.string "link_title", limit: 255
+    t.string "link_id", limit: 255
+    t.string "link_type", limit: 255
+    t.string "perms", limit: 255
   end
 
   create_table "approvers", id: :serial, force: :cascade do |t|
-    t.string "email"
-    t.string "name"
-    t.string "required"
-    t.string "status"
+    t.string "email", limit: 255
+    t.string "name", limit: 255
+    t.string "required", limit: 255
+    t.string "status", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "approval_id"
     t.text "comments"
-    t.string "code"
+    t.string "code", limit: 255
   end
 
   create_table "delayed_jobs", id: :serial, force: :cascade do |t|
@@ -50,22 +50,21 @@ ActiveRecord::Schema.define(version: 2018_08_24_211047) do
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string "locked_by"
-    t.string "queue"
+    t.string "locked_by", limit: 255
+    t.string "queue", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "resource_type"
+    t.string "name", limit: 255
     t.integer "resource_id"
+    t.string "resource_type", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["name"], name: "index_roles_on_name"
-    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
   create_table "subscription_histories", id: :serial, force: :cascade do |t|
@@ -82,7 +81,7 @@ ActiveRecord::Schema.define(version: 2018_08_24_211047) do
   end
 
   create_table "subscriptions", id: :serial, force: :cascade do |t|
-    t.string "plan_type"
+    t.string "plan_type", limit: 255
     t.date "plan_date"
     t.date "renewable_date"
     t.integer "user_id"
@@ -92,7 +91,7 @@ ActiveRecord::Schema.define(version: 2018_08_24_211047) do
 
   create_table "tasks", id: :serial, force: :cascade do |t|
     t.text "comment"
-    t.string "status"
+    t.string "status", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "approval_id"
@@ -100,20 +99,20 @@ ActiveRecord::Schema.define(version: 2018_08_24_211047) do
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "provider"
-    t.string "uid"
+    t.string "name", limit: 255
+    t.string "email", limit: 255
+    t.string "provider", limit: 255
+    t.string "uid", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "picture"
-    t.string "token"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "refresh_token"
-    t.string "code"
-    t.string "second_email"
-    t.string "email_domain"
+    t.string "picture", limit: 255
+    t.string "token", limit: 255
+    t.string "first_name", limit: 255
+    t.string "last_name", limit: 255
+    t.string "refresh_token", limit: 255
+    t.string "code", limit: 255
+    t.string "second_email", limit: 255
+    t.string "email_domain", limit: 255
     t.integer "approvals_sent"
     t.integer "approvals_received"
     t.integer "approvals_responded_to"
@@ -128,9 +127,7 @@ ActiveRecord::Schema.define(version: 2018_08_24_211047) do
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
-    t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
-    t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
   add_foreign_key "subscription_histories", "users"

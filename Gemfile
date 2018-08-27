@@ -69,6 +69,7 @@ group :development do
   gem "binding_of_caller", ">= 0.7.1"
   gem "better_errors", ">= 0.6.0"
   gem "letter_opener"
+  gem "thor"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
   gem "listen", ">= 3.0.5", "< 3.2"

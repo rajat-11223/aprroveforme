@@ -469,6 +469,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   stripe
+  thor
   turbolinks (~> 5.1.0)
   uglifier
   web-console (>= 3.3.0)
