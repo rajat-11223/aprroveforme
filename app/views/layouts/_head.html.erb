@@ -3,7 +3,7 @@
 <!-- Set the viewport width to device width for mobile -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<% if Rails.env.production? %>
+<% if Rails.env.production? || Rails.env.staging? %>
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <% end %>
 
