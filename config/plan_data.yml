@@ -51,6 +51,10 @@ staging:
 production:
   <<: *default
   lite:
+    name: Lite
+    reviews_each_month: 2
+    reviews_each_month_in_words: 2
+    order: 1
     monthly:
       identifier: plan_DTIh8GdKV8PD3O
       price: 0
@@ -60,6 +64,10 @@ production:
       price: 0
       price_in_words: FREE
   professional:
+    name: Professional
+    reviews_each_month: 6
+    reviews_each_month_in_words: 6
+    order: 2
     monthly:
       identifier: plan_DUnWe8RyBEZrWv
       price: 200
@@ -69,6 +77,10 @@ production:
       price: 2000
       price_in_words: $20/yr
   unlimited:
+    name: Unlimited
+    reviews_each_month: 1000000
+    reviews_each_month_in_words: Unlimited
+    order: 3
     monthly:
       identifier: plan_DUnbZC2d2aIkLq
       price: 500
