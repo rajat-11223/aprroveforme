@@ -49,6 +49,7 @@ staging:
   <<: *default
 
 production:
+  <<: *default
   lite:
     monthly:
       identifier: plan_DTIh8GdKV8PD3O
@@ -56,11 +57,11 @@ production:
       identifier: plan_DUn1gBlfIf0k1K
   professional:
     monthly:
-      identifier: plan_DTIh8GdKV8PD3O
+      identifier: plan_DUnWe8RyBEZrWv
     yearly:
-      identifier: plan_DUn1gBlfIf0k1K
+      identifier: plan_DUnWg7fOWJAIOo
   unlimited:
     monthly:
-      identifier: plan_DTIh8GdKV8PD3O
+      identifier: plan_DUnbZC2d2aIkLq
     yearly:
-      identifier: plan_DUn1gBlfIf0k1K
+      identifier: plan_DUncYNajGsX5fq
