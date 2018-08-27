@@ -53,15 +53,27 @@ production:
   lite:
     monthly:
       identifier: plan_DTIh8GdKV8PD3O
+      price: 0
+      price_in_words: FREE
     yearly:
       identifier: plan_DUn1gBlfIf0k1K
+      price: 0
+      price_in_words: FREE
   professional:
     monthly:
       identifier: plan_DUnWe8RyBEZrWv
+      price: 200
+      price_in_words: $2/mo
     yearly:
       identifier: plan_DUnWg7fOWJAIOo
+      price: 2000
+      price_in_words: $20/yr
   unlimited:
     monthly:
       identifier: plan_DUnbZC2d2aIkLq
+      price: 500
+      price_in_words: $5/mo
     yearly:
       identifier: plan_DUncYNajGsX5fq
+      price: 5500
+      price_in_words: $55/yr
