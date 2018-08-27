@@ -51,16 +51,16 @@ staging:
 production:
   lite:
     monthly:
-      identifier:
+      identifier: plan_DTIh8GdKV8PD3O
     yearly:
-      identifier:
+      identifier: plan_DUn1gBlfIf0k1K
   professional:
     monthly:
-      identifier:
+      identifier: plan_DTIh8GdKV8PD3O
     yearly:
-      identifier:
+      identifier: plan_DUn1gBlfIf0k1K
   unlimited:
     monthly:
-      identifier:
+      identifier: plan_DTIh8GdKV8PD3O
     yearly:
-      identifier:
+      identifier: plan_DUn1gBlfIf0k1K
