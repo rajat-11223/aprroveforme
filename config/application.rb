@@ -82,5 +82,9 @@ module Workflow
     config.assets.version = '2.0'
 
     config.google_verification = "google16deb60cae23dff7"
+
+    require Rails.root.join("lib/country_block")
+
+    config.middleware.insert_before ActionDispatch::Static, CountryBlock::App
   end
 end
