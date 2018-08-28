@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  include RedirectUnlessOnProperDomain
   include TurbolinksCacheControl
 
   helper_method :current_user

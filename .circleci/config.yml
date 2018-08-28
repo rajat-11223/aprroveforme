@@ -30,6 +30,8 @@ jobs:
         STRIPE_PUBLISHABLE_KEY: pk_test_KHAbpzE07JuTR3kJpviPpnZT
         STRIPE_SECRET_KEY: sk_test_3csz1Gmr5UQUIsGovXbNPvUE
         COUNTRY_BLOCK_REDIRECT_URL: /blocked_country
+        APP_HOST: approveforme.lvh.me:5000
+        APP_DOMAIN: http://approveforme.lvh.me:5000/
         CI: true
 
     steps:
