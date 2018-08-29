@@ -1,5 +1,5 @@
 <% case approver.status %>
-<% when "Approved" %>
+<% when "approved" %>
   <div class="grid-x">
     <div class="large-6 large-offset-3 cell">
         <div class="callout small text-center item action-past">
@@ -9,7 +9,7 @@
     </div>
   </div>
 
-<% when "Declined" %>
+<% when "declined" %>
   <div class="grid-x">
     <div class="large-6 large-offset-3 cell">
         <div class="callout small text-center item action-past">
@@ -52,8 +52,8 @@
 
     <div class="grid-x">
       <div class="cell auto text-center">
-        <%= f.submit "Approved", class: "button approve", name: "approval[approver][status]", value: "Approved" %>
-        <%= f.submit "Declined", class: "button decline", name: "approval[approver][status]", value: "Declined", style: "margin-left: 10px;" %>
+        <%= f.submit "Approved", class: "button approve", name: "approval[approver][status]", value: "approved" %>
+        <%= f.submit "Declined", class: "button decline", name: "approval[approver][status]", value: "declined", style: "margin-left: 10px;" %>
       </div>
     </div>
   <% end %>

@@ -2,7 +2,7 @@
   include ActionView::Helpers::DateHelper
   include CreationDateScopes
 
-  has_many :approvers, dependent: :destroy, inverse_of: :approval
+  has_many :approvers, dependent: :destroy, inverse_of: :approval, autosave: true
   has_many :tasks, dependent: :destroy
 
   validates :title, presence: true

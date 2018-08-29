@@ -437,7 +437,7 @@
 
                         Hi <%= @approver.name %>, <br><br>
 
-						<%= @owner.name %> has marked you as a <%= @approver.required.camelize(:lower) %> reviewer and has requested your approval of
+						<%= @owner.name %> has marked you as a <%= @approver.required %> reviewer and has requested your approval of
 						<%= link_to @approval.title, "#{approval_url(@approval)}&?code=#{@approver.code}" %>.<br>
                         </td>
                     </tr>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_24_211047) do
+ActiveRecord::Schema.define(version: 2018_08_29_024936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,14 +31,14 @@ ActiveRecord::Schema.define(version: 2018_08_24_211047) do
   end
 
   create_table "approvers", id: :serial, force: :cascade do |t|
-    t.string "email", limit: 255
-    t.string "name", limit: 255
-    t.string "required", limit: 255
-    t.string "status", limit: 255
+    t.string "email", null: false
+    t.string "name", null: false
+    t.string "required", default: "required", null: false
+    t.string "status", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "approval_id"
-    t.text "comments"
+    t.integer "approval_id", null: false
+    t.text "comments", default: "", null: false
     t.string "code", limit: 255
   end
 
