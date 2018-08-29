@@ -18,21 +18,7 @@ class Approver < ApplicationRecord
     self.code = SecureRandom.alphanumeric(50)
   end
 
-  scope :for_email, -> (*emails) do
-    emails = Array(emails).compact.map(&:downcase)
-    return Approver.none if emails.empty?
-    result = all
-    emails.each.with_index do |email, index|
-      result =
-        if index.zero?
-          result.where(email: email)
-        else
-          result.or(Approver.where(email: email))
-        end
-    end
-    result
-  end
-
+  scope :for_email, -> (*emails) { where(email: Array(emails).compact.map(&:downcase)) }
   scope :by_user, -> (user) { for_email(*user.all_emails) }
 
   scope :required, -> { where(required: "required") }
