@@ -14,7 +14,6 @@ ApproveForMe.google.createFilePicker = ->
 
 # A simple callback implementation.
 ApproveForMe.google.pickerCallback = (data) ->
-  url = "nothing"
   if data[google.picker.Response.ACTION] == google.picker.Action.PICKED
     doc = data[google.picker.Response.DOCUMENTS][0]
     url = doc[google.picker.Document.URL]
@@ -23,21 +22,21 @@ ApproveForMe.google.pickerCallback = (data) ->
     type = doc.type
     embed = doc[google.picker.Document.EMBEDDABLE_URL]
 
-  message = "<input id=\"approval_link\" name=\"approval[link]\" type=\"hidden\" value=\"#{url}\">"
-  message = "#{message} <input id=\"approval_embed\" name=\"approval[embed]\" type=\"hidden\" value=\"#{embed}\">"
-  message = "#{message} <input id=\"approval_link_title\" name=\"approval[link_title]\" type=\"hidden\" value=\"#{title}\">"
-  message = "#{message} <input id=\"approval_link_id\" name=\"approval[link_id]\" type=\"hidden\" value=\"#{id}\">"
-  message = "#{message} <input id=\"approval_link_type\" name=\"approval[link_type]\" type=\"hidden\" value=\"#{type}\">"
-  # add HTML around this for title
-  message = "#{message} <p class=\"form-file-name\">Filename: \"#{title}\"</p>"
+    document.getElementById("approval_link").value = url
+    document.getElementById("approval_embed").value = embed
+    document.getElementById("approval_link_title").value = title
+    document.getElementById("approval_link_id").value = id
+    document.getElementById("approval_link_type").value = type
 
-  document.getElementById("result").innerHTML = message
-  document.getElementById("file-selector").text = "Replace File"
+    # Update the clickable link to the right of the file selector
+    fileLink = "<a target=\"_blank\" href=\"#{url}\">#{title}</a>"
+    document.getElementById("link-to-file").innerHTML = fileLink
 
-  #!-- prefill the title field with the doc title
-  myTextField = document.getElementById("result2")
-  myTextField.value = title
-  return
+    # prefill the title field with the document title
+    document.getElementById("result2").value = title
+
+    # Update file selector text
+    document.getElementById("file-selector").text = "Replace File"
 
 ApproveForMe.add_fields = (link, association, content) ->
   new_id = (new Date).getTime()

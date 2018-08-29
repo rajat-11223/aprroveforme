@@ -108,7 +108,9 @@ class ApprovalsController < ApplicationController
     deadline.present? && @approval.deadline = DateTime.strptime(deadline.to_s, "%m/%d/%Y")
 
     @approval.approvers.each do |approver|
-      @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms]) if @approval.link
+      if @approval.link_id.present?
+        @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms])
+      end
       approver.generate_code
     end
 
