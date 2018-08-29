@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe Approval do
-  subject { create(:approval) }
+describe Approval, focus: true do
+  subject { build(:approval) }
 
   it 'valid' do
     expect(subject).to be_valid

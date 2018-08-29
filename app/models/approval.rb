@@ -8,7 +8,7 @@
   validates :title, presence: true
   validates :deadline, presence: true
 
-  validate :deadline_in_future
+  validate :deadline_in_future, on: :create
   validate :require_one_approver
   validate :require_link
 

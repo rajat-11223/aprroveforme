@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Create Approval", js: true, focus: true do
+describe "Create Approval", js: true do
   let(:user) { create(:user, :with_subscription) }
 
   before do
