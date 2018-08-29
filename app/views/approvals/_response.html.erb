@@ -3,7 +3,7 @@
   <div class="grid-x">
     <div class="large-6 large-offset-3 cell">
         <div class="callout small text-center item action-past">
-          <h5>You have approved. <img src="/assets/approved.png"></h5>
+          <h5>You have approved. <%= image_tag("approved.png") %></h5>
           <p><button class="button" data-open="approvalModal">Update Response</button></p>
       </div>
     </div>
@@ -13,7 +13,7 @@
   <div class="grid-x">
     <div class="large-6 large-offset-3 cell">
         <div class="callout small text-center item action-past">
-          <h5>You have declined. <img src="/assets/declined.png"></h5>
+          <h5>You have declined. <%= image_tag("declined.png") %></h5>
           <p><button class="button" data-open="approvalModal">Update Response</button></p>
       </div>
     </div>
@@ -23,7 +23,7 @@
   <div class="grid-x">
     <div class="large-6 large-offset-3 cell">
         <div class="callout small text-center item action-past">
-          <h5><%= approver.approval.user.name %> has requested your approval. <img src="/assets/action.png"></h5>
+          <h5><%= approver.approval.user.name %> has requested your approval. <%= image_tag("action.png") %></h5>
           <p><button class="button" data-open="approvalModal">Respond</button></p>
       </div>
     </div>
