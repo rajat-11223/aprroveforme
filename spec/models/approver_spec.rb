@@ -41,4 +41,40 @@ describe Approver do
       expect(subject.email).to eq("uppercase@email.com")
     end
   end
+
+  describe "scopes" do
+    let!(:approval) { create(:approval) }
+
+    context "with 0 emails" do
+      it '.for_email' do
+        result = Approver.for_email(nil)
+        expect(result).to eq([])
+
+        expect(Approver.count).to be >= 1
+      end
+    end
+
+    context "with one emails" do
+      let(:approver) { create(:approver, approval: approval, email: "ab@cd.com") }
+
+      it '.for_email' do
+        result = Approver.for_email("ab@cd.com")
+        expect(result).to eq([approver])
+
+        expect(Approver.count).to be >= 2
+      end
+    end
+
+    context "when two emails" do
+      let(:approver_two) { create(:approver, approval: approval, email: "ef@gh.com") }
+      let(:approver) { create(:approver, approval: approval, email: "ab@cd.com") }
+
+      it '.for_email' do
+        result = Approver.for_email("ab@cd.com", "ef@gh.com")
+        expect(result).to eq([approver, approver_two])
+
+        expect(Approver.count).to be >= 3
+      end
+    end
+  end
 end

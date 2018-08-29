@@ -14,4 +14,10 @@ describe User do
     subject.email = nil
     expect(subject).to_not be_valid
   end
+
+  it '#all_emails' do
+    user = build_stubbed(:user, email: "ab@cd.com", second_email: "ef@gh.com")
+
+    expect(user.all_emails).to eq(["ab@cd.com", "ef@gh.com"])
+  end
 end

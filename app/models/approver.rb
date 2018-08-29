@@ -17,19 +17,22 @@ class Approver < ApplicationRecord
     self.code = SecureRandom.alphanumeric(50)
   end
 
-  scope :for_email, -> (email_one, email_two) do
-    emails = [email_one, email_two].compact.map(&:downcase)
-    case emails.length
-    when 0
-      scoped
-    when 1
-      where(email: emails[0].downcase)
-    when 2
-      where(email: emails[0]).or(Approver.where(email: emails[1]))
+  scope :for_email, -> (*emails) do
+    emails = Array(emails).compact.map(&:downcase)
+    return Approver.none if emails.empty?
+    result = all
+    emails.each.with_index do |email, index|
+      result =
+        if index.zero?
+          result.where(email: email)
+        else
+          result.or(Approver.where(email: email))
+        end
     end
+    result
   end
 
-  scope :by_user, -> (user) { for_email(user.email, user.second_email) }
+  scope :by_user, -> (user) { for_email(*user.all_emails) }
 
   scope :required, -> { where(required: "Required") }
   scope :optional, -> { where(required: "Optional") }
