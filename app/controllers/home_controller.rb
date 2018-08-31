@@ -13,7 +13,7 @@ class HomeController < ApplicationController
   def dashboard
     authorize! :read, Approval.new(owner: current_user.id)
 
-    base_approvals = Approval.for_owner(current_user.id)
+    base_approvals = current_user.approvals
 
     @my_approvals = base_approvals.deadline_is_in_future
     @my_completed_approvals = base_approvals.deadline_is_past
@@ -25,7 +25,7 @@ class HomeController < ApplicationController
     # @any_approvers = Approver.where("email = ? or email = ? ", current_user.email.downcase, current_user.second_email)
 
     user_subscription_date = current_user.subscription.plan_date
-    @user_approvals = Approval.for_owner(current_user.id).from_this_month
+    @user_approvals = current_user.approvals.from_this_month
   end
 
   def pending_approvals
@@ -38,13 +38,13 @@ class HomeController < ApplicationController
   def open_approvals
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @my_approvals = Approval.for_owner(current_user.id).deadline_is_in_future
+    @my_approvals = current_user.approvals.deadline_is_in_future
   end
 
   def past_documents
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @my_completed_approvals = Approval.for_owner(current_user.id).deadline_is_past
+    @my_completed_approvals = current_user.approvals.deadline_is_past
   end
 
   def past_approvals

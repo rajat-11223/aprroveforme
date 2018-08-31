@@ -55,7 +55,7 @@
               <a href="mailto:<%= user.email %>" target="_blank"><%= user.email %></a>
             </td>
             <td><%= user.created_at.to_date %></td>
-            <td><%= Approval.for_owner(user.id).count %></td>
+            <td><%= user.approvals.count %></td>
             <td><%= Approver.by_user(user).count %></td>
             <td><%= user.updated_at.to_date %></td>
             <td><%= link_to_if(user != current_user, "delete", user_path(user), data: { confirm: "Are you sure you want to delete '#{user.name}'?" },

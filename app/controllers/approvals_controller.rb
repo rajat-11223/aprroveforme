@@ -41,7 +41,7 @@ class ApprovalsController < ApplicationController
       redirect_to pricing_path, notice: 'Please subscribe to a plan to continue creating approvals'
     end
 
-    recent_approvals_count = Approval.from_this_month.for_owner(current_user.id).count
+    recent_approvals_count = current_user.approvals.from_this_month.count
 
     if recent_approvals_count >= plan_responses_limit
       redirect_to pricing_path,
