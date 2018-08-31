@@ -63,7 +63,7 @@ class SessionsController < ApplicationController
         redirect_to new_approval_url
       else
         if user.subscription.plan_name == "lite"
-          redirect_to pricing_url
+          redirect_to dashboard_home_index_path
         else
           redirect_to_redirection_path
         end

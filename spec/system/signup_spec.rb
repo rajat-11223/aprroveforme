@@ -17,7 +17,7 @@ describe "Signup" do
   it 'enables me to signup' do
     visit root_path
     click_link "Sign Up Free"
-    expect(page).to have_current_path(pricing_path)
+    expect(page).to have_current_path(dashboard_home_index_path)
 
     user = User.find_by(uid: 123545)
 
@@ -38,7 +38,7 @@ describe "Signup" do
     it 'enables me to sign up and sets picture to gravatar' do
       visit root_path
       click_link "Sign Up Free"
-      expect(page).to have_current_path(pricing_path)
+      expect(page).to have_current_path(dashboard_home_index_path)
 
       user = User.find_by(uid: 123545)
       expect(user.picture).to include('gravatar')

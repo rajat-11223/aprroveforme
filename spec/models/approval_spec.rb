@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Approval, focus: true do
+describe Approval do
   subject { build(:approval) }
 
   it 'valid' do
