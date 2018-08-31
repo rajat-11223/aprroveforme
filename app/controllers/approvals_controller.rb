@@ -37,6 +37,14 @@ class ApprovalsController < ApplicationController
   # GET /approvals/new
   # GET /approvals/new.json
   def new
+    Rails.logger.info("Creating New Approval")
+    Rails.logger.info("Name")
+    Rails.logger.info(current_user.name)
+    Rails.logger.info("Customer")
+    Rails.logger.info(current_user.payment_customer)
+    Rails.logger.info("Subscription")
+    Rails.logger.info(current_user.subscription.inspect)
+
     if !current_user.subscription.present?
       redirect_to pricing_path, notice: 'Please subscribe to a plan to continue creating approvals'
     end
@@ -56,6 +64,9 @@ class ApprovalsController < ApplicationController
     end
 
     # if the doc is being opened from Google drive, pre-populate
+    Rails.logger.info("Checking if from Google Drive")
+    Rails.logger.info("Session state")
+    Rails.logger.info(session[:state].inspect)
     if session[:state] and (session[:state]['action'] == 'open')
       current_user.refresh_google
       api_client = current_user.google_auth
@@ -205,7 +216,8 @@ class ApprovalsController < ApplicationController
   end
 
   def plan_responses_limit
-    Plans::List[current_user.subscription.plan_name].dig("reviews_each_month")
+    plan_name = current_user.subscription.plan_name.presence || "lite"
+    Plans::List[plan_name].dig("reviews_each_month")
   end
 
   def require_user_or_code!
