@@ -42,6 +42,7 @@ class Deploy < Thor
 
     dropdb local_db
     heroku "pg:pull DATABASE_URL #{local_db}", :production
+    `bundle exec rails chore:clean_up_stripe_customers`
   end
 
   desc "copy_stg_to_local", "copies staging data to local"
@@ -50,6 +51,7 @@ class Deploy < Thor
 
     dropdb local_db
     heroku "pg:pull DATABASE_URL #{local_db}", :staging
+    `bundle exec rails chore:clean_up_stripe_customers`
   end
 
   desc "snap_prod", "take a production snapshot"
@@ -85,6 +87,7 @@ class Deploy < Thor
       run_with_maintenance(stage, with_maintenance) do
         run "git push #{force} #{stage} #{current_branch}:master"
         heroku_run "rails db:migrate", stage
+        heroku_run "rails chore:clean_up_stripe_customers", stage
 
         # heroku_run "rails temporary:migrate_goal_status", stage
       end
