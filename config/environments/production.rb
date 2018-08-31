@@ -63,7 +63,9 @@ Workflow::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => ENV["APP_HOST"] }
+  config.action_mailer.default_url_options = { host: ENV["APP_HOST"] }
+  config.action_mailer.asset_host = ENV["APP_HOST"]
+
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
   config.action_mailer.delivery_method = :smtp
@@ -80,6 +82,7 @@ Workflow::Application.configure do
     password: ENV["SENDGRID_PASSWORD"],
     :enable_starttls_auto => true
   }
+
   config.eager_load = true
 
 
