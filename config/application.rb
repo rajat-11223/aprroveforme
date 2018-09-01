@@ -14,6 +14,9 @@ module Workflow
     ENV["ROLES"] ||= "admin user VIP"
     ENV["GOOGLE_SCOPE"] ||= "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install"
 
+    SENDGRID_API_KEY = ENV.fetch("SENDGRID_API_KEY")
+    SENDGRID_CLIENT  = SendGrid::API.new(api_key: SENDGRID_API_KEY).client
+
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.test_framework :rspec
