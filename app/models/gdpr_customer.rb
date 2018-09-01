@@ -1,0 +1,2 @@
+class GdprCustomer < ApplicationRecord
+end

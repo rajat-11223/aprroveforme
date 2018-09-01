@@ -1,4 +1,5 @@
 Workflow::Application.routes.draw do
+  post 'form_submission/create', as: :form_submission
   get "pricing", as: :pricing, to: "pricing#index"
 
   resources :approvals do

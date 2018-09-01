@@ -1,7 +1,41 @@
 <div class="grid-x">
-  <div class="large-12 cell text-center">
-    <h3>Blocked Country</h3>
+  <div class="cell auto text-center">
+    <h2>Aww snap.</h2>
     <p>
-      <strong>I'm sorry but we're not GDPR compliant. Want to know when we are?</strong>
+      <% future = 7.months.from_now %>
+      <strong>ApproveForMe is not GDPR-compliant... yet.</strong><br />
+      Complete the fields below and we'll notify you when we are GDPR-compliant.
+      Estimated date is <%= "#{Date::MONTHNAMES[future.month]} #{future.year}" %>.
+  </div>
+</div>
+
+<%= form_tag form_submission_path, method: :post, remote: true do %>
+  <div class="grid-x grid-padding-x">
+      <div class="medium-6 cell text-center">
+        <%= label_tag :email %>
+        <%= text_field_tag :email, "", placeholder: "Email Address"  %>
+      </div>
+      <div class="medium-6 cell text-center">
+        <%= label_tag :search, "What search brought you to this page?" %>
+        <%= text_field_tag :search, "", placeholder: "What brought you here?" %>
+      </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="cell auto text-center">
+      <%= submit_tag "Notify me!" %>
+    </div>
+  </div>
+<% end %>
+
+<div class="grid-x grid-padding-x">
+  <div class="cell auto text-center">
+    <p>
+      By clicking "Submit," you are accepting to receive up to three announcement
+      emails from ApproveForMe when the service is GDPR compliant.
+    </p>
+    <p>
+      You can easily unsubscribe from our mailing list at any time by clicking on
+      the unsubscribe links at the bottom of each of our emails.
+    </p>
   </div>
 </div>
