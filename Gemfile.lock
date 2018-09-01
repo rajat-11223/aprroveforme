@@ -327,6 +327,7 @@ GEM
     rspec_junit_formatter (0.4.1)
       rspec-core (>= 2, < 4, != 2.12.0)
     ruby_dep (1.5.0)
+    ruby_http_client (3.3.0)
     rubyzip (1.2.1)
     rush (0.6.8)
       session
@@ -340,6 +341,9 @@ GEM
     selenium-webdriver (3.14.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
+    sendgrid-ruby (5.2.0)
+      ruby_http_client (~> 3.2)
+      sinatra (>= 1.4.7, < 3)
     session (3.2.0)
     signet (0.6.0)
       addressable (~> 2.3)
@@ -463,6 +467,7 @@ DEPENDENCIES
   rspec_junit_formatter
   sass-rails
   selenium-webdriver
+  sendgrid-ruby
   simple_form (>= 2.0.4)
   split
   split-analytics

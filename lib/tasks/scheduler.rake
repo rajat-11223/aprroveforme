@@ -1,17 +1,12 @@
-desc "This task is called by the Heroku scheduler add-on"
-task :update_feed => :environment do
-  puts "Updating feed..."
-  NewsFeed.update
-  puts "done."
+desc "Update stats for users"
+task update_stats: :environment do
+  User.find_each do |user|
+    User::StatUpdater.new(user).call
+    print '.'
+  end
 end
 
-task :send_reminders => :environment do
-  User.send_reminders
-end
-
-desc "Update admin stats"
-task :update_stats => :environment do
-	User.all.each do |user|
-		user.update_stats
-	end
+desc "Sync Mail Contacts to our marketing system"
+task sync_mail_contacts: :environment do |t|
+  MailContacts::Sync.all!
 end

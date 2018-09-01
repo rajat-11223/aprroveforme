@@ -59,19 +59,6 @@ class User < ApplicationRecord
     end
   end
 
-  def update_stats
-    self.email_domain = self.email.split("@").try(:last)
-    self.approvals_sent = self.approvals.count
-    self.approvals_received = Approver.by_user(self).count
-    self.approvals_responded_to = Approver.by_user(self).approved_or_declined.count
-    self.approvals_sent_30 = self.approvals.from_this_month.count
-    self.approvals_received_30 = Approver.by_user(self).from_this_month.count
-    self.approvals_responded_to_30 = Approver.by_user(self).approved_or_declined.from_this_month.count
-    self.last_sent_date = self.approvals.last.try(:created_at)
-
-    self.save
-  end
-
   def payment_customer
     return unless customer_id.to_s.start_with?("cus_")
 

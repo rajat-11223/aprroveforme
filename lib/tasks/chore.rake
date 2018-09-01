@@ -1,5 +1,5 @@
 namespace :chore do
-  desc "This task clears the stripe customer_id and subscription_id for staging and development"
+  desc "Clears the stripe customer_id and subscription_id for staging and development"
   task :clean_up_stripe_customers => :environment do
     if Rails.env.production?
       puts "NOT RUNNING!!!"
