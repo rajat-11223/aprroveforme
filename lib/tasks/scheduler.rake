@@ -1,7 +1,8 @@
-desc "Update admin stats"
+desc "Update stats for users"
 task update_stats: :environment do
   User.find_each do |user|
-   user.update_stats
+    User::StatUpdater.new(user).call
+    print '.'
   end
 end
 
