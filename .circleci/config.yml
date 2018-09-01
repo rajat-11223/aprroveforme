@@ -32,6 +32,7 @@ jobs:
         COUNTRY_BLOCK_REDIRECT_URL: /blocked_country
         APP_DOMAIN: approveforme.lvh.me:5000
         APP_HOST: http://approveforme.lvh.me:5000/
+        SENDGRID_API_KEY: ""
         CI: true
 
     steps:
