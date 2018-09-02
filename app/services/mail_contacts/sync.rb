@@ -7,7 +7,7 @@ module MailContacts
     def initialize(users, sendgrid_client: nil, batch_size: nil)
       @users = users
       @batch_size = batch_size || 1000
-      @sendgrid_client = sendgrid_client || Application::SENDGRID_CLIENT
+      @sendgrid_client = sendgrid_client || Workflow::Application::SENDGRID_CLIENT
     end
 
     def sync!
