@@ -37,14 +37,6 @@ class ApprovalsController < ApplicationController
   # GET /approvals/new
   # GET /approvals/new.json
   def new
-    Rails.logger.info("Creating New Approval")
-    Rails.logger.info("Name")
-    Rails.logger.info(current_user.name)
-    Rails.logger.info("Customer")
-    Rails.logger.info(current_user.payment_customer)
-    Rails.logger.info("Subscription")
-    Rails.logger.info(current_user.subscription.inspect)
-
     if !current_user.subscription.present?
       redirect_to pricing_path, notice: 'Please subscribe to a plan to continue creating approvals'
     end
@@ -64,41 +56,11 @@ class ApprovalsController < ApplicationController
     end
 
     # if the doc is being opened from Google drive, pre-populate
-    Rails.logger.info("Checking if from Google Drive")
-    Rails.logger.info("Session state")
-    Rails.logger.info(session[:state].inspect)
-    if session[:state] and (session[:state]['action'] == 'open')
-      current_user.refresh_google
-      api_client = current_user.google_auth
-      file_id = (session[:state]['exportIds'][0])
-
-      if file_id
-        file = file_metadata(api_client, file_id)
-        if file
-          @approval.link_title = file.title
-          @approval.embed = file.embedLink
-          @approval.link_id = file.id
-          @approval.link_type = file.mimeType
-          @approval.link = file.alternateLink
-        end
-      end
-    end
+    Google::PrepopulateApprovalFromDrive.new(session, @approval, current_user).call
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @approval }
-    end
-  end
-
-  def file_metadata(client, file_id)
-    @drive = client.discovered_api('drive', 'v2')
-    result = client.execute(
-        :api_method => @drive.files.get,
-        :parameters => { 'fileId' => file_id })
-    if result.status == 200
-      return result.data
-    else
-      puts "An error occurred: #{result.data['error']['message']}"
     end
   end
 
