@@ -32,6 +32,7 @@ class SessionsController < ApplicationController
             User::CreateFromOmniauth.new(auth).call
 
     Rails.logger.debug("Sync User with google info")
+    User::LogLogin.new(user).call
     Google::SyncUser.new(user).call(auth)
 
     session[:user_id] = user.id

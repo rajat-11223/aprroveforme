@@ -42,6 +42,7 @@ describe "Signup" do
 
       user = User.find_by(uid: 123545)
       expect(user.picture).to include('gravatar')
+      expect(user.last_login_at).to_not be_nil
     end
   end
 
