@@ -36,7 +36,9 @@ Workflow::Application.routes.draw do
   get "/#{Rails.application.config.google_verification}.html",
       to: proc { |env| [200, {}, ["google-site-verification: #{Rails.application.config.google_verification}.html"]] }
 
-  mount Split::Dashboard, :at => 'split'
+  constraints SignedIn.new { |user| user.user.has_role?(:admin) } do
+    mount Split::Dashboard, at: 'split'
+  end
 
   resources :users, :only => [:index, :show, :edit, :update ]
 
