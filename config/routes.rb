@@ -28,11 +28,6 @@ Workflow::Application.routes.draw do
     end
   end
 
-  # get 'payments_methods' => 'payments#index', as: :payment_methods
-  # get 'payments_method/update' => 'payments#update', as: :payment_method_update
-  # post 'payments' => 'payments#create', as: :payment
-  # get 'payments/confirm' => 'payments#confirm', as: :confirm_payment
-
   get "/#{Rails.application.config.google_verification}.html",
       to: proc { |env| [200, {}, ["google-site-verification: #{Rails.application.config.google_verification}.html"]] }
 
@@ -40,7 +35,9 @@ Workflow::Application.routes.draw do
     mount Split::Dashboard, at: 'split'
   end
 
-  resources :users, :only => [:index, :show, :edit, :update ]
+  get "/bomb", to: "errors#bomb"
+
+  resources :users, only: [:index, :show, :edit, :update]
 
   get '/auth/:provider/callback' => 'sessions#create', as: :oauth_callback
   get '/signin' => 'sessions#new', :as => :signin
@@ -50,7 +47,7 @@ Workflow::Application.routes.draw do
 
   resources :home do
     collection do
-      get 'dashboard'
+      get :dashboard
       get :pending_approvals
       get :open_approvals
       get :past_documents
