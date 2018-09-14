@@ -40,10 +40,10 @@
         <%- if @customer.sources.find{ |s| s.id ==  @customer.default_source }.id == card.id %>
           <%= content_tag :span, 'Default', class: "button default right" %>
         <% else %>
-          <%= link_to 'Set Default', set_default_payment_method_account_path(id: card.id), class: "button default right" %>
+          <%= link_to 'Set Default', set_default_payment_method_account_path(id: card.id), method: :patch, class: "button default right" %>
         <% end %>
 
-        <%= link_to delete_payment_method_account_path(id: card.id), class: "button alert right" do %>
+        <%= link_to delete_payment_method_account_path(id: card.id), method: :delete, class: "button alert right" do %>
           <i class="fas fa-trash"></i>
         <% end %>
       </div>
