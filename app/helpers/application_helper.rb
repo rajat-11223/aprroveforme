@@ -69,15 +69,11 @@ module ApplicationHelper
   end
 
   def button_to_add_fields(name, f, association)
-    #begin f.object.class.reflect_on_association(association).klass.new
     new_object = f.object.class.reflect_on_association(association).klass.new
-    #rescue
-    # 	new_object = f.object.approvers.first.class.reflect_on_association(association).klass.new
-    # end
-    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-      render(association.to_s.singularize + "_form", :f => builder)
+    fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
+      render("#{association.to_s.singularize}_form", f: builder)
     end
-    button_to_function(name, "ApproveForMe.add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", :class=>"button secondary small")
+    button_to_function(name, %( ApproveForMe.add_fields(this, "#{association}", "#{escape_javascript(fields)}")), class: "button secondary small")
   end
 
   def button_to_function(name, function=nil, html_options={})
@@ -85,9 +81,17 @@ module ApplicationHelper
         "See http://guides.rubyonrails.org/working_with_javascript_in_rails.html#unobtrusive-javascript"
     ActiveSupport::Deprecation.warn message
 
-    onclick = "#{"#{html_options[:onclick]}; " if html_options[:onclick]}#{function};"
+    onclick = ""
+    build_js_function(onclick, html_options[:onclick])
+    build_js_function(onclick, function)
 
-    tag(:input, html_options.merge(:type => "button", :value => name, :onclick => onclick))
+    tag(:input, html_options.merge(type: "button", value: name, onclick: onclick))
+  end
+
+  def build_js_function(str, func)
+    return unless func.present?
+
+    str << "#{func};"
   end
 
   def sortable(column, title = nil)
