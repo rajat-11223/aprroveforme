@@ -99,6 +99,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
+    daemons (1.2.6)
     debug_inspector (0.0.3)
     delayed_job (4.1.5)
       activesupport (>= 3.0, < 5.3)
@@ -432,6 +433,7 @@ DEPENDENCIES
   chromedriver-helper
   codacy-coverage
   coffee-rails
+  daemons
   delayed_job_active_record
   dotenv-rails
   dynamic_form
