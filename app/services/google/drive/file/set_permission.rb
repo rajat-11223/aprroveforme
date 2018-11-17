@@ -45,10 +45,9 @@ module Google
           when "invalidSharingRequest"
             raise InvalidGoogleUser, "You tried to add #{permission_config["value"]}. Since there is no Google account associated with this email address, we have made this document readable by non-Google users."
           else
+            Rails.logger.error "[Error] occurred when setting permissions: #{message}"
             raise reason, message
           end
-
-          Rails.logger.error "[Error] occurred when setting permissions: #{message}"
         end
       end
     end
