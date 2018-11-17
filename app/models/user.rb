@@ -38,25 +38,24 @@ class User < ApplicationRecord
 
   def refresh_google
     # TODO: Move this into a service
-    connection = Faraday.new('https://accounts.google.com/o/oauth2/token') do |conn|
+    connection = Faraday.new('https://www.googleapis.com/oauth2/v4/token') do |conn|
       conn.response :json, :content_type => /\bjson$/
       conn.adapter Faraday.default_adapter
     end
 
     response = connection.post do |req|
       req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      req.body = { client_id: ENV['GOOGLE_ID'],
+      req.body = URI.encode_www_form({ client_id: ENV['GOOGLE_ID'],
                    client_secret: ENV['GOOGLE_SECRET'],
                    refresh_token: self.refresh_token,
                    grant_type: 'refresh_token'
-                 }.to_json
+                 })
     end
 
     if response.status == 200
       self.update_attributes token: response.body['access_token']
-      self.save
     else
-      Rails.logger.error("Unable to refresh google_oauth2 authentication token.")
+      Rails.logger.error("Unable to refresh google_oauth2 authentication token for User(id=#{self.id}).")
       Rails.logger.error("Refresh token response body: #{response.body}")
     end
   end
