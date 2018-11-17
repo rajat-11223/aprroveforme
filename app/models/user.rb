@@ -17,21 +17,23 @@ class User < ApplicationRecord
   end
 
   def google_auth
-    # Create a new API client & load the Google Drive API
-    client = GoogleApiWrapper.new
-    client.authorization.client_id = ENV['GOOGLE_ID']
-    client.authorization.client_secret = ENV['GOOGLE_SECRET']
-    client.authorization.scope = ENV['GOOGLE_SCOPE']
-    client.authorization.redirect_uri = ENV['REDIRECT_URI']
-    client.authorization.code = self.code.chomp || ""
-    client.authorization.access_token = self.token
-    client.authorization.refresh_token = self.refresh_token
+    @google_auth_client ||= begin
+      # Create a new API client & load the Google Drive API
+      client = GoogleApiWrapper.new
+      client.authorization.client_id = ENV['GOOGLE_ID']
+      client.authorization.client_secret = ENV['GOOGLE_SECRET']
+      client.authorization.scope = ENV['GOOGLE_SCOPE']
+      client.authorization.redirect_uri = ENV['REDIRECT_URI']
+      client.authorization.code = self.code.chomp || ""
+      client.authorization.access_token = self.token
+      client.authorization.refresh_token = self.refresh_token
 
-    if client.authorization.refresh_token && client.authorization.expired?
-      client.authorization.fetch_access_token!
+      if client.authorization.refresh_token && client.authorization.expired?
+        client.authorization.fetch_access_token!
+      end
+
+      client
     end
-
-    client
   end
 
   def refresh_google
