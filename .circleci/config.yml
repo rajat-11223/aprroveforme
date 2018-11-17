@@ -107,12 +107,13 @@ jobs:
       # Save test results for timing analysis
       - store_test_results:
           path: test_results
+
 workflows:
   version: 2
-  nightly:
+  weekly:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 0 * * 0"
           filters:
             branches:
               only:
