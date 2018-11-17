@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_121900) do
+ActiveRecord::Schema.define(version: 2018_11_17_155908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(version: 2018_09_07_121900) do
     t.string "link_title", limit: 255
     t.string "link_id", limit: 255
     t.string "link_type", limit: 255
-    t.string "perms", limit: 255
+    t.string "drive_perms", limit: 255, default: "reader"
+    t.boolean "drive_public", default: false, null: false
   end
 
   create_table "approvers", id: :serial, force: :cascade do |t|

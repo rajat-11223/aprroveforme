@@ -48,7 +48,7 @@ class ApprovalsController < ApplicationController
         notice: "Please upgrade your plan to continue creating approvals. You have used #{recent_approvals_count} of #{plan_responses_limit}"
     end
 
-    @approval = Approval.new(perms: "reader", owner: current_user.id)
+    @approval = Approval.new(drive_perms: "reader", owner: current_user.id)
     authorize! :create, @approval
 
     if @approval.approvers.empty?
@@ -77,22 +77,35 @@ class ApprovalsController < ApplicationController
     @approval.owner = current_user.id
     authorize! :create, @approval
 
-    deadline = params.dig(:approval, :deadline).match(/\d{2}\/\d{2}\/\d{4}/)
-    deadline.present? && @approval.deadline = DateTime.strptime(deadline.to_s, "%m/%d/%Y")
+    @approval.deadline = parse_deadline
 
-    @approval.approvers.each do |approver|
-      if @approval.link_id.present?
-        @approval.update_permissions(@approval.link_id, current_user, approver, params[:approval][:perms])
+    google_drive_file_id = @approval.link_id
+
+    user_permission_updates =
+      @approval.approvers.map do |approver|
+        approver.generate_code
+        approver.save
+
+        if google_drive_file_id.present? && !make_public?
+          Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user, approver: approver, role: google_drive_permission)
+        else
+          nil
+        end
       end
-      approver.generate_code
-    end
+
+    success_notice = "Approval was successfully created."
+    make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user, role: google_drive_permission)
+    resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
+
+    success_notice << " #{resp[:warning]}" if resp[:warning]
 
     respond_to do |format|
       if @approval.save
         ab_finished(:approval_created)
-        format.html { redirect_to @approval, notice: 'Approval was successfully created.' }
+        format.html { redirect_to @approval, notice: success_notice }
         format.json { render json: @approval, status: :created, location: @approval }
         UserMailer.my_new_approval(@approval).deliver_later
+
         @approval.approvers.each do |approver|
           UserMailer.new_approval_invite(@approval, approver).deliver_later
         end
@@ -109,45 +122,51 @@ class ApprovalsController < ApplicationController
     @approval = Approval.includes(:approvers).find(params[:id])
 
     # if an approver is approving
+    # TODO: Move this to another route
     if params.dig(:approval, :approver)
       authorize! :approve, @approval
       @approver = @approval.approvers.by_user(current_user).first
       @approver.update_attributes! status: params.dig(:approval, :approver, :status),
                                    comments: params.dig(:approval, :approver, :comments)
 
-      # @approval.tasks << Task.new(params[:approval][:tasks])
-      #params[:approval][:approver][:tasks].each do |task|
-      #  @approver.tasks << task
-      #end
       ab_finished(:approver_approved)
       UserMailer.approval_update(@approver).deliver_later
 
       UserMailer.completed_approval(@approval).deliver_later if @approval.complete?
 
-      redirect_to @approval, notice: 'Approval submitted'
+      redirect_to @approval, notice: "Approval submitted"
     else
       authorize! :update, @approval
 
-      if params[:approval][:deadline].match(/\d{2}\/\d{2}\/\d{4}/)
-        params[:approval][:deadline] = DateTime.strptime(params.dig(:approval, :deadline), "%m/%d/%Y")
-      end
-
       respond_to do |format|
-        if @approval.update_attributes(approval_params)
+        if @approval.update_attributes(approval_params.merge(deadline: parse_deadline))
+          google_drive_file_id = @approval.link_id
+
           # if any new approvers, add permissions and code
-
           approvers_without_codes = @approval.approvers.select {|a| !a.code.present? }
-          approvers_without_codes.each do |approver|
-            @approval.update_permissions(@approval.link_id,
-                                         current_user,
-                                         approver, params.dig(:approval, :perms))
-            approver.generate_code
-            @approval.save
+          user_permission_updates =
+            approvers_without_codes.map do |approver|
+              approver.generate_code
+              approver.save
 
-            UserMailer.new_approval_invite(@approval, approver).deliver_later
-          end
+              UserMailer.new_approval_invite(@approval, approver).deliver_later
 
-          format.html { redirect_to @approval, notice: 'Approval was successfully updated.' }
+              if google_drive_file_id.present? && !make_public?
+                Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user, approver: approver, role: google_drive_permission)
+              else
+                nil
+              end
+            end
+
+          @approval.save
+
+          success_notice = "Approval was successfully updated."
+          make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user, role: google_drive_permission)
+          resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
+
+          success_notice << " #{resp[:warning]}" if resp[:warning]
+
+          format.html { redirect_to @approval, notice: success_notice }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -174,7 +193,7 @@ class ApprovalsController < ApplicationController
   private
 
   def approval_params
-    params.require(:approval).permit(:id,:deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :perms, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
+    params.require(:approval).permit(:id, :deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :drive_perms, :drive_public, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
   end
 
   def plan_responses_limit
@@ -188,5 +207,34 @@ class ApprovalsController < ApplicationController
     else
       require_user!
     end
+  end
+
+  def make_public?
+    approval_params[:drive_public] == "true"
+  end
+
+  def parse_deadline
+    deadline = params.dig(:approval, :deadline).match(/\d{2}\/\d{2}\/\d{4}/).to_s
+    deadline.presence && DateTime.strptime(deadline, "%m/%d/%Y")
+  end
+
+  def google_drive_permission
+    approval_params[:drive_perms]
+  end
+
+  def apply_permission_updates!(permission_updates, make_file_public:)
+    response = {}
+    permission_updates = permission_updates.dup
+    permission_updates = [ make_file_public ] if make_public?
+
+    begin
+      permission_updates.compact.map(&:call)
+    rescue Google::Drive::File::SetPermission::InvalidGoogleUser => e
+      # Since we have an invalid Google user, make the file publically accessible
+      make_file_public.call
+      response[:warning] = e.message
+    end
+
+    response
   end
 end
