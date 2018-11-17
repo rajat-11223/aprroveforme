@@ -1,4 +1,5 @@
 Workflow::Application.routes.draw do
+  mount_griddler('/incoming/email')
 
   resources :approvals do
     resources :approvers
