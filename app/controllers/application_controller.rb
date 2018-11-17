@@ -39,6 +39,19 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, notice: message
     end
 
+    def require_subscription
+      redirect_to pricing_path, notice: "Please subscribe to a plan to continue creating approvals" unless current_user.subscription.present?
+    end
+
+    def require_remaining_approvals_in_plan
+      return unless current_user
+      details = PlanDetails.new(current_user)
+      return if details.has_remaining_approvals?
+
+      redirect_to pricing_path,
+        notice: "Please upgrade your plan to continue creating approvals. You have used #{details.current_approval_count} of #{details.approval_limit_in_words.downcase} this month"
+    end
+
     def save_redirection_url!
       session[:redirection_url] = request.url
     end

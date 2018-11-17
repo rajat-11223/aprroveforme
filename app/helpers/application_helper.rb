@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def plan_responses_limit
-    Plans::List[current_user.subscription.plan_name]["reviews_each_month_in_words"]
+    PlanDetails.new(current_user).approval_limit_in_words
   end
 
   def free_plan_compare

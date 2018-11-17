@@ -11,9 +11,7 @@
     </p>
   </li>
   <li>
-    <p class="title <%= active_class([pending_approvals_home_index_path]) %>">
-      <%= link_to 'Pending Approvals', pending_approvals_home_index_path %>
-    </p>
+    <p class="title">Created Approvals:</p>
   </li>
   <li>
     <p class="title <%= active_class([open_approvals_home_index_path]) %>">
@@ -22,12 +20,20 @@
   </li>
   <li>
     <p class="title <%= active_class([past_documents_home_index_path]) %>">
-      <%= link_to 'Past Documents', past_documents_home_index_path %>
+      <%= link_to 'Complete Approvals', past_documents_home_index_path %>
+    </p>
+  </li>
+  <li>
+    <p class="title">Received Approvals:</p>
+  </li>
+  <li>
+    <p class="title <%= active_class([pending_approvals_home_index_path]) %>">
+      <%= link_to 'Waiting on Response', pending_approvals_home_index_path %>
     </p>
   </li>
   <li>
     <p class="title <%= active_class([past_approvals_home_index_path]) %>">
-      <%= link_to 'Past Approvals', past_approvals_home_index_path %>
+      <%= link_to 'Have Responded', past_approvals_home_index_path %>
     </p>
   </li>
 </ul>

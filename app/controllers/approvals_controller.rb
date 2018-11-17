@@ -2,6 +2,8 @@ class ApprovalsController < ApplicationController
   before_action :require_user!, except: [:show]
   before_action :require_user_or_code!, only: [:show]
 
+  before_action :require_subscription
+  before_action :require_remaining_approvals_in_plan, only: [:new, :create]
 
   # GET /approvals
   # GET /approvals.json
@@ -37,19 +39,10 @@ class ApprovalsController < ApplicationController
   # GET /approvals/new
   # GET /approvals/new.json
   def new
-    if !current_user.subscription.present?
-      redirect_to pricing_path, notice: 'Please subscribe to a plan to continue creating approvals'
-    end
-
-    recent_approvals_count = current_user.approvals.from_this_month.count
-
-    if recent_approvals_count >= plan_responses_limit
-      redirect_to pricing_path,
-        notice: "Please upgrade your plan to continue creating approvals. You have used #{recent_approvals_count} of #{plan_responses_limit}"
-    end
-
     @approval = Approval.new(drive_perms: "reader", owner: current_user.id)
+
     authorize! :create, @approval
+    prefill_from_template(@approval)
 
     if @approval.approvers.empty?
       3.times { @approval.approvers.build }
@@ -192,13 +185,28 @@ class ApprovalsController < ApplicationController
 
   private
 
-  def approval_params
-    params.require(:approval).permit(:id, :deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :drive_perms, :drive_public, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
+  def prefill_from_template(approval)
+    return unless params[:from_approval] && from_approval = current_user.approvals.find(params[:from_approval])
+
+    deadline_distance = from_approval.deadline - from_approval.created_at
+    deadline = Time.now + deadline_distance
+
+    template_attrs = from_approval.
+                       attributes.
+                       slice("drive_perms", "drive_public").
+                       merge(deadline: deadline)
+
+    approval.assign_attributes(template_attrs)
+
+    from_approval.approvers.each do |from_approver|
+      approval.approvers.build name: from_approver.name,
+                               email: from_approver.email,
+                               required: from_approver.required
+    end
   end
 
-  def plan_responses_limit
-    plan_name = current_user.subscription.plan_name.presence || "lite"
-    Plans::List[plan_name].dig("reviews_each_month")
+  def approval_params
+    params.require(:approval).permit(:id, :deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :drive_perms, :drive_public, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
   end
 
   def require_user_or_code!
