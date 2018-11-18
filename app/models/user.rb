@@ -70,37 +70,6 @@ class User < ApplicationRecord
     !!payment_customer
   end
 
-  # def view_docs
-  #   client = self.google_auth
-  #   drive = client.discovered_api('drive', 'v2')
-  #   page_token = nil
-  #   doc_list = []
-  #
-  #   # params
-  #   search_string = "title contains 'WhichBus'"
-  #
-  #   begin
-  #     if page_token.to_s != ''
-  #       parameters['pageToken'] = page_token
-  #     end
-  #
-  #     result = drive.list_files(q: search_string)
-  #
-  #     if result.status == 200
-  #         puts "success!"
-  #         files = result.data
-  #         #doc_list << files.items
-  #         files.items.each {|file| doc_list << file}
-  #         page_token = files.next_page_token
-  #     else
-  #         puts "An error occurred: #{result.data['error']['message']}"
-  #         page_token = nil
-  #     end
-  #   end while page_token.to_s != ''
-  #
-  #   doc_list
-  # end
-
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
