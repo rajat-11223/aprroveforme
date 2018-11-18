@@ -189,7 +189,7 @@ class ApprovalsController < ApplicationController
     return unless params[:from_approval] && from_approval = current_user.approvals.find(params[:from_approval])
 
     deadline_distance = from_approval.deadline - from_approval.created_at
-    deadline = Time.now + deadline_distance
+    deadline = (Time.now + deadline_distance).end_of_day
 
     template_attrs = from_approval.
                        attributes.

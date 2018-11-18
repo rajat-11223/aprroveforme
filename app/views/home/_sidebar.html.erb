@@ -1,39 +1,41 @@
-<div class="new-approval-button">
-  <b>
-    <%= link_to "New Approval", new_approval_path, class: "button primary create expand" %>
-  </b>
-</div>
+<div id="sidebar">
+  <div class="new-approval-button">
+    <b>
+      <%= link_to "New Approval", new_approval_path, class: "button primary create expand" %>
+    </b>
+  </div>
 
-<ul class="vertical menu">
-  <li>
-    <p class="title <%= active_class([dashboard_home_index_path]) %>">
-      <%= link_to 'Dashboard', dashboard_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title">Created Approvals:</p>
-  </li>
-  <li>
-    <p class="title <%= active_class([open_approvals_home_index_path]) %>">
-      <%= link_to 'Open Approvals', open_approvals_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title <%= active_class([past_documents_home_index_path]) %>">
-      <%= link_to 'Complete Approvals', past_documents_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title">Received Approvals:</p>
-  </li>
-  <li>
-    <p class="title <%= active_class([pending_approvals_home_index_path]) %>">
-      <%= link_to 'Waiting on Response', pending_approvals_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title <%= active_class([past_approvals_home_index_path]) %>">
-      <%= link_to 'Have Responded', past_approvals_home_index_path %>
-    </p>
-  </li>
-</ul>
+  <ul class="vertical menu">
+    <li>
+      <p class="title <%= active_class([dashboard_home_index_path]) %>">
+        <%= link_to 'Dashboard', dashboard_home_index_path %>
+      </p>
+    </li>
+    <li>
+      <p class="title">Created Approvals:</p>
+    </li>
+    <li>
+      <p class="title <%= active_class([open_approvals_home_index_path]) %>">
+        <%= link_to 'Open Approvals', open_approvals_home_index_path %>
+      </p>
+    </li>
+    <li>
+      <p class="title <%= active_class([past_documents_home_index_path]) %>">
+        <%= link_to 'Complete Approvals', past_documents_home_index_path %>
+      </p>
+    </li>
+    <li>
+      <p class="title">Received Approvals:</p>
+    </li>
+    <li>
+      <p class="title <%= active_class([pending_approvals_home_index_path]) %>">
+        <%= link_to 'Waiting on Response', pending_approvals_home_index_path %>
+      </p>
+    </li>
+    <li>
+      <p class="title <%= active_class([past_approvals_home_index_path]) %>">
+        <%= link_to 'Have Responded', past_approvals_home_index_path %>
+      </p>
+    </li>
+  </ul>
+</div>

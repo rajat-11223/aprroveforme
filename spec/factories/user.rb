@@ -1,7 +1,17 @@
 FactoryBot.define do
   factory :user do
-    name { "Kim Manis" }
-    email { "kimmanis@gmail.com" }
+    uid { rand(10_000) }
+
+    sequence :name do |n|
+      "Kim Manis-#{n}"
+    end
+    first_name { name.split(" ")[0] }
+    last_name { name.split(" ")[1] }
+    provider { "google_oauth2" }
+
+    sequence :email do |n|
+      "kimmanis-#{n}@gmail.com"
+    end
     picture "https://lh4.googleusercontent.com/-AU_9Qx9sUXw/AAAAAAAAAAI/AAAAAAAAAAA/hXcwDv3KdZI/photo.jpg"
   end
 
