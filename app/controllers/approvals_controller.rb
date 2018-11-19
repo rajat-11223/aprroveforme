@@ -240,6 +240,9 @@ class ApprovalsController < ApplicationController
     rescue Google::Drive::File::SetPermission::InvalidGoogleUser => e
       # Since we have an invalid Google user, make the file publically accessible
       make_file_public.call
+
+      # Set approval as public, since we had to force it public.
+      @approval.drive_public = true
       response[:warning] = e.message
     end
 
