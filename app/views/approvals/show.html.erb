@@ -52,17 +52,17 @@
             <button class="button primary" data-open="approvalModal">Respond</button>
           <% end %>
         <% end %>
-        <%= link_to "Open File", @approval.link, target: "_blank", class: "button secondary"%>
 
+        <%= link_to "Open File", @approval.link, target: "_blank", class: "button secondary"%>
         <!--- END DOCUMENT INFO -->
       </div>
     </div>
     <div class="grid-x">
-      <div class="large-4 small-3 cell"><hr /></div>
+      <div class="large-4 small-3 cell"><hr/></div>
       <div class="large-4 small-6 cell">
         <p class="text-center">APPROVERS</p>
       </div>
-      <div class="large-4 small-3 cell"><hr /></div>
+      <div class="large-4 small-3 cell"><hr/></div>
     </div>
     <!--- START APPROVERS -->
     <div class="grid-x">
@@ -74,40 +74,48 @@
             <div class="large-3 small-3 cell"><%= image_tag image_url(approver.email), :class=>"approvers-pic" %></div>
             <div class="large-9 small-9 cell">
               <div class="grid-x">
-                <div class="large-6 small-7 cell">
+                <div class="small-6 cell">
                   <p class="approver-name"><%= approver.name %></p>
                 </div>
-                <div class="large-6 small-5 cell">
 
+                <div class="small-6 cell">
                   <% case approver.status %>
-                    <% when "approved" %>
-                    <p class="approval-details approved">Approved</p>
-                    <!--- APPROVED -->
-                    <% when "declined" %>
-                      <p class="approval-details declined">Declined</p>
-                      <!--- DECLINED -->
-                    <% else %>
-                      <p class="approval-details">No Response</p>
-                      <!--- NO RESPONSE -->
-                    <% end %>
-                  </div>
-                </div>
-                <div class="grid-x">
-                  <div class="large-12 cell">
-                    <p class="approval-details">
-                      <% if approver.comments.present? %>
-                        <%= approver.comments %>
-                      <% else approver.comments %>
-                        No comments
-                      <% end %>
-                    </p>
-                  </div>
+                  <% when "approved" %>
+                  <p class="approval-details approved">Approved</p>
+                  <% when "declined" %>
+                    <p class="approval-details declined">Declined</p>
+                  <% else %>
+                    <p class="approval-details">No Response Yet</p>
+                  <% end %>
                 </div>
               </div>
-            </div><br/>
-          <% end %>
-        </div>
-      </div><br/>
+              <div class="grid-x">
+                <div class="small-12 cell">
+                  <p class="approver-comments">
+                    <% if approver.has_responded? && approver.comments.present? %>
+                      Comments: <%= approver.comments %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+              <div class="grid-x">
+                <div class="small-12 cell">
+                  <p class="approval-details">
+                    Requested at <%= approver.created_at.to_s(:date_with_time) %>
+                  </p>
+                  <p class="approval-details">
+                    <% if approver.has_responded? %>
+                      Responded on <%= approver.updated_at.to_s(:date_with_time) %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+        <% end %>
+      </div>
+    </div><br/>
       <!--- END APPROVERS -->
 
       <!--- START EDIT / DELETE BUTTON -->
@@ -117,9 +125,7 @@
             <%= link_to 'edit', edit_approval_path(@approval), class: "small button secondary" %>
           <% end %>
           <% if can?(:delete, @approval) %>
-            <%= button_to 'delete', @approval, method: :delete,
-                                               data: { confirm: "Are you sure you want to delete this approval?" },
-                                               class: "destroy small button secondary" %>
+            <%= button_to 'delete', @approval, method: :delete, data: { confirm: "Are you sure you want to delete this approval?" }, class: "destroy small button secondary" %>
           <% end %>
         </div>
       </div>
