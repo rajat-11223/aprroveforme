@@ -44,7 +44,7 @@
           <p class="form-label">Title*</p>
         </div>
         <div class="large-8 small-9 cell">
-          <%= f.text_field :title, placeholder: "Title", id: "result2", required: true %>
+          <%= f.text_field :title, placeholder: "Title", id: "result2", required: true, autocomplete: :off %>
         </div>
       </div>
       <div class="grid-x">
@@ -52,7 +52,7 @@
           <p class="form-label">Description</p>
         </div>
         <div class="large-8 small-9 cell">
-          <%= f.text_area :description, placeholder: "Description", rows: 3 %>
+          <%= f.text_area :description, placeholder: "Description", rows: 3, autocomplete: :off %>
         </div>
       </div>
       <div class="grid-x">
