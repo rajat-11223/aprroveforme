@@ -1,8 +1,13 @@
 <div id="sidebar">
   <div class="new-approval-button">
-    <b>
-      <%= link_to "New Approval", new_approval_path, class: "button primary create expand" %>
-    </b>
+    <b><%= link_to "New Approval", new_approval_path, class: "button primary create expand" %></b>
+  </div>
+
+  <div>
+    <p style="line-height: 1;">
+      <span style="font-size: 14px;"><%= current_user.approvals.from_this_month.count %> of <%= plan_responses_limit.to_s.downcase %></span><br/>
+      <span style="color: gray; font-size: 12px">approvals created this month</span>
+    <p>
   </div>
 
   <ul class="vertical menu">
@@ -12,30 +17,30 @@
       </p>
     </li>
     <li>
-      <p class="title">Created Approvals:</p>
+      <div class="title">Created Approvals:</div>
     </li>
     <li>
-      <p class="title <%= active_class([open_approvals_home_index_path]) %>">
+      <div class="title <%= active_class([open_approvals_home_index_path]) %>">
         <%= link_to 'Open Approvals', open_approvals_home_index_path %>
-      </p>
+      </div>
     </li>
     <li>
-      <p class="title <%= active_class([past_documents_home_index_path]) %>">
+      <div class="title <%= active_class([past_documents_home_index_path]) %>">
         <%= link_to 'Complete Approvals', past_documents_home_index_path %>
-      </p>
+      </div>
     </li>
     <li>
-      <p class="title">Received Approvals:</p>
+      <div class="title">Received Approvals:</div>
     </li>
     <li>
-      <p class="title <%= active_class([pending_approvals_home_index_path]) %>">
+      <div class="title <%= active_class([pending_approvals_home_index_path]) %>">
         <%= link_to 'Waiting on Response', pending_approvals_home_index_path %>
-      </p>
+      </div>
     </li>
     <li>
-      <p class="title <%= active_class([past_approvals_home_index_path]) %>">
+      <div class="title <%= active_class([past_approvals_home_index_path]) %>">
         <%= link_to 'Have Responded', past_approvals_home_index_path %>
-      </p>
+      </div>
     </li>
   </ul>
 </div>

@@ -1,26 +1,19 @@
 <%= content_for :main do %>
   <div class="grid-x">
-    <div class="large-4 cell">
-      <%= link_to past_approvals_home_index_path do %>
-        <div class="dashboard-number-card yellow">
-          <h1 class="dashboard-number-value">Used</h1>
-          <h5 class="dashboard-number-value" style="margin-top: -50px !important;"><%= @user_approvals.count %> / <%= plan_responses_limit %> </h5>
-        </div>
+    <div class="large-6 cell">
+      <%= link_to open_approvals_home_index_path do %>
+      <div class="dashboard-number-card positive">
+        <h1 class="dashboard-number-value">Open Approvals</h1>
+        <h5 class="dashboard-number-value" style="margin-top: -50px !important;"><%= @my_approvals.count %></h5>
+      </div>
       <% end %>
     </div>
-    <div class="large-4 cell">
+
+    <div class="large-6 cell">
       <%= link_to pending_approvals_home_index_path do %>
         <div class="dashboard-number-card negative">
-          <h1 class="dashboard-number-value">Pending</h1>
+          <h1 class="dashboard-number-value">Waiting on Response</h1>
           <h5 class="dashboard-number-value" style="margin-top: -50px !important;"><%= @pending_approvals.count %></h5>
-        </div>
-      <% end %>
-    </div>
-    <div class="large-4 cell">
-      <%= link_to open_approvals_home_index_path do %>
-        <div class="dashboard-number-card positive">
-          <h1 class="dashboard-number-value">Open</h1>
-          <h5 class="dashboard-number-value" style="margin-top: -50px !important;"><%= @my_approvals.count %></h5>
         </div>
       <% end %>
     </div>
