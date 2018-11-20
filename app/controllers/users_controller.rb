@@ -8,7 +8,14 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { @users = User.order(sort_column => sort_direction).page(params[:page]) }
-      format.csv { send_data User.to_csv }
+      format.csv do
+        headers["X-Accel-Buffering"] = "no"
+        headers["Cache-Control"] = "no-cache"
+        headers["Content-Type"] = "text/csv; charset=utf-8"
+        headers["Content-Disposition"] = %(attachment; filename="users-#{Time.zone.now.to_date.to_s(:default)}.csv")
+        headers["Last-Modified"] = Time.now.to_s
+        self.response_body = Enumerator.new { |y| User.to_csv(y) }
+      end
     end
   end
 

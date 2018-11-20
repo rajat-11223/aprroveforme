@@ -70,13 +70,14 @@ class User < ApplicationRecord
     !!payment_customer
   end
 
-  def self.to_csv(options = {})
-    CSV.generate(options) do |csv|
-      csv << column_names
+  def self.to_csv(output="")
+    output << CSV.generate_line(self.column_names)
 
-      User.all.find_each.lazy do |user|
-        csv << user.attributes.values_at(*column_names)
-      end
+    self.find_each.lazy.each do |user, index|
+      line = CSV.generate_line(user.attributes.values_at(*column_names))
+      output << line
     end
+
+    output
   end
 end
