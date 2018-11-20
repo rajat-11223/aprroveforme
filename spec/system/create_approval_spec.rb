@@ -37,7 +37,7 @@ describe "Create Approval", js: true do
     click_button "Add Another Approver"
     expect(page.all(".approver").size).to eq(4)
 
-    click_button "Submit Document for Approval"
+    click_button "Submit Approval"
 
     approval = Approval.last
     expect(Approval.count).to eq(1)
