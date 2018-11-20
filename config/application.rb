@@ -11,6 +11,7 @@ module Workflow
 
     APP_HOST = ENV.fetch("APP_HOST")
     APP_DOMAIN = ENV.fetch("APP_DOMAIN")
+    BASE_APP_DOMAIN = ENV.fetch("BASE_APP_DOMAIN", APP_DOMAIN)
     ENV["ROLES"] ||= "admin user VIP"
     ENV["GOOGLE_SCOPE"] ||= "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install"
 
