@@ -23,6 +23,7 @@ class ApproveForMe.Page
   defaultBindEvents: ->
     log("Binding Events #{this.constructor.name}")
     @bindEvents()
+    @onEvent 'submit', 'form', {}, @startFormProgressBar
 
   onEvent: (event, selector, data, handler) ->
     $('body').on(event, selector, data, handler)
@@ -41,3 +42,13 @@ class ApproveForMe.Page
 
   initCrisp: ->
     ApproveForMe.crisp.init()
+
+  startFormProgressBar: ->
+    if $(this).data("remote") != true
+      return
+
+    if !Turbolinks.supported
+      return
+
+    Turbolinks.controller.adapter.progressBar.setValue(0)
+    Turbolinks.controller.adapter.progressBar.show()
