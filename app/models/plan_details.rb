@@ -12,7 +12,7 @@ class PlanDetails
   end
 
   def approval_limit_in_words
-    plan["reviews_each_month_in_words"]
+    plan["reviews_each_month_in_words"].to_s
   end
 
   def has_remaining_approvals?
