@@ -4,38 +4,18 @@
   <table class="dashboard-table">
     <thead>
       <tr>
-        <th>
-          <a href="#">Document Name
-            <i class="fas fa-caret-down"></i>
-          </a>
-        </th>
-        <th>
-          <a href="#">Description
-            <i class="fas fa-caret-down"></i>
-          </a>
-        </th>
-        <th>
-          <a href="#">Progress
-            <i class="fas fa-caret-down"></i>
-          </a>
-        </th>
-        <th>
-          <a href="#">Deadline
-            <i class="fas fa-caret-down"></i>
-          </a>
-        </th>
-        <th>
-          <a href="#">Action
-            <i class="fas fa-caret-down"></i>
-          </a>
-        </th>
+        <th>Document Name</th>
+        <th>Description</th>
+        <th>Progress</th>
+        <th>Deadline</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody></tbody>
     <% @my_completed_approvals.each do |approval| %>
       <tr>
-        <td class="bold"><%= link_to approval.title, approval %></td>
-        <td><%= approval.description %></td>
+        <td class="bold"><%= link_to truncate(approval.title), approval %></td>
+        <td><%= truncate(approval.description) %></td>
         <td><%= approval.percentage_complete %></td>
 
         <td class="listing-inquiry-status">
