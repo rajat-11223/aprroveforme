@@ -29,11 +29,6 @@ class ApprovalsController < ApplicationController
 
       session.delete(:code)
     end
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @approval }
-    end
   end
 
   # GET /approvals/new
@@ -50,11 +45,6 @@ class ApprovalsController < ApplicationController
 
     # if the doc is being opened from Google drive, pre-populate
     Google::PrepopulateApprovalFromDrive.new(session, @approval, current_user).call
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @approval }
-    end
   end
 
   # GET /approvals/1/edit
@@ -89,20 +79,16 @@ class ApprovalsController < ApplicationController
                                                                                  role: google_drive_permission)
     resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
 
-    respond_to do |format|
-      if @approval.errors.none? && @approval.save
-        ab_finished(:approval_created)
+    if @approval.errors.none? && @approval.save
+      ab_finished(:approval_created)
 
-        format.html { redirect_to @approval, notice: ["Approval was successfully created.", resp[:warning]].compact.join(" ") }
-        format.json { render json: @approval, status: :created, location: @approval }
+      UserMailer.my_new_approval(@approval).deliver_later
+      @approval.approvers.each { |approver| UserMailer.new_approval_invite(@approval, approver).deliver_later }
 
-        UserMailer.my_new_approval(@approval).deliver_later
-        @approval.approvers.each { |approver| UserMailer.new_approval_invite(@approval, approver).deliver_later }
-      else
-        flash[:notice] = ["Approval was not created.", resp[:warning]].compact.join(" ")
-        format.html { render action: "new" }
-        format.json { render json: @approval.errors, status: :unprocessable_entity }
-      end
+      redirect_to @approval, notice: ["Approval was successfully created.", resp[:warning]].compact.join(" ")
+    else
+      flash[:notice] = ["Approval was not created.", resp[:warning]].compact.join(" ")
+      render action: "new"
     end
   end
 
@@ -128,35 +114,31 @@ class ApprovalsController < ApplicationController
     else
       authorize! :update, @approval
 
-      respond_to do |format|
-        if @approval.update_attributes(approval_params.merge(deadline: parse_deadline))
-          google_drive_file_id = @approval.link_id
+      if @approval.update_attributes(approval_params.merge(deadline: parse_deadline))
+        google_drive_file_id = @approval.link_id
 
-          # if any new approvers, add permissions and code
-          approvers_without_codes = @approval.approvers.select {|a| !a.code.present? }
-          user_permission_updates =
-            approvers_without_codes.map do |approver|
-              approver.generate_code
-              approver.save
+        # if any new approvers, add permissions and code
+        approvers_without_codes = @approval.approvers.select {|a| !a.code.present? }
+        user_permission_updates =
+          approvers_without_codes.map do |approver|
+            approver.generate_code
+            approver.save
 
-              UserMailer.new_approval_invite(@approval, approver).deliver_later
+            UserMailer.new_approval_invite(@approval, approver).deliver_later
 
-              Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user,
-                                                                         approver: approver,
-                                                                         role: google_drive_permission) unless make_public?
-            end
+            Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user,
+                                                                       approver: approver,
+                                                                       role: google_drive_permission) unless make_public?
+          end
 
-          @approval.save
+        @approval.save
 
-          make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user, role: google_drive_permission)
-          resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
+        make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user, role: google_drive_permission)
+        resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
 
-          format.html { redirect_to @approval, notice: ["Approval was successfully updated.", resp[:warning]].compact.join(" ") }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @approval.errors, status: :unprocessable_entity }
-        end
+        redirect_to @approval, notice: ["Approval was successfully updated.", resp[:warning]].compact.join(" ")
+      else
+        render action: "edit"
       end
 
     end
@@ -169,10 +151,7 @@ class ApprovalsController < ApplicationController
     authorize! :destroy, @approval
 
     @approval.destroy
-    respond_to do |format|
-      format.html { redirect_to root_url, notice: "Approval was successfully deleted." }
-      format.json { head :no_content }
-    end
+    redirect_to root_url, notice: "Approval was successfully deleted."
   end
 
   private

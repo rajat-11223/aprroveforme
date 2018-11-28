@@ -24,6 +24,7 @@ class ApproveForMe.Page
     log("Binding Events #{this.constructor.name}")
     @bindEvents()
     @onEvent 'submit', 'form', {}, @startFormProgressBar
+    @onEvent 'turbolinks:load', document, {}, @finishFormProgressBar
 
   onEvent: (event, selector, data, handler) ->
     $('body').on(event, selector, data, handler)
@@ -52,3 +53,7 @@ class ApproveForMe.Page
 
     Turbolinks.controller.adapter.progressBar.setValue(0)
     Turbolinks.controller.adapter.progressBar.show()
+
+  finishFormProgressBar: ->
+    Turbolinks.controller.adapter.progressBar.setValue(10000)
+    Turbolinks.controller.adapter.progressBar.hide()

@@ -400,6 +400,9 @@ GEM
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
     turbolinks-source (5.1.0)
+    turbolinks_render (0.9.1)
+      rails (~> 5.2.0)
+      turbolinks-source (~> 5.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.18)
@@ -482,6 +485,7 @@ DEPENDENCIES
   stripe
   thor
   turbolinks (~> 5.1.0)
+  turbolinks_render
   uglifier
   web-console (>= 3.3.0)
   workless

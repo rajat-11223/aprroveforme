@@ -37,6 +37,7 @@ gem "split-analytics"
 gem "split", require: "split/dashboard"
 gem "stripe"
 gem "turbolinks", "~> 5.1.0"
+gem "turbolinks_render"
 gem "uglifier"
 gem "workless"
 
