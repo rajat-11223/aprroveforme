@@ -1,6 +1,6 @@
 <%= form_for @approval, remote: true do |f| %>
   <div class="grid-x grid-margin-x">
-    <div class="large-8 large-offset-2 item-approval-form cell">
+    <div class="large-10 large-offset-1 item-approval-form cell">
       <div class="grid-x">
         <div class="large-offset-1 large-2 small-3 cell">
           <p class="form-label">File*</p>
@@ -27,7 +27,7 @@
         </div>
         <label class="error"><%= error_message_on @approval, :link %></label>
       </div>
-      <div class="grid-x">
+      <div class="grid-x" style="padding-top: 1rem">
         <div class="large-8 large-offset-3 small-12 cell">
           <label for="approval_drive_public" style="margin-top:-18px;">
             <%= check_box("approval", "drive_public", {checked: !@approval.drive_public}, "false", "true") %>
