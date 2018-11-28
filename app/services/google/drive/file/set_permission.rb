@@ -3,10 +3,14 @@ module Google
     module File
       module SetPermission
         class InvalidGoogleUser < StandardError; end
+        class DoNotOwnDocument < StandardError; end
+        class UnknownError < StandardError; end
 
         private
 
         def set_permission(file_id, user, permission_options, role="reader", retry_count=0)
+          return unless file_id.present?
+
           user.refresh_google
           client = user.google_auth
           drive = client.discovered_api("drive", "v2")
@@ -37,16 +41,19 @@ module Google
         end
 
         def process_result_error(result, permission_config={})
-          error = result.data["error"] || {}
-          reason = error.dig("errors", 0, "reason")
-          message = error["message"]
+          data = result.data || {}
+          error = data["error"] || {}
+          reason = error.dig("errors", 0, "reason") || "Unknown"
+          message = error["message"] || "Unknown reason, please contact technical support."
 
           case reason
           when "invalidSharingRequest"
             raise InvalidGoogleUser, "You tried to add #{permission_config["value"]}. Since there is no Google account associated with this email address, we have made this document readable by non-Google users."
+          when "forbidden"
+            raise DoNotOwnDocument, "You tried to share a file that you do not own. Please ask the owner to make you the owner or share another document."
           else
-            Rails.logger.error "[Error] occurred when setting permissions: #{message}"
-            raise reason, message
+            Rails.logger.error "[Error] occurred when setting permissions: #{result.inspect}"
+            raise UnknownError, message
           end
         end
       end

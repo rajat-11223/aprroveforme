@@ -29,14 +29,14 @@
       </div>
       <div class="grid-x">
         <div class="large-8 large-offset-3 small-12 cell">
+          <label for="approval_drive_public" style="margin-top:-18px;">
+            <%= check_box("approval", "drive_public", {checked: !@approval.drive_public}, "false", "true") %>
+            Require reviewers to be signed in to Google to view this document.</label>
+        </div>
+        <div class="large-8 large-offset-3 small-12 cell">
           <label for="approval_drive_perms" style="margin-top:-18px;">
             <%= check_box("approval", "drive_perms", {}, "writer", "reader") %>
             Allow reviewers to edit this document.</label>
-        </div>
-        <div class="large-8 large-offset-3 small-12 cell">
-          <label for="approval_drive_public" style="margin-top:-18px;">
-            <%= check_box("approval", "drive_public", {}, "true", "false") %>
-            Allow non-Google users to approve this document.</label>
         </div>
       </div>
       <div class="grid-x">
