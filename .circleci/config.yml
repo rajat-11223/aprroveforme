@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     parallelism: 1
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
@@ -110,6 +110,9 @@ jobs:
 
 workflows:
   version: 2
+  commit:
+    jobs:
+      - test
   weekly:
     triggers:
       - schedule:
@@ -121,4 +124,4 @@ workflows:
                 - deploy
                 - beta
     jobs:
-      - build
+      - test
