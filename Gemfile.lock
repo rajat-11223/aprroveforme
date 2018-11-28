@@ -419,8 +419,6 @@ GEM
       rush
     xpath (3.1.0)
       nokogiri (~> 1.8)
-    zocial-rails (1.0.6)
-      railties (>= 3.1)
 
 PLATFORMS
   ruby
@@ -487,7 +485,6 @@ DEPENDENCIES
   uglifier
   web-console (>= 3.3.0)
   workless
-  zocial-rails
 
 RUBY VERSION
    ruby 2.5.1p57
