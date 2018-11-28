@@ -57,11 +57,35 @@ jobs:
       - save_cache:
           key: approve_for_me-bundle-v2-{{ checksum "Gemfile.lock" }}
           paths:
-            - vendor/bundle
+            - ~/.yarn-cache
+
+      # Restore yarn cache
+      - restore_cache:
+          keys:
+            - yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-cache-{{ .Branch }}
+            - yarn-cache
+
+      - run: yarn install
+
+      # Store yarn cache
+      - save_cache:
+          key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
 
       - run:
           name: Install Rake and Brakeman
           command: gem install bundler rake brakeman
+
+      - run:
+          name: Bundler Audit
+          command: bundle exec bundle-audit check --update
+
+      - run:
+          name: Brakeman
+          command: brakeman --exit-on-warn --progress --run-all-checks -i ./config/brakeman.ignore
 
       - run:
           name: Wait for Postgres
@@ -86,12 +110,9 @@ jobs:
           command: bundle exec rake db:schema:load --trace
 
       - run:
-          name: Bundler Audit
-          command: bundle exec bundle-audit check --update
+          name: Compile Webpacker Assets
+          command: bundle exec rails webpacker:compile
 
-      - run:
-          name: Brakeman
-          command: brakeman --exit-on-warn --progress --run-all-checks -i ./config/brakeman.ignore
 
       # Run rspec
       - run:
