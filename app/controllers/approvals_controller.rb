@@ -180,6 +180,8 @@ class ApprovalsController < ApplicationController
   def prefill_from_template(approval)
     return unless params[:from_approval] && from_approval = current_user.approvals.find(params[:from_approval])
 
+    flash[:notice] = "New approval successfully created from '#{from_approval.title}'. Document permissions and approver details have been set."
+
     deadline_distance = from_approval.deadline - from_approval.created_at
     deadline = (Time.now + deadline_distance).end_of_day
 
