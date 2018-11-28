@@ -7,7 +7,11 @@ class UsersController < ApplicationController
     authorize! :manage, :all
 
     respond_to do |format|
-      format.html { @users = User.order(sort_column => sort_direction).page(params[:page]) }
+      format.html do
+        @users = User.order(sort_column => sort_direction).page(params[:page])
+        @system_stats = SystemStats.new.call
+      end
+
       format.csv do
         headers["X-Accel-Buffering"] = "no"
         headers["Cache-Control"] = "no-cache"
