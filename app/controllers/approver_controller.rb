@@ -13,14 +13,10 @@ class ApproverController < ApplicationController
     @approver = Approver.find(params[:id])
     authorize! :update, @approver
 
-    respond_to do |format|
-      if @approver.update_attributes(approver_params)
-        format.html { redirect_to @approver.approval, notice: 'Approval was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @approver.approval, status: :unprocessable_entity }
-      end
+    if @approver.update_attributes(approver_params)
+      redirect_to @approver.approval, notice: 'Approval was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 

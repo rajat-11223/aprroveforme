@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     parallelism: 1
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
@@ -87,7 +87,7 @@ jobs:
 
       - run:
           name: Bundler Audit
-          command: bundle exec bundle-audit check  --ignore CVE-2018-1000544 --update
+          command: bundle exec bundle-audit check --update
 
       - run:
           name: Brakeman
@@ -110,6 +110,9 @@ jobs:
 
 workflows:
   version: 2
+  commit:
+    jobs:
+      - test
   weekly:
     triggers:
       - schedule:
@@ -121,4 +124,4 @@ workflows:
                 - deploy
                 - beta
     jobs:
-      - build
+      - test

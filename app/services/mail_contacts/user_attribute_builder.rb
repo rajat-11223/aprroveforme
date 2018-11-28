@@ -53,7 +53,7 @@ module MailContacts
     end
 
     def completed_approvals
-      approvals.map(&:complete?)
+      approvals.select(&:complete?)
     end
 
     def subscription
