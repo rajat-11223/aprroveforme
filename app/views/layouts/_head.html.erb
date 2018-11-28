@@ -13,6 +13,10 @@
 <link rel="icon" type="image/png" href="<%= asset_path("favicon.png") %>"/>
 
 <%= turbolinks_cache_control_meta_tag %>
+
+<%= javascript_pack_tag 'application' %>
+<%# stylesheet_pack_tag 'application' %>
+
 <%= stylesheet_link_tag "//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" %>
 <%= stylesheet_link_tag "//use.fontawesome.com/releases/v5.2.0/css/all.css", integrity:"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ", crossorigin: "anonymous" %>
 <%= stylesheet_link_tag "application" %>

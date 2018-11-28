@@ -38,6 +38,7 @@ gem "stripe"
 gem "turbolinks", "~> 5.1.0"
 gem "uglifier"
 gem "workless"
+gem 'webpacker', '~> 3.5'
 gem "zocial-rails"
 
 gem "rollbar", require: false

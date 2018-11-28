@@ -7,7 +7,8 @@ class Approver < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :email
-  validates :status, inclusion: { in: %w(pending approved declined) }
+  validates :status, inclusion: { in: %w(pending approved declined) }, on: :create
+  validates :status, inclusion: { in: %w(approved declined) }, on: :update
   validates :required, inclusion: { in: %w(required optional) }
 
   def to_s

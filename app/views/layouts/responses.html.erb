@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%= render 'layouts/head' %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body class="<%= [controller_name, action_name].join(' ') %>">
+    <div class="tw-container tw-mx-auto tw-bg-grey-lightest">
+      <%= yield %>
+    </div>
+  </body>
+</html>

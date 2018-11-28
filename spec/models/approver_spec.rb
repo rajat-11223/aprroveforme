@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe Approver do
-  let(:approval) { create(:approval) }
-  subject { approval.approvers.first }
+  subject { create(:approver, :approved) }
+  let(:approval) { approver.approval }
 
   it 'has valid factory' do
     expect(subject).to be_valid
@@ -39,6 +39,41 @@ describe Approver do
       subject.email = "UPPERcase@email.com"
       subject.save!
       expect(subject.email).to eq("uppercase@email.com")
+    end
+  end
+
+  describe "status" do
+    context "when created" do
+      it "should allow pending" do
+        expect(create(:approver, status: "pending")).to be_present
+      end
+
+      it "should now allow random" do
+        expect { create(:approver, status: "rand") }.to raise_error ActiveRecord::RecordInvalid
+      end
+    end
+    context "when updating" do
+      subject { create(:approver, status: "pending") }
+
+      it "should not allow pending" do
+        subject.status = "pending"
+        expect(subject).to_not be_valid
+      end
+
+      it "should not allow random" do
+        subject.status = "random"
+        expect(subject).to_not be_valid
+      end
+
+      it "should allow approved" do
+        subject.status = "approved"
+        expect(subject).to be_valid
+      end
+
+      it "should allow declined" do
+        subject.status = "declined"
+        expect(subject).to be_valid
+      end
     end
   end
 

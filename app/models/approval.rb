@@ -24,14 +24,12 @@ class Approval < ApplicationRecord
                                 allow_destroy: true
 
   def deadline_in_words
-    to_append =
-      if self.deadline > Time.now
-        " remaining"
-      else
-        " ago"
-      end
-
+    to_append = !past_due? ? " remaining" : " ago"
     distance_of_time_in_words_to_now(self.deadline).humanize + to_append
+  end
+
+  def past_due?
+    self.deadline > Time.now
   end
 
   # TODO: review whether required is cap
@@ -54,7 +52,7 @@ class Approval < ApplicationRecord
   end
 
 
-    private
+  private
 
     def required_approver_count
       approvers.required.count

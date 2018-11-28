@@ -5,6 +5,8 @@ Workflow::Application.routes.draw do
     resources :tasks
   end
 
+  resources :responses, only: [:show, :update]
+
   resource :account do
     collection do
       get :profile

@@ -114,57 +114,42 @@ class ApprovalsController < ApplicationController
   def update
     @approval = Approval.includes(:approvers).find(params[:id])
 
-    # if an approver is approving
-    # TODO: Move this to another route
-    if params.dig(:approval, :approver)
-      authorize! :approve, @approval
-      @approver = @approval.approvers.by_user(current_user).first
-      @approver.update_attributes! status: params.dig(:approval, :approver, :status),
-                                   comments: params.dig(:approval, :approver, :comments)
+    authorize! :update, @approval
 
-      ab_finished(:approver_approved)
-      UserMailer.approval_update(@approver).deliver_later
+    respond_to do |format|
+      if @approval.update_attributes(approval_params.merge(deadline: parse_deadline))
+        google_drive_file_id = @approval.link_id
 
-      UserMailer.completed_approval(@approval).deliver_later if @approval.complete?
+        # if any new approvers, add permissions and code
+        approvers_without_codes = @approval.approvers.select {|a| !a.code.present? }
+        user_permission_updates =
+          approvers_without_codes.map do |approver|
+            approver.generate_code
+            approver.save
 
-      redirect_to @approval, notice: "Approval submitted"
-    else
-      authorize! :update, @approval
+            UserMailer.new_approval_invite(@approval, approver).deliver_later
 
-      respond_to do |format|
-        if @approval.update_attributes(approval_params.merge(deadline: parse_deadline))
-          google_drive_file_id = @approval.link_id
-
-          # if any new approvers, add permissions and code
-          approvers_without_codes = @approval.approvers.select {|a| !a.code.present? }
-          user_permission_updates =
-            approvers_without_codes.map do |approver|
-              approver.generate_code
-              approver.save
-
-              UserMailer.new_approval_invite(@approval, approver).deliver_later
-
-              if google_drive_file_id.present? && !make_public?
-                Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user, approver: approver, role: google_drive_permission)
-              else
-                nil
-              end
+            if google_drive_file_id.present? && !make_public?
+              Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user, approver: approver, role: google_drive_permission)
+            else
+              nil
             end
+          end
 
-          @approval.save
+        # TODO: I don't think this is required.
+        @approval.save
 
-          success_notice = "Approval was successfully updated."
-          make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user, role: google_drive_permission)
-          resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
+        success_notice = "Approval was successfully updated."
+        make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user, role: google_drive_permission)
+        resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
 
-          success_notice << " #{resp[:warning]}" if resp[:warning]
+        success_notice << " #{resp[:warning]}" if resp[:warning]
 
-          format.html { redirect_to @approval, notice: success_notice }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @approval.errors, status: :unprocessable_entity }
-        end
+        format.html { redirect_to @approval, notice: success_notice }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @approval.errors, status: :unprocessable_entity }
       end
 
     end

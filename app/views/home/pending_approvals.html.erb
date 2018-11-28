@@ -37,7 +37,7 @@
 
           <div class="flex-container align-top">
             <div class="flex-child-grow">
-              <h4 class="dashboard-table-text"><%= link_to 'View', approver.approval, class: 'button small round' %></h4>
+              <h4 class="dashboard-table-text"><%= link_to 'Respond', response_path(approver, code: approver.code), class: 'button small round', target: "_blank" %></h4>
             </div>
           </div>
 

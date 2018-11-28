@@ -14,13 +14,7 @@
 <!--- START CONTENT -->
 <div class="grid-x grid-margin-x">
   <div class="large-8 medium-6 embed cell hide-for-small-only">
-    <% if @approval.embed != "undefined"  %>
-      <iframe src="<%= @approval.embed %>" style="width: 100%; height: 100%" frameborder="0"></iframe>
-    <% elsif @approval.link_type == "photo"  %>
-      <%= image_tag "https://drive.google.com/uc?export=download&id=#{@approval.link_id}", width: "100%" %>
-    <% else %>
-      <%= link_to image_tag("preview-not-available.png"), @approval.link, target: "_blank" %>
-    <% end %>
+    <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
   </div>
 
   <!--- START RIGHT COLUMN -->
