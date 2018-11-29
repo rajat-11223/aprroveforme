@@ -9,6 +9,7 @@ ApproveForMe.google.createFilePicker = ->
     addView(view).
     addView(new (google.picker.DocsUploadView)).
     enableFeature(google.picker.Feature.MINE_ONLY).
+    # enableFeature(google.picker.Feature.MULTISELECT_ENABLED).
     setCallback(ApproveForMe.google.pickerCallback).
     build().
     setVisible true
