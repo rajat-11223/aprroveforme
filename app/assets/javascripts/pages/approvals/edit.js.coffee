@@ -4,7 +4,7 @@ class ApproveForMe.Pages.ApprovalsEdit extends ApproveForMe.Page
 
   bindEvents: ->
     @onEvent 'click', '.destroy-approver', {}, @markAsDestroyedAndHide
-
+    @onEvent 'click', '#google-file-picker', {}, ApproveForMe.google.createFilePicker
 
   # Helpers
   markAsDestroyedAndHide: ->
