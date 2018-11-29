@@ -8,6 +8,7 @@ ApproveForMe.google.createFilePicker = ->
     setOAuthToken(gon.googleUserToken).
     addView(view).
     addView(new (google.picker.DocsUploadView)).
+    enableFeature(google.picker.Feature.MINE_ONLY).
     setCallback(ApproveForMe.google.pickerCallback).
     build().
     setVisible true
