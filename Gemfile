@@ -43,7 +43,7 @@ gem "turbolinks_render"
 gem "uglifier"
 gem "workless"
 
-gem "rollbar"
+gem "rollbar", require: false
 gem "puma"
 gem "rack-timeout"
 
