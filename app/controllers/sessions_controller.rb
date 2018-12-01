@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     if params[:state]
       session[:state] =
         begin
-          JSON.parse(params[:state] || '{}')
+          JSON.parse(params[:state] || "{}")
         rescue JSON::ParserError
           {}
         end
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
     session[:plan_name] = params[:plan_name]
     session[:plan_interval] = params[:plan_interval]
-    redirect_to '/auth/google_oauth2?prompt=select_account'
+    redirect_to "/auth/google_oauth2?prompt=select_account"
   end
 
   def create
@@ -22,15 +22,15 @@ class SessionsController < ApplicationController
     Rails.logger.debug(auth)
     Rails.logger.debug(session[:state])
 
-    if auth['provider'] != 'google_oauth2'
+    if auth["provider"] != "google_oauth2"
       Rollbar.warning("Unsupported OAuth provider", omniauth_details: auth)
       redirect_to root_path, notice: "We don't support that provider"
       return
     end
 
     Rails.logger.debug("Find or create user")
-    user = User.find_by(provider: auth['provider'], uid: auth['uid'].to_s) ||
-            User::CreateFromOmniauth.new(auth).call
+    user = User.find_by(provider: auth["provider"], uid: auth["uid"].to_s) ||
+           User::CreateFromOmniauth.new(auth).call
 
     Rails.logger.debug("Sync User with google info")
     User::LogLogin.new(user).call
@@ -61,7 +61,7 @@ class SessionsController < ApplicationController
     if !user.name.present?
       redirect_to edit_user_path(user), alert: "Please enter your name."
     else
-      if ['create', 'open'].include? session[:state]['action'].to_s
+      if ["create", "open"].include? session[:state]["action"].to_s
         redirect_to new_approval_url
       else
         if user.subscription.plan_name == "lite"
@@ -108,7 +108,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_url, notice: 'You have successfully signed out.'
+    redirect_to root_url, notice: "You have successfully signed out."
   end
 
   def failure

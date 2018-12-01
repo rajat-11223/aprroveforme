@@ -5,7 +5,7 @@ Workflow::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
@@ -71,7 +71,7 @@ Workflow::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { host: ENV["APP_HOST"] }
+  config.action_mailer.default_url_options = {host: ENV["APP_HOST"]}
   config.action_mailer.asset_host = ENV["APP_HOST"]
 
   # ActionMailer Config
@@ -88,11 +88,10 @@ Workflow::Application.configure do
     authentication: "plain",
     user_name: ENV["SENDGRID_USERNAME"],
     password: ENV["SENDGRID_PASSWORD"],
-    :enable_starttls_auto => true
+    :enable_starttls_auto => true,
   }
 
   config.eager_load = true
-
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
