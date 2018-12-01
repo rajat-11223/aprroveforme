@@ -53,7 +53,7 @@ ApproveForMe.google.pickerCallback = (data) ->
   titleField = document.getElementById("result2")
 
   if titleField.value.trim() == ""
-    titielField.value = title
+    titleField.value = title
 
   # Update file selector text
   document.getElementById("google-file-picker").text = "Replace File"
