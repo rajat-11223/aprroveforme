@@ -7,7 +7,7 @@ class Approver < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :email
-  validates_format_of :email, :with => /@/
+  validates_format_of :email, :with => /\A(.*)@(.*)\.(.*)\Z/
   validates :status, inclusion: {in: %w(pending approved declined)}
   validates :required, inclusion: {in: %w(required optional)}
 
