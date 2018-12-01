@@ -15,6 +15,7 @@ class ApproveForMe.Page
     @setupFoundation()
     @closeCallouts()
     @initCrisp()
+    @finishFormProgressBar()
 
     log("Rendering #{this.constructor.name}")
     @render()
@@ -24,7 +25,6 @@ class ApproveForMe.Page
     log("Binding Events #{this.constructor.name}")
     @bindEvents()
     @onEvent 'submit', 'form', {}, @startFormProgressBar
-    @onEvent 'turbolinks:load', document, {}, @finishFormProgressBar
 
   onEvent: (event, selector, data, handler) ->
     $('body').on(event, selector, data, handler)
