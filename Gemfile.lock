@@ -310,7 +310,7 @@ GEM
       railties (>= 4.2.0, < 5.3)
     retriable (1.4.1)
     rolify (5.2.0)
-    rollbar (2.17.0)
+    rollbar (2.18.0)
       multi_json
     rspec-core (3.7.1)
       rspec-support (~> 3.7.0)
