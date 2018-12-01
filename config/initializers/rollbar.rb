@@ -50,7 +50,7 @@ Rollbar.configure do |config|
   # You can supply custom Sidekiq options:
   # config.use_sidekiq 'queue' => 'default'
 
-  config.use_delayed_job
+  # config.use_delayed_job
 
   # If your application runs behind a proxy server, you can set proxy parameters here.
   # If https_proxy is set in your environment, that will be used. Settings here have precedence.
