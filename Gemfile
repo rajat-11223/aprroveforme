@@ -41,7 +41,7 @@ gem "stripe"
 gem "turbolinks", "~> 5.1.0"
 gem "turbolinks_render"
 gem "uglifier"
-gem "workless"
+# gem "workless"
 
 gem "rollbar", require: false
 gem "puma"

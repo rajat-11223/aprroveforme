@@ -87,8 +87,9 @@ module Workflow
     config.google_verification = "google16deb60cae23dff7"
     config.startup_ranking_verification = "startupranking1011604961421011"
 
-    require Rails.root.join("lib/country_block")
+    config.active_job.queue_adapter = :delayed_job
 
+    require Rails.root.join("lib/country_block")
     config.middleware.insert_before ActionDispatch::Static, CountryBlock::App
   end
 end
