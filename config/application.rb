@@ -12,7 +12,7 @@ module Workflow
     APP_DOMAIN = ENV.fetch("APP_DOMAIN")
     BASE_APP_DOMAIN = ENV.fetch("BASE_APP_DOMAIN", APP_DOMAIN)
     ENV["ROLES"] ||= "admin user VIP"
-    ENV["GOOGLE_SCOPE"] ||= "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install"
+    ENV["GOOGLE_SCOPE"] ||= "email profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.install"
 
     SENDGRID_API_KEY = ENV.fetch("SENDGRID_API_KEY")
     SENDGRID_CLIENT = SendGrid::API.new(api_key: SENDGRID_API_KEY).client

@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     Rails.logger.debug("Creating session with auth:")
     Rails.logger.debug(auth)
+    Rails.logger.debug(session[:state])
 
     if auth['provider'] != 'google_oauth2'
       Rollbar.warning("Unsupported OAuth provider", omniauth_details: auth)
