@@ -48,6 +48,8 @@ Workflow::Application.routes.draw do
   # Google Verification
   get "/#{Rails.application.config.google_verification}.html",
       to: proc { |env| [200, {}, ["google-site-verification: #{Rails.application.config.google_verification}.html"]] }
+  get "/#{Rails.application.config.startup_ranking_verification}.html",
+      to: proc { |env| [200, {}, ["startupranking-site-verification: #{Rails.application.config.startup_ranking_verification}.html"]] }
 
   # Authentication
   get '/auth/:provider/callback' => 'sessions#create', as: :oauth_callback

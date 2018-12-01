@@ -88,6 +88,7 @@ module Workflow
     config.assets.version = '2.0'
 
     config.google_verification = "google16deb60cae23dff7"
+    config.startup_ranking_verification = "startupranking1011604961421011"
 
     require Rails.root.join("lib/country_block")
 
