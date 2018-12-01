@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   rolify
   validates :email, :picture, presence: true
+  validates_format_of :email, :with => /@/
   before_save { |user| user.email = user.email.downcase }
 
   has_many :approvals, dependent: :destroy, foreign_key: :owner
