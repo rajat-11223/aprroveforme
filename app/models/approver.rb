@@ -7,9 +7,9 @@ class Approver < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :email
-  validates :status, inclusion: { in: %w(pending approved declined) }
-  validates :required, inclusion: { in: %w(required optional) }
   validates_format_of :email, :with => /@/
+  validates :status, inclusion: {in: %w(pending approved declined)}
+  validates :required, inclusion: {in: %w(required optional)}
 
   def to_s
     "Your approval is #{self.required}. #{self.approval.deadline_in_words}".humanize
