@@ -9,8 +9,7 @@ class ResponsesController < ApplicationController
 
   # an approver is approving
   def update
-    binding.pry
-    if @approver.update_attributes(approver_params)
+    if !@approval.past_due? && @approver.update_attributes(approver_params)
       ab_finished(:approver_approved)
       UserMailer.approval_update(@approver).deliver_later
 
@@ -24,20 +23,19 @@ class ResponsesController < ApplicationController
 
   private
 
-    def set_approver_and_approval
-      code = params.dig(:code) || params.dig(:approver, :code)
-      @approver = Approver.find_by(id: params[:id], code: code)
-      @approval = @approver.try(:approval)
-    end
+  def set_approver_and_approval
+    code = params.dig(:code) || params.dig(:approver, :code)
+    @approver = Approver.find_by(id: params[:id], code: code)
+    @approval = @approver.try(:approval)
+  end
 
-    def require_approver_and_approval
-      return if @approver && @approval
+  def require_approver_and_approval
+    return if @approver && @approval
 
-      redirect_to response_path(@approver)
-    end
+    redirect_to response_path(@approver)
+  end
 
-    def approver_params
-      params.permit(:status, :comments)
-    end
-
+  def approver_params
+    params.permit(:status, :comments)
+  end
 end

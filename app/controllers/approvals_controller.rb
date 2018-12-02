@@ -21,9 +21,9 @@ class ApprovalsController < ApplicationController
     # 3.times { @approval.tasks.build } if @approval.tasks.empty?
 
     if session[:code].present?
-      approver = @approval.approvers.find {|a| a.code == session[:code] }
+      approver = @approval.approvers.find { |a| a.code == session[:code] }
 
-      if approver.present? && (approver.approval_id == @approval.id) and (current_user.email != approver.email )
+      if approver.present? && (approver.approval_id == @approval.id) and (current_user.email != approver.email)
         current_user.update_attributes second_email: approver.email.downcase
       end
 
@@ -103,7 +103,7 @@ class ApprovalsController < ApplicationController
       google_drive_file_id = @approval.link_id
 
       # if any new approvers, add permissions and code
-      approvers_without_codes = @approval.approvers.select {|a| !a.code.present? }
+      approvers_without_codes = @approval.approvers.select { |a| !a.code.present? }
       user_permission_updates =
         approvers_without_codes.map do |approver|
           approver.generate_code
@@ -148,9 +148,9 @@ class ApprovalsController < ApplicationController
     deadline = (Time.now + deadline_distance).end_of_day
 
     template_attrs = from_approval.
-                       attributes.
-                       slice("drive_perms", "drive_public").
-                       merge(deadline: deadline)
+      attributes.
+      slice("drive_perms", "drive_public").
+      merge(deadline: deadline)
 
     approval.assign_attributes(template_attrs)
 
@@ -162,12 +162,12 @@ class ApprovalsController < ApplicationController
   end
 
   def approval_params
-    params.require(:approval).permit(:id, :deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :drive_perms, :drive_public, approvers_attributes: [:_destroy, :id,:email, :name, :required, :status, :comments, :code])
+    params.require(:approval).permit(:id, :deadline, :description, :link, :title, :embed, :link_title, :link_id, :link_type, :tasks_attributes, :drive_perms, :drive_public, approvers_attributes: [:_destroy, :id, :email, :name, :required, :status, :comments, :code])
   end
 
   def require_user_or_code!
-    if session[:code]
-      require_user!(message: "Please sign in with Google Drive to approve this document.")
+    if params[:code] && approver = Approver.joins(:approval).where(approvals: {id: params[:id]}).find_by(code: params[:code])
+      redirect_to response_path(approver, code: approver.code)
     else
       require_user!
     end
@@ -189,7 +189,7 @@ class ApprovalsController < ApplicationController
   def apply_permission_updates!(permission_updates, make_file_public:)
     response = {}
     permission_updates = permission_updates.dup
-    permission_updates = [ make_file_public ] if make_public?
+    permission_updates = [make_file_public] if make_public?
 
     begin
       permission_updates.compact.map(&:call)
