@@ -21,8 +21,6 @@ class HomeController < ApplicationController
     base_approver = Approver.by_user(current_user)
     @pending_approvals = base_approver.pending
     @signedoff_approvals = base_approver.approved_or_declined
-    # @any_approvals = Approval.where("owner = ?", current_user.id)
-    # @any_approvers = Approver.where("email = ? or email = ? ", current_user.email.downcase, current_user.second_email)
 
     user_subscription_date = current_user.subscription.plan_date
     @user_approvals = current_user.approvals.from_this_month
@@ -31,8 +29,10 @@ class HomeController < ApplicationController
   def pending_approvals
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @pending_approvals = Approver.pending
+    @pending_approvals = Approver.includes(:approval)
+                                 .pending
                                  .by_user(current_user)
+                                 .select { |approver| !approver.approval.complete? }
   end
 
   def open_approvals
@@ -50,8 +50,10 @@ class HomeController < ApplicationController
   def past_approvals
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @signedoff_approvals = Approver.approved_or_declined
-                                   .by_user(current_user)
+    @signedoff_approvals = Approver.includes(:approval)
+      .approved_or_declined
+      .by_user(current_user)
+      .select { |approver| approver.approval.complete? }
   end
 
   private
