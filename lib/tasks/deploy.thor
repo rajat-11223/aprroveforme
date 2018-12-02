@@ -19,7 +19,6 @@ class Deploy < Thor
 
   def staging
     copy_prod_to_staging
-    heroku_run "rails jobs:clear", :staging
     deploy :staging, options
     set_sha_and_branch :staging
   end
