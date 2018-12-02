@@ -24,7 +24,7 @@ gem "kaminari"
 gem "modernizr-rails"
 gem "newrelic_rpm"
 gem "omniauth-google-oauth2"
-gem "omniauth", ">= 1.1.3"
+gem "omniauth"
 gem "oj"
 gem "pg", "~> 0.20.0"
 gem "rails", "~> 5.2.1"
@@ -41,7 +41,6 @@ gem "stripe"
 gem "turbolinks", "~> 5.1.0"
 gem "turbolinks_render"
 gem "uglifier"
-gem "workless"
 gem 'webpacker', '~> 3.5'
 
 gem "rollbar", require: false
