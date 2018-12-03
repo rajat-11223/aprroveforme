@@ -1,5 +1,8 @@
 <% show_thank_you_blurb = !@approver.present? || !@approval.present? || @approval.past_due? || @approver.has_responded? %>
 <% requester_name = @approval.try(:user).try(:name) || "the requester" %>
+<% subtitle = show_thank_you_blurb ? "Thank You" : @approval.title %>
+
+<% content_for(:title, t("app-title-with-subtitle", subtitle: subtitle)) %>
 
 <% if show_thank_you_blurb %>
   <div class="tw-h-screen">

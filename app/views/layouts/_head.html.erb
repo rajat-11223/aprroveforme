@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <% end %>
 
-<title><%= content_for?(:title) ? yield(:title) : "ApproveForMe" %></title>
+<title><%= content_for?(:title) ? yield(:title).strip : t("app-title") %></title>
 <meta name="Description" content="ApproveForMe is a free web-based tool that simplifies your professional life by making it easier to create, track, and manage document signoffs.">
 
 <link rel="icon" type="image/png" href="<%= asset_path("favicon.png") %>"/>
