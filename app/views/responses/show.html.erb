@@ -1,29 +1,31 @@
 <% show_thank_you_blurb = !@approver.present? || !@approval.present? || @approval.past_due? || @approver.has_responded? %>
+<% requester_name = @approval.try(:user).try(:name) || "the requester" %>
 
 <% if show_thank_you_blurb %>
-  <div class="row align-middle" style="min-height: 100vh">
-    <div class="columns small-12">
-      <div class="text-center">
-        <h1 class="tw-text-5xl">Thank You</h1>
-        <p>We have logged your response and have provided the requester your feedback</p>
+  <div class="tw-h-screen">
+    <div class="tw-container tw-mx-auto tw-h-full tw-flex tw-justify-center tw-items-center">
+      <div class="tw-block tw-text-center">
+        <h1 class="tw-text-5xl">Thank You!</h1>
+        <p class="tw-text-grey-darker">We have logged your response and have provided <%= requester_name %> your feedback.</p>
+        <p class="tw-py-8"><%= link_to image_tag("logo.png"), root_url %>
       </div>
     </div>
   </div>
 <% else %>
-  <div class="tw-flex tw-px-32 tw-text-center">
-    <div class="tw-flex-1">
-      <h1>Please approve '<%= @approval.title %>'</h1>
-    </div>
+  <div>
+    <div class="tw-text-grey-dark"><%= requester_name %> has requested your approval on</div>
+    <h3><%= @approval.title %></h3>
+    <div class="tw-text-grey-darkest">Description: <%= @approval.description.strip.present? ? simple_format(@approval.description) : "none" %></div>
   </div>
 
-  <div class="tw-flex tw-px-32">
-    <div class="tw-w-full">
-      <%= simple_format(@approval.description) %>
+  <div class="tw-flex md:tw-flex-row-reverse tw-flex-wrap">
+    <div class="tw-w-full md:tw-w-3/4 tw-py-8 md:tw-pl-8">
+      <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
+      <div class="tw-p-2 tw-text-center">
+        <%= link_to "View Full Screen", @approval.link, target: "_blank", class: "tw-cursor-pointer tw-text-black hover:tw-text-white tw-bg-yellow-dark tw-px-3 tw-py-2"%>
+      </div>
     </div>
-  </div>
-
-  <div class="tw-flex tw-mb-4 tw-text-center">
-    <div class="tw-flex-1">
+    <div class="tw-w-full md:tw-w-1/4 tw-py-8 md:tw-pr-8">
       <%= form_for @approver, url: response_path(@approver), remote: true do |f|  %>
         <%= f.hidden_field :code %>
 
@@ -43,15 +45,10 @@
             </div>
           </div>
         </div>
-        <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 5, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-grey-darker tw-mb-3 tw-leading-tight tw-focus:outline-none tw-focus:shadow-outline" %>
-        <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
-      <% end %>
-    </div>
-  </div>
 
-  <div class="grid-x">
-    <div class="cell small-12">
-      <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
+        <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 5, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-8 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
+        <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-black hover:tw-text-white tw-font-bold tw-py-4 tw-px-4 tw-border-none tw-w-full", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
+      <% end %>
     </div>
   </div>
 <% end %>
