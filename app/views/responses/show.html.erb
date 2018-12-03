@@ -46,9 +46,13 @@
             <% end %>
           </div>
 
+          <div class="tw-px-1">
+            <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 7, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-4 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
+          </div>
 
-          <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 5, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-4 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
-          <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-black hover:tw-text-white tw-font-bold tw-py-4 tw-border-none tw-w-full", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
+          <div class="tw-px-1">
+            <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-black hover:tw-text-white tw-font-bold tw-py-4 tw-border-none tw-w-full", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
+          </div>
         <% end %>
       </div>
     </div>
