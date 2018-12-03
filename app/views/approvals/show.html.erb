@@ -6,11 +6,6 @@
   </div>
 </div>
 
-<!-- if you have been asked to approve, show alert (code separated out in view/approvals/_response) -->
-<% if approver = @approval.approvers.by_user(current_user).first %>
-  <%= render "response", approver: approver %>
-<% end %>
-
 <!--- START CONTENT -->
 <div class="grid-x grid-margin-x">
   <div class="large-8 medium-6 embed cell hide-for-small-only">
