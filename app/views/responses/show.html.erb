@@ -29,22 +29,16 @@
         </div>
       </div>
       <div class="tw-w-full lg:tw-w-1/4 tw-py-8 lg:tw-pr-8">
-        <%= form_for @approver, url: response_path(@approver), class: "tw-flex tw-flex-col", remote: true do |f|  %>
+        <%= form_for @approver, url: response_path(@approver, code: @approver.code), class: "tw-flex tw-flex-col", remote: true do |f|  %>
           <%= f.hidden_field :code %>
 
-          <div class="tw-py-2 button-group">
-            <%= f.radio_button :status, 'approved', name: "status", required: true, class: "hidden" %>
-            <%= f.label :status_approved, class: "tw-mx-auto tw-text-center tw-bg-green-light tw-hover:bg-green-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-32 tw-p-3" do %>
-              Approved
-            <% end %>
-          </div>
-
-          <div class="tw-py-2 button-group">
-            <%= f.radio_button :status, 'declined', name: "status", required: true, class: "hidden" %>
-            <%= f.label :status_declined, class: "tw-mx-auto tw-text-center tw-bg-red tw-hover:bg-red-light tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-32 tw-p-3" do %>
-              Declined
-            <% end %>
-          </div>
+          <%= f.collection_radio_buttons :status, [["approved", "Approved"], ["declined", "Declined"]], :first, :last do |opt| %>
+            <div class="tw-py-2 button-group">
+              <% color = opt.value == "approved" ? "tw-bg-green-light" : "tw-bg-red-light" %>
+              <%= opt.radio_button required: true, class: "hidden" %>
+              <%= opt.label class: "#{color} tw-mx-auto tw-text-center tw-hover:bg-green-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-32 tw-p-3" %>
+            </div>
+          <% end %>
 
           <div class="tw-px-1">
             <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 7, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-4 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>

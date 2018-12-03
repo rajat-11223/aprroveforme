@@ -9,7 +9,7 @@ class ResponsesController < ApplicationController
 
   # an approver is approving
   def update
-    if !@approval.past_due? && @approver.update_attributes(approver_params)
+    if !@approval.past_due? && @approver.update_attributes!(approver_params)
       ab_finished(:approver_approved)
       UserMailer.approval_update(@approver).deliver_later
 
@@ -36,6 +36,6 @@ class ResponsesController < ApplicationController
   end
 
   def approver_params
-    params.permit(:status, :comments)
+    params.require(:approver).permit(:status, :comments)
   end
 end

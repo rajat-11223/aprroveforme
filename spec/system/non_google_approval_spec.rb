@@ -5,8 +5,20 @@ describe "Allow non-google (i.e. unauthenticated) users to approve an approval",
   let(:approval) { approver.approval }
   let(:user) { approval.user }
 
-  after do
-    travel_back
+  context "when visiting valid response" do
+    before { visit response_path(approver.id, code: approver.code) }
+
+    it "happy path" do
+      click_approved
+      provide_comments("This is awesome!")
+      submit_response
+
+      shows_thank_you_page
+
+      approver.reload
+      expect(approver.status).to eq("approved")
+      expect(approver.comments).to eq("This is awesome!")
+    end
   end
 
   context "when visiting old url" do
@@ -17,6 +29,51 @@ describe "Allow non-google (i.e. unauthenticated) users to approve an approval",
     it "redirects from old url to new url properly" do
       expect(page).to have_current_path(response_path(approver, code: approver.code))
       expect(page).to have_content(approval.title)
+    end
+  end
+
+  context "when visiting response url with bad code" do
+    let(:rand_code) { "RANDOM_CODE" }
+
+    before { visit response_path(approver, code: rand_code) }
+
+    it "shows thank you page" do
+      shows_thank_you_page
+    end
+  end
+
+  context "when visiting response url with unknown approval id" do
+    let(:rand_id) { rand(50_000_000) }
+
+    before { visit response_path(rand_id) }
+
+    it "shows thank you page" do
+      shows_thank_you_page
+    end
+  end
+
+  private
+
+  def shows_thank_you_page
+    expect(page).to_not have_content(approval.title)
+    expect(page).to have_content("Thank You!")
+  end
+
+  def click_approved
+    find("label[for=approver_status_approved]").click
+  end
+
+  def click_declined
+    find("label[for=approver_status_declined]").click
+  end
+
+  def provide_comments(text)
+    fill_in "approver_comments", with: text
+  end
+
+  def submit_response
+    accept_alert do
+      click_button("Submit Response")
     end
   end
 end
