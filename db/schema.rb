@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_28_134405) do
+ActiveRecord::Schema.define(version: 2018_12_03_030419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "approvals", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255
+    t.string "title", limit: 255, null: false
     t.string "link", limit: 255
-    t.text "description"
-    t.datetime "deadline"
+    t.text "description", default: "", null: false
+    t.datetime "deadline", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "owner"
+    t.integer "owner", null: false
     t.string "embed", limit: 255
     t.string "link_title", limit: 255
     t.string "link_id", limit: 255
