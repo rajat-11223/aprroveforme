@@ -12,43 +12,45 @@
     </div>
   </div>
 <% else %>
-  <div>
-    <div class="tw-text-grey-dark"><%= requester_name %> has requested your approval on</div>
-    <h3><%= @approval.title %></h3>
-    <div class="tw-text-grey-darkest">Description: <%= @approval.description.strip.present? ? simple_format(@approval.description) : "none" %></div>
-  </div>
-
-  <div class="tw-flex md:tw-flex-row-reverse tw-flex-wrap">
-    <div class="tw-w-full md:tw-w-3/4 tw-py-8 md:tw-pl-8">
-      <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
-      <div class="tw-p-2 tw-text-center">
-        <%= link_to "View Full Screen", @approval.link, target: "_blank", class: "tw-cursor-pointer tw-text-black hover:tw-text-white tw-bg-yellow-dark tw-px-3 tw-py-2"%>
-      </div>
+  <div class="tw-h-screen">
+    <div>
+      <h2 class="tw-text-base tw-text-grey-dark"><%= requester_name %> has requested your approval on</h2>
+      <h1 class="tw-text-3xl"><%= @approval.title %></h3>
+      <div class="tw-text-grey-darkest">Description: <%= @approval.description.strip.present? ? simple_format(@approval.description) : "none" %></div>
     </div>
-    <div class="tw-w-full md:tw-w-1/4 tw-py-8 md:tw-pr-8">
-      <%= form_for @approver, url: response_path(@approver), remote: true do |f|  %>
-        <%= f.hidden_field :code %>
 
-        <div class="button-group round toggle text-center">
-          <div class="tw-flex tw-flex-wrap tw-items-stretch tw-w-full">
-            <div class="tw-w-1/3 tw-ml-auto">
-              <%= f.label :status_approved, class: "tw-bg-green tw-hover:bg-green-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" do %>
-                <%= f.radio_button :status, 'approved', name: "status", required: true %>
-                Approved
-              <% end %>
-            </div>
-            <div class="tw-w-1/3 tw-mr-auto">
-              <%= f.label :status_declined, class: "tw-bg-red tw-hover:bg-red-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-py-2 tw-px-4 tw-rounded" do %>
-                <%= f.radio_button :status, 'declined', name: "status", required: true %>
-                Declined
-              <% end %>
-            </div>
-          </div>
+    <div class="tw-flex lg:tw-flex-row-reverse tw-flex-wrap md:tw-h-full">
+      <div class="tw-w-full lg:tw-w-3/4 tw-py-2 lg:tw-pl-8">
+        <div class="tw-hidden md:tw-block md:tw-h-75%">
+          <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
         </div>
+        <div class="tw-px-2 tw-py-4 tw-text-center">
+          <%= link_to "View Document Full Screen", @approval.link, target: "_blank", class: "tw-cursor-pointer tw-text-black hover:tw-text-white tw-bg-yellow-dark tw-px-3 tw-py-2"%>
+        </div>
+      </div>
+      <div class="tw-w-full lg:tw-w-1/4 tw-py-8 lg:tw-pr-8">
+        <%= form_for @approver, url: response_path(@approver), class: "tw-flex tw-flex-col", remote: true do |f|  %>
+          <%= f.hidden_field :code %>
 
-        <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 5, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-8 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
-        <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-black hover:tw-text-white tw-font-bold tw-py-4 tw-px-4 tw-border-none tw-w-full", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
-      <% end %>
+          <div class="tw-py-2 button-group">
+            <%= f.radio_button :status, 'approved', name: "status", required: true, class: "hidden" %>
+            <%= f.label :status_approved, class: "tw-mx-auto tw-text-center tw-bg-green-light tw-hover:bg-green-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-32 tw-p-3" do %>
+              Approved
+            <% end %>
+          </div>
+
+          <div class="tw-py-2 button-group">
+            <%= f.radio_button :status, 'declined', name: "status", required: true, class: "hidden" %>
+            <%= f.label :status_declined, class: "tw-mx-auto tw-text-center tw-bg-red tw-hover:bg-red-light tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-32 tw-p-3" do %>
+              Declined
+            <% end %>
+          </div>
+
+
+          <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 5, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-4 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
+          <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-black hover:tw-text-white tw-font-bold tw-py-4 tw-border-none tw-w-full", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
