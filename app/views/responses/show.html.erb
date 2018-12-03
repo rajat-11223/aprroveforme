@@ -24,11 +24,14 @@
 
     <div class="tw-flex lg:tw-flex-row-reverse tw-flex-wrap md:tw-h-full">
       <div class="tw-w-full lg:tw-w-3/4 tw-py-2 lg:tw-pl-8">
-        <div class="tw-hidden md:tw-block md:tw-h-75%">
-          <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
-        </div>
-        <div class="tw-px-2 tw-py-4 tw-text-center">
-          <%= link_to "View Document Full Screen", @approval.link, target: "_blank", class: "tw-cursor-pointer tw-text-black hover:tw-text-white tw-bg-yellow-dark tw-px-3 tw-py-2"%>
+        <div class="tw-flex tw-flex-col tw-h-full">
+          <p class="tw-flex-none tw-text-grey tw-text-center tw-leading-none tw-hidden md:tw-block">If the document below is not displayed, you may have to login to your <%= @approver.email %> Google account.</p>
+          <div class="tw-flex-grow tw-hidden md:tw-block tw-h-64">
+            <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
+          </div>
+          <div class="tw-flex-none tw-px-2 tw-py-4 tw-text-center">
+            <%= link_to "View Document Full Screen", @approval.link, target: "_blank", class: "tw-cursor-pointer tw-text-black hover:tw-text-white tw-bg-yellow-dark tw-px-3 tw-py-2"%>
+          </div>
         </div>
       </div>
       <div class="tw-w-full lg:tw-w-1/4 tw-py-8 lg:tw-pr-8">
