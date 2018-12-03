@@ -39,15 +39,7 @@
           <span class="meter" style="width: <%= @approval.percentage_complete %>;"></span>
         </div>
 
-        <% if approver = @approval.approvers.by_user(current_user).first %>
-          <% if approver.has_responded? %>
-            <button class="button primary" data-open="approvalModal">Update Response</button>
-          <% else %>
-            <button class="button primary" data-open="approvalModal">Respond</button>
-          <% end %>
-        <% end %>
-
-        <%= link_to "Open File", @approval.link, target: "_blank", class: "button secondary"%>
+        <%= link_to "View Document Full Screen", @approval.link, target: "_blank", class: "button secondary"%>
         <!--- END DOCUMENT INFO -->
       </div>
     </div>

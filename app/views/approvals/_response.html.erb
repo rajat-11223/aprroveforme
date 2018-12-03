@@ -1,3 +1,4 @@
+<% return if current_user == approver.approval.user %>
 <% case approver.status %>
 <% when "approved" %>
   <div class="grid-x">
