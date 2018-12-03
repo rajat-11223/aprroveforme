@@ -13,8 +13,8 @@
   </div>
 <% else %>
   <div class="tw-h-screen">
-    <div>
-      <h2 class="tw-text-base tw-text-grey-dark"><%= requester_name %> has requested your approval on</h2>
+    <div class="tw-pt-4">
+      <h2 class="tw-text-base tw-text-grey-dark tw-leading-none"><%= requester_name %> has requested your approval on</h2>
       <h1 class="tw-text-3xl"><%= @approval.title %></h3>
       <div class="tw-text-grey-darkest">Description: <%= @approval.description.strip.present? ? simple_format(@approval.description) : "none" %></div>
     </div>
