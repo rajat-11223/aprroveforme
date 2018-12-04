@@ -23,6 +23,10 @@ class Approval < ApplicationRecord
                                 reject_if: proc { |attributes| attributes["name"].blank? || attributes["email"].blank? },
                                 allow_destroy: true
 
+  def request_type
+    @request_type ||= RequestType.approval
+  end
+
   def deadline_in_words
     to_append = past_due? ? " ago" : " remaining"
     distance_of_time_in_words_to_now(self.deadline).humanize + to_append

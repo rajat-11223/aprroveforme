@@ -28,6 +28,7 @@ class ResponsesController < ApplicationController
 
     @approver = Approver.find_by(id: params[:id], code: code)
     @approval = @approver.try(:approval)
+    @request_type = @approval.try(:request_type)
   end
 
   def require_approver_and_approval

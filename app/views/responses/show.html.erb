@@ -17,7 +17,7 @@
 <% else %>
   <div class="tw-h-screen">
     <div class="tw-pt-4">
-      <h2 class="tw-text-base tw-text-grey-dark tw-leading-none"><%= requester_name %> has requested your approval on</h2>
+      <h2 class="tw-text-base tw-text-grey-dark tw-leading-none"><%= requester_name %> has requested your <%= @request_type.lower_name %> on</h2>
       <h1 class="tw-text-3xl"><%= @approval.title %></h3>
       <div class="tw-text-grey-darkest">Description: <%= @approval.description.strip.present? ? simple_format(@approval.description) : "none" %></div>
     </div>
@@ -35,24 +35,28 @@
         </div>
       </div>
       <div class="tw-w-full lg:tw-w-1/4 tw-py-8 lg:tw-pr-8">
-        <%= form_for @approver, url: response_path(@approver, code: @approver.code), class: "tw-flex tw-flex-col", remote: true do |f|  %>
+        <%= form_for @approver, url: response_path(@approver, code: @approver.code), class: "tw-flex tw-flex-col tw-px-1", remote: true do |f|  %>
+          <p class="tw-font-semibold tw-leading-none">It just takes 3 steps:</p>
+          <ol>
+            <li>Choose <%= @request_type.request_options.map(&:last).join(" or ") %></li>
+            <li>Enter comments</li>
+            <li>Click Submit Response</li>
+          </ol>
           <%= f.hidden_field :code %>
 
-          <%= f.collection_radio_buttons :status, [["approved", "Approved"], ["declined", "Declined"]], :first, :last do |opt| %>
+          <%= f.collection_radio_buttons :status, @request_type.request_options, :first, :last do |opt| %>
             <div class="tw-py-2 button-group">
+              <%# TODO: Make Colors Customizable %>
               <% color = opt.value == "approved" ? "tw-bg-green-light" : "tw-bg-red-light" %>
+
               <%= opt.radio_button required: true, class: "hidden" %>
-              <%= opt.label class: "#{color} tw-mx-auto tw-text-center tw-hover:bg-green-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-32 tw-p-3" %>
+              <%= opt.label class: "#{color} tw-mx-auto tw-text-center tw-hover:bg-green-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-full tw-p-3" %>
             </div>
           <% end %>
 
-          <div class="tw-px-1">
-            <%= f.text_area :comments, placeholder: "Please provide helpful feedback here", required: true, rows: 7, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-4 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
-          </div>
+          <%= f.text_area :comments, placeholder: "Please provide helpful feedback", required: true, rows: 7, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-4 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
 
-          <div class="tw-px-1">
-            <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-black hover:tw-text-white tw-font-bold tw-py-4 tw-border-none tw-w-full", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
-          </div>
+          <%= f.submit "Submit Response", class: "tw-bg-yellow-dark tw-hover:bg-yellow-darker tw-text-black hover:tw-text-white tw-font-bold tw-py-4 tw-border-none tw-w-full", data: { confirm: "Are you sure you want to submit your response? You will be unable to change it later."} %>
         <% end %>
       </div>
     </div>
