@@ -24,3 +24,12 @@ en:
       previous: "&lt; Previous"
       next: "Next &gt;"
       truncate: "..."
+
+  layouts:
+    footer:
+      about: About
+      faqs: FAQs
+      home: Home
+      privacy: Privacy
+      support: Support
+      terms: Terms

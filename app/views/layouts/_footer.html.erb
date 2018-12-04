@@ -1,25 +1,13 @@
-<footer>
-  <div class="grid-x">
-    <div class="cell large-offset-2 large-2 small-5">
-      <p>Copyright © <%= Time.now.year %> <%= t("app-title") %> </p>
-    </div>
-
-    <div class="cell large-7 small-6">
-      <ul class="menu align-right">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "About", page_path("about") %></li>
-        <li><%= link_to "FAQs", page_path("faq") %>
-        <li>
-          <a href="mailto:team@approveforme.com" data-uv-trigger id="support-link">Support</a>
-        </li>
-        <li><%= link_to "Terms", page_path("terms") %></li>
-        <li><%= link_to "Privacy", page_path("privacy") %></li>
-        <li><a href="https://www.facebook.com/pages/Approve-For-Me/229770000502677" target="_blank" class="fi-social-facebook icon" style="color: black; font-size: 32px; padding: 0rem 1rem;"></a></li>
-        <li><a href="https://twitter.com/approveforme" target="_blank" class="fi-social-twitter" style="color: black; font-size: 32px; padding: .25rem 1rem;"></a></li>
-      </ul>
-    </div>
-  </div>
+<footer class="tw-w-full tw-bg-grey-darker tw-pt-4 tw-border-t-2 tw-border-grey-lightest">
+  <ul class="tw-list-reset tw-flex tw-flex-wrap tw-pl-8 tw-pr-20 tw-items-center">
+    <li class="tw-flex-grow tw-text-white">Copyright &copy; <%= Time.now.year %> <%= t("app-title") %></li>
+    <li class="tw-mr-3"><%= link_to t(".home"), root_path %></li>
+    <li class="tw-mr-3"><%= link_to t(".about"), page_path("about") %></li>
+    <li class="tw-mr-3"><%= link_to t(".faqs"), page_path("faq") %>
+    <li class="tw-mr-3"><%= link_to t(".support"), "mailto:team@approveforme.com", id: "support-link", data: { uv_trigger: true, uv_mode: "contact" } %></li>
+    <li class="tw-mr-3"><%= link_to t(".terms"), page_path("terms") %></li>
+    <li class="tw-mr-3"><%= link_to t(".privacy"), page_path("privacy") %></li>
+    <!-- <li class="tw-mr-3"><%= link_to "", "https://www.facebook.com/pages/Approve-For-Me/229770000502677", target: "_blank", class: "fi-social-facebook tw-text-black hover:tw-text-black tw-text-3xl tw-p-0" %></li> -->
+    <li class="tw-mr-3"><%= link_to "", "https://twitter.com/approveforme", target: "_blank", class: "fi-social-twitter tw-text-black hover:tw-text-black tw-text-3xl" %></li>
+  </ul>
 </footer>
-
-
-<%= Gon::Base.render_data %>
