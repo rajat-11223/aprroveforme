@@ -7,8 +7,11 @@ class Approver < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :email
-  validates :status, inclusion: {in: %w(pending approved declined)}, on: :create
-  validates :status, inclusion: {in: %w(approved declined)}, on: :update
+
+  # TODO: Ensure approvers can only set stats to approved decline on update. This,
+  # valdation, however, doesn't work because it disallows approvals to be updated
+  # validates :status, inclusion: {in: %w(approved declined)}, on: :update
+  validates :status, inclusion: {in: %w(pending approved declined)} #, on: :create
   validates :required, inclusion: {in: %w(required optional)}
   validates_format_of :email, :with => /\A(.*)@(.*)\.(.*)\Z/
 
