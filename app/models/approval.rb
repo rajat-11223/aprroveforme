@@ -82,7 +82,7 @@ class Approval < ApplicationRecord
   end
 
   def deadline_in_future
-    return if deadline.present? && deadline.beginning_of_day >= Date.today.end_of_day
+    return if deadline.present? && deadline.beginning_of_day >= Time.zone.today.end_of_day
 
     errors.add(:deadline, "Please select a deadline in the future")
   end

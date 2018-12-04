@@ -73,7 +73,7 @@ class User < ApplicationRecord
   def self.to_csv(output = "")
     output << CSV.generate_line(self.column_names)
 
-    self.find_each.lazy.each do |user, index|
+    self.find_each.lazy.each do |user, _index|
       line = CSV.generate_line(user.attributes.values_at(*column_names))
       output << line
     end
