@@ -25,6 +25,7 @@ class ResponsesController < ApplicationController
 
   def set_approver_and_approval
     code = params.dig(:code) || params.dig(:approver, :code)
+
     @approver = Approver.find_by(id: params[:id], code: code)
     @approval = @approver.try(:approval)
   end
