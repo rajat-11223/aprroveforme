@@ -21,7 +21,7 @@ class ApproverController < ApplicationController
   end
 
   def approver_params
-    params.require(:approver).permit(:id, :email, :name, :required, :status, :comments, :code)
+    params.require(:approver).permit(:id, :email, :name, :required)
   end
 
 end

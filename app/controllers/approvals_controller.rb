@@ -17,18 +17,6 @@ class ApprovalsController < ApplicationController
   def show
     @approval = Approval.includes(:approvers).find(params[:id])
     authorize! :read, @approval
-
-    # 3.times { @approval.tasks.build } if @approval.tasks.empty?
-
-    if session[:code].present?
-      approver = @approval.approvers.find { |a| a.code == session[:code] }
-
-      if approver.present? && (approver.approval_id == @approval.id) and (current_user.email != approver.email)
-        current_user.update_attributes second_email: approver.email.downcase
-      end
-
-      session.delete(:code)
-    end
   end
 
   # GET /approvals/new

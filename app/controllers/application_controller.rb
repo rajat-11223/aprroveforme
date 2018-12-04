@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   helper_method :user_signed_in?
   helper_method :correct_user?
 
-  before_action :set_code
   before_action :setup_gon
 
   check_authorization
@@ -61,11 +60,7 @@ class ApplicationController < ActionController::Base
       redirect_to(redirection_url || root_url)
     end
 
-    def set_code
-      return unless params["code"].present?
 
-      session[:code] = params["code"]
-    end
 
     def setup_gon
       gon.push googleAppId: ENV.fetch("APP_ID"),
