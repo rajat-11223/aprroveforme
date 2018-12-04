@@ -9,9 +9,8 @@ describe "Allow non-google (i.e. unauthenticated) users to approve an approval",
     before { visit response_path(approver.id, code: approver.code) }
 
     it "happy path" do
-      click_approved
       provide_comments("This is awesome!")
-      submit_response
+      click_approved
 
       shows_thank_you_page
 
@@ -60,20 +59,18 @@ describe "Allow non-google (i.e. unauthenticated) users to approve an approval",
   end
 
   def click_approved
-    find("label[for=approver_status_approved]").click
+    accept_alert do
+      find("label[for=approver_status_approved]").click
+    end
   end
 
   def click_declined
-    find("label[for=approver_status_declined]").click
+    accept_alert do
+      find("label[for=approver_status_declined]").click
+    end
   end
 
   def provide_comments(text)
     fill_in "approver_comments", with: text
-  end
-
-  def submit_response
-    accept_alert do
-      click_button("Submit Response")
-    end
   end
 end

@@ -18,6 +18,10 @@ en:
       action: Delete
       confirmation: Are you sure you want to delete this approval? This cannot be undone.
 
+  response:
+    create:
+      confirmation: Are you sure you want to submit your response? You will be unable to change it later.
+
   hello: "Hello world"
   views:
     pagination:

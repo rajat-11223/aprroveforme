@@ -30,6 +30,10 @@ class RequestType < OpenStruct
     end
   end
 
+  def request_text_options
+    request_options.map(&:last)
+  end
+
   def allow_dissenting?
     allow_dissenting
   end
