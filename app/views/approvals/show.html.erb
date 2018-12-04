@@ -2,7 +2,7 @@
 <div class="grid-x">
   <div class="auto cell">
     <h2><%= @approval.title %></h2>
-    <p class="approval-description"><%= @approval.description %></p>
+    <%= simple_format(@approval.description) %>
   </div>
 </div>
 

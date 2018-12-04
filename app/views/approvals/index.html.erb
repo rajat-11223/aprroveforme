@@ -16,7 +16,7 @@
   <tr>
     <td><%= approval.title %></td>
     <td><%= approval.user.email %></td>
-    <td><%= approval.description %></td>
+    <td><%= simple_formate(approval.description) %></td>
     <td><%= approval.approvers.count %></td>
     <td><%= approval.deadline %></td>
     <td><%= link_to t("approval.show.action"), approval %></td>

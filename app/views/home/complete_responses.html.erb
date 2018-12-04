@@ -40,7 +40,7 @@
 
         <tr>
           <td class="bold"><%= link_to approver.approval.title, approver.approval %></td>
-          <td><%= approver.approval.description %></td>
+          <td><%= truncate(approver.approval.description) %></td>
           <td><%= approver.status %></td>
           <td>
             <%= image_tag image_url(approver.approval.user.email), class: "pic-details" %>
