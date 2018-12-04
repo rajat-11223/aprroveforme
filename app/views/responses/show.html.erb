@@ -29,7 +29,7 @@
           <div class="tw-flex-grow tw-hidden md:tw-block tw-h-64">
             <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
           </div>
-          <div class="tw-flex-none tw-px-2 tw-py-4 tw-text-center">
+          <div class="tw-flex-none tw-px-2 tw-py-4 tw-text-center lg:tw-hidden">
             <%= link_to "View Document Full Screen", @approval.link, target: "_blank", class: "tw-cursor-pointer tw-text-black hover:tw-text-white tw-bg-yellow-dark tw-px-3 tw-py-2"%>
           </div>
         </div>
