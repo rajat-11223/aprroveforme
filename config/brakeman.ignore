@@ -1,32 +1,13 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "1a29fb67c0617fe170517af142c8ec41d1c02b6c5c71766e63cd6712b3238e95",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in link_to href",
-      "file": "app/views/shared/_approval_preview.html.erb",
-      "line": 6,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(image_tag(\"preview-not-available.png\"), Approval.includes(:approvers).find(params[:id]).link, :target => \"_blank\")",
-      "render_path": [{"type":"controller","class":"ApprovalsController","method":"show","line":24,"file":"app/controllers/approvals_controller.rb"},{"type":"template","name":"approvals/show","line":12,"file":"app/views/approvals/show.html.erb"}],
-      "location": {
-        "type": "template",
-        "template": "shared/_approval_preview"
-      },
-      "user_input": "Approval.includes(:approvers).find(params[:id]).link",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
       "fingerprint": "4df28767c004cb7b8980c5176f5a60e27c1c56b8c23057f44d015d0ad768e9b8",
       "check_name": "UnscopedFind",
       "message": "Unscoped call to Approval#find",
       "file": "app/controllers/approvals_controller.rb",
-      "line": 52,
+      "line": 40,
       "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
       "code": "Approval.find(params[:id])",
       "render_path": null,
@@ -49,7 +30,7 @@
       "line": 27,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(Approval.new(approval_params.merge(:owner => current_user.id)).link_title, Approval.new(approval_params.merge(:owner => current_user.id)).link, :target => \"_blank\")",
-      "render_path": [{"type":"controller","class":"ApprovalsController","method":"create","line":91,"file":"app/controllers/approvals_controller.rb"},{"type":"template","name":"approvals/new","line":7,"file":"app/views/approvals/new.html.erb"}],
+      "render_path": [{"type":"controller","class":"ApprovalsController","method":"create","line":79,"file":"app/controllers/approvals_controller.rb"},{"type":"template","name":"approvals/new","line":7,"file":"app/views/approvals/new.html.erb"}],
       "location": {
         "type": "template",
         "template": "approvals/_form"
@@ -65,7 +46,7 @@
       "check_name": "UnscopedFind",
       "message": "Unscoped call to Approval#find",
       "file": "app/controllers/approvals_controller.rb",
-      "line": 133,
+      "line": 121,
       "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
       "code": "Approval.find(params[:id])",
       "render_path": null,
@@ -75,6 +56,25 @@
         "method": "destroy"
       },
       "user_input": "params[:id]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "770a72f4fa87df35b76037d03de059d9eba107eab5d896be3b6b74122cc03afb",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in link_to href",
+      "file": "app/views/shared/_approval_preview.html.erb",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(image_tag(\"preview-not-available.png\", :class => \"tw-w-full\"), Approval.includes(:approvers).find(params[:id]).link, :target => \"_blank\")",
+      "render_path": [{"type":"controller","class":"ApprovalsController","method":"show","line":20,"file":"app/controllers/approvals_controller.rb"},{"type":"template","name":"approvals/show","line":12,"file":"app/views/approvals/show.html.erb"}],
+      "location": {
+        "type": "template",
+        "template": "shared/_approval_preview"
+      },
+      "user_input": "Approval.includes(:approvers).find(params[:id]).link",
       "confidence": "Weak",
       "note": ""
     },
@@ -128,7 +128,7 @@
       "line": 37,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(\"View Document Full Screen\", Approval.includes(:approvers).find(params[:id]).link, :target => \"_blank\", :class => \"button secondary\")",
-      "render_path": [{"type":"controller","class":"ApprovalsController","method":"show","line":24,"file":"app/controllers/approvals_controller.rb"}],
+      "render_path": [{"type":"controller","class":"ApprovalsController","method":"show","line":20,"file":"app/controllers/approvals_controller.rb"}],
       "location": {
         "type": "template",
         "template": "approvals/show"
@@ -158,6 +158,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-12-03 12:47:54 -0500",
+  "updated": "2018-12-04 13:47:54 -0500",
   "brakeman_version": "4.3.1"
 }
