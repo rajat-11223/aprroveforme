@@ -27,10 +27,12 @@ Workflow::Application.routes.draw do
   resources :home do
     collection do
       get :dashboard
-      get :pending_approvals
-      get :open_approvals
-      get :past_documents
-      get :past_approvals
+
+      get :open_requests
+      get :complete_requests
+
+      get :open_responses
+      get :complete_responses
     end
   end
 

@@ -20,7 +20,7 @@
     </thead>
     <tbody></tbody>
 
-    <% @my_approvals.each do |approval| %>
+    <% @open_requests.each do |approval| %>
       <tr id="<%= dom_id(approval) %>">
         <td class="bold"><%= link_to approval.title, approval %></td>
         <td><%= approval.deadline.to_date %>,
@@ -37,19 +37,16 @@
                   <p class="progress-details"><%= approval.ratio_complete %>
                     responses</p>
                 </h4>
-                <!--<span class="dashboard-table-timestamp">03/04/2017</span>-->
               </div>
             </div>
 
           </td>
 
           <td class="listing-inquiry-status">
-            <div class="grid-x align-top">
-              <div class="cell small-6">
-                  <%= link_to 'View', approval, class: 'button small round approval-view' %>
-              </div>
-              <div class="cell small-6">
-                <%= link_to 'Use As Template', new_approval_path(from_approval: approval), class: 'button small round approval-from-template' %>
+            <div class="flex-container align-top">
+              <div class="flex-child-grow">
+                <h4 class="dashboard-table-text"><%= link_to t("approval.show.action"), approval, class: 'button small round' %></h4>
+                <h4 class="dashboard-table-text"><%= link_to t("approval.clone.action"), new_approval_path(from_approval: approval), class: 'button small round' %></h4>
               </div>
             </div>
           </td>
@@ -58,7 +55,7 @@
     </tbody>
   </table>
 
-  <% if @my_approvals.empty? %>
+  <% if @open_requests.empty? %>
     <div class="text-center">
       <h3>No Records</h3>
     </div>

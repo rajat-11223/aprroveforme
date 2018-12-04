@@ -27,7 +27,7 @@
       </tr>
     </thead>
     <tbody></tbody>
-    <% @pending_approvals.each do |approver| %>
+    <% @open_responses.each do |approver| %>
       <tr>
         <td class="bold"><%= approver.approval.user.name %></td>
         <td><%= approver.approval.title %></td>
@@ -47,7 +47,7 @@
   </tbody>
   </table>
 
-  <% if @pending_approvals.empty? %>
+  <% if @open_responses.empty? %>
   <div class="text-center">
     <h3>No Records</h3>
   </div>

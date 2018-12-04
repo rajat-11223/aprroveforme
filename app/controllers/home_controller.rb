@@ -3,60 +3,56 @@ class HomeController < ApplicationController
 
   before_action :set_second_email
   before_action :require_user!, except: [:index]
+  before_action :send_to_dashboard, only: [:index]
 
   def index
-    redirect_to(dashboard_home_index_path) if current_user.present?
-
     authorize! :read, :homepage
   end
 
   def dashboard
     authorize! :read, Approval.new(owner: current_user.id)
 
-    base_approvals = current_user.approvals
-
-    @my_approvals = base_approvals.deadline_is_in_future
-    @my_completed_approvals = base_approvals.deadline_is_past
-
-    base_approver = Approver.by_user(current_user)
-    @pending_approvals = base_approver.pending
-    @signedoff_approvals = base_approver.approved_or_declined
-
-    user_subscription_date = current_user.subscription.plan_date
-    @user_approvals = current_user.approvals.from_this_month
+    open_requests
+    open_responses
   end
 
-  def pending_approvals
+  def open_requests
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @pending_approvals = Approver.includes(:approval)
-                                 .pending
-                                 .by_user(current_user)
-                                 .select { |approver| !approver.approval.complete? }
+    @open_requests = current_user.approvals.deadline_is_in_future
   end
 
-  def open_approvals
+  def complete_requests
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @my_approvals = current_user.approvals.deadline_is_in_future
+    @complete_requests = current_user.approvals.deadline_is_past
   end
 
-  def past_documents
+  def open_responses
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @my_completed_approvals = current_user.approvals.deadline_is_past
+    @open_responses = Approver.includes(:approval)
+                              .pending
+                              .by_user(current_user)
+                              .select { |approver| !approver.approval.complete? }
   end
 
-  def past_approvals
+  def complete_responses
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @signedoff_approvals = Approver.includes(:approval)
-      .approved_or_declined
-      .by_user(current_user)
-      .select { |approver| approver.approval.complete? }
+    @complete_responses = Approver.includes(:approval)
+                                  .approved_or_declined
+                                  .by_user(current_user)
+                                  .select { |approver| approver.approval.complete? }
   end
 
   private
+
+  def send_to_dashboard
+    return unless current_user.present?
+
+    redirect_to(dashboard_home_index_path)
+  end
 
   def set_second_email
     return unless session[:code]
