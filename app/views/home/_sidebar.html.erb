@@ -1,6 +1,6 @@
 <div id="sidebar">
   <div class="new-approval-button">
-    <b><%= link_to "New Approval", new_approval_path, class: "button primary create expand" %></b>
+    <b><%= link_to t("approval.create.action"), new_approval_path, class: "button primary create expand" %></b>
   </div>
 
   <div>
@@ -20,26 +20,26 @@
       <div class="title">Created Approvals:</div>
     </li>
     <li>
-      <div class="title <%= active_class([open_approvals_home_index_path]) %>">
-        <%= link_to 'Open Approvals', open_approvals_home_index_path %>
+      <div class="title <%= active_class([open_requests_home_index_path]) %>">
+        <%= link_to 'Open Approvals', open_requests_home_index_path %>
       </div>
     </li>
     <li>
-      <div class="title <%= active_class([past_documents_home_index_path]) %>">
-        <%= link_to 'Complete Approvals', past_documents_home_index_path %>
+      <div class="title <%= active_class([complete_requests_home_index_path]) %>">
+        <%= link_to 'Complete Approvals', complete_requests_home_index_path %>
       </div>
     </li>
     <li>
       <div class="title">Received Approvals:</div>
     </li>
     <li>
-      <div class="title <%= active_class([pending_approvals_home_index_path]) %>">
-        <%= link_to 'Waiting on Response', pending_approvals_home_index_path %>
+      <div class="title <%= active_class([open_responses_home_index_path]) %>">
+        <%= link_to 'Waiting on Response', open_responses_home_index_path %>
       </div>
     </li>
     <li>
-      <div class="title <%= active_class([past_approvals_home_index_path]) %>">
-        <%= link_to 'Have Responded', past_approvals_home_index_path %>
+      <div class="title <%= active_class([complete_responses_home_index_path]) %>">
+        <%= link_to 'Have Responded', complete_responses_home_index_path %>
       </div>
     </li>
   </ul>

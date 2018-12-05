@@ -1,25 +1,25 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Approver do
-  let(:approval) { create(:approval) }
-  subject { approval.approvers.first }
+  subject { create(:approver, :approved) }
+  let(:approval) { approver.approval }
 
-  it 'has valid factory' do
+  it "has valid factory" do
     expect(subject).to be_valid
   end
 
-  it 'requires an approval' do
+  it "requires an approval" do
     subject.approval = nil
 
     expect(subject).to_not be_valid
   end
 
-  it 'requires a name' do
+  it "requires a name" do
     subject.name = nil
     expect(subject).to_not be_valid
   end
 
-  it 'requires an email' do
+  it "requires an email" do
     subject.email = nil
     expect(subject).to_not be_valid
   end
@@ -42,11 +42,46 @@ describe Approver do
     end
   end
 
+  describe "status" do
+    context "when created" do
+      it "should allow pending" do
+        expect(create(:approver, status: "pending")).to be_present
+      end
+
+      it "should now allow random" do
+        expect { create(:approver, status: "rand") }.to raise_error ActiveRecord::RecordInvalid
+      end
+    end
+    context "when updating" do
+      subject { create(:approver, status: "pending") }
+
+      xit "should not allow pending" do
+        subject.status = "pending"
+        expect(subject).to_not be_valid
+      end
+
+      it "should not allow random" do
+        subject.status = "random"
+        expect(subject).to_not be_valid
+      end
+
+      it "should allow approved" do
+        subject.status = "approved"
+        expect(subject).to be_valid
+      end
+
+      it "should allow declined" do
+        subject.status = "declined"
+        expect(subject).to be_valid
+      end
+    end
+  end
+
   describe "scopes" do
     let!(:approval) { create(:approval) }
 
     context "with 0 emails" do
-      it '.for_email' do
+      it ".for_email" do
         result = Approver.for_email(nil)
         expect(result).to eq([])
 
@@ -57,7 +92,7 @@ describe Approver do
     context "with one emails" do
       let(:approver) { create(:approver, approval: approval, email: "ab@cd.com") }
 
-      it '.for_email' do
+      it ".for_email" do
         result = Approver.for_email("ab@cd.com")
         expect(result).to eq([approver])
 
@@ -69,7 +104,7 @@ describe Approver do
       let(:approver_two) { create(:approver, approval: approval, email: "ef@gh.com") }
       let(:approver) { create(:approver, approval: approval, email: "ab@cd.com") }
 
-      it '.for_email' do
+      it ".for_email" do
         result = Approver.for_email("ab@cd.com", "ef@gh.com")
         expect(result).to eq([approver, approver_two])
 

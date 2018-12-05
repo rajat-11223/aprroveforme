@@ -1,6 +1,5 @@
 @import "../settings";
 
-$footer-height: 60px;
 
 html, body {
   height: 100%;
@@ -10,22 +9,4 @@ html, body {
 .content {
   padding: 20px;
   min-height: 100%;
-  margin: 0 auto $footer-height;
-}
-
-footer {
-  // position: fixed;
-  // bottom: 0;
-  width: 100%;
-  background-color: $dark-gray;
-  padding-top: 10px;
-  border-top: 3px solid #dedede;
-  color: $light-gray;
-  height: $footer-height;
-
-  .text-footer, .text-footer a, .text-footer a:hover {
-    font-size: 12px;
-    color: #fff;
-    font-weight: normal;
-  }
 }

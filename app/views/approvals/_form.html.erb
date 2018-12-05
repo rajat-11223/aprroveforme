@@ -67,6 +67,7 @@
                                       id: "datepicker",
                                       value: (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline),
                                       as: :string,
+                                      autocomplete: :off,
                                       required: true %>
         </div>
       </div>

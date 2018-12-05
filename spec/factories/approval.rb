@@ -4,6 +4,7 @@ FactoryBot.define do
     link "https://google.drive/file.pdf"
     deadline 3.days.from_now
     user
-    approvers { [ build(:approver) ]}
+    description { "" }
+    approvers { [build(:approver)] }
   end
 end

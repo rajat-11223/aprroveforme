@@ -2,9 +2,38 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  app-title: ApproveForMe
+  app-title-with-subtitle: "ApproveForMe :: %{subtitle}"
+
+  approval:
+    create:
+      action: New Approval
+    clone:
+      action: Use As Template
+    show:
+      action: View
+    edit:
+      action: Edit
+    delete:
+      action: Delete
+      confirmation: Are you sure you want to delete this approval? This cannot be undone.
+
+  response:
+    create:
+      confirmation: Are you sure you want to submit your response? You will be unable to change it later.
+
   hello: "Hello world"
   views:
     pagination:
       previous: "&lt; Previous"
       next: "Next &gt;"
       truncate: "..."
+
+  layouts:
+    footer:
+      about: About
+      faqs: FAQs
+      home: Home
+      privacy: Privacy
+      support: Support
+      terms: Terms

@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody></tbody>
-    <% @my_completed_approvals.each do |approval| %>
+    <% @complete_requests.each do |approval| %>
       <tr>
         <td class="bold"><%= link_to truncate(approval.title), approval %></td>
         <td><%= truncate(approval.description) %></td>
@@ -32,21 +32,19 @@
         </td>
 
         <td class="listing-inquiry-status">
-
           <div class="flex-container align-top">
             <div class="flex-child-grow">
-              <h4 class="dashboard-table-text"><%= link_to 'View', approval, class: 'button small round' %></h4>
-              <h4 class="dashboard-table-text"><%= link_to 'Use As Template', new_approval_path(from_approval: approval), class: 'button small round' %></h4>
+              <h4 class="dashboard-table-text"><%= link_to t("approval.show.action"), approval, class: 'button small round' %></h4>
+              <h4 class="dashboard-table-text"><%= link_to t("approval.clone.action"), new_approval_path(from_approval: approval), class: 'button small round' %></h4>
             </div>
           </div>
-
         </td>
       </tr>
     <% end %>
   </tbody>
   </table>
 
-  <% if @my_completed_approvals.empty? %>
+  <% if @complete_requests.empty? %>
   <div class="text-center">
     <h3>No Records</h3>
   </div>

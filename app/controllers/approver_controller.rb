@@ -14,14 +14,13 @@ class ApproverController < ApplicationController
     authorize! :update, @approver
 
     if @approver.update_attributes(approver_params)
-      redirect_to @approver.approval, notice: 'Approval was successfully updated.'
+      redirect_to @approver.approval, notice: "Approval was successfully updated."
     else
       render action: "edit"
     end
   end
 
   def approver_params
-    params.require(:approver).permit(:id, :email, :name, :required, :status, :comments, :code)
+    params.require(:approver).permit(:id, :email, :name, :required)
   end
-
 end

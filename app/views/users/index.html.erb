@@ -11,7 +11,7 @@
 
 <div class="grid-x">
   <div class="large-4 cell panel center">
-    <h4><%= Approval.where('created_at >= ?', Date.today).count %></h4>
+    <h4><%= Approval.where('created_at >= ?', Time.zone.today).count %></h4>
     DAILY NEW APPROVALS
   </div>
   <div class="large-4 cell panel center">
@@ -26,7 +26,7 @@
 
 <div class="grid-x">
   <div class="large-4 cell panel center">
-    <h4><%= User.where('created_at >= ?', Date.today).count %></h4>
+    <h4><%= User.where('created_at >= ?', Time.zone.today).count %></h4>
     DAILY NEW USERS
   </div>
   <div class="large-4 cell panel center">
