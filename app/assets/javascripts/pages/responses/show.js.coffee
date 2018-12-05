@@ -2,7 +2,7 @@ class ApproveForMe.Pages.ResponsesShow extends ApproveForMe.Page
   render: ->
 
   bindEvents: ->
-    @onEvent 'change', "input[name='approver[status]']", {}, @submitForm
+    @onEvent 'click', "input[name='approver[status]']", {}, @submitForm
 
   # Helpers
   submitForm: (e) ->
