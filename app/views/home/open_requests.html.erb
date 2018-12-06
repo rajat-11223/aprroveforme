@@ -32,8 +32,9 @@
             <div class="flex-container align-top">
               <div class="flex-child-grow">
                 <h4 class="dashboard-table-text">
-                  <div class="progress">
-                    <span class="meter" style="width: <%= approval.percentage_complete %>;"></span></div>
+                  <div class="tw-bg-grey-light tw-mb-4 tw-h-4 tw-w-full">
+                    <div class="tw-bg-yellow-dark tw-h-full" style="width: <%= approval.percentage_complete %>;"></div>
+                  </div>
                   <p class="progress-details"><%= approval.ratio_complete %>
                     responses</p>
                 </h4>

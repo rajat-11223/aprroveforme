@@ -30,8 +30,9 @@
           <strong>Progress:</strong>
           <%= @approval.ratio_complete %>
           required responses</p>
-        <div class="progress">
-          <span class="meter" style="width: <%= @approval.percentage_complete %>;"></span>
+
+        <div class="tw-bg-grey-light tw-mb-4 tw-h-4 tw-w-full">
+          <div class="tw-bg-yellow-dark tw-h-full" style="width: <%= @approval.percentage_complete %>;"></div>
         </div>
 
         <%= link_to "View Document Full Screen", @approval.link, target: "_blank", class: "button secondary"%>
