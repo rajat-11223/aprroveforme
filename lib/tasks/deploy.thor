@@ -103,7 +103,7 @@ class Deploy < Thor
 
         case stage
         when :staging
-          heroku_run "rails jobs:clear", stage
+          heroku_run "rails chore:clear_sidekiq_jobs", stage
         end
 
         # heroku_run "rails temporary:migrate_goal_status", stage

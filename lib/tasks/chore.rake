@@ -8,4 +8,9 @@ namespace :chore do
       puts "NOT RUNNING!!!"
     end
   end
+
+  desc "Clear Sidekiq jobs"
+  task :clear_sidekiq_jobs => :environment do
+    Sidekiq::Queue.new.clear
+  end
 end
