@@ -10,9 +10,6 @@
           Deadline
         </th>
         <th>
-          Progress
-        </th>
-        <th>
           Responses
         </th>
         <th>Action</th>
@@ -25,7 +22,6 @@
         <td class="bold"><%= link_to approval.title, approval %></td>
         <td><%= approval.deadline.to_date %>,
           <strong><%= approval.deadline_in_words %></td>
-          <td><%= approval.percentage_complete %></td>
 
           <td class="listing-inquiry-status">
 
@@ -35,8 +31,12 @@
                   <div class="tw-bg-grey-light tw-mb-4 tw-h-4 tw-w-full">
                     <div class="tw-bg-yellow-dark tw-h-full" style="width: <%= approval.percentage_complete %>;"></div>
                   </div>
-                  <p class="progress-details"><%= approval.ratio_complete %>
-                    responses</p>
+                  <p class="progress-details">
+                    <%= approval.ratio_complete %> responses
+                  </p>
+                  <p>
+                    <%= approval.percentage_complete %>
+                  </p>
                 </h4>
               </div>
             </div>
@@ -44,12 +44,7 @@
           </td>
 
           <td class="listing-inquiry-status">
-            <div class="flex-container align-top">
-              <div class="flex-child-grow">
-                <h4 class="dashboard-table-text"><%= link_to t("approval.show.action"), approval, class: 'button small round' %></h4>
-                <h4 class="dashboard-table-text"><%= link_to t("approval.clone.action"), new_approval_path(from_approval: approval), class: 'button small round' %></h4>
-              </div>
-            </div>
+            <%= render partial: "approval-actions", locals: { approval: approval } %>
           </td>
         </tr>
       <% end %>

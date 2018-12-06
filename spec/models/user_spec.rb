@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe User do
   subject { build_stubbed(:user) }
@@ -17,11 +17,5 @@ describe User do
 
   it "does not have a default last_login_at" do
     expect(subject.last_login_at).to be_nil
-  end
-
-  it '#all_emails' do
-    user = build_stubbed(:user, email: "ab@cd.com", second_email: "ef@gh.com")
-
-    expect(user.all_emails).to eq(["ab@cd.com", "ef@gh.com"])
   end
 end

@@ -24,7 +24,7 @@ class Approver < ApplicationRecord
   end
 
   scope :for_email, -> (*emails) { where(email: Array(emails).compact.map(&:downcase)) }
-  scope :by_user, -> (user) { for_email(*user.all_emails) }
+  scope :by_user, -> (user) { for_email(user.email) }
 
   scope :required, -> { where(required: "required") }
   scope :optional, -> { where(required: "optional") }

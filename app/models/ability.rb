@@ -1,5 +1,6 @@
 class Ability
   include CanCan::Ability
+
   class DoneProcessing < StandardError; end
 
   def initialize(user)
@@ -32,10 +33,13 @@ class Ability
   end
 
   def standard_user_permissions
-    can [:read, :approve, :decline], Approval, approvers: { email: user.all_emails }
+    can [:read, :approve, :decline], Approval, approvers: {email: user.email}
 
     can [:create, :read], SubscriptionHistory, user_id: user.id
-    can :manage, Approval, owner: user.id
+
+    can :manage, Approval, owner: user.id, complete: false
+    can [:read, :clone], Approval, owner: user.id
+
     can [:create, :read, :update], User, id: user.id
   end
 end

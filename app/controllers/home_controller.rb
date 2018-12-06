@@ -18,22 +18,24 @@ class HomeController < ApplicationController
   def open_requests
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @open_requests = current_user.approvals.deadline_is_in_future
+    @open_requests = current_user.approvals
+                                 .not_complete
   end
 
   def complete_requests
     authorize! :read, Approval.new(owner: current_user.id)
 
-    @complete_requests = current_user.approvals.deadline_is_past
+    @complete_requests = current_user.approvals
+                                     .complete
   end
 
   def open_responses
     authorize! :read, Approval.new(owner: current_user.id)
 
     @open_responses = Approver.includes(:approval)
-                              .pending
+                              .where(approvals: {complete: false})
                               .by_user(current_user)
-                              .select { |approver| !approver.approval.complete? }
+                              .pending
   end
 
   def complete_responses
@@ -42,7 +44,6 @@ class HomeController < ApplicationController
     @complete_responses = Approver.includes(:approval)
                                   .approved_or_declined
                                   .by_user(current_user)
-                                  .select { |approver| approver.approval.complete? }
   end
 
   private

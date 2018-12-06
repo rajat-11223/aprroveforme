@@ -13,10 +13,6 @@ class User < ApplicationRecord
     @ability ||= Ability.new(self)
   end
 
-  def all_emails
-    [email, second_email].compact
-  end
-
   def google_auth
     @google_auth_client ||= begin
       # Create a new API client & load the Google Drive API

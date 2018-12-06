@@ -17,6 +17,9 @@ class Approval < ApplicationRecord
   scope :deadline_is_in_future, -> { where("deadline >= ?", 1.day.from_now.beginning_of_day) }
   scope :deadline_is_past, -> { where("deadline < ?", 1.day.from_now.beginning_of_day) }
 
+  scope :complete, -> { where(complete: true) }
+  scope :not_complete, -> { where.not(complete: true) }
+
   belongs_to :user, foreign_key: :owner
 
   accepts_nested_attributes_for :approvers,
@@ -51,12 +54,16 @@ class Approval < ApplicationRecord
     "#{required_approved_count}/#{required_approver_count}"
   end
 
-  def complete?
+  def is_completable?
     all_required_responses? || past_due?
   end
 
   def all_required_responses?
     required_approver_count == required_approved_count
+  end
+
+  def mark_as_complete!
+    self.update_attribute(:complete, true)
   end
 
   private

@@ -6,7 +6,6 @@
       <tr>
         <th>Document Name</th>
         <th>Description</th>
-        <th>Progress</th>
         <th>Deadline</th>
         <th>Action</th>
       </tr>
@@ -16,10 +15,8 @@
       <tr>
         <td class="bold"><%= link_to truncate(approval.title), approval %></td>
         <td><%= truncate(approval.description) %></td>
-        <td><%= approval.percentage_complete %></td>
 
         <td class="listing-inquiry-status">
-
           <div class="flex-container align-top">
             <div class="flex-child-grow">
               <h4 class="dashboard-table-text">
@@ -31,13 +28,8 @@
 
         </td>
 
-        <td class="listing-inquiry-status">
-          <div class="flex-container align-top">
-            <div class="flex-child-grow">
-              <h4 class="dashboard-table-text"><%= link_to t("approval.show.action"), approval, class: 'button small round' %></h4>
-              <h4 class="dashboard-table-text"><%= link_to t("approval.clone.action"), new_approval_path(from_approval: approval), class: 'button small round' %></h4>
-            </div>
-          </div>
+        <td>
+          <%= render partial: "approval-actions", locals: { approval: approval } %>
         </td>
       </tr>
     <% end %>
