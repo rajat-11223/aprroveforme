@@ -10,24 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_121900) do
+ActiveRecord::Schema.define(version: 2018_12_06_214158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "approvals", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255
+    t.string "title", limit: 255, null: false
     t.string "link", limit: 255
-    t.text "description"
-    t.datetime "deadline"
+    t.text "description", default: "", null: false
+    t.datetime "deadline", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "owner"
+    t.integer "owner", null: false
     t.string "embed", limit: 255
     t.string "link_title", limit: 255
     t.string "link_id", limit: 255
     t.string "link_type", limit: 255
-    t.string "perms", limit: 255
+    t.string "drive_perms", limit: 255, default: "reader"
+    t.boolean "drive_public", default: true, null: false
+    t.boolean "complete", default: false
   end
 
   create_table "approvers", id: :serial, force: :cascade do |t|
@@ -40,21 +42,6 @@ ActiveRecord::Schema.define(version: 2018_09_07_121900) do
     t.integer "approval_id", null: false
     t.text "comments", default: "", null: false
     t.string "code", limit: 255
-  end
-
-  create_table "delayed_jobs", id: :serial, force: :cascade do |t|
-    t.integer "priority", default: 0
-    t.integer "attempts", default: 0
-    t.text "handler"
-    t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string "locked_by", limit: 255
-    t.string "queue", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "gdpr_customers", force: :cascade do |t|

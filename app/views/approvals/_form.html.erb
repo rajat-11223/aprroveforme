@@ -1,13 +1,19 @@
-<%= form_for @approval do |f| %>
+<%= form_for @approval, remote: true do |f| %>
   <div class="grid-x grid-margin-x">
-    <div class="large-8 large-offset-2 item-approval-form cell">
+    <div class="large-10 large-offset-1 item-approval-form cell">
       <div class="grid-x">
         <div class="large-offset-1 large-2 small-3 cell">
           <p class="form-label">File*</p>
         </div>
-        <div class="large-4 small-4 cell">
-          <a id="file-selector" onclick="ApproveForMe.google.createFilePicker()" class="button primary" style="width:100%;">Select File</a>
+        <div class="large-3 small-3 cell">
+          <% picker_label = !@approval.persisted? ? "Select Google Drive File" : "Replace File" %>
+          <%= link_to picker_label, "", id: "google-file-picker",
+                                        class: "button primary",
+                                        style: "width: 100%" %>
         </div>
+        <!-- <div class="large-4 large-offset-1 small-4 cell">
+          <a id="file-selector" class="button primary" style="width:100%;">Select File from Computer</a>
+        </div> -->
         <div class="large-offset-1 large-4 small-5 cell">
           <p class="form-file-name">
             <div id="result">
@@ -24,10 +30,15 @@
         </div>
         <label class="error"><%= error_message_on @approval, :link %></label>
       </div>
-      <div class="grid-x">
+      <div class="grid-x" style="padding-top: 1rem">
         <div class="large-8 large-offset-3 small-12 cell">
-          <label for="perms" style="margin-top:-18px;">
-            <%= check_box("approval", "perms", {}, "writer", "reader") %>
+          <label for="approval_drive_public" style="margin-top:-18px;">
+            <%= check_box("approval", "drive_public", {checked: !@approval.drive_public}, "false", "true") %>
+            Require reviewers to be signed in to Google to view this document.</label>
+        </div>
+        <div class="large-8 large-offset-3 small-12 cell">
+          <label for="approval_drive_perms" style="margin-top:-18px;">
+            <%= check_box("approval", "drive_perms", {}, "writer", "reader") %>
             Allow reviewers to edit this document.</label>
         </div>
       </div>
@@ -36,7 +47,7 @@
           <p class="form-label">Title*</p>
         </div>
         <div class="large-8 small-9 cell">
-          <%= f.text_field :title, placeholder: "Title", id: "result2" %>
+          <%= f.text_field :title, placeholder: "Title", id: "result2", required: true, autocomplete: :off %>
         </div>
       </div>
       <div class="grid-x">
@@ -44,7 +55,7 @@
           <p class="form-label">Description</p>
         </div>
         <div class="large-8 small-9 cell">
-          <%= f.text_area :description, placeholder: "Description", rows: 3 %>
+          <%= f.text_area :description, placeholder: "Description", rows: 3, autocomplete: :off %>
         </div>
       </div>
       <div class="grid-x">
@@ -52,7 +63,12 @@
           <p class="form-label">Deadline*</p>
         </div>
         <div class="large-8 small-9 cell">
-          <%= f.text_field :deadline, placeholder: "MM/DD/YYYY", id: "datepicker", value: (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline), as: :string %>
+          <%= f.text_field :deadline, placeholder: "MM/DD/YYYY",
+                                      id: "datepicker",
+                                      value: (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline),
+                                      as: :string,
+                                      autocomplete: :off,
+                                      required: true %>
         </div>
       </div>
       <div class="grid-x">
@@ -73,8 +89,8 @@
             </div>
           </div>
           <%= f.fields_for :approvers do |builder| %>
-          <%= render 'approver_form', :f => builder %>
-        <% end %>
+            <%= render 'approver_form', f: builder %>
+          <% end %>
         <div class="add"></div>
         <div class="grid-x">
           <div class="large-12 cell">
@@ -86,7 +102,7 @@
     </div>
     <div class="grid-x">
       <div class="large-10 large-offset-3  cell">
-        <%= f.submit "Submit Document for Approval", :class => "button primary", :id =>"submit-approval" %>
+        <%= f.submit submit_button_text, class: "button primary", id: "submit-approval", data: { disable_with: "Saving approval..."} %>
       </div>
     </div>
   </div>

@@ -1,0 +1,45 @@
+<%= content_for :main do %>
+
+  <h4>Completed Approvals</h4>
+  <table class="dashboard-table">
+    <thead>
+      <tr>
+        <th>Document Name</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <% @complete_requests.each do |approval| %>
+      <tr>
+        <td class="bold"><%= link_to truncate(approval.title), approval %></td>
+        <td><%= truncate(approval.description) %></td>
+
+        <td class="listing-inquiry-status">
+          <div class="flex-container align-top">
+            <div class="flex-child-grow">
+              <h4 class="dashboard-table-text">
+                <%= approval.deadline.to_date %>
+              </h4>
+              <span class="dashboard-table-timestamp"><%= approval.deadline_in_words %></span>
+            </div>
+          </div>
+
+        </td>
+
+        <td>
+          <%= render partial: "approval-actions", locals: { approval: approval } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+
+  <% if @complete_requests.empty? %>
+  <div class="text-center">
+    <h3>No Records</h3>
+  </div>
+  <% end %>
+
+<% end %>

@@ -15,6 +15,7 @@ class ApproveForMe.Page
     @setupFoundation()
     @closeCallouts()
     @initCrisp()
+    @finishFormProgressBar()
 
     log("Rendering #{this.constructor.name}")
     @render()
@@ -23,6 +24,7 @@ class ApproveForMe.Page
   defaultBindEvents: ->
     log("Binding Events #{this.constructor.name}")
     @bindEvents()
+    @onEvent 'submit', 'form', {}, @startFormProgressBar
 
   onEvent: (event, selector, data, handler) ->
     $('body').on(event, selector, data, handler)
@@ -37,7 +39,21 @@ class ApproveForMe.Page
   closeCallouts: ->
     setTimeout ->
       $('.callout').trigger('close')
-    , 4000
+    , 10000
 
   initCrisp: ->
     ApproveForMe.crisp.init()
+
+  startFormProgressBar: ->
+    if $(this).data("remote") != true
+      return
+
+    if !Turbolinks.supported
+      return
+
+    Turbolinks.controller.adapter.progressBar.setValue(0)
+    Turbolinks.controller.adapter.progressBar.show()
+
+  finishFormProgressBar: ->
+    Turbolinks.controller.adapter.progressBar.setValue(10000)
+    Turbolinks.controller.adapter.progressBar.hide()

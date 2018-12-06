@@ -1,0 +1,19 @@
+@tailwind utilities;
+
+
+.tw-container h1, .tw-container h2, .tw-container h3, .tw-container h4, .tw-container h5, .tw-container h6, {
+  @apply .font-sans;
+}
+
+.button-group input {
+  @apply .hidden;
+}
+
+.button-group label {
+  @apply .mx-auto !important;
+}
+
+.button-group input:checked+label {
+  box-shadow: 0 0 0 .125rem rgba(0, 0, 0, 0.6);
+  @apply .text-black;
+}

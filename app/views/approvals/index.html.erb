@@ -16,16 +16,16 @@
   <tr>
     <td><%= approval.title %></td>
     <td><%= approval.user.email %></td>
-    <td><%= approval.description %></td>
+    <td><%= simple_formate(approval.description) %></td>
     <td><%= approval.approvers.count %></td>
     <td><%= approval.deadline %></td>
-    <td><%= link_to 'Show', approval %></td>
-    <td><%= link_to 'Edit', edit_approval_path(approval) %></td>
-    <td><%= link_to 'Destroy', approval, method: :delete, data: { confirm: 'Are you sure you want to delete this approval?' } %></td>
+    <td><%= link_to t("approval.show.action"), approval %></td>
+    <td><%= link_to t("approval.edit.action"), edit_approval_path(approval) %></td>
+    <td><%= link_to t("approval.delete.action"), approval, method: :delete, data: { confirm: t("approval.delete.confirmation") } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Approval', new_approval_path %>
+<%= link_to t("approval.create.action"), new_approval_path %>

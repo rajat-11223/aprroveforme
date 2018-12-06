@@ -7,17 +7,22 @@
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <% end %>
 
-<title><%= content_for?(:title) ? yield(:title) : "ApproveForMe" %></title>
+<title><%= content_for?(:title) ? yield(:title).strip : t("app-title") %></title>
 <meta name="Description" content="ApproveForMe is a free web-based tool that simplifies your professional life by making it easier to create, track, and manage document signoffs.">
 
 <link rel="icon" type="image/png" href="<%= asset_path("favicon.png") %>"/>
 
 <%= turbolinks_cache_control_meta_tag %>
+
+<%= javascript_pack_tag 'application' %>
+
 <%= stylesheet_link_tag "//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" %>
-<%= stylesheet_link_tag "https://use.fontawesome.com/releases/v5.2.0/css/all.css", integrity:"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ", crossorigin: "anonymous" %>
+<%= stylesheet_link_tag "//use.fontawesome.com/releases/v5.2.0/css/all.css", integrity:"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ", crossorigin: "anonymous" %>
 <%= stylesheet_link_tag "application" %>
 
-<%= javascript_include_tag "http://www.google.com/jsapi" %>
-<%= javascript_include_tag "https://js.stripe.com/v3/" %>
+<%= javascript_include_tag "//www.google.com/jsapi" %>
+<%= javascript_include_tag "//js.stripe.com/v3/" %>
 <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 <%= render "layouts/google_analytics" %>
+<%= Gon::Base.render_data %>
+

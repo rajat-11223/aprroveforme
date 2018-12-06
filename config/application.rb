@@ -1,21 +1,21 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path("../boot", __FILE__)
 
-require 'rails/all'
-require 'active_support/all'
-require 'csv'
+require "rails/all"
+require "active_support/all"
+require "csv"
 
 Bundler.require(:default, Rails.env)
 
 module Workflow
   class Application < Rails::Application
-
     APP_HOST = ENV.fetch("APP_HOST")
     APP_DOMAIN = ENV.fetch("APP_DOMAIN")
+    BASE_APP_DOMAIN = ENV.fetch("BASE_APP_DOMAIN", APP_DOMAIN)
     ENV["ROLES"] ||= "admin user VIP"
-    ENV["GOOGLE_SCOPE"] ||= "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.install"
+    ENV["GOOGLE_SCOPE"] ||= "email profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.install"
 
     SENDGRID_API_KEY = ENV.fetch("SENDGRID_API_KEY")
-    SENDGRID_CLIENT  = SendGrid::API.new(api_key: SENDGRID_API_KEY).client
+    SENDGRID_CLIENT = SendGrid::API.new(api_key: SENDGRID_API_KEY).client
 
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
@@ -24,7 +24,6 @@ module Workflow
       g.helper_specs false
     end
 
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -32,7 +31,6 @@ module Workflow
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += %W(#{config.root}/lib)
-
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -84,12 +82,14 @@ module Workflow
     # config.active_record.raise_in_transactional_callbacks = true
     config.i18n.enforce_available_locales = false
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '2.0'
+    config.assets.version = "2.0"
 
     config.google_verification = "google16deb60cae23dff7"
+    config.startup_ranking_verification = "startupranking1011604961421011"
+
+    config.active_job.queue_adapter = :sidekiq
 
     require Rails.root.join("lib/country_block")
-
     config.middleware.insert_before ActionDispatch::Static, CountryBlock::App
   end
 end

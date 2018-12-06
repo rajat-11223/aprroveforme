@@ -1,0 +1,60 @@
+<%= content_for(:main) do %>
+  <h4>Open Approvals</h4>
+  <table class="dashboard-table">
+    <thead>
+      <tr>
+        <th>
+          Document Name
+        </th>
+        <th>
+          Deadline
+        </th>
+        <th>
+          Responses
+        </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+
+    <% @open_requests.each do |approval| %>
+      <tr id="<%= dom_id(approval) %>">
+        <td class="bold"><%= link_to approval.title, approval %></td>
+        <td><%= approval.deadline.to_date %>,
+          <strong><%= approval.deadline_in_words %></td>
+
+          <td class="listing-inquiry-status">
+
+            <div class="flex-container align-top">
+              <div class="flex-child-grow">
+                <h4 class="dashboard-table-text">
+                  <div class="tw-bg-grey-light tw-mb-4 tw-h-4 tw-w-full">
+                    <div class="tw-bg-yellow-dark tw-h-full" style="width: <%= approval.percentage_complete %>;"></div>
+                  </div>
+                  <p class="progress-details">
+                    <%= approval.ratio_complete %> responses
+                  </p>
+                  <p>
+                    <%= approval.percentage_complete %>
+                  </p>
+                </h4>
+              </div>
+            </div>
+
+          </td>
+
+          <td class="listing-inquiry-status">
+            <%= render partial: "approval-actions", locals: { approval: approval } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @open_requests.empty? %>
+    <div class="text-center">
+      <h3>No Records</h3>
+    </div>
+  <% end %>
+
+<% end %>

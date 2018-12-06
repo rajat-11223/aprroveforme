@@ -1,33 +1,46 @@
-<div class="new-approval-button">
-  <b>
-    <%= link_to "New Approval", new_approval_path, class: "button primary create expand" %>
-  </b>
-</div>
+<div id="sidebar">
+  <div class="new-approval-button">
+    <b><%= link_to t("approval.create.action"), new_approval_path, class: "button primary create expand" %></b>
+  </div>
 
-<ul class="vertical menu">
-  <li>
-    <p class="title <%= active_class([dashboard_home_index_path]) %>">
-      <%= link_to 'Dashboard', dashboard_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title <%= active_class([pending_approvals_home_index_path]) %>">
-      <%= link_to 'Pending Approvals', pending_approvals_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title <%= active_class([open_approvals_home_index_path]) %>">
-      <%= link_to 'Open Approvals', open_approvals_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title <%= active_class([past_documents_home_index_path]) %>">
-      <%= link_to 'Past Documents', past_documents_home_index_path %>
-    </p>
-  </li>
-  <li>
-    <p class="title <%= active_class([past_approvals_home_index_path]) %>">
-      <%= link_to 'Past Approvals', past_approvals_home_index_path %>
-    </p>
-  </li>
-</ul>
+  <div>
+    <p style="line-height: 1;">
+      <span style="font-size: 14px;"><%= current_user.approvals.from_this_month.count %> of <%= plan_responses_limit.to_s.downcase %></span><br/>
+      <span style="color: gray; font-size: 12px">approvals created this month</span>
+    <p>
+  </div>
+
+  <ul class="vertical menu">
+    <li>
+      <p class="title <%= active_class([dashboard_home_index_path]) %>">
+        <%= link_to 'Dashboard', dashboard_home_index_path %>
+      </p>
+    </li>
+    <li>
+      <div class="title">Created Approvals:</div>
+    </li>
+    <li>
+      <div class="title <%= active_class([open_requests_home_index_path]) %>">
+        <%= link_to 'Open Approvals', open_requests_home_index_path %>
+      </div>
+    </li>
+    <li>
+      <div class="title <%= active_class([complete_requests_home_index_path]) %>">
+        <%= link_to 'Complete Approvals', complete_requests_home_index_path %>
+      </div>
+    </li>
+    <li>
+      <div class="title">Received Approvals:</div>
+    </li>
+    <li>
+      <div class="title <%= active_class([open_responses_home_index_path]) %>">
+        <%= link_to 'Waiting on Response', open_responses_home_index_path %>
+      </div>
+    </li>
+    <li>
+      <div class="title <%= active_class([complete_responses_home_index_path]) %>">
+        <%= link_to 'Have Responded', complete_responses_home_index_path %>
+      </div>
+    </li>
+  </ul>
+</div>

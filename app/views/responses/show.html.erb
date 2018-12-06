@@ -1,0 +1,63 @@
+<% show_thank_you_blurb = !@approver.present? || !@approval.present? || @approval.past_due? || @approver.has_responded? %>
+<% requester_name = @approval.try(:user).try(:name) || "the requester" %>
+<% subtitle = show_thank_you_blurb ? "Thank You" : @approval.title %>
+
+<% content_for(:title, t("app-title-with-subtitle", subtitle: subtitle)) %>
+
+<% if show_thank_you_blurb %>
+  <div class="tw-h-screen">
+    <div class="tw-container tw-mx-auto tw-h-full tw-flex tw-justify-center tw-items-center">
+      <div class="tw-block tw-text-center">
+        <h1 class="tw-text-5xl">Thank You!</h1>
+        <p class="tw-text-grey-darker">We have logged your response and have provided <%= requester_name %> your feedback.</p>
+        <p class="tw-py-8"><%= link_to image_tag("logo.png"), root_url %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="tw-h-screen">
+    <div class="tw-pt-4">
+      <h2 class="tw-text-base tw-text-grey-dark tw-leading-none"><%= requester_name %> has requested your <%= @request_type.lower_name %> on</h2>
+      <h1 class="tw-text-3xl"><%= @approval.title %></h3>
+      <div class="tw-text-grey-darkest">Description: <%= @approval.description.strip.present? ? simple_format(@approval.description) : "none" %></div>
+    </div>
+
+    <div class="tw-flex lg:tw-flex-row-reverse tw-flex-wrap md:tw-h-full">
+      <div class="tw-w-full lg:tw-w-3/4 tw-py-2 lg:tw-pl-8">
+        <div class="tw-flex tw-flex-col tw-h-full">
+          <p class="tw-flex-none tw-text-grey tw-text-center tw-leading-none tw-hidden md:tw-block">If the document below is not displayed, you may have to login to your <%= @approver.email %> Google account.</p>
+          <div class="tw-flex-grow tw-hidden md:tw-block tw-h-64">
+            <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
+          </div>
+          <div class="tw-flex-none tw-px-2 tw-py-4 tw-text-center lg:tw-hidden">
+            <%= link_to "View Document Full Screen", @approval.link, target: "_blank", class: "tw-cursor-pointer tw-text-black hover:tw-text-white tw-bg-yellow-dark tw-px-3 tw-py-2"%>
+          </div>
+        </div>
+      </div>
+      <div class="tw-w-full lg:tw-w-1/4 tw-py-8 lg:tw-pr-8">
+        <%= form_for @approver, url: response_path(@approver, code: @approver.code), class: "tw-flex tw-flex-col tw-px-1", remote: true do |f|  %>
+          <p class="tw-font-semibold tw-leading-none">It just takes 3 steps:</p>
+          <ol>
+            <li>Review the document</li>
+            <li>Enter comments</li>
+            <li>Choose <%= @request_type.request_text_options.join(" or ") %></li>
+          </ol>
+          <%= f.hidden_field :code %>
+
+          <%= f.text_area :comments, placeholder: "Please provide helpful feedback", required: true, rows: 7, autocomplete: :off, class: "tw-shadow tw-appearance-none tw-border tw-w-full tw-px-3 tw-text-grey-darker tw-my-4 tw-leading-tight focus:tw-outline-none focus:tw-shadow-outline" %>
+
+          <%= f.collection_radio_buttons :status, @request_type.request_options, :first, :last do |opt| %>
+            <div class="tw-py-2 button-group">
+              <%# TODO: Make Colors Customizable %>
+              <% color = opt.value == "approved" ? "tw-bg-green-light" : "tw-bg-red-light" %>
+
+              <%= opt.radio_button required: true, class: "hidden" %>
+              <%= opt.label class: "#{color} tw-mx-auto tw-text-center tw-hover:bg-green-dark tw-active:bg-blue-dark tw-text-white tw-font-bold tw-w-full lg:tw-w-full sm:tw-w-64 md:tw-w-64 tw-p-3" %>
+            </div>
+          <% end %>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

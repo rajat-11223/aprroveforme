@@ -1,17 +1,32 @@
 <div class="grid-x">
   <div class="large-3 large-offset-2 cell panel center">
-    <h2><%= User.count %></h2>
+    <h2><%= @system_stats.last[:total_users] %></h2>
     TOTAL USERS
   </div>
   <div class="large-3 large-offset-2 end cell panel center">
-    <h2><%= Approval.count %></h2>
+    <h2><%= @system_stats.last[:total_approvals] %></h2>
     TOTAL APPROVALS SENT
   </div>
 </div>
 
 <div class="grid-x">
   <div class="large-4 cell panel center">
-    <h4><%= User.where('created_at >= ?', Date.today).count %></h4>
+    <h4><%= Approval.where('created_at >= ?', Time.zone.today).count %></h4>
+    DAILY NEW APPROVALS
+  </div>
+  <div class="large-4 cell panel center">
+    <h4><%= Approval.where('created_at >= ?', 1.week.ago).count %></h4>
+    WEEKLY NEW APPROVALS
+  </div>
+  <div class="large-4 cell panel center">
+    <h4><%= @system_stats.last[:new_approvals] %></h4>
+    MONTHLY NEW APPROVALS
+  </div>
+</div>
+
+<div class="grid-x">
+  <div class="large-4 cell panel center">
+    <h4><%= User.where('created_at >= ?', Time.zone.today).count %></h4>
     DAILY NEW USERS
   </div>
   <div class="large-4 cell panel center">
@@ -19,10 +34,41 @@
     WEEKLY NEW USERS
   </div>
   <div class="large-4 cell panel center">
-    <h4><%= User.where('created_at >= ?', 1.month.ago).count %></h4>
+    <h4><%= @system_stats.last[:new_users] %></h4>
     MONTHLY NEW USERS
   </div>
 </div>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Month <br />(first day of month)</th>
+      <th>Total Users</th>
+      <th>New Users</th>
+      <th>New Approvals</th>
+      <th>New Approvals <br />(by new users)</th>
+      <th>Total Approvals</th>
+      <th>% New Approvals<br />(by new users)</th>
+      <th>% New Approvals<br />(by all users)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @system_stats.each do |monthly_stats| %>
+      <tr>
+        <td><%= monthly_stats[:date_human] %></td>
+        <td><%= monthly_stats[:total_users] %></td>
+        <td><%= monthly_stats[:new_users] %></td>
+        <td><%= monthly_stats[:new_approvals] %></td>
+        <td><%= monthly_stats[:new_users_approvals] %></td>
+        <td><%= monthly_stats[:total_approvals] %></td>
+        <td><%= monthly_stats[:percent_new_approvals_by_new_users] %>%</td>
+        <td><%= monthly_stats[:percent_new_approvals_by_all_users] %>%</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 <div class="grid-x">
   <div class="large-4 cell" style="margin-bottom:20px;">
@@ -31,40 +77,4 @@
   </div>
 </div>
 
-<div class="grid-x">
-  <div class="auto cell">
-    <table class="table">
-      <thead>
-        <tr>
-          <th colspan="2"><%= sortable "name" %></th>
-          <th><%= sortable "email" %></th>
-          <th><%= sortable "created_at" %></th>
-          <th><%= sortable "sent" %></th>
-          <th><%= sortable "received" %></th>
-          <th><%= sortable "last_login_at", "last login" %></th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <% @users.each do |user| %>
-          <tr>
-            <td><%= image_tag user.picture, :style=>"width:35px" %></td>
-            <td><%= link_to user.name, user %></td>
-            <td>
-              <a href="mailto:<%= user.email %>" target="_blank"><%= user.email %></a>
-            </td>
-            <td><%= user.created_at.to_date %></td>
-            <td><%= user.approvals.count %></td>
-            <td><%= Approver.by_user(user).count %></td>
-            <td><%= user.updated_at.to_date %></td>
-            <td><%= link_to_if(user != current_user, "delete", user_path(user), data: { confirm: "Are you sure you want to delete '#{user.name}'?" },
-                                                                                method: :delete,
-                                                                                class: 'btn btn-mini') %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= paginate @users, :remote => true %>
-  </div>
-</div>
+<%= render partial: "user_list", locals: { users: @users } %>

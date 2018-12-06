@@ -37,15 +37,18 @@ describe "Create Approval", js: true do
     click_button "Add Another Approver"
     expect(page.all(".approver").size).to eq(4)
 
-    click_button "Submit Document for Approval"
+    click_button "Submit Approval"
+
+    expect(page).to have_selector(:css, "body.approvals.show")
 
     approval = Approval.last
-    expect(Approval.count).to eq(1)
     expect(page).to have_current_path(approval_path(approval))
     expect(approval.title).to eq("Fun Document")
     expect(approval.description).to eq("Joy comes from reading this")
     expect(approval.link).to eq("https://www.google.com")
     expect(approval.approvers.count).to eq(1)
+
+    expect(Approval.count).to eq(1)
   end
 
   def set_hidden_value(id:, value: )

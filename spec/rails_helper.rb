@@ -31,6 +31,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include OmniauthHelpers, type: :system
   config.include StripeHelpers, type: :system, js: true
+  config.include ActiveSupport::Testing::TimeHelpers
 
   config.before(:each, type: :system) do
     Capybara.default_max_wait_time = 10

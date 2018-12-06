@@ -1,9 +1,9 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe Approval do
   subject { build(:approval) }
 
-  it 'valid' do
+  it "valid" do
     expect(subject).to be_valid
   end
 
@@ -33,5 +33,24 @@ describe Approval do
     subject.approvers = []
 
     expect(subject).to_not be_valid
+  end
+
+  context "completeness" do
+    subject! { create(:approval) }
+
+    it "defaults to not complete" do
+      expect(subject).to_not be_complete
+
+      expect(Approval.complete.count).to eq(0)
+      expect(Approval.not_complete.count).to eq(1)
+    end
+
+    it "is completeable" do
+      subject.mark_as_complete!
+      expect(subject).to be_complete
+
+      expect(Approval.complete.count).to eq(1)
+      expect(Approval.not_complete.count).to eq(0)
+    end
   end
 end

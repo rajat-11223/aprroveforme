@@ -9,14 +9,14 @@ module MailContacts
         attributes.
         slice(*stock_attributes).
         merge({
-          "signed_up_date" => user.created_at,
-          "created_first_approval" => (approvals_count > 0).to_s,
-          "created_first_approval_date" => approvals.first.try(:created_at),
-          "completed_one_approval" => completed_approvals.any?.to_s,
-          "entered_credit_card" => payment_sources.any?.to_s,
-          "active_plan_type" => subscription.try(:plan_name),
-          "active_plan_interval" => subscription.try(:plan_interval),
-        }).
+        "signed_up_date" => user.created_at,
+        "created_first_approval" => (approvals_count > 0).to_s,
+        "created_first_approval_date" => approvals.first.try(:created_at),
+        "completed_one_approval" => completed_approvals.any?.to_s,
+        "entered_credit_card" => payment_sources.any?.to_s,
+        "active_plan_type" => subscription.try(:plan_name),
+        "active_plan_interval" => subscription.try(:plan_interval),
+      }).
         compact # remove empty values
     end
 
@@ -36,7 +36,7 @@ module MailContacts
         "approvals_sent_30",
         "approvals_received_30",
         "approvals_responded_to_30",
-        "last_sent_date"
+        "last_sent_date",
       ]
     end
 
@@ -53,7 +53,7 @@ module MailContacts
     end
 
     def completed_approvals
-      approvals.map(&:complete?)
+      approvals.complete
     end
 
     def subscription

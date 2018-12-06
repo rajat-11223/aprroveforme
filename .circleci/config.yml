@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     parallelism: 1
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
@@ -19,7 +19,7 @@ jobs:
       - image: redis:4.0
     environment:
       - DATABASE_URL: "postgres://approveforme@localhost:5432/approveforme_test"
-        REDISTOGO_URL: redis://localhost:6379
+        REDISCLOUD_URL: redis://localhost:6379
         REDIRECT_URI: http://approveforme.lvh.me:5000/auth/google_oauth2/callback
         GOOGLE_ID: 107940143634-mied1cvqssluehq4t1q3jaa6qi9obesv.apps.googleusercontent.com
         GOOGLE_SECRET: MuN9fGHDQloWhCgEOTly5nfF
@@ -57,11 +57,35 @@ jobs:
       - save_cache:
           key: approve_for_me-bundle-v2-{{ checksum "Gemfile.lock" }}
           paths:
-            - vendor/bundle
+            - ~/.yarn-cache
+
+      # Restore yarn cache
+      - restore_cache:
+          keys:
+            - yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-cache-{{ .Branch }}
+            - yarn-cache
+
+      - run: yarn install
+
+      # Store yarn cache
+      - save_cache:
+          key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
 
       - run:
           name: Install Rake and Brakeman
           command: gem install bundler rake brakeman
+
+      - run:
+          name: Bundler Audit
+          command: bundle exec bundle-audit check --update
+
+      - run:
+          name: Brakeman
+          command: brakeman --exit-on-warn --progress --run-all-checks -i ./config/brakeman.ignore
 
       - run:
           name: Wait for Postgres
@@ -86,12 +110,9 @@ jobs:
           command: bundle exec rake db:schema:load --trace
 
       - run:
-          name: Bundler Audit
-          command: bundle exec bundle-audit check  --ignore CVE-2018-1000544 --update
+          name: Compile Webpacker Assets
+          command: bundle exec rails webpacker:compile
 
-      - run:
-          name: Brakeman
-          command: brakeman --exit-on-warn --progress --run-all-checks -i ./config/brakeman.ignore
 
       # Run rspec
       - run:
@@ -107,3 +128,21 @@ jobs:
       # Save test results for timing analysis
       - store_test_results:
           path: test_results
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - test
+  weekly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0"
+          filters:
+            branches:
+              only:
+                - master
+                - deploy
+                - beta
+    jobs:
+      - test
