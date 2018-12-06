@@ -19,7 +19,7 @@ jobs:
       - image: redis:4.0
     environment:
       - DATABASE_URL: "postgres://approveforme@localhost:5432/approveforme_test"
-        REDISTOGO_URL: redis://localhost:6379
+        REDISCLOUD_URL: redis://localhost:6379
         REDIRECT_URI: http://approveforme.lvh.me:5000/auth/google_oauth2/callback
         GOOGLE_ID: 107940143634-mied1cvqssluehq4t1q3jaa6qi9obesv.apps.googleusercontent.com
         GOOGLE_SECRET: MuN9fGHDQloWhCgEOTly5nfF
