@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_03_030419) do
+ActiveRecord::Schema.define(version: 2018_12_06_023353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,21 +41,6 @@ ActiveRecord::Schema.define(version: 2018_12_03_030419) do
     t.integer "approval_id", null: false
     t.text "comments", default: "", null: false
     t.string "code", limit: 255
-  end
-
-  create_table "delayed_jobs", id: :serial, force: :cascade do |t|
-    t.integer "priority", default: 0
-    t.integer "attempts", default: 0
-    t.text "handler"
-    t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string "locked_by", limit: 255
-    t.string "queue", limit: 255
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "gdpr_customers", force: :cascade do |t|

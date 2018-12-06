@@ -1,3 +1,15 @@
+require "sidekiq/web"
+# Sidekiq::Web.set :session_secret, Rails.application.credentials[:secret_key_base]
+
+class AdminConstraint
+  def matches?(request)
+    return false unless request.session["user_id"].present?
+    user = User.find(request.session["user_id"])
+
+    user && user.has_role?(:admin)
+  end
+end
+
 Workflow::Application.routes.draw do
   resources :approvals do
     resources :approvers
@@ -60,6 +72,8 @@ Workflow::Application.routes.draw do
   get "/signout" => "sessions#destroy", :as => :signout
   get "/auth/failure" => "sessions#failure"
   get "/getstarted/:intro" => "home#index"
+
+  mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
 
   # Static Pages
   get "pricing", as: :pricing, to: "pricing#index"
