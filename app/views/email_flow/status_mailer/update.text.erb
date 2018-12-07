@@ -1,0 +1,17 @@
+Hello <%= @user.first_name %>,
+
+This is a status email about your ApproveForMe account. Below are details about your open approvals, and your last 10 completed approvals.
+
+Open Approvals
+
+<% @user.approvals.not_complete.each do |approval| %>
+- <%= approval.title %> (<%= approval.percentage_complete %>); Deadline: <%= approval.deadline_in_words %>
+<% end %>
+
+
+
+Complete Approvals
+
+<% @user.approvals.complete.take(10).each do |approval| %>
+- <%= approval.title %> (<%= approval.response_status_text %>); Completed <%= approval.updated_at_in_words %>
+<% end %>

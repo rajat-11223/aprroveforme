@@ -14,6 +14,8 @@ class Approval < ApplicationRecord
   validate :require_one_approver
   validate :require_link
 
+  default_scope -> { order(created_at: :desc) }
+
   scope :deadline_is_in_future, -> { where("deadline >= ?", 1.day.from_now.beginning_of_day) }
   scope :deadline_is_past, -> { where("deadline < ?", 1.day.from_now.beginning_of_day) }
 
@@ -30,9 +32,27 @@ class Approval < ApplicationRecord
     @request_type ||= RequestType.approval
   end
 
+  def response_status_text
+    # TODO: Base this on request type details
+    if complete?
+      if approvers.any?(&:declined?) || approvers.any?(&:pending?)
+        "declined"
+      else
+        "approved"
+      end
+    else
+      "pending"
+    end
+  end
+
   def deadline_in_words
     to_append = past_due? ? " ago" : " remaining"
     distance_of_time_in_words_to_now(self.deadline).humanize + to_append
+  end
+
+  def updated_at_in_words
+    to_append = past_due? ? " ago" : " remaining"
+    distance_of_time_in_words_to_now(self.updated_at).humanize + to_append
   end
 
   def past_due?

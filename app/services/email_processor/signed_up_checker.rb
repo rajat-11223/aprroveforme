@@ -2,12 +2,14 @@ class EmailProcessor
   class SignedUpChecker < Base
     triggered_by :any
 
-    CHECK = -> (email) { return if User.exists?(email: email) }
+    CHECK = -> (email) { User.exists?(email: email) }
 
     def process
-      CHECK.call(from_email)
+      return if CHECK.call(from_email)
 
-      raise StopProcessing.new("The email address is not signed up")
+      EmailFlow::SignupMailer.how_to_signup(from_email).deliver_later
+
+      raise StopProcessing, "The email address is not signed up, so let's stop now"
     end
   end
 end

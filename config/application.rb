@@ -91,5 +91,7 @@ module Workflow
 
     require Rails.root.join("lib/country_block")
     config.middleware.insert_before ActionDispatch::Static, CountryBlock::App
+
+    config.action_mailer.preview_path = "app/mailers/previews"
   end
 end

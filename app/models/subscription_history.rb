@@ -1,7 +1,7 @@
 class SubscriptionHistory < ApplicationRecord
   belongs_to :user
 
-  default_scope -> { order(created_at: :desc)}
+  default_scope -> { order(created_at: :desc) }
   validates_presence_of :plan_name
   validates_presence_of :plan_interval
   validates_presence_of :plan_identifier

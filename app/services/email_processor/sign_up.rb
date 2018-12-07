@@ -4,9 +4,8 @@ class EmailProcessor
 
     def process
       return if EmailProcessor::SignUpChecker::CHECK.call(from_email)
-      puts "-> signing up"
 
-      raise StopProcessing, "not yet implemented"
+      raise StopProcessing, "SignUp via email not yet implemented"
     end
   end
 end

@@ -37,4 +37,16 @@ class Approver < ApplicationRecord
   def has_responded?
     ["approved", "declined"].include? self.status
   end
+
+  def declined?
+    status == "declined"
+  end
+
+  def approved?
+    status == "approved"
+  end
+
+  def pending?
+    status == "pending"
+  end
 end

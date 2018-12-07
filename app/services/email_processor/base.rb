@@ -14,12 +14,8 @@ class EmailProcessor
     end
 
     def process!
-      puts self.class.to_s
       if !slug.presence || self.class.triggerable?(slug)
-        puts "-> process"
         process
-      else
-        puts "-> not processed"
       end
     end
 
@@ -28,12 +24,12 @@ class EmailProcessor
     attr_reader :email, :options
 
     def from_email
-      @from_email ||= email[:from].dig(0, :email)
+      @from_email ||= email.from.dig(:email)
     end
 
     def from_with_name
       @from_with_name ||= begin
-        full_str = email[:from].dig(0, :full)
+        full_str = email.from.dig(:full)
         name = full_str.split("<").first.strip
 
         [name, from_email]
