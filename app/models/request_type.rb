@@ -1,4 +1,10 @@
 class RequestType < OpenStruct
+  def self.find_by(slug: nil)
+    return unless [:approval, :confirmation].include?(slug.to_sym)
+
+    self.send(slug)
+  end
+
   def self.available_options
     @available_options ||=
       [:approval, :confirmation].map { |o| self.send(o) }
