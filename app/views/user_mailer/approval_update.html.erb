@@ -572,17 +572,18 @@
 
                                           <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;text-align: left;">
 
-                                            Hi
-                                            <%= @owner.first_name %>, <br><br>
+                                            <p>Hi <%= @owner.first_name %>,</p>
 
-                                            <%= @approver.name %> has <b>
-                                              <%= @approver.status %></b>
-                                            <%= link_to @approval.title, approval_url(@approval) %>.
+                                            <p>
+                                              <%= @approver.name %> has <b><%= @approver.status %></b>
+                                              <%= link_to @approval.title, approval_url(@approval) %>.
+                                            </p>
+
                                             <% if @approver.comments.present? %>
-                                            <%= @approver.name %> had the following comments: <em>"
-                                              <%= @approver.comments %>"</em>
+                                              <p>
+                                                <%= @approver.name %> had the following comments: <em>"<%= @approver.comments %>"</em>
+                                              </p>
                                             <% end %>
-                                            <br>
                                           </td>
                                         </tr>
                                       </tbody>
