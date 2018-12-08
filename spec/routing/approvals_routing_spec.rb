@@ -1,8 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 
 describe ApprovalsController do
   describe "routing" do
-
     it "routes to #index" do
       expect(get("/approvals")).to route_to("approvals#index")
     end
@@ -30,6 +29,5 @@ describe ApprovalsController do
     it "routes to #destroy" do
       expect(delete("/approvals/1")).to route_to("approvals#destroy", :id => "1")
     end
-
   end
 end
