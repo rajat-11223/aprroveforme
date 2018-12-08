@@ -1,5 +1,4 @@
 require "sidekiq/web"
-# Sidekiq::Web.set :session_secret, Rails.application.credentials[:secret_key_base]
 
 class AdminConstraint
   def matches?(request)
@@ -11,6 +10,8 @@ class AdminConstraint
 end
 
 Workflow::Application.routes.draw do
+  mount_griddler("/incoming/email")
+
   resources :approvals do
     resources :approvers
     resources :tasks

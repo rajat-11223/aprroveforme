@@ -157,6 +157,12 @@ GEM
       memoist (~> 0.12)
       multi_json (~> 1.11)
       signet (~> 0.6)
+    griddler (1.5.2)
+      htmlentities
+      rails (>= 3.2.0)
+    griddler-sendgrid (1.1.0)
+      griddler (>= 1.5.2)
+      mail (>= 2.7.0)
     hashie (3.5.7)
     high_voltage (3.1.0)
     htmlentities (4.3.4)
@@ -441,6 +447,8 @@ DEPENDENCIES
   foundation-rails
   gon
   google-api-client (>= 0.4.4)
+  griddler
+  griddler-sendgrid
   high_voltage (~> 3.1)
   httparty
   i18n-js

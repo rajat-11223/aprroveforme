@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   include RedirectUnlessOnProperDomain
   include TurbolinksCacheControl
+  include HttpAuthConcern
 
   helper_method :current_user
   helper_method :user_signed_in?

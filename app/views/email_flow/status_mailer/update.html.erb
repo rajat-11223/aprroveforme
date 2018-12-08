@@ -1,0 +1,71 @@
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;background-color: #F4F4F4;border-top: 0;border-bottom: 0;">
+      <tr>
+          <td align="center" valign="top" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+              <table border="0" cellpadding="0" cellspacing="0" width="600" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                  <tr>
+                      <td valign="top" class="bodyContainer" style="padding-top: 10px;padding-right: 18px;padding-bottom: 10px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                              <tbody class="mcnTextBlockOuter">
+                                  <tr>
+                                      <td valign="top" class="mcnTextBlockInner" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+
+                                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="600" class="mcnTextContentContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                                              <tbody>
+                                                  <tr>
+
+                                                      <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;text-align: left;">
+                                                          <p>Hello <%= @user.first_name %>,</p>
+
+                                                          <p>This is a status email about your ApproveForMe account. Below are details about your open approvals, and your last 10 completed approvals.</p>
+
+                                                          <h3>Open Approvals</h3>
+                                                          <ul>
+                                                            <% @user.approvals.not_complete.each do |approval| %>
+                                                              <li><%= link_to approval.title, approval %> (<%= approval.percentage_complete %>); Deadline: <%= approval.deadline_in_words %></li>
+                                                            <% end %>
+                                                          </ul>
+
+                                                          <h3>Complete Approvals</h3>
+                                                          <ul>
+                                                            <% @user.approvals.complete.take(10).each do |approval| %>
+                                                              <li><%= link_to approval.title, approval %> (<%= approval.response_status_text %>); Completed <%= approval.updated_at_in_words %></li>
+                                                            <% end %>
+                                                          </ul>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                              <tbody class="mcnTextBlockOuter">
+                                  <tr>
+                                      <td valign="top" class="mcnTextBlockInner" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+
+                                          <table align="left" border="0" cellpadding="0" cellspacing="0" width="600" class="mcnTextContentContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
+                                              <tbody>
+                                                  <tr>
+
+                                                      <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;text-align: left;">
+
+                                                          Sincerely,
+                                                          <br> -The ApproveForMe Team
+
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </td>
+                  </tr>
+              </table>
+          </td>
+      </tr>
+</table>
