@@ -7,22 +7,26 @@ class EmailProcessor
     EmailProcessor::TranscriptSaver.new(email).process!
 
     return unless first_email.present?
-    slug = first_email[:token].to_sym
 
     EmailProcessor::SignUp.new(email, slug: slug).process!
     EmailProcessor::SignedUpChecker.new(email, slug: slug).process!
 
     EmailProcessor::Status.new(email, slug: slug).process!
     EmailProcessor::Request.new(email, slug: slug).process!
-  rescue StopProcessing
+  rescue StopProcessing => e
     Rails.logger.info("Stopped Processing the rest of the chain")
+    Rails.logger.info(e.message)
   end
 
   private
 
   attr_reader :email
 
+  def slug
+    @slug ||= first_email[:token].to_sym
+  end
+
   def first_email
-    email.to.first { |e| e[:email].include? ".approveforme.com" }
+    @first_email ||= email.to.first { |e| e[:email].include? ".approveforme.com" }
   end
 end

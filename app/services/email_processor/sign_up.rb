@@ -3,9 +3,11 @@ class EmailProcessor
     triggered_by :signup, :sign_up
 
     def process
-      return if EmailProcessor::SignUpChecker::CHECK.call(from_email)
+      return if EmailProcessor::SignedUpChecker::CHECK.call(from_email)
 
-      raise StopProcessing, "SignUp via email not yet implemented"
+      EmailFlow::SignupMailer.signup(from_email).deliver_later
+
+      raise StopProcessing, "SignUp action should stop further processing"
     end
   end
 end
