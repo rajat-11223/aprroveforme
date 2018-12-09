@@ -5,7 +5,6 @@ class User < ApplicationRecord
   before_save { |user| user.email = user.email.downcase }
 
   has_many :approvals, dependent: :destroy, foreign_key: :owner
-  has_one :payment_method, dependent: :destroy
   has_one :subscription, autosave: true, required: false, class_name: "SubscriptionHistory"
   has_many :subscription_histories, dependent: :destroy
 
