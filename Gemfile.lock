@@ -207,6 +207,10 @@ GEM
     js_cookie_rails (2.2.0)
       railties (>= 3.1)
     json (2.1.0)
+    jsonb_accessor (1.0.0)
+      activerecord (>= 5.0)
+      activesupport (>= 5.0)
+      pg (>= 0.18.1)
     jstz-rails3-plus (1.0.5)
       railties (>= 3.1)
     jwt (1.4.1)
@@ -487,6 +491,7 @@ DEPENDENCIES
   jquery-ui-rails
   js_cookie_rails
   json
+  jsonb_accessor (~> 1.0.0)
   jwt (~> 1.4.0)
   kaminari
   letter_opener

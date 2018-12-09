@@ -98,15 +98,19 @@ class Deploy < Thor
       run_with_maintenance(stage, with_maintenance) do
         heroku_scale_process(name: :worker, to: 0, stage: stage)
         run "git push #{force} #{stage} #{current_branch}:master"
-        heroku_run "rails db:migrate", stage
-        heroku_run "rails chore:clean_up_stripe_customers", stage
 
-        case stage
-        when :staging
-          heroku_run "rails chore:clear_sidekiq_jobs", stage
-        end
+        standard_jobs = ["db:migrate", "db:seed", "chore:clean_up_stripe_customers"]
 
-        # heroku_run "rails temporary:migrate_goal_status", stage
+        # Add temporary jobs here
+        stage_jobs =
+          case stage
+          when :staging
+            ["chore:clear_sidekiq_jobs"]
+          else
+            []
+          end
+
+        heroku_run "rails #{(standard_jobs + stage_jobs).join(" ")}", stage
         heroku_scale_process(name: :worker, to: 1, stage: stage)
       end
 

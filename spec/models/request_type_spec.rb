@@ -1,17 +1,11 @@
 require "rails_helper"
 
 describe RequestType do
-  it ".available_options" do
-    expect(RequestType.available_options.length).to eq(2)
-
-    RequestType.available_options.each do |option|
-      expect(option).to be_a RequestType
-    end
-  end
+  before { Rails.application.load_seed }
+  let(:approval) { RequestType.find_by(slug: "approval") }
+  let(:confirmation) { RequestType.find_by(slug: "confirmation") }
 
   it "approval" do
-    approval = RequestType.approval
-
     expect(approval.allow_dissenting?).to eq true
     expect(approval.allow_dissenting).to eq true
 
@@ -20,8 +14,6 @@ describe RequestType do
   end
 
   it "confirmation" do
-    confirmation = RequestType.confirmation
-
     expect(confirmation.allow_dissenting?).to eq false
     expect(confirmation.allow_dissenting).to eq false
 

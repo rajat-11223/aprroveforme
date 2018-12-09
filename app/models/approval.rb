@@ -29,7 +29,7 @@ class Approval < ApplicationRecord
                                 allow_destroy: true
 
   def request_type
-    @request_type ||= RequestType.approval
+    @request_type ||= RequestType.find_by(slug: "approval")
   end
 
   def response_status_text

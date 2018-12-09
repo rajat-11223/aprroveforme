@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe "Allow non-google (i.e. unauthenticated) users to approve an approval", js: true do
+  before { Rails.application.load_seed }
+
   let(:approver) { create(:approver, :with_code) }
   let(:approval) { approver.approval }
   let(:user) { approval.user }
