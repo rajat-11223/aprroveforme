@@ -1,14 +1,5 @@
 require "sidekiq/web"
 
-class AdminConstraint
-  def matches?(request)
-    return false unless request.session["user_id"].present?
-    user = User.find(request.session["user_id"])
-
-    user && user.has_role?(:admin)
-  end
-end
-
 Workflow::Application.routes.draw do
   mount_griddler("/incoming/email")
 
@@ -35,7 +26,7 @@ Workflow::Application.routes.draw do
     end
   end
 
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:show, :edit, :update]
 
   resources :home do
     collection do
@@ -59,6 +50,8 @@ Workflow::Application.routes.draw do
   # Admins-only
   constraints SignedIn.new { |user| user.user.has_role?(:admin) } do
     mount Split::Dashboard, at: "split"
+    mount Sidekiq::Web => "/sidekiq"
+    ActiveAdmin.routes(self)
   end
 
   # Google Verification
@@ -73,8 +66,6 @@ Workflow::Application.routes.draw do
   get "/signout" => "sessions#destroy", :as => :signout
   get "/auth/failure" => "sessions#failure"
   get "/getstarted/:intro" => "home#index"
-
-  mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
 
   # Static Pages
   get "pricing", as: :pricing, to: "pricing#index"

@@ -28,7 +28,9 @@ class Ability
   end
 
   def admin_permissions
-    return unless user.has_role? :admin
+    return if !user.has_role?(:admin)
+
+    can :manage, ActiveAdmin::Page
     can :manage, :all
   end
 

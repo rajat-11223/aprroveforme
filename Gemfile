@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 ruby "2.5.1"
 
+gem "activeadmin"
 gem "autoprefixer-rails"
 gem "browser-timezone-rails"
 gem "cancancan", "~> 2.0"

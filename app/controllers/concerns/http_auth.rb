@@ -1,4 +1,4 @@
-module HttpAuthConcern
+module HttpAuth
   extend ActiveSupport::Concern
   included do
     before_action :http_authenticate

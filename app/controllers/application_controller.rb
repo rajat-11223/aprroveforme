@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
 
   include RedirectUnlessOnProperDomain
   include TurbolinksCacheControl
-  include HttpAuthConcern
+  include HttpAuth
+  include AuthorizationChecks
 
   helper_method :current_user
   helper_method :user_signed_in?
@@ -11,33 +12,16 @@ class ApplicationController < ActionController::Base
 
   before_action :setup_gon
 
-  check_authorization
-
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_path, :alert => exception.message
-  end
-
   private
 
   def current_user
     return unless session[:user_id]
 
-    begin
-      @current_user ||= User.includes(:subscription).find(session[:user_id])
-    rescue ActiveRecord::RecordNotFound
-      nil
-    end
+    @current_user ||= User.includes(:subscription).find_by(id: session[:user_id])
   end
 
   def user_signed_in?
     current_user.present?
-  end
-
-  def require_user!(message: "You need to sign in")
-    return if current_user
-    save_redirection_url!
-
-    redirect_to root_path, notice: message
   end
 
   def require_subscription

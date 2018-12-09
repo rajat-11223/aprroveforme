@@ -19,9 +19,8 @@
             <li><%= link_to "My Subscription", current_subscription_account_path %></li>
             <li><%= link_to "Payment Methods", payment_methods_account_path %></li>
             <li><hr /></li>
-            <% if can? :manage, :all %>
-              <li><%= link_to "Admin", users_path %></li>
-              <li><%= link_to "Sidekiq", sidekiq_web_path, data: { turbuolinks: false } %></li>
+            <% if can?(:manage, :all) %>
+              <li><%= link_to "Admin", admin_dashboard_path, data: { turbolinks: false } %></li>
             <% end %>
             <li><%= link_to "Log out", signout_path %></li>
           </ul>
