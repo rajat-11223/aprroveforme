@@ -7,9 +7,9 @@ describe "Logout", js: true do
     sign_in_as(user)
   end
 
-  it 'signup and navigate to account' do
+  it "signup and navigate to account" do
     hover_top_nav_account_image
-    within(".top-bar") do
+    within("nav#main") do
       click_link "Log out"
     end
 
@@ -17,7 +17,7 @@ describe "Logout", js: true do
   end
 
   def hover_top_nav_account_image
-    within(".top-bar") do
+    within("nav#main") do
       find("#account-dropdown").hover
     end
   end

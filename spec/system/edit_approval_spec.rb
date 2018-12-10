@@ -16,7 +16,7 @@ describe "Edit Approval", js: true do
     fill_in "datepicker", with: 5.days.from_now.strftime("%m/%d/%Y")
 
     expect(page.all(".approver").size).to eq(1)
-
+    find("body").click
     click_button "Update Approval"
 
     expect(page).to have_selector(:css, "body.approvals.show")

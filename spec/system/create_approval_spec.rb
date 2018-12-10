@@ -7,8 +7,8 @@ describe "Create Approval", js: true do
     sign_in_as(user)
   end
 
-  it 'signup and navigate to account' do
-    within(".top-bar") do
+  it "signup and navigate to account" do
+    within("nav#main") do
       click_link "Home"
     end
 
@@ -25,6 +25,7 @@ describe "Create Approval", js: true do
     fill_in "Title", with: "Fun Document"
     fill_in "Description", with: "Joy comes from reading this"
     fill_in "datepicker", with: 5.days.from_now.strftime("%m/%d/%Y")
+    find("body").click #To have datepicker hide
 
     expect(page.all(".approver").size).to eq(3)
     within page.all(".approver").first do
@@ -51,7 +52,7 @@ describe "Create Approval", js: true do
     expect(Approval.count).to eq(1)
   end
 
-  def set_hidden_value(id:, value: )
+  def set_hidden_value(id:, value:)
     find(%(##{id}), visible: false)
     page.execute_script(%(document.getElementById("#{id}").value = "#{value}"))
   end

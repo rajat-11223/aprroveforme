@@ -1,6 +1,5 @@
 body.home.dashboard {
   .dashboard-number-card {
-    background: #fff;
     border-radius: 5px;
     margin: 0 20px 20px;
     position: relative;
@@ -15,7 +14,7 @@ body.home.dashboard {
       opacity: 0.7;
       position: absolute;
       right: 6px;
-      color: #1779ba;
+      // color: #1779ba;
 
       i {
         margin-right: 5px;
@@ -23,24 +22,24 @@ body.home.dashboard {
       }
     }
 
-    &.negative .dashboard-number-delta,
-    &.positive .dashboard-number-delta {
-      color: #fefefe;
-    }
+    // &.negative .dashboard-number-delta,
+    // &.positive .dashboard-number-delta {
+    //   color: #fefefe;
+    // }
 
-    &.positive {
-      .dashboard-number-area,
-      .dashboard-number-value {
-        color: white;
-      }
-    }
+    // &.positive {
+    //   .dashboard-number-area,
+    //   .dashboard-number-value {
+    //     color: white;
+    //   }
+    // }
 
-    &.negative {
-      .dashboard-number-area,
-      .dashboard-number-value {
-        color: white;
-      }
-    }
+    // &.negative {
+    //   .dashboard-number-area,
+    //   .dashboard-number-value {
+    //     color: white;
+    //   }
+    // }
 
     &.negative .dashboard-number-area,
     &.positive .dashboard-number-area {
@@ -61,7 +60,7 @@ body.home.dashboard {
   }
 
   .dashboard-number-value {
-    color: #1779ba;
+    // color: #1779ba;
     font-size: 22px;
     font-weight: 800;
     padding: 1rem 2rem 1.75rem;
@@ -70,7 +69,7 @@ body.home.dashboard {
 
   .dashboard-number-area {
     bottom: 6px;
-    color: #1779ba;
+    // color: #1779ba;
     font-size: 12px;
     left: 6px;
     margin-bottom: 0;

@@ -1,12 +1,12 @@
 require "rails_helper"
 
 describe "Account Nav", js: true do
-  it 'signup and navigate to account' do
+  it "signup and navigate to account" do
     visit root_path
     click_link "Sign Up Free"
 
     hover_top_nav_account_image
-    within(".top-bar") do
+    within("nav#main") do
       click_link "Account"
     end
 
@@ -18,7 +18,7 @@ describe "Account Nav", js: true do
   end
 
   def hover_top_nav_account_image
-    within(".top-bar") do
+    within("nav#main") do
       find("#account-dropdown").hover
     end
   end

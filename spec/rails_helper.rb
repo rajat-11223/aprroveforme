@@ -48,7 +48,7 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless
-    # driven_by :selenium_chrome
+    # driven_by :selenium_chrome, screen_size: [1600, 1400]
   end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
