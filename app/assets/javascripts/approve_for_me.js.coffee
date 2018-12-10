@@ -17,3 +17,7 @@ window.ApproveForMe =
     else
       log("Can't find #{gon.pageName} class; loading default page")
       ApproveForMe.page = new ApproveForMe.Page
+
+  expandOrCollapseById: (id) ->
+    nav = document.getElementById(id)
+    nav.classList.toggle("tw-hidden")
