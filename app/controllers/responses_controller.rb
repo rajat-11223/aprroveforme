@@ -12,8 +12,7 @@ class ResponsesController < ApplicationController
     if !@approval.past_due? && @approver.update_attributes!(approver_params)
       ab_finished(:approver_approved)
       UserMailer.approval_update(@approver).deliver_later
-
-      @approval.is_completable? && @approval.mark_as_complete! && UserMailer.completed_approval(@approval).deliver_later
+      CheckForCompleteApprovalJob.perform_later(@approval)
 
       redirect_to response_path(@approver, code: @approver.code)
     else
