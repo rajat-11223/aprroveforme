@@ -58,6 +58,17 @@ body.home {
     color: #595959;
     font-weight: 400;
   }
+  .menu {
+    a {
+      font-weight: 500;
+    }
+    .is-active>a,
+    .active>a {
+      background: #ffcc00;
+      color: #000;
+    }
+  }
+
   // .section p {
   //   border-top: unset !important;
   //   background: unset !important;

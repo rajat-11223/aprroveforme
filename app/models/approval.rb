@@ -19,14 +19,18 @@ class Approval < ApplicationRecord
   scope :deadline_is_in_future, -> { where("deadline >= ?", 1.day.from_now.beginning_of_day) }
   scope :deadline_is_past, -> { where("deadline < ?", 1.day.from_now.beginning_of_day) }
 
-  scope :complete, -> { where(complete: true) }
-  scope :not_complete, -> { where.not(complete: true) }
+  scope :complete, -> { where("completed_at <= ?", Time.zone.now) }
+  scope :not_complete, -> { where("completed_at > ?", Time.zone.now).or(Approval.where(completed_at: nil)) }
 
   belongs_to :user, foreign_key: :owner
 
   accepts_nested_attributes_for :approvers,
                                 reject_if: proc { |attributes| attributes["name"].blank? || attributes["email"].blank? },
                                 allow_destroy: true
+
+  def complete?
+    self.completed_at? && self.completed_at < Time.zone.now
+  end
 
   def request_type
     @request_type ||= RequestType.find_by(slug: "approval")
@@ -50,9 +54,13 @@ class Approval < ApplicationRecord
     distance_of_time_in_words_to_now(self.deadline).humanize + to_append
   end
 
-  def updated_at_in_words
-    to_append = past_due? ? " ago" : " remaining"
-    distance_of_time_in_words_to_now(self.updated_at).humanize + to_append
+  def completed_at_in_words
+    if complete?
+      to_append = past_due? ? " ago" : " remaining"
+      distance_of_time_in_words_to_now(self.completed_at).humanize + to_append
+    else
+      "not complete yet"
+    end
   end
 
   def past_due?
@@ -83,7 +91,7 @@ class Approval < ApplicationRecord
   end
 
   def mark_as_complete!
-    self.update_attribute(:complete, true)
+    self.update_attribute(:completed_at, Time.zone.now)
   end
 
   private

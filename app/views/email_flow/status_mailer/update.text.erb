@@ -13,5 +13,5 @@ Open Approvals
 Complete Approvals
 
 <% @user.approvals.complete.take(10).each do |approval| %>
-- <%= approval.title %> (<%= approval.response_status_text %>); Completed <%= approval.updated_at_in_words %>
+- <%= approval.title %> (<%= approval.response_status_text %>); Completed <%= approval.completed_at_in_words %>
 <% end %>

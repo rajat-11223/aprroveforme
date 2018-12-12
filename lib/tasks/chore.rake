@@ -13,4 +13,18 @@ namespace :chore do
   task :clear_sidekiq_jobs => :environment do
     Sidekiq::Queue.new.clear
   end
+
+  desc "Compute completed_at"
+  task :compute_completed_at => :environment do
+    Approval.not_complete.find_each do |approval|
+      case
+      when approval.deadline < Time.zone.now
+        approval.update_attributes completed_at: approval.deadline
+      when approval.created_at < (Time.zone.now - 5.months)
+        approval.update_attributes completed_at: Time.zone.now
+      end
+
+      print "."
+    end
+  end
 end

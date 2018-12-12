@@ -28,7 +28,7 @@
                                                           <h3>Complete Approvals</h3>
                                                           <ul>
                                                             <% @user.approvals.complete.take(10).each do |approval| %>
-                                                              <li><%= link_to approval.title, approval %> (<%= approval.response_status_text %>); Completed <%= approval.updated_at_in_words %></li>
+                                                              <li><%= link_to approval.title, approval %> (<%= approval.response_status_text %>); Completed <%= approval.completed_at_in_words %></li>
                                                             <% end %>
                                                           </ul>
                                                       </td>
