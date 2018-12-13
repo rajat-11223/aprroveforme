@@ -1,4 +1,5 @@
 require "sidekiq/web"
+require "sidekiq/cron/web"
 
 Workflow::Application.routes.draw do
   mount_griddler("/incoming/email")

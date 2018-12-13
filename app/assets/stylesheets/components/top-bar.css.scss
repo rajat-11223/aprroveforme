@@ -1,112 +1,112 @@
 @import "../settings";
 
-.top-bar {
-  background-color: $light-gray;
-  margin-bottom: 25px;
-  padding: 10px;
-  border-top: 4px solid $primary-color;
+// .top-bar {
+//   background-color: $light-gray;
+//   margin-bottom: 25px;
+//   padding: 10px;
+//   border-top: 4px solid $primary-color;
 
-  a {
-    color: $medium-gray;
-    text-align: center;
-    padding-top: .25rem .5rem;
-    margin-top: .75rem;
-    font-size: .75rem;
-  }
+//   a {
+//     color: $medium-gray;
+//     text-align: center;
+//     padding-top: .25rem .5rem;
+//     margin-top: .75rem;
+//     font-size: .75rem;
+//   }
 
-  $menu-hover-lines-transition: all 0.35s ease;
-  $menu-hover-lines-border-width: 3px;
+//   $menu-hover-lines-transition: all 0.35s ease;
+//   $menu-hover-lines-border-width: 3px;
 
-  .menu-hover-lines {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 1px;
-    transition: $menu-hover-lines-transition;
+//   .menu-hover-lines {
+//     text-align: center;
+//     text-transform: uppercase;
+//     font-weight: 500;
+//     letter-spacing: 1px;
+//     transition: $menu-hover-lines-transition;
 
-    li a {
-      padding: 0.75rem 0;
-      color: rgba($body-font-color, 0.5);
-      position: relative;
-      margin-left: 1rem;
-    }
+//     li a {
+//       padding: 0.75rem 0;
+//       color: rgba($body-font-color, 0.5);
+//       position: relative;
+//       margin-left: 1rem;
+//     }
 
-    li:first-child a {
-      margin-left: 0;
-    }
+//     li:first-child a {
+//       margin-left: 0;
+//     }
 
-    li.active > a {
-      background-color: transparent;
-    }
+//     li.active > a {
+//       background-color: transparent;
+//     }
 
-    a:before,
-    a::after {
-      height: $menu-hover-lines-border-width;
-      position: absolute;
-      content: '';
-      transition: $menu-hover-lines-transition;
-      background-color: $primary-color;
-      width: 0;
-    }
+//     a:before,
+//     a::after {
+//       height: $menu-hover-lines-border-width;
+//       position: absolute;
+//       content: '';
+//       transition: $menu-hover-lines-transition;
+//       background-color: $primary-color;
+//       width: 0;
+//     }
 
-    a::before {
-      top: 0;
-      left: 0;
-    }
+//     a::before {
+//       top: 0;
+//       left: 0;
+//     }
 
-    a::after {
-      bottom: 0;
-      right: 0;
-    }
+//     a::after {
+//       bottom: 0;
+//       right: 0;
+//     }
 
-    a:hover,
-    li.active > a {
-      color: $body-font-color;
-      transition: $menu-hover-lines-transition;
-    }
+//     a:hover,
+//     li.active > a {
+//       color: $body-font-color;
+//       transition: $menu-hover-lines-transition;
+//     }
 
-    .is-dropdown-submenu {
-      a:hover {
-        transition: none;
-      }
+//     .is-dropdown-submenu {
+//       a:hover {
+//         transition: none;
+//       }
 
-      a:before,
-      a::after {
-        content: none;
-      }
-    }
+//       a:before,
+//       a::after {
+//         content: none;
+//       }
+//     }
 
-    li.is-dropdown-submenu.active > a {
-      transition: none;
-    }
+//     li.is-dropdown-submenu.active > a {
+//       transition: none;
+//     }
 
-    a:hover::before,
-    .active a::before,
-    a:hover::after,
-    .active a::after {
-      width: 100%;
-    }
-  }
+//     a:hover::before,
+//     .active a::before,
+//     a:hover::after,
+//     .active a::after {
+//       width: 100%;
+//     }
+//   }
 
-  .logo {
-    margin-bottom: 0px;
-    padding-top: 22px;
-  }
+//   .logo {
+//     margin-bottom: 0px;
+//     padding-top: 22px;
+//   }
 
-  .nav-pic {
-    $pic-width: 3rem;
-    width: $pic-width;
-    margin: 0rem 2rem;
-    border-radius: $pic-width;
-  }
+//   .nav-pic {
+//     $pic-width: 3rem;
+//     width: $pic-width;
+//     margin: 0rem 2rem;
+//     border-radius: $pic-width;
+//   }
 
-  li .sign-up {
-    background-color: $primary-color;
-    padding: 0.75rem !important;
-  }
-  li .login {
-    background-color: $secondary-color;
-    color: $white !important;
-    padding: 0.75rem !important;
-  }
-}
+//   li .sign-up {
+//     background-color: $primary-color;
+//     padding: 0.75rem !important;
+//   }
+//   li .login {
+//     background-color: $secondary-color;
+//     color: $white !important;
+//     padding: 0.75rem !important;
+//   }
+// }

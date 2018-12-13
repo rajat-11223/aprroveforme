@@ -7,6 +7,7 @@
         <th>Document Name</th>
         <th>Description</th>
         <th>Deadline</th>
+        <th>Completed</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -25,8 +26,19 @@
               <span class="dashboard-table-timestamp"><%= approval.deadline_in_words %></span>
             </div>
           </div>
-
         </td>
+
+        <td class="listing-inquiry-status">
+          <div class="flex-container align-top">
+            <div class="flex-child-grow">
+              <h4 class="dashboard-table-text">
+                <%# approval.completed_at.to_date %>
+              </h4>
+              <span class="dashboard-table-timestamp"><%= approval.completed_at_in_words %></span>
+            </div>
+          </div>
+        </td>
+
 
         <td>
           <%= render partial: "approval-actions", locals: { approval: approval } %>

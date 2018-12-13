@@ -1,0 +1,5 @@
+check_for_complete_approvals:
+  cron: "*/30 * * * *"
+  class: "CheckForCompleteApprovalsJob"
+  # queue: default
+

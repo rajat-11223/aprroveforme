@@ -1,4 +1,4 @@
-Workflow::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -16,14 +16,14 @@ Workflow::Application.configure do
   config.eager_load = false
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
@@ -36,6 +36,5 @@ Workflow::Application.configure do
   config.active_support.deprecation = :stderr
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'example.com' }
-
+  config.action_mailer.default_url_options = {:host => "example.com"}
 end

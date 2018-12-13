@@ -39,7 +39,7 @@ class Ability
 
     can [:create, :read], SubscriptionHistory, user_id: user.id
 
-    can :manage, Approval, owner: user.id, complete: false
+    can :manage, Approval, owner: user.id, completed_at: nil
     can [:read, :clone], Approval, owner: user.id
 
     can [:create, :read, :update], User, id: user.id

@@ -128,6 +128,8 @@ GEM
       launchy (~> 2.1)
       mail (~> 2.7)
     erubi (1.7.1)
+    et-orbi (1.1.6)
+      tzinfo
     execjs (2.7.0)
     extlib (0.9.16)
     factory_bot (4.10.0)
@@ -150,6 +152,9 @@ GEM
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
       sprockets-es6 (>= 0.9.0)
+    fugit (1.1.6)
+      et-orbi (~> 1.1, >= 1.1.6)
+      raabro (~> 1.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     gon (6.2.1)
@@ -286,6 +291,7 @@ GEM
       pry (>= 0.10.4)
     public_suffix (3.0.2)
     puma (3.11.4)
+    raabro (1.1.6)
     rack (2.0.6)
     rack-protection (2.0.3)
       rack
@@ -331,7 +337,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    redis (4.0.1)
+    redis (4.0.3)
     request_store (1.4.1)
       rack (>= 1.4)
     responders (2.4.0)
@@ -383,6 +389,9 @@ GEM
       connection_pool (~> 2.2, >= 2.2.2)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
+    sidekiq-cron (1.0.4)
+      fugit (~> 1.1)
+      sidekiq (>= 4.2.1)
     signet (0.6.0)
       addressable (~> 2.3)
       extlib (~> 0.9)
@@ -517,6 +526,7 @@ DEPENDENCIES
   selenium-webdriver
   sendgrid-ruby
   sidekiq
+  sidekiq-cron
   simple_form (>= 2.0.4)
   split
   split-analytics

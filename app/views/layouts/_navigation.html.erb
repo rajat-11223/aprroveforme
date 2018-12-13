@@ -1,21 +1,21 @@
 <nav id="main" class="tw-bg-yellow-dark tw-p-6">
   <div class="tw-m-auto tw-flex tw-items-center tw-justify-between tw-flex-wrap tw-max-w-3xl">
-    <div class="tw-flex tw-items-center tw-flex-no-shrink tw-text-white tw-mr-6">
+    <div class="tw-flex tw-items-center tw-flex-no-shrink tw-text-black tw-mr-6">
       <svg class="tw-fill-current tw-h-8 tw-w-8 tw-mr-2" width="54" height="54" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
       <span class="tw-font-semibold tw-text-xl tw-tracking-tight"><%= t("app-title") %></span>
     </div>
     <div class="tw-block lg:tw-hidden">
-      <button onclick="ApproveForMe.expandOrCollapseById('navbar-menu')" class="tw-flex tw-items-center tw-px-3 tw-py-2 tw-border tw-rounded tw-text-white tw-border-white hover:tw-text-black hover:tw-border-black">
+      <button onclick="ApproveForMe.expandOrCollapseById('navbar-menu')" class="tw-flex tw-items-center tw-px-3 tw-py-2 tw-border tw-rounded tw-text-black tw-border-white hover:tw-text-black hover:tw-border-black">
         <svg class="tw-fill-current tw-h-4 tw-w-4" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
       </button>
     </div>
     <div id="navbar-menu" class="tw-w-full tw-hidden lg:tw-flex lg:tw-items-center lg:tw-w-auto lg:tw-block">
-      <%= link_to "Home", root_url, class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-white hover:tw-text-black tw-mr-4" %>
-      <%= link_to "How It Works", page_path("how-it-works"), class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-white hover:tw-text-black tw-mr-4" %>
+      <%= link_to "Home", root_url, class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-black hover:tw-text-black tw-mr-4" %>
+      <%= link_to "How It Works", page_path("how-it-works"), class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-black hover:tw-text-black tw-mr-4" %>
 
       <% if user_signed_in? %>
-        <div id="account-dropdown" class="tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-white hover:tw-text-black tw-mr-4 tw-relative group">
-          <div class="tw-flex tw-items-center tw-cursor-pointer tw-text-md tw-text-white tw-border tw-border-white tw-border-b-0 group-hover:tw-border-grey-light tw-rounded-t-lg tw-py-1 tw-px-2">
+        <div id="account-dropdown" class="tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-black hover:tw-text-black tw-mr-4 tw-relative group">
+          <div class="tw-flex tw-items-center tw-cursor-pointer tw-text-md tw-text-black tw-border tw-border-white tw-border-b-0 group-hover:tw-border-grey-light tw-rounded-t-lg tw-py-1 tw-px-2">
             <%= image_tag current_user.picture, class: "tw-rounded-full tw-mr-2 tw-w-6", width: "60px" %>
             <%= current_user.email %>
             <svg class="tw-fill-current tw-h-4 tw-w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -33,12 +33,12 @@
           </div>
         </div>
       <% else %>
-        <%= link_to "Pricing", pricing_path , class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-white hover:tw-text-black tw-mr-4"%>
-        <%= link_to "Login", signin_path, class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-white hover:tw-text-black tw-mr-4 login" %>
-        <%= link_to "Sign Up Free", signin_path, class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-white hover:tw-text-black tw-mr-4 sign-up" %>
+        <%= link_to "Pricing", pricing_path , class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-black hover:tw-text-black tw-mr-4"%>
+        <%= link_to "Login", signin_path, class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-black hover:tw-text-black tw-mr-4 login" %>
+        <%= link_to "Sign Up Free", signin_path, class: "tw-block tw-mt-4 lg:tw-inline-block lg:tw-mt-0 tw-text-black hover:tw-text-black tw-mr-4 sign-up" %>
       <% end %>
       <!--div class="lg:tw-px-2">
-        <a href="#" class="tw-inline-block tw-text-md lg:tw-px-4 lg:tw-py-2 tw-leading-none tw-border tw-rounded tw-text-white tw-border-white hover:tw-border-transparent hover:tw-text-black hover:tw-bg-white tw-mt-4 lg:tw-mt-0">New Approval</a>
+        <a href="#" class="tw-inline-block tw-text-md lg:tw-px-4 lg:tw-py-2 tw-leading-none tw-border tw-rounded tw-text-black tw-border-white hover:tw-border-transparent hover:tw-text-black hover:tw-bg-white tw-mt-4 lg:tw-mt-0">New Approval</a>
       </div-->
     </div>
   </div>
