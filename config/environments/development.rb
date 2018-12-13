@@ -1,4 +1,4 @@
-Workflow::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -18,7 +18,7 @@ Workflow::Application.configure do
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.seconds.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.seconds.to_i}",
     }
   else
     config.action_controller.perform_caching = false
@@ -49,12 +49,12 @@ Workflow::Application.configure do
   config.action_view.raise_on_missing_translations = true
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { host: ENV["APP_HOST"] }
+  config.action_mailer.default_url_options = {host: ENV["APP_HOST"]}
   config.action_mailer.asset_host = ENV["APP_HOST"]
 
   # change to true to allow email to be sent during development
   config.action_mailer.raise_delivery_errors = true
- # config.action_mailer.default :charset => "utf-8"
+  # config.action_mailer.default :charset => "utf-8"
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
 

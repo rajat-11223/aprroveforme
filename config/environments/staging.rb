@@ -4,9 +4,9 @@ require_relative "production.rb"
 
 # Set the domain to explecitly be our BASE_APP_DOMAIN
 # https://github.com/omniauth/omniauth-oauth2/issues/58
-Workflow::Application.config.session_store :cookie_store, key: "_approveforme_session", domain: Workflow::Application::BASE_APP_DOMAIN, expire_after: 55.minutes
+Rails.application.config.session_store :cookie_store, key: "_approveforme_session", domain: Workflow::Application::BASE_APP_DOMAIN, expire_after: 55.minutes
 
-Workflow::Application.configure do
+Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     user_name: "0644e1881fb7c3",
