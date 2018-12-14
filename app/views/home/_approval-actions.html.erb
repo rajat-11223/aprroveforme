@@ -1,17 +1,17 @@
 <ul class="tw-list-reset">
   <li class="tw-p-2">
     <% if can?(:read, approval) %>
-      <%= link_to t("approval.show.action"), approval, class: "tw-text-white tw-bg-yellow-dark hover:tw-text-white tw-text-xs tw-p-3" %>
+      <%= link_to t("approval.show.action"), approval, class: "tw-text-black tw-bg-yellow-dark hover:tw-text-black tw-text-xs tw-p-3" %>
     <% end %>
   </li>
   <li class="tw-p-2">
     <% if can?(:edit, approval) %>
-      <%= link_to t("approval.edit.action"), edit_approval_path(approval), class: "tw-text-white tw-bg-yellow-dark hover:tw-text-white tw-text-xs tw-p-3" %>
+      <%= link_to t("approval.edit.action"), edit_approval_path(approval), class: "tw-text-black tw-bg-yellow-dark hover:tw-text-black tw-text-xs tw-p-3" %>
     <% end %>
   </li>
   <li class="tw-p-2">
     <% if can?(:clone, approval) %>
-      <%= link_to t("approval.clone.action"), new_approval_path(from_approval: approval), class: "tw-text-white tw-bg-yellow-dark hover:tw-text-white tw-text-xs tw-p-3" %>
+      <%= link_to t("approval.clone.action"), new_approval_path(from_approval: approval), class: "tw-text-black tw-bg-yellow-dark hover:tw-text-black tw-text-xs tw-p-3" %>
     <% end %>
   </li>
 </ul>
