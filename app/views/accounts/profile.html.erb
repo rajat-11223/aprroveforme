@@ -11,7 +11,7 @@
   </div>
   <div class="grid-x">
     <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">Last Name</p>
+      <p class="form-label">Last Name:</p>
     </div>
     <div class="large-10 small-9 cell" style="width: 477px;">
       <%= current_user.last_name %>
@@ -19,12 +19,27 @@
   </div>
   <div class="grid-x">
     <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">Email</p>
+      <p class="form-label">Email:</p>
     </div>
     <div class="large-10 small-9 cell" style="width: 477px;">
       <%= current_user.email %>
     </div>
   </div>
-<% end -%>
+  <p>You may not change this information here. Please login to Google / GSuite, change your contact information and then
+    log out/log back into this service. We update your details everytime you login.</p>
 
-<p>You may not change this information here. Please login to Google / GSuite, change your contact information and then log out/log back into this service. We update your details everytime you login.</p>
+  <div class="grid-x">
+    <div class="large-2 small-3 cell" style="width: 142px;">
+      <p class="form-label">TimeZone</p>
+    </div>
+    <div class="large-10 small-9 cell" style="width: 477px;">
+      <%= select_tag :time_zone, options_for_select(ActiveSupport::TimeZone.all.map(&:to_s).zip(ActiveSupport::TimeZone.all.map(&:name)), selected: current_user.time_zone),
+                                  { data: { placeholder: "Select time zone",
+                                    remote: true,
+                                    url: profile_update_account_path(current_user),
+                                    method: :patch } } %>
+    </div>
+  </div>
+
+  <p>The timezone is used to calculate deadlines and the times that are reported to you. This should be kept up-to-date.</p>
+<% end -%>

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include TurbolinksCacheControl
   include HttpAuth
   include AuthorizationChecks
+  include SetCurrentUser
 
   helper_method :current_user
   helper_method :user_signed_in?

@@ -6,6 +6,16 @@ class AccountsController < ApplicationController
     authorize! :read, current_user
   end
 
+  def profile_update
+    authorize! :update, current_user
+
+    if current_user.update_attributes(params.permit(:time_zone))
+      redirect_to profile_account_path(current_user), notice: "Successfully updated timezone"
+    else
+      redirect_to profile_account_path(current_user), notice: "Timezone did not update"
+    end
+  end
+
   def payment_methods
     authorize! :read, current_user
     @customer = current_user.payment_customer
@@ -17,7 +27,7 @@ class AccountsController < ApplicationController
     PaymentGateway::SyncCustomer.new(current_user).call
     PaymentGateway::AddCard.new(current_user).call(source: params[:stripeToken])
 
-    redirect_to payment_methods_account_path, notice: 'Payment method was successfully added.'
+    redirect_to payment_methods_account_path, notice: "Payment method was successfully added."
   end
 
   def delete_payment_method
@@ -25,7 +35,7 @@ class AccountsController < ApplicationController
 
     PaymentGateway::RemoveCard.new(current_user).call(token: params[:id])
 
-    redirect_to payment_methods_account_path, notice: 'Payment method was successfully deleted.'
+    redirect_to payment_methods_account_path, notice: "Payment method was successfully deleted."
   end
 
   def set_default_payment_method
@@ -33,7 +43,7 @@ class AccountsController < ApplicationController
 
     PaymentGateway::SetDefaultCard.new(current_user).call(token: params[:id])
 
-    redirect_to payment_methods_account_path, notice: 'Default card successfully updated'
+    redirect_to payment_methods_account_path, notice: "Default card successfully updated"
   end
 
   def current_subscription

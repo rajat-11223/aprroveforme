@@ -1,12 +1,13 @@
 require "rails_helper"
 
 describe "Use existing approval as template", js: true do
-
-  let(:approval) { create(:approval, created_at: Time.zone.local(2019, 11, 18, 13, 0,0), deadline: Time.zone.local(2019, 11, 25, 13, 0,0), drive_perms: "writer", drive_public: true ) }
+  let(:approval) { create(:approval, created_at: Time.zone.local(2019, 11, 18, 13, 0, 0), deadline: Time.zone.local(2019, 11, 25, 13, 0, 0), drive_perms: "writer", drive_public: true) }
   let(:user) { approval.user }
 
   before do
-    travel_to Time.zone.local(2019, 11, 19, 13, 0,0)
+    user.update_attributes time_zone: "Eastern Time (US & Canada)"
+
+    travel_to Time.zone.local(2019, 11, 19, 13, 0, 0)
     sign_in_as(user)
   end
 
@@ -14,7 +15,7 @@ describe "Use existing approval as template", js: true do
     travel_back
   end
 
-  it 'new approval has old information' do
+  it "new approval has old information" do
     within("#sidebar") do
       click_link "Open Approvals"
     end

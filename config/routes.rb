@@ -14,6 +14,7 @@ Workflow::Application.routes.draw do
   resource :account do
     collection do
       get :profile
+      patch :profile_update
 
       # Payment management
       get :payment_methods
