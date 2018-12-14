@@ -8,10 +8,9 @@ class Approver < ApplicationRecord
   validates_presence_of :name
   validates_presence_of :email
 
-  # TODO: Ensure approvers can only set stats to approved decline on update. This,
-  # valdation, however, doesn't work because it disallows approvals to be updated
-  # validates :status, inclusion: {in: %w(approved declined)}, on: :update
-  validates :status, inclusion: {in: %w(pending approved declined)} #, on: :create
+  validates :status, inclusion: {in: %w(approved declined)}, if: :has_responded?
+  validates :status, inclusion: {in: %w(pending approved declined)}
+
   validates :required, inclusion: {in: %w(required optional)}
   validates_format_of :email, :with => /\A(.*)@(.*)\.(.*)\Z/
 
@@ -34,8 +33,12 @@ class Approver < ApplicationRecord
   scope :pending, -> { where(status: "pending") }
   scope :approved_or_declined, -> { approved.or(Approver.declined) }
 
+  scope :responded, -> { where("responded_at <= ?", Time.zone.now) }
+  scope :not_responded, -> { where("responded_at > ?", Time.zone.now).or(Approver.where(responded_at: nil)) }
+
   def has_responded?
-    ["approved", "declined"].include? self.status
+    self.responded_at? &&
+      self.responded_at <= Time.zone.now
   end
 
   def declined?

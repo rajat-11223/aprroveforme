@@ -20,7 +20,7 @@
         <p class="approval-details">
           <strong>Creator:</strong>
           <%= image_tag image_url(@approval.user.email), class: "pic-approval-owner" %>
-          <%= @approval.user.name %><br/>
+          <%= @approval.user.name %> - (<%= @approval.user.email %>)<br/>
         </p>
         <p class="approval-details">
           <strong>Deadline:</strong>
@@ -87,7 +87,7 @@
                   </p>
                   <p class="approval-details">
                     <% if approver.has_responded? %>
-                      Responded on <%= approver.updated_at.to_s(:date_with_time) %>
+                      Responded on <%= approver.responded_at.to_s(:date_with_time) %>
                     <% end %>
                   </p>
                 </div>

@@ -9,7 +9,7 @@ class ResponsesController < ApplicationController
 
   # an approver is approving
   def update
-    if !@approval.past_due? && @approver.update_attributes!(approver_params)
+    if !@approval.past_due? && @approver.update_attributes!(approver_params.merge(responded_at: Time.zone.now))
       ab_finished(:approver_approved)
       UserMailer.approval_update(@approver).deliver_later
       CheckForCompleteApprovalJob.perform_later(@approval)

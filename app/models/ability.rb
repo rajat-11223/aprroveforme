@@ -35,10 +35,12 @@ class Ability
   end
 
   def standard_user_permissions
-    can [:read, :approve, :decline], Approval, approvers: {email: user.email}
-
     can [:create, :read], SubscriptionHistory, user_id: user.id
 
+    # Approvals I am an approver on
+    can [:approve, :decline], Approval, approvers: {email: user.email}
+
+    # Approvals I own
     can :manage, Approval, owner: user.id, completed_at: nil
     can [:read, :clone], Approval, owner: user.id
 

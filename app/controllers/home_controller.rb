@@ -34,15 +34,15 @@ class HomeController < ApplicationController
 
     @open_responses = Approver.joins(:approval)
                               .merge(Approval.not_complete)
+                              .not_responded
                               .by_user(current_user)
-                              .pending
   end
 
   def complete_responses
     authorize! :read, Approval.new(owner: current_user.id)
 
     @complete_responses = Approver.includes(:approval)
-                                  .approved_or_declined
+                                  .responded
                                   .by_user(current_user)
   end
 
