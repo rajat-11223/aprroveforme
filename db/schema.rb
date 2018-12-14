@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2018_12_14_190206) do
     t.string "customer_id"
     t.string "stripe_subscription_id"
     t.datetime "last_login_at"
-    t.string "time_zone", default: "UTC", null: false
+    t.string "time_zone"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
