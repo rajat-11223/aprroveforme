@@ -6,12 +6,11 @@ class ApplicationController < ActionController::Base
   include HttpAuth
   include AuthorizationChecks
   include SetCurrentUser
+  include SetGon
 
   helper_method :current_user
   helper_method :user_signed_in?
   helper_method :correct_user?
-
-  before_action :setup_gon
 
   private
 
@@ -45,12 +44,5 @@ class ApplicationController < ActionController::Base
   def redirect_to_redirection_path
     redirection_url = session.delete(:redirection_url)
     redirect_to(redirection_url || root_url)
-  end
-
-  def setup_gon
-    gon.push googleAppId: ENV.fetch("APP_ID"),
-             googleUserToken: current_user.try(:token),
-             stripePublishableKey: ENV.fetch("STRIPE_PUBLISHABLE_KEY"),
-             pageName: [controller_name.camelize, action_name.camelize].join
   end
 end
