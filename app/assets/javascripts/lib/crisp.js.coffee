@@ -20,7 +20,7 @@ ApproveForMe.crisp =
 
     @markShown('earnFreeYear')
     ApproveForMe.crisp.pushMessage("Want to earn a free year of ApproveForMe Unlimited?")
-    ApproveForMe.crisp.pushMessage("Schedule a 15 minute call with me at https://calendly.com/ricky-rakefire/approve-for-me-15-minute and I'll hook you up.")
+    ApproveForMe.crisp.pushMessage("Schedule a 15 minute call with me at https://calendly.com/ricky-chilcott/approve-for-me-15-minute and I'll hook you up.")
 
   # Helpers
   pushMessage: (msg) ->
