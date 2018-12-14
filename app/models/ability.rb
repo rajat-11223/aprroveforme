@@ -38,7 +38,7 @@ class Ability
     can [:create, :read], SubscriptionHistory, user_id: user.id
 
     # Approvals I am an approver on
-    can [:approve, :decline], Approval, approvers: {email: user.email}
+    can [:approve, :decline], Approval, responded_at: nil, approvers: {email: user.email}
 
     # Approvals I own
     can :manage, Approval, owner: user.id, completed_at: nil
