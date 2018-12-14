@@ -10,9 +10,9 @@ class AccountsController < ApplicationController
     authorize! :update, current_user
 
     if current_user.update_attributes(params.permit(:time_zone))
-      redirect_to profile_account_path(current_user), notice: "Successfully updated timezone"
+      redirect_to profile_account_path, notice: "Successfully updated timezone"
     else
-      redirect_to profile_account_path(current_user), notice: "Timezone did not update"
+      redirect_to profile_account_path, notice: "Timezone did not update"
     end
   end
 

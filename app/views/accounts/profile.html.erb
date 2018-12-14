@@ -33,10 +33,10 @@
       <p class="form-label">TimeZone</p>
     </div>
     <div class="large-10 small-9 cell" style="width: 477px;">
-      <%= select_tag :time_zone, options_for_select(ActiveSupport::TimeZone.all, selected: current_user.time_zone),
+      <%= select_tag :time_zone, options_for_select(ActiveSupport::TimeZone.all.zip(ActiveSupport::TimeZone.all.map(&:name)), selected: current_user.time_zone),
                                   { data: {
                                       remote: true,
-                                      url: profile_update_account_path(current_user),
+                                      url: profile_update_account_path,
                                       method: :patch },
                                     prompt: "Select time zone"
                                   } %>
