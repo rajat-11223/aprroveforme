@@ -1,28 +1,27 @@
 module ApplicationHelper
   def turbolinks_cache_control_meta_tag
-    tag :meta, name: 'turbolinks-cache-control', content: @turbolinks_cache_control || 'cache'
+    tag :meta, name: "turbolinks-cache-control", content: @turbolinks_cache_control || "cache"
   end
 
   def sign_up_button(plan:, color: "ffa500")
-    link_to "Get Started", signin_path(plan_name: plan[:name], plan_interval: plan[:interval]),
-                           class: "button primary",
-                           style: "background-color: ##{color} !important;",
-                           data: { turbolinks: false }
+    link_to "Get Started", signin_path(plan_name: plan[:name], plan_interval: plan[:interval], type: :signup),
+            class: "button primary",
+            style: "background-color: ##{color} !important;",
+            data: {turbolinks: false}
   end
 
   def upgrade_or_downgrade_button(plan:, on_color: "ffa500", current_color: "2787cd")
     on_plan = plan_compare(to: plan[:name])
 
-    if on_plan != 'Current'
-      link_to on_plan, "#", data: { name: plan[:name], interval: plan[:interval], turbolinks: false },
+    if on_plan != "Current"
+      link_to on_plan, "#", data: {name: plan[:name], interval: plan[:interval], type: :upgrade, turbolinks: false},
                             class: "button primary continue-change",
                             style: "background-color: ##{on_color}"
     else
-      link_to 'Current', dashboard_home_index_path,
-                         data: { name: plan[:name], interval: plan[:interval] },
-                         class: "button primary",
-                         style: "background-color: ##{current_color}"
-
+      link_to "Current", dashboard_home_index_path,
+              data: {name: plan[:name], interval: plan[:interval], type: :upgrade},
+              class: "button primary",
+              style: "background-color: ##{current_color}"
     end
   end
 
@@ -31,15 +30,15 @@ module ApplicationHelper
   end
 
   def free_plan_compare
-    { lite: "Current", professional: "Upgrade", unlimited: "Upgrade" }
+    {lite: "Current", professional: "Upgrade", unlimited: "Upgrade"}
   end
 
   def professional_plan_compare
-    { lite: "Downgrade", professional: "Current", unlimited: "Upgrade" }
+    {lite: "Downgrade", professional: "Current", unlimited: "Upgrade"}
   end
 
   def unlimited_plan_compare
-    { lite: "Downgrade", professional: "Downgrade", unlimited: "Current" }
+    {lite: "Downgrade", professional: "Downgrade", unlimited: "Current"}
   end
 
   def plan_compare(to:)
@@ -76,9 +75,9 @@ module ApplicationHelper
     button_to_function(name, %( ApproveForMe.add_fields(this, "#{association}", "#{escape_javascript(fields)}")), class: "button secondary small")
   end
 
-  def button_to_function(name, function=nil, html_options={})
+  def button_to_function(name, function = nil, html_options = {})
     message = "button_to_function is deprecated and will be removed from Rails 4.1. We recommend using Unobtrusive JavaScript instead. " +
-        "See http://guides.rubyonrails.org/working_with_javascript_in_rails.html#unobtrusive-javascript"
+              "See http://guides.rubyonrails.org/working_with_javascript_in_rails.html#unobtrusive-javascript"
     ActiveSupport::Deprecation.warn message
 
     onclick = ""

@@ -7,7 +7,7 @@ module PaymentGateway
     def call(name:, interval:)
       customer = user.payment_customer
       identifier = Plans::List[name.to_s].dig(interval.to_s, "identifier")
-      subscription = customer.subscriptions.first
+      subscription = user.subscription.stripe_subscription
 
       raise "Unknown plan #{name} - #{interval}" unless identifier.present?
       raise "Don't have a customer" unless customer.present?

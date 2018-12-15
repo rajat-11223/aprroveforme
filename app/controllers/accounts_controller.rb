@@ -17,6 +17,9 @@ class AccountsController < ApplicationController
   end
 
   def payment_methods
+    session.delete(:plan_name)
+    session.delete(:plan_interval)
+
     authorize! :read, current_user
     @customer = current_user.payment_customer
   end
@@ -27,7 +30,17 @@ class AccountsController < ApplicationController
     PaymentGateway::SyncCustomer.new(current_user).call
     PaymentGateway::AddCard.new(current_user).call(source: params[:stripeToken])
 
-    redirect_to payment_methods_account_path, notice: "Payment method was successfully added."
+    if session[:plan_name].present? && session[:plan_interval].present?
+      name = session.delete(:plan_name)
+      interval = session.delete(:plan_interval)
+
+      PaymentGateway::CreateOrUpdateSubscription.new(current_user).call(name: name,
+                                                                        interval: interval)
+
+      redirect_to dashboard_home_index_path, notice: "Congratulations! Upgraded to #{name}, billed #{interval}"
+    else
+      redirect_to payment_methods_account_path, notice: "Payment method was successfully added."
+    end
   end
 
   def delete_payment_method

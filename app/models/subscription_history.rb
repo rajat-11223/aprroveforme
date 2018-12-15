@@ -8,19 +8,43 @@ class SubscriptionHistory < ApplicationRecord
   validates_presence_of :plan_date
   validates_presence_of :subscription_identifier
 
-  scope :lite, -> { where(plan_name: :free).or(SubscriptionHistory.where(plan_name: :free)).or(SubscriptionHistory.where(plan_name: "")) }
-  scope :professional, -> { where(plan_name: :professional) }
-  scope :unlimited, -> { where(plan_name: :unlimited) }
+  LITE = "lite"
+  PROFESSIONAL = "professional"
+  UNLIMITED = "unlimited"
+
+  MONTHLY = "monthly"
+  YEARLY = "yearly"
+
+  scope :lite, -> { where(plan_name: LITE) }
+  scope :professional, -> { where(plan_name: PROFESSIONAL) }
+  scope :unlimited, -> { where(plan_name: UNLIMITED) }
+
+  scope :monthly, -> { where(plan_interval: MONTHLY) }
+  scope :yearly, -> { where(plan_interval: YEARLY) }
+
+  def stripe_subscription
+    @stripe_subscription ||= Stripe::Subscription.retrieve(subscription_identifier)
+  rescue Stripe::InvalidRequestError
+    nil
+  end
 
   def lite?
-    plan_name == "lite"
+    plan_name == LITE
   end
 
   def professional?
-    plan_name == "professional"
+    plan_name == PROFESSIONAL
   end
 
   def unlimited?
-    plan_name == "unlimited"
+    plan_name == UNLIMITED
+  end
+
+  def monthly?
+    plan_interval == MONTHLY
+  end
+
+  def yearl?
+    plan_interval == YEARLY
   end
 end

@@ -9,16 +9,15 @@ class SubscriptionsController < ApplicationController
 
     authorize! :create, current_user.subscription
 
-    if current_user.payment_customer? &&
-        !PaymentGateway::FetchCards.new(current_user).call.empty?
-          current_user.subscription.plan_name != "lite"
+    if current_user.payment_customer? && !PaymentGateway::FetchCards.new(current_user).call.empty?
+      current_user.subscription.plan_name != SubscriptionHistory::LITE
       update
     end
   end
 
   def continue_permission
     authorize! :create, current_user.subscription
-    render partial: 'continue_permission', locals: { name: params[:name], interval: params[:interval] }
+    render partial: "continue_permission", locals: {name: params[:name], interval: params[:interval], type: params[:type]}
   end
 
   def create
