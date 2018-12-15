@@ -142,6 +142,8 @@ GEM
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     ffi (1.9.25)
+    flatpickr_rails (1.1.0)
+      railties (>= 3.0)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
@@ -193,7 +195,7 @@ GEM
     htmlentities (4.3.4)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
-    i18n (1.1.1)
+    i18n (1.2.0)
       concurrent-ruby (~> 1.0)
     i18n-js (3.2.0)
       i18n (>= 0.8.0, < 2)
@@ -328,7 +330,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
-    rake (12.3.1)
+    rake (12.3.2)
     ransack (2.1.1)
       actionpack (>= 5.0)
       activerecord (>= 5.0)
@@ -487,6 +489,7 @@ DEPENDENCIES
   email_spec (>= 1.4.0)
   factory_bot_rails
   faraday_middleware
+  flatpickr_rails
   foundation-icons-sass-rails
   foundation-rails
   gon

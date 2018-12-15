@@ -1,6 +1,5 @@
 #= require modernizr
 #= require jquery
-#= require jquery-ui/widgets/datepicker
 #= require jquery_ujs
 #= require turbolinks
 #= require foundation
@@ -9,6 +8,7 @@
 #= require browser_timezone_rails/set_time_zone
 #= require i18n
 #= require i18n/translations
+#= require flatpickr
 #= require approve_for_me
 #= require_tree ./lib
 #= require_tree ./pages

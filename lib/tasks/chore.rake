@@ -27,4 +27,15 @@ namespace :chore do
       print "."
     end
   end
+
+  desc "Set deadline to noon for everyon!"
+  task :set_deadline_times => :environment do
+    Approval.includes(:user).all.find_each do |approval|
+      next if approval.user.paid?
+
+      Time.zone = approval.user.time_zone.presence || "UTC"
+      approval.deadline = approval.deadline.noon
+      approval.save(validate: false, touch: false)
+    end
+  end
 end

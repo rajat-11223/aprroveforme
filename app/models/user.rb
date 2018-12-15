@@ -65,6 +65,19 @@ class User < ApplicationRecord
     !!payment_customer
   end
 
+  def paid?
+    subscription? &&
+      (subscription.professional? || subscription.unlimited?)
+  end
+
+  def not_paid?
+    !paid?
+  end
+
+  def subscription?
+    subscription.present?
+  end
+
   def self.to_csv(output = "")
     output << CSV.generate_line(self.column_names)
 

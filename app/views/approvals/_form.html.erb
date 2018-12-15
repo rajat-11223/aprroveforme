@@ -63,12 +63,12 @@
           <p class="form-label">Deadline*</p>
         </div>
         <div class="large-8 small-9 cell">
-          <%= f.text_field :deadline, placeholder: "MM/DD/YYYY",
-                                      id: "datepicker",
-                                      value: (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline),
+          <%= f.text_field :deadline, id: current_user.paid? ? "datetimepicker" : "datepicker",
+                                      value: @approval.deadline,
                                       as: :string,
                                       autocomplete: :off,
-                                      required: true %>
+                                      required: true,
+                                      placeholder: "Deadline" %>
         </div>
       </div>
       <div class="grid-x">

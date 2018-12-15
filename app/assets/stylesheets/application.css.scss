@@ -10,10 +10,33 @@
  *
  *= require_self
  *= require foundation_and_overrides
+ *= require flatpickr
  *= require_tree ./components
  *= require_tree ./pages
 */
 @import 'variables';
+
+// Flatpikr fixes
+.flatpickr-calendar {
+  div.flatpickr-month {
+    height: 40px;
+    background-color: #fc0;
+
+    .numInputWrapper {
+      padding-left: 8px;
+
+      input.cur-year {
+        font-size: 20px !important;
+        padding-top: 4px !important;
+      }
+    }
+  }
+
+  span.flatpickr-day.selected {
+    background-color: #767676 !important;
+    border-color: #767676 !important;
+  }
+}
 
 // body a {
 //   color: #5e74c6;

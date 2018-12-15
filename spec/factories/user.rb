@@ -25,7 +25,7 @@ FactoryBot.define do
 
   trait :with_subscription do
     after(:create) do |user|
-      create(:subscription_history, user: user)
+      create(:subscription_history, :lite, user: user)
       user.reload
     end
   end

@@ -1,6 +1,7 @@
 class ApproveForMe.Pages.ApprovalsEdit extends ApproveForMe.Page
   render: ->
-    $("#datepicker").datepicker({minDate: '+1D'})
+    ApproveForMe.date_and_time_picker.init("#datepicker", "date")
+    ApproveForMe.date_and_time_picker.init("#datetimepicker", "datetime")
 
   bindEvents: ->
     @onEvent 'click', '.destroy-approver', {}, @markAsDestroyedAndHide

@@ -11,4 +11,16 @@ class SubscriptionHistory < ApplicationRecord
   scope :lite, -> { where(plan_name: :free).or(SubscriptionHistory.where(plan_name: :free)).or(SubscriptionHistory.where(plan_name: "")) }
   scope :professional, -> { where(plan_name: :professional) }
   scope :unlimited, -> { where(plan_name: :unlimited) }
+
+  def lite?
+    plan_name == "lite"
+  end
+
+  def professional?
+    plan_name == "professional"
+  end
+
+  def unlimited?
+    plan_name == "unlimited"
+  end
 end
