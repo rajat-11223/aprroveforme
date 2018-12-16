@@ -12,7 +12,7 @@ ApproveForMe.date_and_time_picker =
     {
       "date": Object.assign({
         enableTible: false,
-        altFormat: "F j, Y",
+        altFormat: "F j, Y \\a\\t 12:00 \\P\\M",
       }, base_settings),
       "datetime": Object.assign({
         enableTime: true,
