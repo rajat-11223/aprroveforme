@@ -41,9 +41,9 @@ class Ability
     can [:approve, :decline], Approval, responded_at: nil, approvers: {email: user.email}
 
     # Approvals I own
-    can :manage, Approval, owner: user.id, completed_at: nil
+    can [:create, :edit, :update], Approval, owner: user.id, completed_at: nil
     can [:read, :clone], Approval, owner: user.id
 
-    can [:create, :read, :update], User, id: user.id
+    can [:read, :edit, :update], User, id: user.id
   end
 end
