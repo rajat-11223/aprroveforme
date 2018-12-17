@@ -1,8 +1,8 @@
-<%- submit_button_text ||= "Add Card" %>
+<% submit_button_text ||= "Add Card" %>
 
 <%= form_tag submit_path, method: :post, id: "payment-form" do %>
-  <div class="form-row">
-    <label class="text-center" for="card-element">
+  <div>
+    <label class="tw-text-lg tw-font-bold tw-text-center" for="card-element">
       Add credit or debit card
     </label>
     <div id="card-element">
@@ -13,17 +13,17 @@
     <div id="card-errors" role="alert"></div>
   </div>
 
-  <div class="grid-x grid-margin-x v-align-top">
-    <div class="cell large-3 medium-3 small-5 stripe-logo">
-      <%= image_tag "stripe/powered_by_stripe@2x.png" %>
-    </div>
+  <div class="tw-flex-col">
+    <p class="tw-text-sm tw-text-grey-darker tw-italic">Stripe is PCI compliant and your credit card is sent directly to Stripe for processing.</p>
 
-    <div class="cell large-6 medium-9 small-7 stripe-logo">
-      <p class="help-text">Stripe is PCI compliant and your credit card is sent directly to Stripe for processing.</p>
-    </div>
+    <div class="tw-flex tw-flex-stretch">
+      <div class="tw-flex-auto">
+        <%= image_tag "stripe/powered_by_stripe@2x.png", class: "tw-h-8" %>
+      </div>
 
-    <div class="cell large-3 medium-12 small-12 text-center">
-      <button class="button primary"><%= submit_button_text %> </button>
+      <div class="tw-flex-no-shrink tw-self-center">
+        <button class="tw-px-3 tw-py-2 tw-text-black hover:tw-text-grey-darkest tw-bg-yellow-dark"><%= submit_button_text %> </button>
+      </div>
     </div>
   </div>
 <% end %>

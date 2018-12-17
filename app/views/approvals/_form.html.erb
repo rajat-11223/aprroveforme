@@ -8,11 +8,10 @@
         <div class="large-3 small-3 cell">
           <% picker_label = !@approval.persisted? ? "Select Google Drive File" : "Replace File" %>
           <%= link_to picker_label, "", id: "google-file-picker",
-                                        class: "button primary",
-                                        style: "width: 100%" %>
+                                        class: "button primary tw-w-full" %>
         </div>
         <!-- <div class="large-4 large-offset-1 small-4 cell">
-          <a id="file-selector" class="button primary" style="width:100%;">Select File from Computer</a>
+          <a id="file-selector" class="button primary tw-w-full">Select File from Computer</a>
         </div> -->
         <div class="large-offset-1 large-4 small-5 cell">
           <p class="form-file-name">
@@ -30,14 +29,14 @@
         </div>
         <label class="error"><%= error_message_on @approval, :link %></label>
       </div>
-      <div class="grid-x" style="padding-top: 1rem">
+      <div class="grid-x tw-pt-4">
         <div class="large-8 large-offset-3 small-12 cell">
-          <label for="approval_drive_public" style="margin-top:-18px;">
+          <label for="approval_drive_public" class="tw--mt-8">
             <%= check_box("approval", "drive_public", {checked: !@approval.drive_public}, "false", "true") %>
             Require reviewers to be signed in to Google to view this document.</label>
         </div>
         <div class="large-8 large-offset-3 small-12 cell">
-          <label for="approval_drive_perms" style="margin-top:-18px;">
+          <label for="approval_drive_perms" class="tw--mt-4">
             <%= check_box("approval", "drive_perms", {}, "writer", "reader") %>
             Allow reviewers to edit this document.</label>
         </div>

@@ -19,6 +19,7 @@ class AccountsController < ApplicationController
   def payment_methods
     authorize! :read, current_user
     @customer = current_user.payment_customer
+    @card_data = @customer.sources.data
   end
 
   def add_new_payment_method
