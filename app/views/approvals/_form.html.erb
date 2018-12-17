@@ -70,7 +70,7 @@
                                         required: true,
                                         placeholder: "Deadline" %>
             <% if !current_user.paid? %>
-              <p class="tw-text-grey-darker tw-text-sm tw-m-0 tw-mb-4">
+              <p class="tw-text-grey-darker tw-text-sm tw-m-0 tw-mb-4 tw--mt-4 tw-leading-tight tw-pb-4">
                 On the free plan, all deadlines are set to 12 PM. Want to pick the hour and minute your approvals are due? <%= link_to "Upgrade Now", pricing_path(type: "upgrade") %>
               </p>
             <% end %>
