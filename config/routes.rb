@@ -28,8 +28,6 @@ Workflow::Application.routes.draw do
     end
   end
 
-  resources :users, only: [:show, :edit, :update]
-
   resources :home do
     collection do
       get :dashboard
