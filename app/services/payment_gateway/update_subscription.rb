@@ -11,7 +11,7 @@ module PaymentGateway
 
       raise "Unknown plan #{name} - #{interval}" unless identifier.present?
       raise "Don't have a customer" unless customer.present?
-      raise "Don't have a subscription" unless subscription.present?
+      raise "Don't have a Stripe subscription" unless subscription.present?
 
       User.transaction do
         subscription.plan = identifier
