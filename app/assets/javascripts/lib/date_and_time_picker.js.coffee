@@ -1,5 +1,6 @@
 ApproveForMe.date_and_time_picker =
   init: (selector, type) ->
+    @removeOldPicker(selector)
     flatpickr(selector, @settings()[type])
 
   settings: ->
@@ -19,3 +20,6 @@ ApproveForMe.date_and_time_picker =
         altFormat: "F j, Y \\a\\t h:i K",
       }, base_settings)
     }
+
+  removeOldPicker: (selector) ->
+    $(selector).siblings("input").remove()

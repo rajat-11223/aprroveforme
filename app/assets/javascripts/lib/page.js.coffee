@@ -39,7 +39,7 @@ class ApproveForMe.Page
   closeCallouts: ->
     setTimeout ->
       $('.callout').trigger('close')
-    , 10000
+    , 13000
 
   initCrisp: ->
     ApproveForMe.crisp.init()

@@ -3,6 +3,14 @@ module ApplicationHelper
     tag :meta, name: "turbolinks-cache-control", content: @turbolinks_cache_control || "cache"
   end
 
+  def body_tag(opts = {})
+    options = {class: [controller_name, action_name].join(" "),
+               data: {page_name: [controller_name, action_name].map(&:classify).join}}.merge(opts)
+    content_tag(:body, options) do
+      yield
+    end
+  end
+
   def sign_up_button(plan:, color: "ffa500")
     link_to "Get Started", signin_path(plan_name: plan[:name], plan_interval: plan[:interval], type: :signup),
             class: "button primary",

@@ -1,4 +1,4 @@
-class ApproveForMe.Pages.AccountsPaymentMethods extends ApproveForMe.Page
+class ApproveForMe.Pages.AccountPaymentMethod extends ApproveForMe.Page
   render: ->
 
   bindEvents: ->

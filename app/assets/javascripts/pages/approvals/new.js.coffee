@@ -1,4 +1,4 @@
-class ApproveForMe.Pages.ApprovalsNew extends ApproveForMe.Page
+class ApproveForMe.Pages.ApprovalNew extends ApproveForMe.Page
   render: ->
     ApproveForMe.date_and_time_picker.init("#datepicker", "date")
     ApproveForMe.date_and_time_picker.init("#datetimepicker", "datetime")

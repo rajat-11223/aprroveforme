@@ -5,7 +5,7 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="<%= [controller_name, action_name].join(' ') %>">
+  <%= body_tag do %>
     <%= render "layouts/navigation" %>
     <div class="grid-container content">
       <%= render "layouts/messages" %>
@@ -21,6 +21,5 @@
       </div>
     </div>
     <%= render "layouts/footer" %>
-  </body>
-
+  <% end %>
 </html>

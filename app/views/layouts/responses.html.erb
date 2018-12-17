@@ -5,9 +5,9 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="<%= [controller_name, action_name].join(' ') %>">
+  <%= body_tag do %>
     <div class="tw-container tw-mx-auto tw-p-4 sm:tw-px-8 md:tw-px-16 lg:tw-px-32">
       <%= yield %>
     </div>
-  </body>
+  <% end %>
 </html>

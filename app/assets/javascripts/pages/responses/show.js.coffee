@@ -1,4 +1,4 @@
-class ApproveForMe.Pages.ResponsesShow extends ApproveForMe.Page
+class ApproveForMe.Pages.ResponseShow extends ApproveForMe.Page
   render: ->
 
   bindEvents: ->
