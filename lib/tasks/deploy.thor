@@ -99,13 +99,13 @@ class Deploy < Thor
         heroku_scale_process(name: :worker, to: 0, stage: stage)
         run "git push #{force} #{stage} #{current_branch}:master"
 
-        standard_jobs = ["db:migrate", "db:seed", "chore:clean_up_stripe_customers", "chore:compute_completed_at", "chore:set_deadline_times"]
+        standard_jobs = ["db:migrate", "db:seed"]
 
         # Add temporary jobs here
         stage_jobs =
           case stage
           when :staging
-            ["chore:clear_sidekiq_jobs"]
+            ["chore:clean_up_stripe_customers", "chore:clear_sidekiq_jobs"]
           else
             []
           end
