@@ -62,12 +62,19 @@
           <p class="form-label">Deadline*</p>
         </div>
         <div class="large-8 small-9 cell">
-          <%= f.text_field :deadline, placeholder: "MM/DD/YYYY",
-                                      id: "datepicker",
-                                      value: (@approval.deadline.strftime("%m/%d/%Y") if @approval.deadline),
-                                      as: :string,
-                                      autocomplete: :off,
-                                      required: true %>
+          <div class="tw-flex tw-flex-col">
+            <%= f.text_field :deadline, id: current_user.paid? ? "datetimepicker" : "datepicker",
+                                        value: @approval.deadline,
+                                        as: :string,
+                                        autocomplete: :off,
+                                        required: true,
+                                        placeholder: "Deadline" %>
+            <% if !current_user.paid? %>
+              <p class="tw-text-grey-darker tw-text-sm tw-m-0 tw-mb-4 tw--mt-4 tw-leading-tight tw-pb-4">
+                On the free plan, all deadlines are set to 12 PM. Want to pick the hour and minute your approvals are due? <%= link_to "Upgrade Now", pricing_path(type: "upgrade") %>
+              </p>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="grid-x">
@@ -93,7 +100,7 @@
         <div class="add"></div>
         <div class="grid-x">
           <div class="large-12 cell">
-            <%= button_to_add_fields('Add Another Approver', f, :approvers ) %>
+            <%= button_to_add_fields('Add Another Approver', f, :approvers) %>
           </div>
         </div>
 

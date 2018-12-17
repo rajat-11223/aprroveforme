@@ -4,7 +4,7 @@ class PlanDetails
   end
 
   def name
-    user.subscription.plan_name.presence || "lite"
+    user.subscription.plan_name.presence || SubscriptionHistory::LITE
   end
 
   def approval_limit

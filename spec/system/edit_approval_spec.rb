@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Edit Approval", js: true do
   let(:approval) { create(:approval, user: user) }
-  let(:user) { create(:user, :with_subscription) }
+  let(:user) { create(:user, :with_subscription, time_zone: "Eastern Time (US & Canada)") }
 
   before do
     sign_in_as(user)
@@ -13,10 +13,9 @@ describe "Edit Approval", js: true do
 
     fill_in "Title", with: "Newest of Titles"
     fill_in "Description", with: "Joy comes from reading this"
-    fill_in "datepicker", with: 5.days.from_now.strftime("%m/%d/%Y")
+    fill_in_datepicker("#datepicker", 5.days.from_now.to_s)
 
     expect(page.all(".approver").size).to eq(1)
-    find("body").click
     click_button "Update Approval"
 
     expect(page).to have_selector(:css, "body.approvals.show")

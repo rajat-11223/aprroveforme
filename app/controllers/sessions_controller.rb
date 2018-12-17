@@ -45,7 +45,7 @@ class SessionsController < ApplicationController
 
     Rails.logger.debug("Create Stripe Subscription")
     if !user.subscription.present?
-      PaymentGateway::CreateSubscription.new(user).call(name: "lite", interval: "monthly")
+      PaymentGateway::CreateSubscription.new(user).call(name: SubscriptionHistory::LITE, interval: SubscriptionHistory::MONTHLY)
       user.reload
     end
 
@@ -64,7 +64,7 @@ class SessionsController < ApplicationController
       if ["create", "open"].include? session[:state]["action"].to_s
         redirect_to new_approval_url
       else
-        if user.subscription.plan_name == "lite"
+        if user.subscription.plan_name == SubscriptionHistory::LITE
           redirect_to dashboard_home_index_path
         else
           redirect_to_redirection_path

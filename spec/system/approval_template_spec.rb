@@ -28,7 +28,12 @@ describe "Use existing approval as template", js: true do
       expect(find("#approval_drive_perms").checked?).to eq(true)
       expect(find("#approval_drive_perms").value).to eq("writer")
       expect(find("#approval_drive_public").checked?).to eq(false)
-      expect(find("#datepicker").value).to eq("11/26/2019")
+
+      time_str = find("#datepicker", visible: false).value
+      time = Time.parse(time_str)
+      expect(time.year).to eq(2019)
+      expect(time.month).to eq(11)
+      expect(time.day).to eq(27)
 
       first_approver = approval.approvers.first
       expect(find("#approval_approvers_attributes_0_name").value).to eq(first_approver.name)

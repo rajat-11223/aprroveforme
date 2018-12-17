@@ -166,8 +166,16 @@ class ApprovalsController < ApplicationController
   end
 
   def parse_deadline
-    deadline = params.dig(:approval, :deadline).match(/\d{2}\/\d{2}\/\d{4}/).to_s
-    deadline.presence && DateTime.strptime(deadline, "%m/%d/%Y")
+    deadline_str = params.dig(:approval, :deadline)
+    return unless deadline_str.present?
+
+    deadline = Time.zone.parse(deadline_str)
+    if current_user.paid?
+      deadline
+    else
+      # Conform the time to noon for free accounts
+      deadline.noon
+    end
   end
 
   def google_drive_permission

@@ -11,11 +11,12 @@ class ApproveForMe.Pages.PricingIndex extends ApproveForMe.Page
   continuePermission: ->
     name = $(this).data('name')
     interval = $(this).data('interval')
+    type = $(this).data('type')
 
     $.ajax
       url: '/subscription/continue_permission'
       type: 'GET'
-      data: {name: name, interval: interval}
+      data: {name: name, interval: interval, type: type}
       success: (data) ->
         $("#permissionModal").html(data)
 

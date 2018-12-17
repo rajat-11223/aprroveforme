@@ -32,6 +32,7 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include FactoryBot::Syntax::Methods
   config.include OmniauthHelpers, type: :system
+  config.include CapybaraHelpers, type: :system, js: true
   config.include StripeHelpers, type: :system, js: true
   config.include ActiveSupport::Testing::TimeHelpers
 

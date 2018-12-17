@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :subscription_history do
-    plan_name { ["lite", "professional", "unlimited"].sample }
-    plan_interval { ["monthly", "yearly"].sample }
+    plan_name { [SubscriptionHistory::LITE, SubscriptionHistory::PROFESSIONAL, SubscriptionHistory::UNLIMITED].sample }
+    plan_interval { [SubscriptionHistory::MONTHLY, SubscriptionHistory::YEARLY].sample }
     plan_date { 1.month.from_now }
     plan_identifier { Plans::List.new[plan_name].dig(plan_interval, "identifier") }
     renewable_date { 1.year.from_now }
@@ -9,15 +9,15 @@ FactoryBot.define do
     user
 
     trait :lite do
-      plan_name "lite"
+      plan_name SubscriptionHistory::LITE
     end
 
     trait :professional do
-      plan_name "professional"
+      plan_name SubscriptionHistory::PROFESSIONAL
     end
 
     trait :unlimited do
-      plan_name "unlimited"
+      plan_name SubscriptionHistory::UNLIMITED
     end
   end
 end

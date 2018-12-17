@@ -24,8 +24,7 @@ describe "Create Approval", js: true do
 
     fill_in "Title", with: "Fun Document"
     fill_in "Description", with: "Joy comes from reading this"
-    fill_in "datepicker", with: 5.days.from_now.strftime("%m/%d/%Y")
-    find("body").click #To have datepicker hide
+    fill_in_datepicker("#datepicker", 5.days.from_now.to_s)
 
     expect(page.all(".approver").size).to eq(3)
     within page.all(".approver").first do
