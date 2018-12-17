@@ -1,29 +1,23 @@
 <%= content_for :main do %>
-  <div class="grid-x">
-    <div class="large-6 cell">
-      <%= link_to open_requests_home_index_path do %>
-      <div class="dashboard-number-card tw-bg-green tw-text-white">
-        <h1 class="dashboard-number-value">Open Approvals</h1>
-        <h5 class="dashboard-number-value" style="margin-top: -50px !important;"><%= @open_requests.count %></h5>
-      </div>
-      <% end %>
+  <div class="tw-flex tw-items-stretch">
+    <%= link_to open_requests_home_index_path, class: "tw-flex-1 tw-px-4 tw-m-2" do %>
+    <div class="tw-rounded tw-bg-green tw-text-white tw-text-center tw-p-6">
+      <h1 class="tw-text-2xl tw-font-bold">Open Approvals</h1>
+      <h5 class="tw-text-2xl tw-font-bold"><%= @open_requests.count %></h5>
     </div>
+    <% end %>
 
-    <div class="large-6 cell">
-      <%= link_to open_responses_home_index_path do %>
-        <div class="dashboard-number-card tw-bg-red tw-text-white">
-          <h1 class="dashboard-number-value">Waiting on Response</h1>
-          <h5 class="dashboard-number-value" style="margin-top: -50px !important;"><%= @open_responses.count %></h5>
-        </div>
-      <% end %>
-    </div>
+    <%= link_to open_responses_home_index_path, class: "tw-flex-1 tw-px-4 tw-m-2" do %>
+      <div class="tw-rounded tw-bg-red tw-text-white tw-text-center tw-p-6">
+        <h1 class="tw-text-2xl tw-font-bold">Waiting on Response</h1>
+        <h5 class="tw-text-2xl tw-font-bold"><%= @open_responses.count %></h5>
+      </div>
+    <% end %>
   </div>
 
-  <% if current_user.approvals.count.zero? %>
-    <div class="grid-x cta">
-      <div class="cell auto text-center">
-        Have a Pat in you life? Send them <%= link_to "a document for review", new_approval_path %> now.
-      </div>
+  <% if !current_user.approvals.count.zero? %>
+    <div class="tw-text-center tw-pt-6">
+      Have a Pat in you life? Send them <%= link_to "a document for review", new_approval_path, class: "tw-text-blue hover:tw-text-blue-darker" %> now.
     </div>
   <% end %>
 <% end %>

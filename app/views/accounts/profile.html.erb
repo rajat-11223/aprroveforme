@@ -1,47 +1,42 @@
 <h3>Profile</h3>
 
-<%= field_set_tag "Account Info" do -%>
-  <div class="grid-x">
-    <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">First Name:</p>
+<%= field_set_tag "Account Info", class: "tw-text-2xl" do %>
+  <div class="tw-flex tw-flex-col tw-text-base tw-max-w-md">
+    <div class="tw-flex">
+      <p class="tw-font-semibold tw-w-32">First Name:</p>
+      <p>
+        <%= current_user.first_name %>
+      </p>
     </div>
-    <div class="large-10 small-9 cell" style="width: 477px;">
-      <%= current_user.first_name %>
+    <div class="tw-flex">
+      <p class="tw-font-semibold tw-w-32">Last Name:</p>
+      <p>
+        <%= current_user.last_name %>
+      </p>
     </div>
-  </div>
-  <div class="grid-x">
-    <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">Last Name:</p>
-    </div>
-    <div class="large-10 small-9 cell" style="width: 477px;">
-      <%= current_user.last_name %>
-    </div>
-  </div>
-  <div class="grid-x">
-    <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">Email:</p>
-    </div>
-    <div class="large-10 small-9 cell" style="width: 477px;">
+    <div class="tw-flex">
+      <p class="tw-font-semibold tw-w-32">Email:</p>
       <%= current_user.email %>
     </div>
-  </div>
-  <p>You may not change this information here. Please login to Google / GSuite, change your contact information and then
-    log out/log back into this service. We update your details everytime you login.</p>
+    <p class="tw-text-grey-darker tw-text-sm">
+      You may not change this information here. Please login to Google / GSuite,
+      change your contact information and then
+      log out/log back into this service. We update your details everytime you login.
+    </p>
 
-  <div class="grid-x">
-    <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">TimeZone</p>
-    </div>
-    <div class="large-10 small-9 cell" style="width: 477px;">
+    <div class="tw-flex tw-flex-col sm:tw-flex-row">
+      <p class="tw-font-semibold  tw-w-32">Time Zone:</p>
       <%= select_tag :time_zone, options_for_select(ActiveSupport::TimeZone.all.zip(ActiveSupport::TimeZone.all.map(&:name)), selected: current_user.time_zone),
-                                  { data: {
-                                      remote: true,
-                                      url: profile_update_account_path,
-                                      method: :patch },
-                                    prompt: "Select time zone"
-                                  } %>
-    </div>
-  </div>
+                                      { data: {
+                                          remote: true,
+                                          url: profile_update_account_path,
+                                          method: :patch },
+                                        prompt: "Select time zone",
 
-  <p>The timezone is used to calculate deadlines and the times that are reported to you. This should be kept up-to-date.</p>
+                                      } %>
+    </div>
+
+    <p class="tw-text-grey-darker tw-text-sm">The timezone is used to calculate deadlines and the times that are reported
+      to you. This should be kept up-to-date.</p>
+  </div>
 <% end -%>

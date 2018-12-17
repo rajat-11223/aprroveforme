@@ -1,49 +1,36 @@
 <h3>Current Subscription</h3>
 
-<%= field_set_tag "Subscription Info" do -%>
-  <div class="grid-x">
-    <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">Current Plan:</p>
+<%= field_set_tag "Subscription Info", class: "tw-text-2xl" do %>
+  <div class="tw-flex tw-flex-col tw-text-base tw-max-w-md">
+    <div class="tw-flex">
+      <p class="tw-font-bold tw-w-32">Current Plan:</p>
+      <p><%= @subscription.plan_name %> / <%= @subscription.plan_interval %></p>
     </div>
-    <div class="large-10 small-9 cell" style="width: 477px;">
-      <%= @subscription.plan_name %> / <%= @subscription.plan_interval %>
+
+    <div class="tw-flex">
+      <p class="tw-font-bold tw-w-32">Start Date</p>
+      <p><%= @subscription.plan_date.to_formatted_s(:long_ordinal) %></p>
     </div>
-  </div>
-  <div class="grid-x">
-    <div class="large-2 small-3 cell" style="width: 142px;">
-      <p class="form-label">Start Date</p>
-    </div>
-    <div class="large-10 small-9 cell" style="width: 477px;">
-      <%= @subscription.plan_date.to_formatted_s(:long_ordinal) %> <br />
-    </div>
-  </div>
-  <div class="grid-x">
-    <div class="cell auto">
-      <% if free_plan_compare == 'Current' %>
-        <%= link_to "Upgrade Subscription", pricing_path(type: "upgrade"), class: "button primary right"%>
+
+    <% if free_plan_compare == 'Current' %>
+      <%= link_to "Upgrade Subscription", pricing_path(type: "upgrade"), class: "button primary right"%>
     <% end %>
-    </div>
   </div>
 <% end -%>
 
-<h3>Subscription History</h3>
+<h3 class="tw-pt-16">Subscription History</h3>
 
 <% @subscription_histories.each do |s| %>
-  <%= field_set_tag "Plan Change" do -%>
-    <div class="grid-x">
-      <div class="large-2 small-3 cell" style="width: 142px;">
-        <p class="form-label">Plan:</p>
+  <%= field_set_tag "Plan Change", class: "tw-text-2xl" do %>
+    <div class="tw-flex tw-flex-col tw-text-base tw-max-w-md">
+      <div class="tw-flex">
+        <p class="tw-font-bold tw-w-32">Plan:</p>
+        <p><%= s.plan_name %> / <%= s.plan_interval %></p>
       </div>
-      <div class="large-10 small-9 cell" style="width: 477px;">
-        <%= s.plan_name %> / <%= s.plan_interval %>
-      </div>
-    </div>
-    <div class="grid-x">
-      <div class="large-2 small-3 cell" style="width: 142px;">
-        <p class="form-label">Start Date</p>
-      </div>
-      <div class="large-10 small-9 cell" style="width: 477px;">
-        <%= s.plan_date.to_formatted_s(:long_ordinal) %>
+
+      <div class="tw-flex">
+        <p class="tw-font-bold tw-w-32">Start Date</p>
+        <p><%= s.plan_date.to_formatted_s(:long_ordinal) %></p>
       </div>
     </div>
   <% end -%>

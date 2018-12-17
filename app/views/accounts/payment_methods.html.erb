@@ -1,60 +1,51 @@
-<div class="grid-x grid-margin-x">
-  <div class="auto">
-    <h3>Payment Methods</h3>
-  </div>
-  <div class="cell auto">
-    <%= link_to '#', class: "button secondary right add-payment-method" do %>
+<div class="tw-flex tw-pb-8">
+  <h3 class="tw-self-center">Payment Methods</h3>
+  <div class="tw-px-4 tw-self-center">
+    <%= link_to '#', class: "tw-p-3 tw-bg-grey-dark tw-text-white hover:tw-text-white add-payment-method" do %>
       <i class="fas fa-plus"></i>
     <% end %>
   </div>
 </div>
 
-<%- card_data = @customer.sources.data %>
+<% @card_data.each do |card| %>
+  <%= field_set_tag "Card Info", class: "tw-text-lg tw-max-w-md" do %>
+    <div class="tw-text-base">
+      <div class="tw-flex">
+        <p class="tw-font-bold tw-w-32">Last 4:</p>
+        <p><%= card.last4 %></p>
+      </div>
 
-<% card_data.each do |card| %>
-  <%= field_set_tag "Card Info" do -%>
-    <div class="grid-x">
-      <div class="large-2 small-3 cell" style="width: 142px;">
-        <p class="form-label">Number Last4:</p>
+      <div class="tw-flex">
+        <p class="tw-font-bold tw-w-32">Expiration Date:</p>
+        <p><%= card.exp_month %>/<%= card.exp_year %></p>
       </div>
-      <div class="large-10 small-9 cell" style="width: 477px;">
-        <%= card.last4 %>
+
+      <div class="tw-flex">
+        <p class="tw-font-bold tw-w-32">Type:</p>
+        <p class=""><%= card.brand %></p>
+
+        <div class="tw-pl-4">
+          <% if @customer.sources.find{ |s| s.id ==  @customer.default_source }.id == card.id %>
+            <%= content_tag :span, 'Default', class: "tw-px-4 tw-py-3 tw-bg-yellow-dark tw-text-black hover:tw-text-black" %>
+          <% else %>
+            <%= link_to 'Set Default', set_default_payment_method_account_path(id: card.id), method: :patch, class: "tw-px-4 tw-py-3 tw-bg-yellow-dark tw-text-black hover:tw-text-black" %>
+          <% end %>
+        </div>
+
+        <div class="tw-pl-4">
+          <%= link_to delete_payment_method_account_path(id: card.id), method: :delete, class: "tw-px-4 tw-py-3 tw-bg-red tw-text-black hover:tw-text-black" do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        </div>
       </div>
+
     </div>
-    <div class="grid-x">
-      <div class="large-2 small-3 cell" style="width: 142px;">
-        <p class="form-label">Expiration Date</p>
-      </div>
-
-      <div class="large-10 small-9 cell" style="width: 477px;">
-        <%= card.exp_month %>/<%= card.exp_year %>
-      </div>
-    </div>
-    <div class="grid-x">
-      <div class="large-2 small-3 cell" style="width: 142px;">
-        <p class="form-label">Type</p>
-      </div>
-      <div class="large-10 small-9 cell" style="width: 477px;">
-        <%= card.brand %>
-
-        <%- if @customer.sources.find{ |s| s.id ==  @customer.default_source }.id == card.id %>
-          <%= content_tag :span, 'Default', class: "button default right" %>
-        <% else %>
-          <%= link_to 'Set Default', set_default_payment_method_account_path(id: card.id), method: :patch, class: "button default right" %>
-        <% end %>
-
-        <%= link_to delete_payment_method_account_path(id: card.id), method: :delete, class: "button alert right" do %>
-          <i class="fas fa-trash"></i>
-        <% end %>
-      </div>
-    </div>
-  <% end -%>
-  <br>
+  <% end %>
 <% end %>
 
-<% if card_data.empty? %>
+<% if @card_data.empty? %>
   <h5>No payment method found</h5>
-  <%= link_to "Add one now", "#", class: "add-payment-method" %>
+  <%= link_to "Add one now", "#", class: "tw-text-blue hover:tw-text-blue-darker add-payment-method" %>
 <% end %>
 
 <div class="reveal" id="addPaymentMethod" data-reveal>
