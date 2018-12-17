@@ -15,7 +15,7 @@
     <% end %>
   </div>
 
-  <% if !current_user.approvals.count.zero? %>
+  <% if current_user.approvals.count.zero? %>
     <div class="tw-text-center tw-pt-6">
       Have a Pat in you life? Send them <%= link_to "a document for review", new_approval_path, class: "tw-text-blue hover:tw-text-blue-darker" %> now.
     </div>
