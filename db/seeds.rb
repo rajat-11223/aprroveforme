@@ -12,7 +12,7 @@
   Role.find_or_create_by(name: role)
 end
 
-rt = RequestType.find_or_initialize_by(slug: "approval")
+rt = RequestType.find_or_initialize_by(slug: "approve")
 rt.assign_attributes name: "Approval",
                      public: true,
                      affirming_text: "Approve",
