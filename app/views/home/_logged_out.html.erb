@@ -1,101 +1,127 @@
-<div class="grid-x">
-  <div class="cell auto">
-    <%= render partial: ab_test("Logged out copy test") %>
+<div class="tw-flex tw-justify-center tw-pt-16">
+  <div class="tw-flex-col tw-w-full tw-max-w-md">
+    <h1 class="tw-text-4xl tw-pb-8 tw-text-center md:tw-text-left">ApproveForMe is a dead simple document approval tool that keeps all the feedback in one place</h1>
+    <div class="tw-w-full tw-text-center md:tw-text-left">
+      <%= link_to image_tag("google/sign-in/btn_google_signin_dark_focus_web@2x.png"), signin_path, id: "login" %>
+    </div>
+    <p class="tw-text-grey-darker tw-py-2 tw-text-center md:tw-text-left">Get started for Free. No credit card required</p>
+  </div>
+  <div class="tw-hidden md:tw-block tw-w-64">
+    <%= image_tag("afm-checkmark-big.png") %>
   </div>
 </div>
 
-<div class="grid-x">
-  <div class="cell auto">
-    <p class="text-center">
-      <%= link_to signin_path, id: "login" do %>
-        <%= image_tag "google/sign-in/btn_google_signin_dark_focus_web@2x.png" %>
-      <% end%>
-    </p>
+<div class="tw-flex tw-justify-center tw-h-full tw-pt-16">
+  <div class="tw-hidden md:tw-block tw-w-16 tw-bg-yellow-dark tw-mr-8">&nbsp;</div>
+  <div class="tw-flex-col">
+    <h3 class="tw-uppercase tw-text-4xl">How It Works</h3>
+    <div class="tw-flex">
+      <h4 class="tw-text-6xl tw-font-black tw-mx-8 tw-leading-none tw-grey-dark">1</h4>
+      <div class="tw-max-w-sm">
+        <h5 class="tw-text-2xl">Choose your Google Drive file</h5>
+        <p class="tw-mb-2 tw-grey-darker">Sign in with Google and select the file you want to share with your recipients</p>
+      </div>
+    </div>
+    <div class="tw-flex">
+      <h4 class="tw-text-6xl tw-font-black tw-mx-8 tw-leading-none tw-grey-dark">2</h4>
+      <div class="tw-max-w-sm">
+        <h5 class="tw-text-2xl">Update Details</h5>
+        <p class="tw-mb-2 tw-grey-darker">Now it's time for the details!</p>
+        <p class="tw-mb-2 tw-grey-darker">Enter a title and description to give context for your project</p>
+        <p class="tw-mb-2 tw-grey-darker">Enter recipients who you want to get feedback from</p>
+        <p class="tw-mb-2 tw-grey-darker">Select your deadline and hit "Submit"</p>
+      </div>
+    </div>
+    <div class="tw-flex">
+      <h4 class="tw-text-6xl tw-font-black tw-mx-8 tw-leading-none tw-grey-dark">3</h4>
+      <div class="tw-max-w-sm">
+        <h5 class="tw-text-2xl">Messages Sent</h5>
+        <p class="tw-mb-2 tw-grey-darker">Each person receives an email request.</p>
+        <p class="tw-mb-2 tw-grey-darker">They do not need to sign in to ApproveForMe, just click the link.</p>
+        <p class="tw-mb-2 tw-grey-darker">Each person respons, your project is update and you recieve notices along the way.</p>
+        <p class="tw-mb-2 tw-grey-darker">Everything in one place &emdash no more having to piece together multiple emails</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="grid-x">
-  <div class="float-center">
-    <%= image_tag "screenshot.png" %>
+<div class="tw-flex tw-justify-center tw-pt-32">
+  <div class="tw-self-center">
+    <%= link_to signin_path, id: "login", class: "tw-uppercase tw-text-base tw-font-bold sm:tw-text-2xl tw-p-6 sm:tw-p-8 tw-bg-red tw-text-white hover:tw-text-white" do %>
+      start your first approval
+    <% end%>
   </div>
 </div>
 
-<br /> <br />
-
-<div class="grid-x">
-  <div class="cell large-4">
-    <p class="text-center"><%= image_tag "realtime.png", style: "width: 80px;" %></p>
-  </div>
-
-  <div class="cell large-6">
-    <p class="sub-title">Real-Time Updates</p>
-    <p class="sub-description">Make sure your approvers always have the latest version. With ApproveForMe, there's no need to worry about keeping track of versions and attachments. </p>
+<div class="tw-flex tw-align-start tw-justify-center tw-pt-32">
+  <div class="tw-flex-col tw-w-full">
+    <h3 class="tw-text-3xl tw-text-center">A Simple Solution For All</h3>
+    <div class="tw-flex-col tw-flex md:tw-flex-row md:tw-items-stretch">
+      <div class="tw-flex-1 tw-flex-col tw-text-center tw-m-auto tw-w-64 tw-px-4">
+        <p class="tw-text-black tw-text-2xl">Creatives</p>
+        <p><i class="fi-photo tw-text-5xl"></i></p>
+        <p class="tw-text-grey-darker">Provide draft deliverables and get quick feedback.</p>
+      </div>
+      <div class="tw-flex-1 tw-flex-col tw-text-center tw-m-auto tw-w-64 tw-px-4">
+        <p class="tw-text-black tw-text-2xl">Sales</p>
+        <p><i class="fi-torso-business tw-text-5xl"></i></p>
+        <p class="tw-text-grey-darker">Turn around quotes, spec documents, and invoices without manually following up with prospects.</p>
+      </div>
+      <div class="tw-flex-1 tw-flex-col tw-text-center tw-m-auto tw-w-64 tw-px-4">
+        <p class="tw-text-black tw-text-2xl">Nonprofits</p>
+        <p><i class="fi-heart tw-text-5xl"></i></p>
+        <p class="tw-text-grey-darker">Get sign off on board agendas and minutes in one place.</p>
+      </div>
+    </div>
+    <div class="tw-flex-col tw-flex md:tw-flex-row md:tw-items-start">
+      <div class="tw-flex-1 tw-flex-col tw-text-center tw-m-auto tw-w-64 tw-px-4">
+        <p class="tw-text-black tw-text-2xl">Freelancers</p>
+        <p><i class="fi-torso tw-text-5xl"></i></p>
+        <p class="tw-text-grey-darker">Get quality, actionable feedback from clients so you can keep them happy.</p>
+      </div>
+      <div class="tw-flex-1 tw-flex-col tw-text-center tw-m-auto tw-w-64 tw-px-4">
+        <p class="tw-text-black tw-text-2xl">Startups</p>
+        <p><i class="fi-torsos tw-text-5xl"></i></p>
+        <p class="tw-text-grey-darker">Make sure founders stay on the same page to keep moving fast.</p>
+      </div>
+      <div class="tw-flex-1 tw-flex-col tw-text-center tw-m-auto tw-w-64 tw-px-4">
+        <p class="tw-text-black tw-text-2xl">Teams</p>
+        <p><i class="fi-torsos-all tw-text-5xl"></i></p>
+        <p class="tw-text-grey-darker">Get more done at work by reducing the number of back-and-forth emails.</p>
+      </div>
+    </div>
   </div>
 </div>
-<br /> <br />
 
-<div class="grid-x">
-  <div class="cell large-4">
-    <p class="text-center"><%= image_tag "cloud.png", style: "width: 80px;" %></p>
-  </div>
 
-  <div class="cell large-6">
-    <p class="sub-title">Securely In The Cloud</p>
-    <p class="sub-description">ApproveForMe relies on Google Drive™ to store your documents. This ensures that you always have quick access to the documents you've already created. If your document isn't already on Google Drive™, it's a snap to upload a new one from your computer.</p>
-  </div>
-</div>
-
-<div class="grid-x">
-  <div class="cell large-4">
-    <p class="text-center"><%= image_tag "documents.png", style: "width: 80px;" %></p>
-  </div>
-
-  <div class="cell large-6">
-    <p class="sub-title">All Files Covered</p>
-    <p class="sub-description">Whether you're a business person, designer, or spreadsheet junkie, ApproveForMe supports all file types, including Office files, PDFs, images and more.</p>
-  </div>
-</div>
-
-<div class="grid-x">
-  <div class="cell auto text-center">
+<div class="tw-flex tw-justify-center tw-py-16">
+  <div class="tw-flex-col tw-text-center tw-w-full">
     <h3>Works with GSuite Apps</h3>
-  </div>
-</div>
-<div class="grid-x grid-x-margin text-center">
-  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_docs_128px.png" %></div>
-  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_drive_128px.png" %></div>
-  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_forms_128px.png" %></div>
-  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_keep_128px.png" %></div>
-  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_sheets_128px.png" %></div>
-  <div class="cell large-2 small-4"><%= image_tag "google/products/logo_slides_128px.png" %></div>
-</div>
-
-<hr />
-
-<div class="grid-x">
-  <div class="cell large-4 ">
-    <p class="sub-title text-center">Freelancers</p>
-    <p class="text-center"><%= image_tag "freelancers.png" %></p>
-    <p class="sub-description text-center">Get quality, actionable feedback from clients so you can keep them happy.</p>
-  </div>
-  <div class="cell large-4 ">
-    <p class="sub-title text-center">Startups</p>
-    <p class="text-center"><%= image_tag "startups.png" %></p>
-    <p class="sub-description text-center">Make sure founders stay on the same page to keep moving fast.</p>
-  </div>
-  <div class="cell large-4 ">
-    <p class="sub-title text-center">Teams</p>
-    <p class="text-center"><%= image_tag "teams.png" %></p>
-    <p class="sub-description text-center">Get more done at work by reducing the number of back-and-forth emails.</p>
+    <div class="tw-flex tw-justify-between tw-w-full tw-flex-wrap md:tw-flex-nowrap">
+      <div class="tw-w-24 md:tw-w-32 tw-p-2"><%= image_tag "google/products/logo_docs_128px.png" %></div>
+      <div class="tw-w-24 md:tw-w-32 tw-p-2"><%= image_tag "google/products/logo_drive_128px.png" %></div>
+      <div class="tw-w-24 md:tw-w-32 tw-p-2"><%= image_tag "google/products/logo_forms_128px.png" %></div>
+      <div class="tw-w-24 md:tw-w-32 tw-p-2"><%= image_tag "google/products/logo_keep_128px.png" %></div>
+      <div class="tw-w-24 md:tw-w-32 tw-p-2"><%= image_tag "google/products/logo_sheets_128px.png" %></div>
+      <div class="tw-w-24 md:tw-w-32 tw-p-2"><%= image_tag "google/products/logo_slides_128px.png" %></div>
+    </div>
   </div>
 </div>
 
-<hr />
+<div class="tw-flex tw-justify-center tw-items-center tw-py-16 tw-text-center">
+  <div class="tw-flex-col">
+    <h3 class="tw-text-2xl sm:tw-text-4xl two-font-medium tw-uppercase">Join our <span class="tw-text-3xl sm:tw-text-5xl tw-font-bold"><%= number_with_delimiter(((User.count / 1000).floor * 1000), delimiter: ",") %>+</span> users</h3>
+    <h4 class="tw-text-lg sm:tw-text-2xl tw-italic tw-font-thin">on ApproveForMe</h4>
+    <h4 class="tw-text-lg sm:tw-text-3xl two-font-medium tw-uppercase">and enjoy better approvals</h3>
+  </div>
+</div>
 
-<div class="grid-x">
-  <div class="cell auto text-center">
-    <%= link_to signin_path, id: "login" do %>
+
+<div class="tw-flex tw-justify-center tw-items-center tw-py-16 tw-text-center">
+  <div class="tw-flex-col">
+    <%= link_to signin_path, id: "login", class: "tw-mx-auto" do %>
       <%= image_tag "google/sign-in/btn_google_signin_dark_focus_web@2x.png" %>
     <% end%>
+    <p class="tw-text-grey-darker tw-py-4">Get started for Free. No credit card required</p>
   </div>
 </div>
