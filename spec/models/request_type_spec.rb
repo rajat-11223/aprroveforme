@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe RequestType do
   before { Rails.application.load_seed }
-  let(:approval) { RequestType.find_by(slug: "approval") }
-  let(:confirmation) { RequestType.find_by(slug: "confirmation") }
+  let(:approval) { RequestType.find_by(slug: "approve") }
+  let(:confirmation) { RequestType.find_by(slug: "confirm") }
 
   it "approval" do
     expect(approval.allow_dissenting?).to eq true

@@ -33,7 +33,7 @@ class Approval < ApplicationRecord
   end
 
   def request_type
-    @request_type ||= RequestType.find_by(slug: "approval")
+    @request_type ||= RequestType.find_by(slug: "approve")
   end
 
   def response_status_text

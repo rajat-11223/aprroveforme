@@ -88,7 +88,7 @@ rt.completed_request_body = "Hello {{ requester_name }},
                               This email was sent from a notification-only address that cannot accept incoming email. Please do not reply to this message."
 rt.save!
 
-rt = RequestType.find_or_initialize_by(slug: "confirmation")
+rt = RequestType.find_or_initialize_by(slug: "confirm")
 rt.assign_attributes name: "Confirmation",
                      public: true,
                      affirming_text: "Confirm",
