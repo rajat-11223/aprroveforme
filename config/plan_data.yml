@@ -78,6 +78,9 @@ production:
       identifier: plan_DUn1gBlfIf0k1K
       price: 0
       price_in_words: FREE
+    extra-details:
+      - Upload files from Google Drive
+      - Online Support
   professional:
     name: Professional
     reviews_each_month: 6
@@ -91,6 +94,11 @@ production:
       identifier: plan_DUnWg7fOWJAIOo
       price: 2000
       price_in_words: $20/yr
+    extra-details:
+      - Upload files from Google Drive
+      - Set deadline time
+      # - Intelligent Reminders
+      - Online Support
   unlimited:
     name: Unlimited
     reviews_each_month: 1000000
@@ -104,3 +112,9 @@ production:
       identifier: plan_DUncYNajGsX5fq
       price: 5500
       price_in_words: $55/yr
+    extra-details:
+    - Upload files from Google Drive
+    - Set deadline time
+    # - Intelligent Reminders
+    # - Google Analytics
+    - Online Support
