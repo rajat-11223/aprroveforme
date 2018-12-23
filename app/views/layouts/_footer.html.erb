@@ -1,13 +1,60 @@
-<footer class="tw-w-full tw-bg-grey-darker tw-mt-16 tw-pt-4 tw-border-t-2 tw-border-grey-lightest">
-  <ul class="tw-list-reset tw-flex tw-flex-wrap tw-pl-8 tw-pr-20 tw-items-center">
-    <li class="tw-flex-grow tw-text-white">Copyright &copy; <%= Time.now.year %> <%= t("app-title") %></li>
-    <li class="tw-mr-3"><%= link_to t(".home"), root_path %></li>
-    <li class="tw-mr-3"><%= link_to t(".about"), page_path("about") %></li>
-    <li class="tw-mr-3"><%= link_to t(".faqs"), page_path("faq") %>
-    <li class="tw-mr-3"><%= link_to t(".support"), "mailto:team@approveforme.com", id: "support-link", data: { uv_trigger: true, uv_mode: "contact" } %></li>
-    <li class="tw-mr-3"><%= link_to t(".terms"), page_path("terms") %></li>
-    <li class="tw-mr-3"><%= link_to t(".privacy"), page_path("privacy") %></li>
-    <!-- <li class="tw-mr-3"><%= link_to "", "https://www.facebook.com/approveforme", target: "_blank", class: "fi-social-facebook tw-text-black hover:tw-text-black tw-text-3xl tw-p-0" %></li> -->
-    <li class="tw-mr-3"><%= link_to "", "https://twitter.com/approveforme", target: "_blank", class: "fi-social-twitter tw-text-black hover:tw-text-black tw-text-3xl" %></li>
-  </ul>
+<footer class="tw-bg-grey-dark tw-pt-8 tw-pb-12 tw-w-full">
+  <div class="tw-container tw-mx-auto tw-px-8 tw-w-full tw-max-w-lg tw-text-left sm:tw-text-center">
+    <div class="tw-flex tw-flex-col sm:tw-flex-row sm:tw-flex tw-justify-between tw-w-full">
+      <div class="tw-block">
+        <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6">Links</p>
+        <ul class="tw-list-reset tw-text-xs tw-mb-6 tw-ml-0">
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to t(".faqs"), page_path("faq"), class: "tw-text-grey hover:tw-text-white" %>
+          </li>
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <a href="#" class="tw-text-grey hover:tw-text-white">Help</a>
+          </li>
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to t(".support"), "mailto:team@approveforme.com", id: "support-link", class: "tw-text-grey hover:tw-text-white", data: { uv_trigger: true, uv_mode: "contact" } %>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tw-block">
+        <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6">Legal</p>
+        <ul class="tw-list-reset tw-text-xs tw-mb-6 tw-ml-0">
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to t(".terms"), page_path("terms"), class: "tw-text-grey hover:tw-text-white" %>
+          </li>
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to t(".privacy"), page_path("privacy"), class: "tw-text-grey hover:tw-text-white" %>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tw-block">
+        <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6">Social</p>
+        <ul class="tw-list-reset tw-text-xs tw-mb-6 tw-ml-0">
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to "Facebook", "https://www.facebook.com/approveforme", target: "_blank", class: "tw-text-grey hover:tw-text-white" %>
+          </li>
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to "Twitter", "https://twitter.com/approveforme", target: "_blank", class: "tw-text-grey hover:tw-text-white" %>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tw-block">
+        <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6">Company</p>
+        <ul class="tw-list-reset tw-text-xs tw-mb-6 tw-ml-0">
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to t(".home"), root_path, class: "tw-text-grey hover:tw-text-white" %>
+          </li>
+          <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+            <%= link_to t(".about"), page_path("about"), class: "tw-text-grey hover:tw-text-white" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tw-container tw-mx-auto tw-px-8 tw-w-full tw-max-w-lg tw-text-base tw-text-black tw-text-left sm:tw-text-center">
+    Copyright &copy; <%= Time.now.year %> <%= t("app-title") %>
+  </div>
 </footer>
