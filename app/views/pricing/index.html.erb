@@ -1,52 +1,31 @@
-<div class="grid-x">
-  <div class="cell large-12 text-center">
-    <h3>Pricing</h3>
+<div class="tw-flex tw-justify-center tw-items-center">
+  <div class="tw-w-32 tw-px-2"><hr /></div>
+  <h1 class="tw-text-5xl tw-text-center tw-px-2">Pricing</h1>
+  <div class="tw-w-32 tw-px-2"><hr /></div>
+</div>
+
+<div id="pricing-table" class="tw-w-full tw-bg-blue tw-pt-8">
+  <div class="tw-flex tw-flex-col sm:tw-flex-row tw-justify-center tw-mb-6 sm:tw-mb-0">
+
+    <div class="sm:tw-flex-1 lg:tw-flex-initial lg:tw-w-1/4 tw-rounded-t-lg tw-rounded-tr-none tw-bg-white tw-mt-4 tw-flex tw-flex-col">
+      <% short_name, details = @plans[0] %>
+      <%= render partial: 'plan_card', locals: { short_name: short_name, details: details } %>
+    </div>
+
+    <div class="tw-flex-1 lg:tw-flex-initial lg:tw-w-1/4 tw-rounded-t-lg tw-bg-white tw-mt-4 sm:tw--mt-4 tw-shadow-lg tw-z-30 tw-flex tw-flex-col">
+      <% short_name, details = @plans[1] %>
+      <%= render partial: 'plan_card', locals: { short_name: short_name, details: details } %>
+    </div>
+
+    <div class="tw-flex-1 lg:tw-flex-initial lg:tw-w-1/4 tw-rounded-t-lg tw-rounded-tl-none tw-bg-white tw-mt-4 tw-flex tw-flex-col">
+      <% short_name, details = @plans[2] %>
+      <%= render partial: 'plan_card', locals: { short_name: short_name, details: details } %>
+    </div>
   </div>
 </div>
 
-<div class="grid-x grid-margin-x">
-  <% Plans::List.new.ordered.each do |short_name, details| %>
-    <div class="cell large-4 small-12">
-      <ul class="pricing-table">
-        <li class="title"><%= details["name"] %></li>
-        <li class="price monthly-details"><%= details.dig("monthly", "price_in_words") %></li>
-        <li class="price yearly-details hide"><%= details.dig("yearly", "price_in_words") %></li>
-        <li class="bullet-item"><%= details["reviews_each_month_in_words"] %> reviews/month</li>
-        <li class="bullet-item">Online support</li>
-        <li class="cta-button monthly-details">
-          <% if current_user %>
-             <%= upgrade_or_downgrade_button(plan: {name: short_name, interval: :monthly}) %>
-          <% else %>
-            <%= sign_up_button(plan: { name: short_name, interval: :monthly }) %>
-          <% end %>
-        </li>
-        <li class="cta-button yearly-details hide">
-          <% if current_user %>
-             <%= upgrade_or_downgrade_button(plan: {name: short_name, interval: :yearly}) %>
-          <% else %>
-            <%= sign_up_button(plan: { name: short_name, interval: :yearly }) %>
-          <% end %>
-        </li>
-      </ul>
-    </div>
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="column text-right">
-    <h4>Monthly</h4>
-  </div>
-  <div class="column large-1 text-center">
-    <div class="switch">
-      <input class="switch-input" id="pricingIntervalSwitch" type="checkbox" name="pricingIntervalSwitch">
-      <label class="switch-paddle" for="pricingIntervalSwitch">
-        <span class="show-for-sr">Monthly</span>
-      </label>
-    </div>
-  </div>
-  <div class="column text-left">
-    <h4>Yearly</h4>
-  </div>
+<div class="tw-hidden sm:tw-flex tw-justify-center tw-pt-8">
+  <%= render partial: "plan_interval_selector" %>
 </div>
 
 <div id="permissionModal"></div>

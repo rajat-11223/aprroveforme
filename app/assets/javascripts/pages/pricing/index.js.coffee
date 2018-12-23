@@ -6,7 +6,8 @@ class ApproveForMe.Pages.PricingIndex extends ApproveForMe.Page
 
   bindEvents: ->
     @onEvent 'click', '.continue-change', {}, @continuePermission
-    @onEvent 'change', '#pricingIntervalSwitch', {}, @pricingIntervalChanged
+    @onEvent 'click', "[data-switchable]", {}, @switchable
+    @onEvent 'click', "[data-switchable-id='pricing-toggle']", {}, @pricingIntervalChanged
 
   continuePermission: ->
     name = $(this).data('name')
@@ -26,12 +27,28 @@ class ApproveForMe.Pages.PricingIndex extends ApproveForMe.Page
         log("ERROR in #continuePermission")
         log(data)
 
+  switchable: (e) ->
+    target = $(e.target)
+
+    if target.data("switchable") == undefined
+      target = target.parent()
+
+    switch_sibblings = target.data("switchable-id")
+    all_switches = $("[data-switchable-id='#{switch_sibblings}']")
+
+    all_switches.toggleClass("tw-switch-off")
+    all_switches.toggleClass("tw-switch-on")
+
   pricingIntervalChanged: (e) ->
     target = $(e.target)
-    yearlyPricing = target.prop('checked')
-    if yearlyPricing == true
-      $(".pricing-table").find(".yearly-details").removeClass("hide")
-      $(".pricing-table").find(".monthly-details").addClass("hide")
+    if target.data("switchable") == undefined
+      target = target.parent()
+
+    switchOn = target.hasClass("tw-switch-on")
+
+    if switchOn
+      $("#pricing-table").find(".yearly-details").removeClass("tw-hidden")
+      $("#pricing-table").find(".monthly-details").addClass("tw-hidden")
     else
-      $(".pricing-table").find(".monthly-details").removeClass("hide")
-      $(".pricing-table").find(".yearly-details").addClass("hide")
+      $("#pricing-table").find(".monthly-details").removeClass("tw-hidden")
+      $("#pricing-table").find(".yearly-details").addClass("tw-hidden")

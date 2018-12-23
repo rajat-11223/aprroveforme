@@ -11,25 +11,22 @@ module ApplicationHelper
     end
   end
 
-  def sign_up_button(plan:, color: "ffa500")
+  def sign_up_button(plan:)
     link_to "Get Started", signin_path(plan_name: plan[:name], plan_interval: plan[:interval], type: :signup),
-            class: "button primary",
-            style: "background-color: ##{color} !important;",
+            class: "tw-btn tw-bg-green hover:tw-bg-green-dark",
             data: {turbolinks: false}
   end
 
-  def upgrade_or_downgrade_button(plan:, on_color: "ffa500", current_color: "2787cd")
+  def upgrade_or_downgrade_button(plan:)
     on_plan = plan_compare(to: plan[:name])
 
     if on_plan != "Current"
       link_to on_plan, "#", data: {name: plan[:name], interval: plan[:interval], type: :upgrade, turbolinks: false},
-                            class: "button primary continue-change",
-                            style: "background-color: ##{on_color}"
+                            class: "tw-btn tw-bg-green hover:tw-bg-green-dark continue-change"
     else
       link_to "Current", dashboard_home_index_path,
               data: {name: plan[:name], interval: plan[:interval], type: :upgrade},
-              class: "button primary",
-              style: "background-color: ##{current_color}"
+              class: "tw-btn tw-bg-green hover:tw-bg-green-dark"
     end
   end
 

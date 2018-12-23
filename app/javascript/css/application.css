@@ -17,3 +17,39 @@
   box-shadow: 0 0 0 .125rem rgba(0, 0, 0, 0.6);
   @apply .text-black;
 }
+
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.tw-switch-container {
+  @apply .border .rounded-full .border-grey .flex .items-center .cursor-pointer;
+}
+.tw-switch-off {
+  @apply .justify-start;
+}
+.tw-switch-on {
+  @apply .justify-end;
+}
+
+.tw-switch {
+  @apply .rounded-full .border .border-grey-darkest .shadow-inner .bg-white .shadow;
+}
+
+.tw-btn {
+  @apply .inline-block .text-white .px-6 .py-4 .rounded;
+}
+
+.tw-btn:hover {
+  @apply .text-white .no-underline;
+}

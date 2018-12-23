@@ -1,0 +1,45 @@
+<div class="tw-w-full tw-p-8 tw-text-3xl tw-font-bold tw-text-center tw-flex-none"><%= details["name"] %></div>
+<div class="tw-w-full tw-border-0 tw-border-grey-light tw-border-t tw-border-solid tw-text-sm tw-flex-none">
+  <div class="tw-text-center tw-border-0 tw-border-grey-light tw-border-b tw-border-solid tw-py-4">
+    <%= details["reviews_each_month_in_words"] %> reviews per month
+  </div>
+  <% details["extra-details"].each do |detail| %>
+    <div class="tw-text-center tw-border-0 tw-border-grey-light tw-border-b tw-border-solid tw-py-4">
+      <%= detail %>
+    </div>
+  <% end %>
+</div>
+
+<div class="tw-flex sm:tw-hidden tw-justify-center tw-my-2 tw-flex-none">
+  <%= render partial: "plan_interval_selector" %>
+</div>
+
+<div class="tw-w-full tw-text-center tw-px-8 sm:tw-pt-8 tw-text-2xl sm:tw-text-xl tw-mt-auto tw-flex-flex-grow">
+  <div class="monthly-details">
+    <%= details.dig("monthly", "price_in_words") %>
+  </div>
+  <div class="yearly-details tw-hidden">
+    <%= details.dig("yearly", "price_in_words") %>
+  </div>
+</div>
+
+<div class="tw-w-full tw-text-center tw-my-4 tw-flex-none">
+  <!-- <a href="#" class="tw-inline-block tw-bg-green tw-text-white tw-px-6 tw-py-4 tw-rounded hover:tw-bg-green-darker hover:tw-text-white hover:tw-no-underline">Sign Up</a> -->
+
+  <div class="monthly-details">
+    <% if current_user %>
+        <%= upgrade_or_downgrade_button(plan: {name: short_name, interval: :monthly}) %>
+    <% else %>
+      <%= sign_up_button(plan: { name: short_name, interval: :monthly }) %>
+    <% end %>
+  </div>
+  <div class="yearly-details tw-hidden">
+    <% if current_user %>
+        <%= upgrade_or_downgrade_button(plan: {name: short_name, interval: :yearly}) %>
+    <% else %>
+      <%= sign_up_button(plan: { name: short_name, interval: :yearly }) %>
+    <% end %>
+  </div>
+</div>
+
+
