@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: request_types
+#
+#  id               :bigint(8)        not null, primary key
+#  affirming_text   :string           not null
+#  allow_dissenting :boolean          default(TRUE), not null
+#  dissenting_text  :string           not null
+#  email_templates  :jsonb
+#  name             :string           not null
+#  public           :boolean          default(FALSE), not null
+#  require_comments :boolean          default(TRUE), not null
+#  slug             :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+# Indexes
+#
+#  index_request_types_on_slug  (slug)
+#
+
 FactoryBot.define do
   factory :request_type do
     name "Slug Slug"

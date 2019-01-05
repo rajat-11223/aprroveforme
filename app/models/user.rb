@@ -1,3 +1,39 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                        :integer          not null, primary key
+#  approvals_received        :integer
+#  approvals_received_30     :integer
+#  approvals_responded_to    :integer
+#  approvals_responded_to_30 :integer
+#  approvals_sent            :integer
+#  approvals_sent_30         :integer
+#  code                      :string(255)
+#  email                     :string(255)
+#  email_domain              :string(255)
+#  expires                   :boolean
+#  expires_at                :datetime
+#  first_name                :string(255)
+#  last_login_at             :datetime
+#  last_name                 :string(255)
+#  last_sent_date            :datetime
+#  name                      :string(255)
+#  picture                   :string(255)
+#  provider                  :string(255)
+#  refresh_token             :string(255)
+#  second_email              :string(255)
+#  time_zone                 :string
+#  token                     :string(255)
+#  uid                       :string(255)
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  customer_id               :string
+#  stripe_subscription_id    :string
+#
+
+require "google/api_client/client_secrets"
+
 class User < ApplicationRecord
   rolify
   validates :email, :picture, presence: true
@@ -13,46 +49,38 @@ class User < ApplicationRecord
   end
 
   def google_auth
-    @google_auth_client ||= begin
-      # Create a new API client & load the Google Drive API
-      client = GoogleApiWrapper.new
-      client.authorization.client_id = ENV["GOOGLE_ID"]
-      client.authorization.client_secret = ENV["GOOGLE_SECRET"]
-      client.authorization.scope = ENV["GOOGLE_SCOPE"]
-      client.authorization.redirect_uri = ENV["REDIRECT_URI"]
-      client.authorization.code = self.code.chomp || ""
-      client.authorization.access_token = self.token
-      client.authorization.refresh_token = self.refresh_token
-
-      if client.authorization.refresh_token && client.authorization.expired?
-        client.authorization.fetch_access_token!
-      end
-
-      client
-    end
+    # Create a new google secrets client
+    @google_auth_client ||=
+      Google::APIClient::ClientSecrets.new(
+        {
+          "web" => {
+            "client_id" => ENV["GOOGLE_ID"],
+            "client_secret" => ENV["GOOGLE_SECRET"],
+            "access_token" => self.try(:token),
+            "refresh_token" => self.try(:refresh_token),
+            "expires_at" => self.try(:expires_at).try(:to_i),
+          },
+        }
+      )
   end
 
-  def refresh_google
-    # TODO: Move this into a service
-    connection = Faraday.new("https://www.googleapis.com/oauth2/v4/token") do |conn|
-      conn.response :json, :content_type => /\bjson$/
-      conn.adapter Faraday.default_adapter
-    end
+  def reset_google_auth!
+    @google_auth_client = nil
+  end
 
-    response = connection.post do |req|
-      req.headers["Content-Type"] = "application/x-www-form-urlencoded"
-      req.body = URI.encode_www_form({client_id: ENV["GOOGLE_ID"],
-                                      client_secret: ENV["GOOGLE_SECRET"],
-                                      refresh_token: self.refresh_token,
-                                      grant_type: "refresh_token"})
-    end
+  def refresh_google_auth!
+    return false if (self.expires_at - 60.seconds) > Time.zone.now
 
-    if response.status == 200
-      self.update_attributes token: response.body["access_token"]
-    else
-      Rails.logger.error("Unable to refresh google_oauth2 authentication token for User(id=#{self.id}).")
-      Rails.logger.error("Refresh token response body: #{response.body}")
-    end
+    authorization = google_auth.to_authorization
+    response = authorization.refresh!
+
+    return false if response.blank?
+
+    self.token = response["access_token"]
+    self.expires_at = Time.zone.now + response["expires_in"].seconds
+    self.save!
+
+    reset_google_auth!
   end
 
   def payment_customer

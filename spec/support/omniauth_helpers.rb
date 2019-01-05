@@ -1,5 +1,4 @@
 module OmniauthHelpers
-
   def sign_in_as(user, provider: :google_oauth2)
     mock_omniauth_provider!(provider: provider, user: user)
     visit oauth_callback_path(provider: provider)
@@ -38,8 +37,14 @@ module OmniauthHelpers
           last_name: user.last_name,
           name: user.name,
           email: user.email,
-          image: user.picture
-        }
+          image: user.picture,
+        },
+        credentials: {
+          token: "valid_token",
+          refresh_token: "valid_refresh_token",
+          expires: true,
+          expires_at: 1.hour.from_now.to_i,
+        },
       })
   end
 
@@ -52,5 +57,4 @@ module OmniauthHelpers
   def setup_test_mode!
     OmniAuth.config.test_mode = true
   end
-
 end

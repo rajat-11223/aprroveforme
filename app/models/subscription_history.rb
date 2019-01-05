@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: subscription_histories
+#
+#  id                      :integer          not null, primary key
+#  plan_date               :datetime
+#  plan_identifier         :string           not null
+#  plan_interval           :string           not null
+#  plan_name               :string           not null
+#  renewable_date          :datetime
+#  subscription_identifier :string           not null
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  user_id                 :integer
+#
+# Indexes
+#
+#  index_subscription_histories_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
+
 class SubscriptionHistory < ApplicationRecord
   belongs_to :user
 

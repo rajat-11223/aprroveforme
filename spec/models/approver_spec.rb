@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: approvers
+#
+#  id           :integer          not null, primary key
+#  code         :string(255)
+#  comments     :text             default(""), not null
+#  email        :string           not null
+#  name         :string           not null
+#  required     :string           default("required"), not null
+#  responded_at :datetime
+#  status       :string           default("pending"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  approval_id  :integer          not null
+#
+
 require "rails_helper"
 
 describe Approver do

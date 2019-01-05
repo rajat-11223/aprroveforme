@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/abrom/omniauth-google-oauth2.git
+  revision: c1dd1a0008976373c1f3b98855066cda594d15fe
+  ref: c1dd1a0008976373c1f3b98855066cda594d15fe
+  specs:
+    omniauth-google-oauth2 (0.5.4)
+      jwt (>= 1.5)
+      omniauth (>= 1.1.1)
+      omniauth-oauth2 (>= 1.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -56,15 +66,14 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    annotate (2.7.4)
+      activerecord (>= 3.2, < 6.0)
+      rake (>= 10.4, < 13.0)
     arbre (1.1.1)
       activesupport (>= 3.0.0)
     archive-zip (0.11.0)
       io-like (~> 0.3.0)
     arel (9.0.0)
-    autoparse (0.3.3)
-      addressable (>= 2.3.1)
-      extlib (>= 0.9.15)
-      multi_json (>= 1.0.0)
     autoprefixer-rails (9.1.3)
       execjs
     babel-source (5.8.35)
@@ -111,11 +120,13 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.3)
+    concurrent-ruby (1.1.4)
     connection_pool (2.2.2)
     crass (1.0.4)
     daemons (1.2.6)
     debug_inspector (0.0.3)
+    declarative (0.0.10)
+    declarative-option (0.1.0)
     diff-lcs (1.3)
     docile (1.3.1)
     dotenv (2.5.0)
@@ -131,13 +142,12 @@ GEM
     et-orbi (1.1.6)
       tzinfo
     execjs (2.7.0)
-    extlib (0.9.16)
     factory_bot (4.10.0)
       activesupport (>= 3.0.0)
     factory_bot_rails (4.10.0)
       factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
-    faraday (0.12.2)
+    faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
@@ -163,24 +173,21 @@ GEM
       actionpack (>= 3.0)
       multi_json
       request_store (>= 1.0)
-    google-api-client (0.8.6)
-      activesupport (>= 3.2)
-      addressable (~> 2.3)
-      autoparse (~> 0.3)
-      extlib (~> 0.9)
-      faraday (~> 0.9)
-      googleauth (~> 0.3)
-      launchy (~> 2.4)
-      multi_json (~> 1.10)
-      retriable (~> 1.4)
-      signet (~> 0.6)
-    googleauth (0.4.2)
-      faraday (~> 0.9)
-      jwt (~> 1.4)
-      logging (~> 2.0)
-      memoist (~> 0.12)
+    google-api-client (0.27.1)
+      addressable (~> 2.5, >= 2.5.1)
+      googleauth (>= 0.5, < 0.8.0)
+      httpclient (>= 2.8.1, < 3.0)
+      mime-types (~> 3.0)
+      representable (~> 3.0)
+      retriable (>= 2.0, < 4.0)
+      signet (~> 0.10)
+    googleauth (0.7.1)
+      faraday (~> 0.12)
+      jwt (>= 1.4, < 3.0)
+      memoist (~> 0.16)
       multi_json (~> 1.11)
-      signet (~> 0.6)
+      os (>= 0.9, < 2.0)
+      signet (~> 0.7)
     griddler (1.5.2)
       htmlentities
       rails (>= 3.2.0)
@@ -190,12 +197,13 @@ GEM
     has_scope (0.7.2)
       actionpack (>= 4.1)
       activesupport (>= 4.1)
-    hashie (3.5.7)
+    hashie (3.6.0)
     high_voltage (3.1.0)
     htmlentities (4.3.4)
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
-    i18n (1.2.0)
+    httpclient (2.8.3)
+    i18n (1.3.0)
       concurrent-ruby (~> 1.0)
     i18n-js (3.2.0)
       i18n (>= 0.8.0, < 2)
@@ -220,7 +228,7 @@ GEM
       pg (>= 0.18.1)
     jstz-rails3-plus (1.0.5)
       railties (>= 3.1)
-    jwt (1.4.1)
+    jwt (2.1.0)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.1)
@@ -241,10 +249,6 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    little-plugger (1.1.4)
-    logging (2.2.2)
-      little-plugger (~> 1.1)
-      multi_json (~> 1.10)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -254,6 +258,9 @@ GEM
       mimemagic (~> 0.3.2)
     memoist (0.16.0)
     method_source (0.9.2)
+    mime-types (3.2.2)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2018.0812)
     mimemagic (0.3.2)
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
@@ -267,31 +274,27 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
-    oauth2 (1.4.0)
-      faraday (>= 0.8, < 0.13)
-      jwt (~> 1.0)
+    oauth2 (1.4.1)
+      faraday (>= 0.8, < 0.16.0)
+      jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     oj (3.6.10)
-    omniauth (1.8.1)
-      hashie (>= 3.4.6, < 3.6.0)
+    omniauth (1.9.0)
+      hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
-    omniauth-google-oauth2 (0.3.1)
-      jwt (~> 1.0)
-      multi_json (~> 1.3)
-      omniauth (>= 1.1.1)
-      omniauth-oauth2 (>= 1.3.1)
-    omniauth-oauth2 (1.5.0)
+    omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
-      omniauth (~> 1.2)
+      omniauth (~> 1.9)
+    os (1.0.0)
     pg (1.1.3)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     pry-rails (0.3.8)
       pry (>= 0.10.4)
-    public_suffix (3.0.2)
+    public_suffix (3.0.3)
     puma (3.11.4)
     raabro (1.1.6)
     rack (2.0.6)
@@ -340,12 +343,16 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (4.0.3)
+    representable (3.0.4)
+      declarative (< 0.1.0)
+      declarative-option (< 0.2.0)
+      uber (< 0.2.0)
     request_store (1.4.1)
       rack (>= 1.4)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
-    retriable (1.4.1)
+    retriable (3.1.2)
     rolify (5.2.0)
     rollbar (2.17.0)
       multi_json
@@ -394,11 +401,10 @@ GEM
     sidekiq-cron (1.0.4)
       fugit (~> 1.1)
       sidekiq (>= 4.2.1)
-    signet (0.6.0)
+    signet (0.11.0)
       addressable (~> 2.3)
-      extlib (~> 0.9)
       faraday (~> 0.9)
-      jwt (~> 1.0)
+      jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
     simple-random (1.0.3)
     simple_form (4.0.1)
@@ -449,6 +455,7 @@ GEM
       turbolinks-source (~> 5.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    uber (0.1.0)
     uglifier (4.1.18)
       execjs (>= 0.3.0, < 3)
     web-console (3.6.2)
@@ -473,6 +480,7 @@ DEPENDENCIES
   activeadmin
   activejob (= 5.2.1.1)
   activestorage (= 5.2.1.1)
+  annotate
   autoprefixer-rails
   better_errors (>= 0.6.0)
   binding_of_caller (>= 0.7.1)
@@ -493,7 +501,7 @@ DEPENDENCIES
   foundation-icons-sass-rails
   foundation-rails
   gon
-  google-api-client (>= 0.4.4)
+  google-api-client (~> 0.11)
   griddler
   griddler-sendgrid
   high_voltage (~> 3.1)
@@ -504,7 +512,7 @@ DEPENDENCIES
   js_cookie_rails
   json
   jsonb_accessor (~> 1.0.0)
-  jwt (~> 1.4.0)
+  jwt (~> 2.0)
   kaminari
   letter_opener
   listen (>= 3.0.5, < 3.2)
@@ -512,7 +520,7 @@ DEPENDENCIES
   newrelic_rpm
   oj
   omniauth
-  omniauth-google-oauth2
+  omniauth-google-oauth2!
   pg
   pry-rails
   puma
@@ -547,4 +555,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.5
+   1.17.3

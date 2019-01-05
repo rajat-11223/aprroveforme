@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: approvers
+#
+#  id           :integer          not null, primary key
+#  code         :string(255)
+#  comments     :text             default(""), not null
+#  email        :string           not null
+#  name         :string           not null
+#  required     :string           default("required"), not null
+#  responded_at :datetime
+#  status       :string           default("pending"), not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  approval_id  :integer          not null
+#
+
 class Approver < ApplicationRecord
   belongs_to :approval, inverse_of: :approvers, autosave: true
   before_save { |approver| approver.email = approver.email.downcase }

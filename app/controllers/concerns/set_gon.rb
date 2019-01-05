@@ -10,6 +10,7 @@ module SetGon
   def setup_gon
     gon.push googleAppId: ENV.fetch("APP_ID"),
              googleUserToken: current_user.try(:token),
+             googleUserTokenExpiresAt: current_user.try(:expires_at),
              stripePublishableKey: ENV.fetch("STRIPE_PUBLISHABLE_KEY")
   end
 end

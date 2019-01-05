@@ -1,3 +1,34 @@
+# == Schema Information
+#
+# Table name: approvals
+#
+#  id              :integer          not null, primary key
+#  completed_at    :datetime
+#  deadline        :datetime         not null
+#  description     :text             default(""), not null
+#  drive_perms     :string(255)      default("reader")
+#  drive_public    :boolean          default(TRUE), not null
+#  embed           :string(255)
+#  link            :string(255)
+#  link_title      :string(255)
+#  link_type       :string(255)
+#  owner           :integer          not null
+#  title           :string(255)      not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  link_id         :string(255)
+#  request_type_id :bigint(8)
+#
+# Indexes
+#
+#  index_approvals_on_completed_at     (completed_at)
+#  index_approvals_on_request_type_id  (request_type_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (request_type_id => request_types.id)
+#
+
 require "rails_helper"
 
 describe Approval do

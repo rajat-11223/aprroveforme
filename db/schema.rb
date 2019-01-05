@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_14_190206) do
+ActiveRecord::Schema.define(version: 2019_01_02_172410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,9 @@ ActiveRecord::Schema.define(version: 2018_12_14_190206) do
     t.string "drive_perms", limit: 255, default: "reader"
     t.boolean "drive_public", default: true, null: false
     t.datetime "completed_at"
+    t.bigint "request_type_id"
     t.index ["completed_at"], name: "index_approvals_on_completed_at"
+    t.index ["request_type_id"], name: "index_approvals_on_request_type_id"
   end
 
   create_table "approvers", id: :serial, force: :cascade do |t|
@@ -78,6 +80,7 @@ ActiveRecord::Schema.define(version: 2018_12_14_190206) do
     t.jsonb "email_templates"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "require_comments", default: true, null: false
     t.index ["slug"], name: "index_request_types_on_slug"
   end
 
@@ -148,6 +151,8 @@ ActiveRecord::Schema.define(version: 2018_12_14_190206) do
     t.string "stripe_subscription_id"
     t.datetime "last_login_at"
     t.string "time_zone"
+    t.datetime "expires_at"
+    t.boolean "expires"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
@@ -156,5 +161,6 @@ ActiveRecord::Schema.define(version: 2018_12_14_190206) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
   end
 
+  add_foreign_key "approvals", "request_types"
   add_foreign_key "subscription_histories", "users"
 end

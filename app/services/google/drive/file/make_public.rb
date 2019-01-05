@@ -11,7 +11,13 @@ module Google
         end
 
         def call
-          set_permission(@file_id, @user, { "type" => "anyone", "withLink" => "true" }, @role)
+          set_permission(@file_id, @user, public_permission, @role)
+        end
+
+        private
+
+        def public_permission
+          Google::Apis::DriveV3::Permission.new(allow_file_discovery: false, type: "anyone")
         end
       end
     end

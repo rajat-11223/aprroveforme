@@ -12,7 +12,13 @@ module Google
         end
 
         def call
-          set_permission(@file_id, @user, { "type" => "user", "value" => @approver.email }, @role)
+          set_permission(@file_id, @user, user_permission, @role)
+        end
+
+        private
+
+        def user_permission
+          Google::Apis::DriveV3::Permission.new(type: "user", email_address: @approver.email)
         end
       end
     end

@@ -44,38 +44,19 @@ class ApprovalsController < ApplicationController
   # POST /approvals
   # POST /approvals.json
   def create
-    @approval = Approval.new(approval_params.merge(owner: current_user.id))
+    @approval = Approval.new(approval_params.merge(owner: current_user.id, deadline: parse_deadline))
     authorize! :create, @approval
 
-    @approval.deadline = parse_deadline
+    if @approval.valid? && @approval.save
+      apply_permission_updates!(approval: @approval, file_id: @approval.link_id)
 
-    google_drive_file_id = @approval.link_id
-
-    @approval.valid?
-
-    user_permission_updates =
-      @approval.approvers.map do |approver|
-        approver.generate_code
-        approver.save
-
-        Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user,
-                                                                   approver: approver,
-                                                                   role: google_drive_permission) unless make_public?
-      end
-
-    make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user,
-                                                                                 role: google_drive_permission)
-    resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
-
-    if @approval.errors.none? && @approval.save
       ab_finished(:approval_created)
 
       UserMailer.my_new_approval(@approval).deliver_later
-      @approval.approvers.each { |approver| UserMailer.new_approval_invite(@approval, approver).deliver_later }
 
-      redirect_to @approval, notice: ["Approval was successfully created.", resp[:warning]].compact.join(" ")
+      redirect_to @approval, notice: "Approval was successfully created."
     else
-      flash[:notice] = ["Approval was not created.", resp[:warning]].compact.join(" ")
+      flash[:notice] = "Approval was not created."
       render action: "new"
     end
   end
@@ -87,30 +68,15 @@ class ApprovalsController < ApplicationController
 
     authorize! :update, @approval
 
-    if @approval.update_attributes(approval_params.merge(deadline: parse_deadline))
-      google_drive_file_id = @approval.link_id
+    @approval.assign_attributes(approval_params.merge(deadline: parse_deadline))
 
+    if @approval.valid? && @approval.save
       # if any new approvers, add permissions and code
-      approvers_without_codes = @approval.approvers.select { |a| !a.code.present? }
-      user_permission_updates =
-        approvers_without_codes.map do |approver|
-          approver.generate_code
-          approver.save
+      apply_permission_updates!(approval: @approval, file_id: @approval.link_id)
 
-          UserMailer.new_approval_invite(@approval, approver).deliver_later
-
-          Google::Drive::File::AddUserRole.new(google_drive_file_id, user: current_user,
-                                                                     approver: approver,
-                                                                     role: google_drive_permission) unless make_public?
-        end
-
-      @approval.save
-
-      make_file_public = Google::Drive::File::MakePublic.new(google_drive_file_id, user: current_user, role: google_drive_permission)
-      resp = apply_permission_updates!(user_permission_updates, make_file_public: make_file_public)
-
-      redirect_to @approval, notice: ["Approval was successfully updated.", resp[:warning]].compact.join(" ")
+      redirect_to @approval, notice: "Approval was successfully updated."
     else
+      flash[:notice] = "Approval was not created."
       render action: "edit"
     end
   end
@@ -182,25 +148,40 @@ class ApprovalsController < ApplicationController
     approval_params[:drive_perms]
   end
 
-  def apply_permission_updates!(permission_updates, make_file_public:)
-    response = {}
-    permission_updates = permission_updates.dup
-    permission_updates = [make_file_public] if make_public?
-
-    begin
-      permission_updates.compact.map(&:call)
-    rescue Google::Drive::File::SetPermission::InvalidGoogleUser => e
-      # Since we have an invalid Google user, make the file publically accessible
-      make_file_public.call
-
-      # Set approval as public, since we had to force it public.
-      @approval.drive_public = true
-      response[:warning] = e.message
-    rescue Google::Drive::File::SetPermission::DoNotOwnDocument => e
-      response[:warning] = e.message
-      @approval.errors.add :link, e.message
+  def apply_permission_updates!(approval:, file_id:)
+    if make_public?
+      Google::Drive::File::MakePublic.new(file_id,
+                                          user: current_user,
+                                          role: google_drive_permission).call
+    else
+      approval.approvers.each do |approver|
+        Google::Drive::File::AddUserRole.new(file_id,
+                                             user: current_user,
+                                             approver: approver,
+                                             role: google_drive_permission).call
+      end
     end
 
-    response
+    approval
+      .approvers
+      .select { |a| a.code.blank? }
+      .each(&:generate_code)
+      .each(&:save!)
+      .each do |approver|
+      UserMailer.new_approval_invite(approval, approver).deliver_later
+    end
+
+    # begin
+    # rescue Google::Drive::File::SetPermission::InvalidGoogleUser => e
+    #   # Since we have an invalid Google user, make the file publically accessible
+    #   make_file_public.call
+
+    #   # Set approval as public, since we had to force it public.
+    #   @approval.drive_public = true
+    #   response[:warning] = e.message
+    # rescue Google::Drive::File::SetPermission::DoNotOwnDocument => e
+    #   response[:warning] = e.message
+    #   @approval.errors.add :link, e.message
+    # end
   end
 end
