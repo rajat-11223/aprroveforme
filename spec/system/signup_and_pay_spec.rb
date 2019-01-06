@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Signup and Payment", js: true do
+describe "Signup and Payment", js: true, ci_ignore: true do
   it "enables me to signup and pay" do
     visit root_path
 

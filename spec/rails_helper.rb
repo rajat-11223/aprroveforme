@@ -47,6 +47,10 @@ RSpec.configure do |config|
     cleanup_omniauth!(provider: :google_oauth2)
   end
 
+  config.around(:each) do
+    skip "ignored on CI" if example.metadata[:ci_ignore] && ENV["CI"] == "true"
+  end
+
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless
     # driven_by :selenium_chrome, screen_size: [1600, 1400]
