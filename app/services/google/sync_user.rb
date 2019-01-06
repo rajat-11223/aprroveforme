@@ -11,7 +11,7 @@ module Google
       user.update_attributes! first_name: info["first_name"] || "",
                               last_name: info["last_name"] || "",
                               token: auth.dig("credentials", "token"),
-                              refresh_token: auth.dig("credentials", "refresh_token"),
+                              refresh_token: auth.dig("credentials", "refresh_token") || user.refresh_token,
                               expires: auth.dig("credentials", "expires"),
                               expires_at: Time.at(auth.dig("credentials", "expires_at")),
                               name: info["name"] || "",
