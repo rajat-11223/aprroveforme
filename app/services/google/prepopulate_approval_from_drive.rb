@@ -1,3 +1,5 @@
+require "google/apis/drive_v2"
+
 module Google
   class PrepopulateApprovalFromDrive
     def initialize(session, approval, user)
@@ -28,10 +30,10 @@ module Google
 
       approval.title = file.title
       approval.link_title = file.title
-      approval.embed = file.embedLink
+      approval.embed = file.embed_link
       approval.link_id = file.id
-      approval.link_type = file.mimeType
-      approval.link = file.alternateLink
+      approval.link_type = file.mime_type
+      approval.link = file.alternate_link
 
       clear_state!
     end
@@ -41,16 +43,17 @@ module Google
     attr_reader :session, :approval, :user
 
     def file_metadata(client, file_id)
-      drive = client.discovered_api("drive", "v2")
+      user.refresh_google_auth!
 
-      result = client.execute(api_method: drive.files.get,
-                              parameters: {"fileId" => file_id})
+      drive = Google::Apis::DriveV2::DriveService.new
+      drive.authorization = user.google_auth.to_authorization
 
-      if result.status == 200
-        result.data
-      else
-        puts "An error occurred: #{result.data["error"]["message"]}"
-      end
+      drive.get_file(file_id)
+      # if result.status == 200
+      #   result.data
+      # else
+      #   puts "An error occurred: #{result.data["error"]["message"]}"
+      # end
     end
 
     def clear_state!
