@@ -47,8 +47,10 @@ RSpec.configure do |config|
     cleanup_omniauth!(provider: :google_oauth2)
   end
 
-  config.around(:each) do
+  config.around(:each) do |example|
     skip "ignored on CI" if example.metadata[:ci_ignore] && ENV["CI"] == "true"
+
+    example.run
   end
 
   config.before(:each, type: :system, js: true) do
