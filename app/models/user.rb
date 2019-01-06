@@ -69,7 +69,7 @@ class User < ApplicationRecord
   end
 
   def refresh_google_auth!
-    return false unless self.refresh_token && self.expires_at && (self.expires_at - 60.seconds) < Time.zone.now
+    return false if self.refresh_token.blank? || self.expires_at.blank? || Time.zone.now < (self.expires_at - 60.seconds)
 
     authorization = google_auth.to_authorization
     response = authorization.refresh!

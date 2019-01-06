@@ -52,4 +52,51 @@ describe User do
   it "does not have a default last_login_at" do
     expect(subject.last_login_at).to be_nil
   end
+
+  describe "google auth" do
+    context "happy path" do
+      subject { create(:user) }
+      let(:response_token) { {"access_token" => "new_token", "expires_in" => 60 * 60} }
+      let(:signet_token) { double(:signet_token, refresh!: response_token) }
+      let(:google_authorization) { double(:google_auth, to_authorization: signet_token) }
+
+      before do
+        allow(subject).to receive(:google_auth).and_return(google_authorization)
+      end
+
+      it "should refresh" do
+        subject.expires_at = Time.now - 1.minute
+        subject.refresh_token = "valid_refresh_token"
+
+        expect(subject.refresh_google_auth!).to eq(true)
+
+        expect(subject.expires_at).to be > Time.now
+        expect(subject.token).to eq("new_token")
+      end
+    end
+
+    context "when no refresh_token" do
+      it "should not refresh" do
+        subject.refresh_token = nil
+
+        expect(subject.refresh_google_auth!).to eq(false)
+      end
+    end
+
+    context "when no expires_at" do
+      it "should not refresh" do
+        subject.expires_at = nil
+
+        expect(subject.refresh_google_auth!).to eq(false)
+      end
+    end
+
+    context "when expires_at is in the future" do
+      it "should not refresh" do
+        subject.expires_at = Time.now + 5.minutes
+
+        expect(subject.refresh_google_auth!).to eq(false)
+      end
+    end
+  end
 end
