@@ -8,6 +8,8 @@ module SetGon
   private
 
   def setup_gon
+    current_user.try(:refresh_google_auth!)
+
     gon.push googleAppId: ENV.fetch("APP_ID"),
              googleUserToken: current_user.try(:token),
              googleUserTokenExpiresAt: current_user.try(:expires_at),
