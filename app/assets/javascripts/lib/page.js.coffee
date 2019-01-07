@@ -46,7 +46,7 @@ class ApproveForMe.Page
       gon.googleUserToken = val
 
     gon.watch 'googleUserTokenExpiresAt', {interval: interval}, (val) ->
-      gon.googleUserToken = googleUserTokenExpiresAt
+      gon.googleUserTokenExpiresAt = val
 
   closeAlerts: ->
     setTimeout ->
