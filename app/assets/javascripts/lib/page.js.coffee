@@ -17,6 +17,7 @@ class ApproveForMe.Page
     @closeCallouts()
     @initCrisp()
     @finishFormProgressBar()
+    @watchGonVars()
 
     log("Rendering #{this.constructor.name}")
     @render()
@@ -38,6 +39,14 @@ class ApproveForMe.Page
   setupFoundation: ->
     $(document).foundation()
 
+  watchGonVars: ->
+    interval = 5 * 60 * 1000 # (5 minutes)
+
+    gon.watch 'googleUserToken', {interval: interval}, (val) ->
+      gon.googleUserToken = val
+
+    gon.watch 'googleUserTokenExpiresAt', {interval: interval}, (val) ->
+      gon.googleUserToken = googleUserTokenExpiresAt
 
   closeAlerts: ->
     setTimeout ->
