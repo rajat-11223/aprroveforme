@@ -12,7 +12,7 @@ ApproveForMe.payments.stripeTokenHandler = (token) ->
   form.submit();
 
 ApproveForMe.payments.setupForm = (parent) ->
-  stripe = Stripe(gon.stripePublishableKey)
+  stripe = Stripe(gon.global.stripePublishableKey)
 
   # Create an instance of Elements.
   elements = stripe.elements()

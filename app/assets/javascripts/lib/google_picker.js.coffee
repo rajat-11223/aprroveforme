@@ -13,7 +13,7 @@ ApproveForMe.google.createFilePicker = (e) ->
   #               # .setMimeTypes('application/vnd.google-apps.folder')
 
   picker = new google.picker.PickerBuilder()
-  picker.setAppId(gon.googleAppId)
+  picker.setAppId(gon.global.googleAppId)
         .setOAuthToken(gon.googleUserToken)
         .addView(docsView)
         # .addView(teamDrivesView)
