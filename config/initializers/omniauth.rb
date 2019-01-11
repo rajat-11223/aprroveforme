@@ -4,7 +4,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            ENV.fetch("GOOGLE_SECRET"),
            {
              "scope" => ENV["GOOGLE_SCOPE"],
-             "prompt" => "select_account",
              "access_type" => "offline",
              "skip_jwt" => Rails.env.development?,
            }

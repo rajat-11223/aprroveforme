@@ -64,13 +64,12 @@ class User < ApplicationRecord
       )
   end
 
-  def reset_google_auth!
-    @google_auth_client = nil
-  end
-
-  def refresh_google_auth!
-    return false if self.refresh_token.blank? || self.expires_at.blank? || Time.zone.now < (self.expires_at - 60.seconds)
-    return false if self.refresh_token.blank? || self.expires_at.blank? || Time.zone.now < (self.expires_at - 10.minutes)
+  def refresh_google_auth!(force: false)
+    if token_needs_refreshed? || force
+      # continue on
+    else
+      return false
+    end
 
     authorization = google_auth.to_authorization
     response = authorization.refresh!
@@ -117,5 +116,15 @@ class User < ApplicationRecord
     end
 
     output
+  end
+
+  private
+
+  def token_needs_refreshed?
+    !(self.refresh_token.blank? || self.expires_at.blank? || Time.zone.now < (self.expires_at - 10.minutes))
+  end
+
+  def reset_google_auth!
+    @google_auth_client = nil
   end
 end

@@ -2,18 +2,21 @@ class SessionsController < ApplicationController
   skip_authorization_check
 
   def new
-    if params[:state]
-      session[:state] =
-        begin
-          JSON.parse(params[:state] || "{}")
-        rescue JSON::ParserError
-          {}
-        end
-    end
+    session[:state] =
+      begin
+        JSON.parse(params[:state] || "{}")
+      rescue JSON::ParserError
+        {}
+      end
 
     session[:plan_name] = params[:plan_name]
     session[:plan_interval] = params[:plan_interval]
-    redirect_to "/auth/google_oauth2?prompt=select_account"
+
+    if session.to_h.dig(:state, "action") == "open"
+      redirect_to "/auth/google_oauth2"
+    else
+      redirect_to "/auth/google_oauth2?prompt=select_account"
+    end
   end
 
   def create

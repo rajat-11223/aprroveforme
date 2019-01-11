@@ -65,10 +65,20 @@ describe User do
       end
 
       it "should refresh" do
-        subject.expires_at = Time.now - 1.minute
+        subject.expires_at = Time.now - 5.minutes
         subject.refresh_token = "valid_refresh_token"
 
         expect(subject.refresh_google_auth!).to eq(true)
+
+        expect(subject.expires_at).to be > Time.now
+        expect(subject.token).to eq("new_token")
+      end
+
+      it "should refresh, when forced" do
+        subject.expires_at = Time.now + 1.hour
+        subject.refresh_token = "valid_refresh_token"
+
+        expect(subject.refresh_google_auth!(force: true)).to eq(true)
 
         expect(subject.expires_at).to be > Time.now
         expect(subject.token).to eq("new_token")

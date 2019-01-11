@@ -1,3 +1,4 @@
+require "google/apis"
 require "google/apis/drive_v2"
 
 module Google
@@ -16,17 +17,10 @@ module Google
       # Pull out ids of Google Drive files
       # exportIds => Google Doc Files
       # ids => Images or other uploaded files
-      file_ids = state["exportIds"] || state["ids"]
-      file_id = file_ids.first
+      file_id = state.dig("exportIds", 0) || state.dig("ids", 0)
+      file = file_metadata(file_id)
 
-      return unless file_id.present?
-
-      user.refresh_google_auth!
-      api_client = user.google_auth
-
-      file = file_metadata(api_client, file_id)
-
-      return unless file.present?
+      return if file.blank?
 
       approval.title = file.title
       approval.link_title = file.title
@@ -42,18 +36,23 @@ module Google
 
     attr_reader :session, :approval, :user
 
-    def file_metadata(client, file_id)
-      user.refresh_google_auth!
+    def file_metadata(file_id)
+      return if file_id.blank?
+
+      user.refresh_google_auth!(force: true)
 
       drive = Google::Apis::DriveV2::DriveService.new
       drive.authorization = user.google_auth.to_authorization
 
       drive.get_file(file_id)
-      # if result.status == 200
-      #   result.data
-      # else
-      #   puts "An error occurred: #{result.data["error"]["message"]}"
-      # end
+    rescue Google::Apis::ClientError => e
+      # @raise [] The request is invalid and should not be retried without modification
+      # It's possible that the user selecteed a different user account for the file,
+      # just return nil
+      Rails.logger.info("CLIENT ERROR for google e.inspect")
+      nil
+    rescue Google::Apis::ServerError, Google::Apis::AuthorizationError => e
+      nil
     end
 
     def clear_state!
