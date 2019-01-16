@@ -14,8 +14,8 @@
     <tbody></tbody>
     <% @complete_requests.each do |approval| %>
       <tr>
-        <td class="bold"><%= link_to truncate(approval.title), approval, class: "tw-text-black" %></td>
-        <td><%= truncate(approval.description) %></td>
+        <td class="bold tw-max-w-xs"><%= link_to truncate(approval.title), approval, class: "tw-text-black" %></td>
+        <td class="w-max-w-sm"><%= truncate(approval.description) %></td>
 
         <td class="listing-inquiry-status">
           <div class="flex-container align-top">

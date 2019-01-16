@@ -5,32 +5,24 @@
     <thead>
       <tr>
         <th>
-          <a href="#">Approver Name
-            <i class="fas fa-caret-down"></i>
-          </a>
+          Approver Name
         </th>
         <th>
-          <a href="#">Document Name
-            <i class="fas fa-caret-down"></i>
-          </a>
+          Document Name
         </th>
         <th>
-          <a href="#">Deadline
-            <i class="fas fa-caret-down"></i>
-          </a>
+          Deadline
         </th>
         <th>
-          <a href="#">Action
-            <i class="fas fa-caret-down"></i>
-          </a>
+          Action
         </th>
       </tr>
     </thead>
     <tbody></tbody>
     <% @open_responses.each do |approver| %>
       <tr>
-        <td class="bold"><%= approver.approval.user.name %></td>
-        <td><%= approver.approval.title %></td>
+        <td class="bold tw-max-w-xs"><%= approver.approval.user.name %></td>
+        <td class="tw-max-w-xs"><%= approver.approval.title %></td>
         <td><%= approver.approval.deadline_in_words %></td>
 
         <td class="listing-inquiry-status">

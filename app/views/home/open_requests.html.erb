@@ -19,9 +19,11 @@
 
     <% @open_requests.each do |approval| %>
       <tr id="<%= dom_id(approval) %>">
-        <td class="bold"><%= link_to(approval.title, approval, class: "tw-text-black") %></td>
-        <td><%= approval.deadline.to_date %>,
-          <strong><%= approval.deadline_in_words %></td>
+        <td class="bold tw-max-w-xs"><%= link_to(approval.title, approval, class: "tw-text-black") %></td>
+        <td class="tw-w-24">
+          <%= approval.deadline.to_date %>,
+          <strong><%= approval.deadline_in_words %>
+        </td>
 
           <td class="listing-inquiry-status">
 
