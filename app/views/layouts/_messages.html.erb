@@ -3,7 +3,7 @@
 <div class="alerts tw-flex tw-flex-col tw-items-center" data-fadeable>
   <% flash.each do |name, msg| %>
     <% if msg.is_a?(String) %>
-      <% color = name == :notice ? :green : :red %>
+      <% color = name == :notice ? :red : :green %>
       <div class="alert tw-flex tw-bg-<%=color-%>-lighter tw-w-full tw-max-w-md tw-mb-4">
         <div class="tw-w-16 tw-bg-<%= color %>">
             <div class="tw-p-4">
