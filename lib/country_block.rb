@@ -20,28 +20,33 @@ module CountryBlock
     end
 
     def call(env)
-      req = Rack::Request.new(env)
+      @req = Rack::Request.new(env)
 
-      return redirect_to_country_block_path if !on_country_block_page?(req) && from_blocked_country?(req)
+      return redirect_to_country_block_path if !on_allowed_page? && from_blocked_country?
 
       @app.call(env)
     end
 
     private
 
-    def on_country_block_page?(req)
-      req.path.starts_with? REDIRECT_URL
+    attr_reader :req
+
+    def on_allowed_page?
+      req.post? ||
+        req.path.starts_with?(REDIRECT_URL) ||
+        req.path.starts_with?("/assets") ||
+        req.path.starts_with?("/packs")
     end
 
-    def from_blocked_country?(req)
+    def from_blocked_country?
       country = req.get_header(HEADER_KEY)
-      return unless country.present?
+      return false if country.blank?
 
-      BLOCKED_COUNTRIES.include? country.upcase
+      BLOCKED_COUNTRIES.include?(country.upcase)
     end
 
     def redirect_to_country_block_path
-      [ REDIRECT_TYPE, {'Content-Type' => 'text/plain; charset=utf-8', 'Location' => REDIRECT_URL}, REDIRECT_URL.chars ]
+      [REDIRECT_TYPE, {"Content-Type" => "text/plain; charset=utf-8", "Location" => REDIRECT_URL}, REDIRECT_URL.chars]
     end
   end
 end
