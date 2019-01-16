@@ -31,7 +31,6 @@
 #  fk_rails_...  (request_type_id => request_types.id)
 #
 
-
 class Approval < ApplicationRecord
   include ActionView::Helpers::DateHelper
   include CreationDateScopes
@@ -39,7 +38,7 @@ class Approval < ApplicationRecord
   has_many :approvers, dependent: :destroy, inverse_of: :approval, autosave: true
   has_many :tasks, dependent: :destroy
 
-  validates :title, presence: true
+  validates :title, presence: true, length: {maximum: 150}
   validates :deadline, presence: true
 
   validate :deadline_in_future, on: :create
