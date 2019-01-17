@@ -4,14 +4,13 @@ module CountryBlock
     REDIRECT_TYPE = ENV.fetch("COUNTRY_BLOCK_REDIRECT_TYPE", 302)
     REDIRECT_URL = ENV.fetch("COUNTRY_BLOCK_REDIRECT_URL")
 
-    EU_COUNTRIES =
+    EU_COUNTRIES = []
+
+    ALLOWED_COUNTRIES =
       ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL",
        "PL", "PT", "RO", "SK", "SI", "ES", "GB", "GF", "GP", "MQ", "ME", "YT", "RE", "MF", "GI", "AX", "PM", "GL", "BL",
        "SX", "AW", "CW", "WF", "PF", "NC", "TF", "AI", "BM", "IO", "VG", "KY", "FK", "MS", "PN", "SH", "GS", "TC", "AD", "LI",
-       "MC", "SM", "VA", "JE", "GG", "GI", "CH"]
-
-    #  Temporarily enable these:
-    ALLOWED_COUNTRIES = ["SE"]
+       "MC", "SM", "VA", "JE", "GG", "GI", "CH", "SE"]
 
     BLOCKED_COUNTRIES = ENV.fetch("BLOCKED_COUNTRIES", EU_COUNTRIES).map(&:upcase).compact
 
