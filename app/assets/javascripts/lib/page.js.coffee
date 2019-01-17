@@ -60,6 +60,7 @@ class ApproveForMe.Page
 
   initCrisp: ->
     ApproveForMe.crisp.init()
+    ApproveForMe.crisp.setUserDetails(gon.global.user)
 
   startFormProgressBar: ->
     if $(this).data("remote") != true
