@@ -32,8 +32,16 @@ en:
   layouts:
     footer:
       about: About
+      company: Company
+      facebook: Facebook
       faqs: FAQs
       home: Home
+      learn: Learn
+      legal: Legal
+      links: Links
+      news: News
       privacy: Privacy
+      social: Social
       support: Support
       terms: Terms
+      twitter: Twitter
