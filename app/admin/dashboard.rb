@@ -23,12 +23,12 @@ ActiveAdmin.register_page "Dashboard" do
           table_for system_stats.reverse do
             column("Month (first day of month)") { |monthly_stats| monthly_stats[:date_human] }
             column("Total Users") { |monthly_stats| monthly_stats[:total_users] }
-            column("New Users - Signed Up") { |monthly_stats| monthly_stats[:new_activated] }
+            column("New Users - Signed Up") { |monthly_stats| monthly_stats[:new_users] }
             column("New Users - Activated") { |monthly_stats| monthly_stats[:new_activated_users] }
             column("New Approvals") { |monthly_stats| monthly_stats[:new_approvals] }
-            column("New Approvals (by new users)") { |monthly_stats| monthly_stats[:new_users_approvals] }
+            column("New Approvals (by new activated users)") { |monthly_stats| monthly_stats[:new_users_approvals] }
             column("Total Approvals") { |monthly_stats| monthly_stats[:total_approvals] }
-            column("% New Approvals (by new users)") { |monthly_stats| monthly_stats[:percent_new_approvals_by_new_users] }
+            column("% New Approvals (by new activated users)") { |monthly_stats| monthly_stats[:percent_new_approvals_by_new_users] }
             column("% New Approvals (by all users)") { |monthly_stats| monthly_stats[:percent_new_approvals_by_all_users] }
           end
         end
