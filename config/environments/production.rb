@@ -81,7 +81,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.default charset: "utf-8"
 
   config.action_mailer.smtp_settings = {
     address: "smtp.sendgrid.net",
@@ -89,7 +89,7 @@ Rails.application.configure do
     domain: ENV["APP_DOMAIN"],
     authentication: "plain",
     user_name: ENV["SENDGRID_USERNAME"],
-    password: ENV["SENDGRID_PASSWORD"ActiveJob::Base.queue_adapter = :test],
+    password: ENV["SENDGRID_PASSWORD"],
     :enable_starttls_auto => true,
   }
 
