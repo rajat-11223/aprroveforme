@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(version: 2019_01_02_172410) do
     t.string "time_zone"
     t.datetime "expires_at"
     t.boolean "expires"
+    t.datetime "activated_at"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|

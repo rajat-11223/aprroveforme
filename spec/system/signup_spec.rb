@@ -10,14 +10,12 @@ describe "Signup" do
                    picture: %(https://lh4.googleusercontent.com/-Qhsxa1kvKXk/AAAAAAAAAAI/AAAAAAAACKM/mHEBI10pFqc/photo.jpg)
   end
 
-  before do
-    mock_omniauth_provider!(user: mock_user)
-  end
+  before { mock_omniauth_provider!(user: mock_user) }
 
-  it 'enables me to signup' do
+  it "enables me to signup" do
     visit root_path
     click_link "Sign Up Free"
-    expect(page).to have_current_path(dashboard_home_index_path)
+    expect(page).to have_current_path(need_to_activate_account_path)
 
     user = User.find_by(uid: 123545)
 
@@ -27,6 +25,16 @@ describe "Signup" do
     expect(user.first_name).to eq "Mock"
     expect(user.last_name).to eq "Bird"
     expect(user.picture).to include("googleusercontent")
+
+    expect(user).to_not be_activated
+
+    # Sends email with with activation_link
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
+    mail = ActionMailer::Base.deliveries.last
+    expect(mail).to be_present
+    expect(mail.to).to include("1313@mockingbird.lane")
+    expect(mail.subject).to include("Welcome")
+    expect(mail.body.encoded).to include(activate_account_url)
   end
 
   context "when user doesn't have an image" do
@@ -35,13 +43,13 @@ describe "Signup" do
       mock_omniauth_provider!(user: mock_user)
     end
 
-    it 'enables me to sign up and sets picture to gravatar' do
+    it "enables me to sign up and sets picture to gravatar" do
       visit root_path
       click_link "Sign Up Free"
-      expect(page).to have_current_path(dashboard_home_index_path)
+      expect(page).to have_current_path(need_to_activate_account_path)
 
       user = User.find_by(uid: 123545)
-      expect(user.picture).to include('gravatar')
+      expect(user.picture).to include("gravatar")
       expect(user.last_login_at).to_not be_nil
     end
   end
@@ -51,7 +59,7 @@ describe "Signup" do
       mock_omniauth_failure!
     end
 
-    it 'redirects to home page and shows me an error' do
+    it "redirects to home page and shows me an error" do
       visit root_path
       click_link "Sign Up Free"
       expect(page).to have_current_path(root_path)
@@ -64,7 +72,7 @@ describe "Signup" do
       cleanup_omniauth!
     end
 
-    it 'redirects to home page and shows me an error' do
+    it "redirects to home page and shows me an error" do
       visit root_path
       click_link "Sign Up Free"
       expect(page).to have_current_path(root_path)

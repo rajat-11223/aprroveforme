@@ -28,4 +28,13 @@ module EmailProcessorHelpers
       {full: "#{@user.name} <#{@user.email}>", email: @user.email, token: @user.email.split("@").first, host: @user.email.split("@").last, name: @user.name}
     end
   end
+
+  def set_to_test_adapter(example)
+    old_adapter = ActiveJob::Base.queue_adapter
+    ActiveJob::Base.queue_adapter = :test
+
+    example.run
+
+    ActiveJob::Base.queue_adapter = old_adapter
+  end
 end

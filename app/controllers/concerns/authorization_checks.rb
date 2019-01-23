@@ -28,9 +28,10 @@ module AuthorizationChecks
   end
 
   def require_user!(message: "You need to sign in")
-    return if current_user
-    save_redirection_url!
+    return if current_user && current_user.activated?
+    (redirect_to(need_to_activate_account_path) && return) if current_user && !current_user.activated?
 
+    save_redirection_url!
     redirect_to root_path, notice: message
   end
 end

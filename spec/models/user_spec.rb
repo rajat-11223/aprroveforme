@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                        :integer          not null, primary key
+#  activated_at              :datetime
 #  approvals_received        :integer
 #  approvals_received_30     :integer
 #  approvals_responded_to    :integer

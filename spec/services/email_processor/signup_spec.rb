@@ -6,6 +6,7 @@ describe "EmailProcessor - signup@" do
   let(:subject) { EmailProcessor.new(email) }
   let!(:to_user) { to_service("signup") }
   let(:email) { build_email(to: [to_user], from: from_user) }
+  around { |example| set_to_test_adapter(example) }
 
   context "when not signed up" do
     let!(:from_user) { build_stubbed(:user) }

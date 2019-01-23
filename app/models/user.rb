@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                        :integer          not null, primary key
+#  activated_at              :datetime
 #  approvals_received        :integer
 #  approvals_received_30     :integer
 #  approvals_responded_to    :integer
@@ -116,6 +117,14 @@ class User < ApplicationRecord
     end
 
     output
+  end
+
+  def activated?
+    activated_at.present? && self.activated_at <= Time.zone.now
+  end
+
+  def activate!
+    update_attributes(activated_at: Time.now)
   end
 
   private

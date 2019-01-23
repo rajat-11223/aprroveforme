@@ -6,6 +6,14 @@ describe "Signup and Payment", js: true, ci_ignore: true do
 
     click_link "Sign Up Free"
 
+    user =
+      loop do
+        user = User.last
+        break(user) if user.present?
+      end
+
+    user.update_attributes activated_at: Time.now
+
     click_link "Change Plan", match: :first
     click_link "Upgrade", match: :first
     click_link "Continue"
@@ -16,7 +24,7 @@ describe "Signup and Payment", js: true, ci_ignore: true do
 
     expect(page).to have_content("Upgraded to professional, billed monthly")
 
-    user = User.last
+    user.reload
     expect(user).to be_paid
     expect(user.subscription).to be_professional
     expect(user.subscription).to be_monthly

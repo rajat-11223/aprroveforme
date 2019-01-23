@@ -12,20 +12,21 @@ Workflow::Application.routes.draw do
   resources :responses, only: [:show, :update]
 
   resource :account do
-    collection do
-      get :profile
-      patch :profile_update
+    get :activate
+    get :need_to_activate
+    post :need_to_activate
+    get :profile
+    patch :profile_update
 
-      # Payment management
-      get :payment_methods
-      delete :delete_payment_method
-      post :add_new_payment_method
-      patch :set_default_payment_method
+    # Payment management
+    get :payment_methods
+    delete :delete_payment_method
+    post :add_new_payment_method
+    patch :set_default_payment_method
 
-      # Subscription management
-      get :current_subscription
-      get :subscription_histories
-    end
+    # Subscription management
+    get :current_subscription
+    get :subscription_histories
   end
 
   resources :home do

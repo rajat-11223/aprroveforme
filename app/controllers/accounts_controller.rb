@@ -1,9 +1,25 @@
 class AccountsController < ApplicationController
-  before_action :require_user!
+  before_action :require_user!, except: [:need_to_activate, :activate]
   skip_before_action :verify_authenticity_token, only: [:add_new_payment_method]
 
   def profile
     authorize! :read, current_user
+  end
+
+  def need_to_activate
+    authorize! :read, current_user
+    if request.post?
+      flash[:notice] = "Check your email. Welcome email has been resent."
+
+      UserMailer.new_user(current_user.name, current_user.email).deliver_later
+    end
+  end
+
+  def activate
+    authorize! :update, current_user
+
+    current_user.activate!
+    redirect_to dashboard_home_index_path, notice: "Your account is now activated."
   end
 
   def profile_update

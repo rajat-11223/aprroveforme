@@ -13,6 +13,11 @@ FactoryBot.define do
       "kimmanis-#{n}@gmail.com"
     end
     picture "https://lh4.googleusercontent.com/-AU_9Qx9sUXw/AAAAAAAAAAI/AAAAAAAAAAA/hXcwDv3KdZI/photo.jpg"
+    activated_at { Time.now }
+
+    trait :not_activated do
+      activated_at { nil }
+    end
   end
 
   trait :admin do

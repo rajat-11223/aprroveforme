@@ -29,6 +29,7 @@ Rails.application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  config.active_job.queue_adapter = :inline
 
   # Raise exception on mass assignment protection for Active Record models
 
@@ -36,7 +37,7 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = {:host => "example.com"}
+  Rails.application.routes.default_url_options[:host] = "example.com"
 
   if ENV.fetch("CI", "false") == "true"
     puts "CI... use eastern tz"

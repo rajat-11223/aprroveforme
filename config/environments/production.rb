@@ -76,6 +76,8 @@ Rails.application.configure do
 
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
+  config.active_job.queue_adapter = :sidekiq
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -87,7 +89,7 @@ Rails.application.configure do
     domain: ENV["APP_DOMAIN"],
     authentication: "plain",
     user_name: ENV["SENDGRID_USERNAME"],
-    password: ENV["SENDGRID_PASSWORD"],
+    password: ENV["SENDGRID_PASSWORD"ActiveJob::Base.queue_adapter = :test],
     :enable_starttls_auto => true,
   }
 

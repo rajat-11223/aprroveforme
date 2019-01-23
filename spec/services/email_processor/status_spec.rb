@@ -6,6 +6,7 @@ describe "EmailProcessor - not supported triggers" do
   let(:subject) { EmailProcessor.new(email) }
   let!(:to_user) { to_service("status") }
   let(:email) { build_email(to: [to_user], from: from_user) }
+  around { |example| set_to_test_adapter(example) }
 
   context "when signed up" do
     let!(:from_user) { create(:user) }
