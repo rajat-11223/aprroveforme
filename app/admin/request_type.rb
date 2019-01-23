@@ -1,5 +1,5 @@
 ActiveAdmin.register RequestType do
-  menu priority: 3
+  menu priority: 4
 
   permit_params :name, :slug, :affirming_text, :dissenting_text, :allow_dissenting, :public, :initial_subject, :initial_body, :reminder_subject, :reminder_body, :due_soon_subject, :due_soon_body, :due_now_subject, :due_now_body, :confirmation_responder_subject, :confirmation_responder_body, :completed_request_subject, :completed_request_body
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register SubscriptionHistory do
-  menu priority: 4
+  menu priority: 5
 
   actions :all, :except => [:new, :edit, :create]
 
