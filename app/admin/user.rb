@@ -3,6 +3,10 @@ ActiveAdmin.register User do
 
   actions :all, :except => [:new, :edit, :create]
 
+  scope :all
+  scope :activated
+  scope :not_activated
+
   index do
     id_column
     column(:email)
@@ -11,6 +15,7 @@ ActiveAdmin.register User do
     column(:approvals_sent)
     column(:approvals_received)
     column(:picture) { |u| image_tag(u.picture, width: "50px") }
+    column(:activated?)
     column(:created_at)
     actions
   end

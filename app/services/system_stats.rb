@@ -13,6 +13,7 @@ class SystemStats
 
   def basic_stats(start_of_month)
     new_user_count = count_of(:created_this_month, User, start_of_month: start_of_month)
+    new_activated_users_count = count_of(:created_this_month, User.activated, start_of_month: start_of_month)
     user_count = count_of(:created_ever, User, start_of_month: start_of_month)
     new_approvals_count = count_of(:created_this_month, Approval, start_of_month: start_of_month)
     new_user_approvals_count = count_of_new_users_approvals(start_of_month: start_of_month)
@@ -21,6 +22,7 @@ class SystemStats
       date: start_of_month,
       date_human: start_of_month.to_s,
       new_users: new_user_count,
+      new_activated_users: new_activated_users_count,
       total_users: user_count,
       new_approvals: new_approvals_count,
       new_users_approvals: new_user_approvals_count,

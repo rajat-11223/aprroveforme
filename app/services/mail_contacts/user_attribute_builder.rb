@@ -10,6 +10,7 @@ module MailContacts
         slice(*stock_attributes).
         merge({
         "signed_up_date" => user.created_at,
+        "activated_at_date" => user.activated_at,
         "created_first_approval" => (approvals_count > 0).to_s,
         "created_first_approval_date" => approvals.first.try(:created_at),
         "completed_one_approval" => completed_approvals.any?.to_s,

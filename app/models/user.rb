@@ -45,6 +45,9 @@ class User < ApplicationRecord
   has_one :subscription, autosave: true, required: false, class_name: "SubscriptionHistory"
   has_many :subscription_histories, dependent: :destroy
 
+  scope :activated, -> { where.not(activated_at: nil) }
+  scope :not_activated, -> { where(activated_at: nil) }
+
   def ability
     @ability ||= Ability.new(self)
   end
