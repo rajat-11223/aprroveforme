@@ -72,13 +72,15 @@ let colors = {
   // "orange-lighter": "#fcd9b6",
   // "orange-lightest": "#fff5eb",
 
-  "yellow-darkest": "#453411",
-  "yellow-darker": "#684f1d",
-  "yellow-dark": "#ffcc00",
-  "yellow": "#ffed4a",
-  "yellow-light": "#fff382",
-  "yellow-lighter": "#fff9c2",
-  "yellow-lightest": "#fcfbeb",
+  "yellow-brand": "#ffbe02",
+
+  // "yellow-darkest": "#453411",
+  // "yellow-darker": "#684f1d",
+  // "yellow-dark": "#ffcc00",
+  // "yellow": "#ffed4a",
+  // "yellow-light": "#fff382",
+  // "yellow-lighter": "#fff9c2",
+  // "yellow-lightest": "#fcfbeb",
 
   "green-darkest": "#0f2f21",
   "green-darker": "#1a4731",

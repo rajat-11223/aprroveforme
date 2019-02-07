@@ -26,9 +26,9 @@
 
         <div class="tw-pl-4">
           <% if @customer.sources.find{ |s| s.id ==  @customer.default_source }.id == card.id %>
-            <%= content_tag :span, 'Default', class: "tw-px-4 tw-py-3 tw-bg-yellow-dark tw-text-black hover:tw-text-black" %>
+            <%= content_tag :span, 'Default', class: "tw-px-4 tw-py-3 tw-bg-yellow-brand tw-text-black hover:tw-text-black" %>
           <% else %>
-            <%= link_to 'Set Default', set_default_payment_method_account_path(id: card.id), method: :patch, class: "tw-px-4 tw-py-3 tw-bg-yellow-dark tw-text-black hover:tw-text-black" %>
+            <%= link_to 'Set Default', set_default_payment_method_account_path(id: card.id), method: :patch, class: "tw-px-4 tw-py-3 tw-bg-yellow-brand tw-text-black hover:tw-text-black" %>
           <% end %>
         </div>
 
