@@ -6,7 +6,8 @@
                 <h1>Account not activated</h1>
             </div>
             <div class="tw-mb-8">
-                <p>To activate your account find your welcome email and click the link. Check your spam folder or <%= link_to "learn more", "https://learn.approveforme.com/email/prevent-spam-or-bounced-emails/" %> about what could be causing your issue.</p>
+              <p>To activate your account find your welcome email (in your <%= current_user.email %> inbox).</p>
+              <p><b>Not finding it?</b> Check your spam folder, <%= link_to "learn more", "https://learn.approveforme.com/email/prevent-spam-or-bounced-emails/", target: :_new %>, or resend the welcome email.</p>
             </div>
             <div class="tw-flex tw-justify-center">
               <%= link_to("Resend Welcome Email", need_to_activate_account_path, method: :post, class: "tw-flex-no-shrink tw-text-white tw-py-2 tw-px-4 tw-rounded tw-bg-blue hover:tw-bg-blue-dark tw-text-white hover:tw-text-white") %>
