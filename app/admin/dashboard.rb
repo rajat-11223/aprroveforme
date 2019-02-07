@@ -24,7 +24,10 @@ ActiveAdmin.register_page "Dashboard" do
             column("Month (first day of month)") { |monthly_stats| monthly_stats[:date_human] }
             column("Total Users") { |monthly_stats| monthly_stats[:total_users] }
             column("New Users - Signed Up") { |monthly_stats| monthly_stats[:new_users] }
+            column("New Users - Projected Sign Up") { |monthly_stats| monthly_stats[:new_users_projected] }
             column("New Users - Activated") { |monthly_stats| monthly_stats[:new_activated_users] }
+            column("New Users - Activation Rate") { |monthly_stats| monthly_stats[:new_activated_user_rate] }
+            column("New Users - Activated Projected") { |monthly_stats| monthly_stats[:new_activated_users_projected] }
             column("New Approvals") { |monthly_stats| monthly_stats[:new_approvals] }
             column("New Approvals (by new activated users)") { |monthly_stats| monthly_stats[:new_users_approvals] }
             column("Total Approvals") { |monthly_stats| monthly_stats[:total_approvals] }
