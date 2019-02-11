@@ -69,7 +69,7 @@ class SystemStats
         days_passed_so_far = (Date.today - start_of_month) + 1
         days_left_in_month = start_of_month.end_of_month - Date.today
 
-        ((users_so_far.to_f / days_passed_so_far) * days_left_in_month).to_i
+        users_so_far + ((users_so_far.to_f / days_passed_so_far) * days_left_in_month).to_i
       else
         new_user_count(start_of_month)
       end
