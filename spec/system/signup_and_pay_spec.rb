@@ -4,7 +4,7 @@ describe "Signup and Payment", js: true, ci_ignore: true do
   it "enables me to signup and pay" do
     visit root_path
 
-    click_link "Sign Up Free"
+    click_link "Sign Up"
 
     user =
       loop do

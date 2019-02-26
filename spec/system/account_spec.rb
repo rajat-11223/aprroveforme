@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Account Nav", js: true do
   it "signup and navigate to account" do
     visit root_path
-    click_link "Sign Up Free"
+    click_link "Sign Up"
 
     hover_top_nav_account_image
     within("nav#main") do
