@@ -2,11 +2,20 @@
     <div class="tw-container tw-mx-auto tw-px-8 tw-w-full tw-max-w-lg tw-text-left sm:tw-text-center">
       <div class="tw-flex tw-flex-col sm:tw-flex-row sm:tw-flex tw-justify-between tw-w-full">
         <div class="tw-block">
-          <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6"><%= t(".links") %></p>
+          <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6"><%= t(".legal") %></p>
           <ul class="tw-list-reset tw-text-sm tw-mb-6 tw-ml-0">
             <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
-              <a href="https://learn.approveforme.com/news" class="hover:tw-text-white"><%= t(".news") %></a>
+              <%= link_to t(".terms"), page_path("terms"), class: "hover:tw-text-white" %>
             </li>
+            <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+              <%= link_to t(".privacy"), page_path("privacy"), class: "hover:tw-text-white" %>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tw-block">
+          <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6"><%= t(".help") %></p>
+          <ul class="tw-list-reset tw-text-sm tw-mb-6 tw-ml-0">
             <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
               <%= link_to t(".faqs"), "https://learn.approveforme.com/faq/", class: "hover:tw-text-white" %>
             </li>
@@ -19,14 +28,15 @@
           </ul>
         </div>
 
+
         <div class="tw-block">
-          <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6"><%= t(".legal") %></p>
+          <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6"><%= t(".product") %></p>
           <ul class="tw-list-reset tw-text-sm tw-mb-6 tw-ml-0">
             <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
-              <%= link_to t(".terms"), page_path("terms"), class: "hover:tw-text-white" %>
+              <%= link_to t(".pricing"), page_path("pricing"), class: "hover:tw-text-white" %>
             </li>
             <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
-              <%= link_to t(".privacy"), page_path("privacy"), class: "hover:tw-text-white" %>
+              <%= link_to t(".request-feature"), "https://approveforme.uservoice.com/", target: "_blank", class: "hover:tw-text-white" %>
             </li>
           </ul>
         </div>
@@ -46,6 +56,9 @@
         <div class="tw-block">
           <p class="tw-uppercase tw-text-grey tw-text-sm tw-font-semibold sm:tw-mb-6"><%= t(".company") %></p>
           <ul class="tw-list-reset tw-text-sm tw-mb-6 tw-ml-0">
+            <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
+              <a href="https://learn.approveforme.com/news" class="hover:tw-text-white"><%= t(".news") %></a>
+            </li>
             <li class="tw-mt-2 tw-inline-block tw-mr-4 sm:tw-block sm:tw-mr-0">
               <%= link_to t(".home"), root_path, class: "hover:tw-text-white" %>
             </li>
