@@ -30,7 +30,8 @@ class SystemStats
   end
 
   def find_percentage(a, b)
-    ((a.to_f / b.to_f) * 100).round(2)
+    val = ((a.to_f / b.to_f) * 100).round(2)
+    val.nan? ? 0 : val
   end
 
   def count_of_new_activated_users_approvals(start_of_month:)
