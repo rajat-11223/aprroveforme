@@ -22,7 +22,7 @@ class User
                                  picture: info["image"] || GravatarUrl.generate(info["email"])
         end
       end.tap do |user|
-        UserMailer.new_user(user.name, user.email).deliver_later
+        WelcomeMailer.new_user(user: user).deliver_later
       end
     end
 

@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
   def new_user(name, email)
     @name = name
     @email = email
-    mail(to: @email, subject: "Welcome to ApproveForMe!")
+    mail(to: @email, subject: "Welcome to ApproveForMe!", layout: "layouts/email_flow")
   end
 
   # mail sent to creator of a new approval

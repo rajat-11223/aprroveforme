@@ -11,7 +11,7 @@ class AccountsController < ApplicationController
     if request.post?
       flash[:notice] = "Check your email. Welcome email has been resent."
 
-      UserMailer.new_user(current_user.name, current_user.email).deliver_later
+      WelcomeMailer.new_user(user: current_user).deliver_later
     end
   end
 

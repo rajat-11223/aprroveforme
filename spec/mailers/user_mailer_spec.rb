@@ -1,25 +1,11 @@
 require "rails_helper"
 
 describe UserMailer do
-  context "when new user email" do
-    let(:user) { create(:user, first_name: "John", email: "john@test.com") }
-
-    it 'sends email' do
-      email = UserMailer.new_user(user.name, user.email)
-
-      expect(email.subject).to eq("Welcome to ApproveForMe!")
-      expect(email.to).to eq(["john@test.com"])
-      expect(email.from).to eq(["team@approveforme.com"])
-
-      expect(email.body.encoded).to include("Welcome")
-    end
-  end
-
   context "when sending an approval, to owner" do
     let(:user) { create(:user, first_name: "John", email: "john@test.com") }
     let(:approval) { create(:approval, title: "<script>Payslip</script>", owner: user.id) }
 
-    it 'sends email' do
+    it "sends email" do
       email = UserMailer.my_new_approval(approval)
 
       expect(email.subject).to eq("Payslip has been sent out for approval")
@@ -35,7 +21,7 @@ describe UserMailer do
     let(:approval) { create(:approval, title: "<script>Payslip</script>", owner: user.id) }
     let(:approver) { approval.approvers.first }
 
-    it 'sends email' do
+    it "sends email" do
       email = UserMailer.new_approval_invite(approval, approver)
 
       expect(email.subject).to eq("John has requested your approval on Payslip")
@@ -52,7 +38,7 @@ describe UserMailer do
     let(:approval) { create(:approval, title: "<script>Payslip</script>", owner: user.id) }
     let(:approver) { approval.approvers.first }
 
-    it 'sends email' do
+    it "sends email" do
       approver.update_attributes status: "approved"
 
       email = UserMailer.approval_update(approver)
@@ -70,7 +56,7 @@ describe UserMailer do
     let(:approval) { create(:approval, title: "<script>Payslip</script>", owner: user.id) }
     let(:approver) { approval.approvers.first }
 
-    it 'sends email' do
+    it "sends email" do
       approver.update_attributes status: "approved"
 
       email = UserMailer.completed_approval(approval)
