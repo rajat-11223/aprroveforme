@@ -5,7 +5,8 @@ class TickleNewUsers
 
       Rails.logger.info("Sending #{template} to #{users.count}")
       users.each do |user|
-        Rails.logger.info(WelcomeMailer.send(template, user: user).message) #.deliver_later
+        Rails.logger.info(".")
+        WelcomeMailer.send(template, user: user).deliver_later
       end
     end
   end
