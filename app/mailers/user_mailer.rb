@@ -2,13 +2,6 @@ class UserMailer < ActionMailer::Base
   include ActionView::Helpers::SanitizeHelper
   default from: "\"ApproveForMe\" <team@approveforme.com>"
 
-  # mail sent when a user signs up for the service
-  def new_user(name, email)
-    @name = name
-    @email = email
-    mail(to: @email, subject: "Welcome to ApproveForMe!", layout: "layouts/email_flow")
-  end
-
   # mail sent to creator of a new approval
   def my_new_approval(approval)
     @approval = approval

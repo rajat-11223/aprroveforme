@@ -1,0 +1,13 @@
+Welcome <%= @user.name %>, we’re glad you’re checking out ApproveForMe! You’re on your way to a new way of creating, tracking, and managing the things in your life that need to be approved!
+
+Sure, you could share a Google Doc with ten contacts via Google. But when those ten people reply to you with feedback (if any do), Google will send you ten different emails. Who needs that?
+
+Instead, share that Google Doc using ApproveForMe and we’ll organize all the feedback on one screen for you. You’ll know who said what and when they said it!
+
+<% if @user.activated? %>
+To create your first approval, please to go <%= dashboard_home_index_url %>.
+<% else %>
+To activate your account, please go to <%= activate_account_url %>
+<% end %>
+
+If you run into any issues along the way or have any questions, feel free to reply directly to this email or visit https://www.approveforme.com and hit the blue chat icon in the corner of your screen.

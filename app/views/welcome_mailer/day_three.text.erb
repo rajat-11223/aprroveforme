@@ -1,0 +1,17 @@
+Hi <%= @user.name %>,
+
+We were excited to develop ApproveForMe because it solves a problem we deal with all the time in our roles. What problem you ask? Feedback!
+
+We send emails with attachments to contacts and colleagues all the time. Sometimes to a dozen people on a project, committee, or sometimes to just a few of coworkers, and then… NOTHING. When we get responses, each is a separate email.
+
+And, to make matters worse, not only do we have to monitor our inbox to see who replies (and doesn't), we have to copy their feedback into a new document so we can organize what everyone says.
+
+ApproveForMe is the answer! With one glance, we can now see who replied and their feedback.
+
+<% if @user.activated? %>
+Make your first approval. Start working smarter! Go to your <%= dashboard_home_index_url %>.
+<% else %>
+Activate your account today. Start working smarter! <%= activate_account_url %>
+<% end %>
+
+If you run into any issues along the way or have any questions, feel free to reply directly to this email or visit https://www.approveforme.com and hit the blue chat icon in the corner of your screen.

@@ -35,6 +35,10 @@ FactoryBot.define do
     end
   end
 
+  trait :with_changing_activation do
+    activated_at { [Time.now, nil].sample }
+  end
+
   # factory :admin, class: User do
   #   email "kimmanis@gmail.com"
   #   picture "https://lh4.googleusercontent.com/-AU_9Qx9sUXw/AAAAAAAAAAI/AAAAAAAAAAA/hXcwDv3KdZI/photo.jpg"

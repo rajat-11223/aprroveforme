@@ -10,3 +10,8 @@ desc "Sync Mail Contacts to our marketing system"
 task sync_mail_contacts: :environment do
   MailContacts::Sync.all!
 end
+
+desc "Send new Approval and Activation Emails"
+task tickle_new_users: :environment do
+  TickleNewUsers.new.call
+end

@@ -8,17 +8,17 @@ class WelcomeMailer < ActionMailer::Base
     mail(to: @user.email, subject: "[AFM] Welcome to ApproveForMe")
   end
 
-  def one_day(user:)
+  def day_one(user:)
     @user = user
     mail(to: @user.email, subject: "[AFM] #{@user.name}, Never think about document approvals again")
   end
 
-  def three_day(user:)
+  def day_three(user:)
     @user = user
     mail(to: @user.email, subject: "[AFM] Be the approval hero")
   end
 
-  def seven_days(user:)
+  def day_seven(user:)
     @user = user
     mail(to: @user.email, subject: "[AFM] #{@user.name}, Feedback is just an approval in disguise")
   end

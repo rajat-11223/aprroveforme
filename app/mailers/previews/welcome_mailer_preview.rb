@@ -2,24 +2,24 @@
 class WelcomeMailerPreview < ActionMailer::Preview
   # mail sent when a user signs up for the service
   def new_user
-    WelcomeMailer.new_user(user: user)
+    WelcomeMailer.new_user(user: FactoryBot.build_stubbed(:user, activated_at: nil))
   end
 
-  def one_day
-    WelcomeMailer.one_day(user: user)
+  def day_one
+    WelcomeMailer.day_one(user: user)
   end
 
-  def three_day
-    WelcomeMailer.three_day(user: user)
+  def day_three
+    WelcomeMailer.day_three(user: user)
   end
 
-  def seven_days
-    WelcomeMailer.seven_days(user: user)
+  def day_seven
+    WelcomeMailer.day_seven(user: user)
   end
 
   private
 
   def user
-    @user ||= User.first
+    @user ||= FactoryBot.build_stubbed(:user, :with_changing_activation)
   end
 end

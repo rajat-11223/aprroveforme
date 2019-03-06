@@ -15,9 +15,19 @@
                         <tr>
 
                           <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;text-align: left;">
-                            Welcome <%= @user.name %> to a new way to create, track, and manage the things in your life that need an approval. <br /><br />
+                            Welcome <%= @user.name %>, we’re glad you’re checking out ApproveForMe! You’re on your way to a new way of creating, tracking, and managing the things in your life that need to be approved!<br/><br/>
 
-                            We're glad you've joined, and we think your colleagues, clients, and customers will appreciate it too.<br /><br />
+                            Sure, you could share a Google Doc with ten contacts via Google. But when those ten people reply to you with feedback (if any do), Google will send you ten different emails. Who needs that?<br/><br/>
+
+                            Instead, share that Google Doc using ApproveForMe and we’ll organize all the feedback on one screen for you. You’ll know who said what and when they said it! <br/><br/>
+
+                            <% if @user.activated? %>
+                            To create your first approval, please to go <%= link_to "your dashboard", dashboard_home_index_url %>.
+                            <% else %>
+                            To begin, please <%= link_to "activate our account", activate_account_url %>.
+                            <% end %>
+                            <br/>
+
                           </td>
                         </tr>
                       </tbody>
@@ -27,25 +37,7 @@
                 </tr>
               </tbody>
             </table>
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-              <tbody class="mcnButtonBlockOuter">
-                <tr>
-                  <td style="padding-top: 0;padding-right: 18px;padding-bottom: 18px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"
-                    valign="top" align="center" class="mcnButtonBlockInner">
-                    <table border="0" cellpadding="0" cellspacing="0" class="mcnButtonContentContainer"
-                      style="border-top-left-radius: 3px;border-top-right-radius: 3px;border-bottom-right-radius: 3px;border-bottom-left-radius: 3px;background-color: #ffcc00;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                      <tbody>
-                        <tr>
-                          <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial;font-size: 16px;padding: 14px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
-                            <%= link_to "Activate Now", activate_account_url, class: "mcnButton", title: "New", target: "_blank", style: "font-weight: bold;letter-spacing: -0.5px;line-height: 100%;text-align: center;text-decoration: none;color: #000001;word-wrap: break-word !important;" %>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+
             <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
               <tbody class="mcnTextBlockOuter">
                 <tr>
@@ -56,7 +48,6 @@
                       <tbody>
                         <tr>
                           <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;text-align: left;">
-
                           If you run into any issues along the way or have any questions, feel free to reply directly to this email or visit <%= link_to "https://www.approveforme.com", "https://www.approveforme.com" %> and hit the blue chat icon in the corner of your screen.<br /><br />
 
                           Sincerely,<br /><br />
