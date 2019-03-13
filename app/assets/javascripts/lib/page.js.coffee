@@ -30,7 +30,10 @@ class ApproveForMe.Page
     @onEvent 'click', '[data-fadeable-handle]', {}, @fadeOutParent
 
   onEvent: (event, selector, data, handler) ->
-    $('body').on(event, selector, data, handler)
+    if selector == window
+      window.addEventListener(event, handler, false)
+    else
+      $('body').on(event, selector, data, handler)
 
   close: ->
     $('body').off()
