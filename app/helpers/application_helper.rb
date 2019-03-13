@@ -104,4 +104,12 @@ module ApplicationHelper
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     link_to title, {sort: column, direction: direction}, {class: css_class}
   end
+
+  def layout_style
+    if @layout_style == :full
+      ""
+    else
+      "grid-container content"
+    end
+  end
 end

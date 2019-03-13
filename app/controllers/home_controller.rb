@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   before_action :send_to_dashboard, only: [:index]
 
   def index
+    @layout_style = :full
     authorize! :read, :homepage
   end
 

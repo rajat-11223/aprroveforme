@@ -7,11 +7,10 @@
 
   <%= body_tag do %>
     <%= render "layouts/navigation" %>
-    <div class="grid-container content">
+    <%= content_tag(:div, class: layout_style) do %>
       <%= render "layouts/messages" %>
-
       <%= yield %>
-    </div>
+    <% end %>
     <%= render "layouts/footer" %>
   <% end %>
 </html>
