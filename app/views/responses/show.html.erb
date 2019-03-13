@@ -25,7 +25,7 @@
     <div class="tw-flex lg:tw-flex-row-reverse tw-flex-wrap md:tw-h-full">
       <div class="tw-w-full lg:tw-w-3/4 tw-py-2 lg:tw-pl-8">
         <div class="tw-flex tw-flex-col tw-h-full">
-          <p class="tw-flex-none tw-text-grey tw-text-center tw-leading-none tw-hidden md:tw-block">If the document below is not displayed, you may have to login to your <%= @approver.email %> Google account.</p>
+          <p class="tw-flex-none tw-text-grey-darker tw-text-center tw-text-sm tw-leading-none tw-hidden md:tw-block">If the document below is not displayed, you may have to login to your <%= @approver.email %> Google account. To <%= approval_action_text(@approval) %> the document, click the popout icon.</p>
           <div class="tw-flex-grow tw-hidden md:tw-block tw-h-64">
             <%= render partial: "shared/approval_preview", locals: { approval: @approval } %>
           </div>
