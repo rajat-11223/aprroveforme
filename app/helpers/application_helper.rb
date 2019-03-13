@@ -112,4 +112,16 @@ module ApplicationHelper
       "grid-container content"
     end
   end
+
+  def page_title
+    app_title = t("app-title")
+    short_app_title = t("app-title-short")
+    if content_for?(:title)
+      [app_title, content_for(:title).strip].join(" : ")
+    elsif controller_name == "home"
+      [short_app_title, action_name.titleize].join(" ")
+    else
+      [short_app_title, controller_name.titleize, action_name.titleize].join(" ")
+    end
+  end
 end

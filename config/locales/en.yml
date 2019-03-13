@@ -4,6 +4,7 @@
 en:
   app-title: ApproveForMe
   app-title-with-subtitle: "ApproveForMe :: %{subtitle}"
+  app-title-short: "AFM"
 
   approval:
     create:
