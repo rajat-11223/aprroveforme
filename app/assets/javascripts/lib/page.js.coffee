@@ -62,8 +62,9 @@ class ApproveForMe.Page
     , 13000
 
   initCrisp: ->
-    ApproveForMe.crisp.init()
-    ApproveForMe.crisp.setUserDetails(gon.global.user)
+    if gon.global.railsEnv != "test" && gon.global.railsEnv != "development"
+      ApproveForMe.crisp.init()
+      ApproveForMe.crisp.setUserDetails(gon.global.user)
 
   startFormProgressBar: ->
     if $(this).data("remote") != true

@@ -11,6 +11,7 @@ module SetGon
     current_user.try(:refresh_google_auth!)
 
     # non-watched vars
+    gon.global.railsEnv = Rails.env
     gon.global.googleAppId = ENV.fetch("APP_ID")
     gon.global.stripePublishableKey = ENV.fetch("STRIPE_PUBLISHABLE_KEY")
     gon.global.user = {
