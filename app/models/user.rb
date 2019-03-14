@@ -69,11 +69,7 @@ class User < ApplicationRecord
   end
 
   def refresh_google_auth!(force: false)
-    if token_needs_refreshed? || force
-      # continue on
-    else
-      return false
-    end
+    return false unless token_needs_refreshed? || force
 
     authorization = google_auth.to_authorization
     response = authorization.refresh!
@@ -86,6 +82,9 @@ class User < ApplicationRecord
 
     reset_google_auth!
     true
+  rescue Signet::AuthorizationError
+    Rails.logger.info("ERROR: Signet::AuthorizationError for #{email} (refresh = #{refresh_token})")
+    false
   end
 
   def payment_customer
