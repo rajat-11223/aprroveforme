@@ -39,6 +39,8 @@ Rails.application.configure do
   # ActionMailer Config
   Rails.application.routes.default_url_options[:host] = "example.com"
 
+  config.secret_key_base = SecureRandom.hex(64)
+
   if ENV.fetch("CI", "false") == "true"
     puts "CI... use eastern tz"
     config.time_zone = "Eastern Time (US & Canada)"
