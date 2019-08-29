@@ -29,13 +29,6 @@ ApproveForMe.crisp =
     if user.picture
       $crisp.push(["set", "user:avatar", user.picture]);
 
-  askForMeeting: ->
-    return if @shownBefore('earnFreeYear')
-
-    @markShown('earnFreeYear')
-    @pushMessage("Want to earn a free year of ApproveForMe Unlimited?")
-    @pushMessage("Schedule a 15 minute call with me at https://calendly.com/ricky-chilcott/approve-for-me-15-minute and I'll hook you up.")
-
   # Helpers
   pushMessage: (msg) ->
     return unless $crisp

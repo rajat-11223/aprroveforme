@@ -1,8 +1,5 @@
 class ApproveForMe.Pages.PricingIndex extends ApproveForMe.Page
   render: ->
-    setTimeout ->
-      ApproveForMe.crisp.askForMeeting()
-    , 5000
 
   bindEvents: ->
     @onEvent 'click', '.continue-change', {}, @continuePermission
