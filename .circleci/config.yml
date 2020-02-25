@@ -127,9 +127,7 @@ jobs:
 
       # Save test results for timing analysis
       - store_test_results:
-          paths:
-            - test_results
-            - tmp/screenshots
+          path: tmp/screenshots
 
 workflows:
   version: 2
