@@ -49,9 +49,7 @@ jobs:
 
       # Restore bundle cache
       - restore_cache:
-          keys:
-            - approve_for_me-bundle-v2-{{ checksum "Gemfile.lock" }}
-            - approve_for_me-bundle-v2-
+          key: approve_for_me-bundle-v3-{{ checksum "Gemfile.lock" }}
 
       - run:
           name: Bundle Install
@@ -59,9 +57,9 @@ jobs:
 
       # Store bundle cache
       - save_cache:
-          key: approve_for_me-bundle-v2-{{ checksum "Gemfile.lock" }}
+          key: approve_for_me-bundle-v3-{{ checksum "Gemfile.lock" }}
           paths:
-            - ~/.yarn-cache
+            - vendor/bundle
 
       # Restore yarn cache
       - restore_cache:
