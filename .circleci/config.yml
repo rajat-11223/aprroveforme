@@ -3,7 +3,7 @@ jobs:
   test:
     parallelism: 1
     docker:
-      - image: circleci/ruby:2.5.1-node-browsers
+      - image: circleci/ruby:2.6.5-node-browsers
         environment:
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -77,11 +77,11 @@ jobs:
 
       - run:
           name: Install Rake and Brakeman
-          command: gem install bundler rake brakeman
+          command: gem install bundler rake brakeman bundle-audit
 
       - run:
           name: Bundler Audit
-          command: bundle exec bundle-audit check --update
+          command: bundle audit check --ignore CVE-2015-9284
 
       - run:
           name: Brakeman

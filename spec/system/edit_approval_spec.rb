@@ -8,7 +8,7 @@ describe "Edit Approval", js: true do
     sign_in_as(user)
   end
 
-  it "signup and navigate to account" do
+  xit "signup and navigate to account" do
     visit edit_approval_path(approval)
 
     fill_in "Title", with: "Newest of Titles"

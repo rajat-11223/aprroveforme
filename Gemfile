@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "2.5.1"
+ruby "2.6.5"
 
 gem "activeadmin"
 gem "autoprefixer-rails"
@@ -59,7 +59,6 @@ group :development, :test do
   gem "pry-rails"
   gem "rspec-rails"
   gem "factory_bot_rails"
-  gem "bundle-audit"
 end
 
 group :test do

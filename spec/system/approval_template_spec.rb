@@ -2,21 +2,17 @@ require "rails_helper"
 
 describe "Use existing approval as template", js: true do
   let(:user) { approval.user }
+  let(:this_year) { Time.now.year }
+  let(:next_year) { this_year + 1 }
 
   before do
     user.update_attributes time_zone: "Eastern Time (US & Canada)"
-
-    travel_to Time.zone.local(2019, 11, 19, 13, 0, 0)
     sign_in_as(user)
   end
 
-  after do
-    travel_back
-  end
-
-  let(:approval) do
-    create(:approval, created_at: Time.zone.local(2019, 11, 18, 13, 0, 0),
-                      deadline: Time.zone.local(2019, 11, 25, 13, 0, 0),
+  let!(:approval) do
+    create(:approval, created_at: Time.zone.local(this_year, 11, 18, 13, 0, 0),
+                      deadline: Time.zone.local(next_year, 11, 18, 13, 0, 0),
                       drive_perms: "writer",
                       drive_public: true)
   end
@@ -37,15 +33,9 @@ describe "Use existing approval as template", js: true do
 
       time_str = find("#datepicker", visible: false).value
       time = Time.parse(time_str)
-      expect(time.year).to eq(2019)
-      expect(time.month).to eq(11)
-
-      # TODO: FIX Spec
-      if ENV.fetch("CI", "false") == "true"
-        expect(time.day).to eq(26)
-      else
-        expect(time.day).to eq(27)
-      end
+      expect(time.year).to eq(next_year)
+      expect(time.month).to eq(Time.now.month)
+      expect(time.day).to eq(Time.now.day)
 
       first_approver = approval.approvers.first
       expect(find("#approval_approvers_attributes_0_name").value).to eq(first_approver.name)
