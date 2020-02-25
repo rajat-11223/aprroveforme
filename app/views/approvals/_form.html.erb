@@ -1,4 +1,8 @@
 <%= form_for @approval, remote: true do |f| %>
+  <div id="errors" class="callout alert" style="display: none; text-align: center;">
+    <p></p>
+  </div>
+
   <div class="grid-x grid-margin-x">
     <div class="large-10 large-offset-1 item-approval-form cell">
       <div class="grid-x">

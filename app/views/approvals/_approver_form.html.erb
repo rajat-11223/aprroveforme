@@ -1,9 +1,9 @@
 <div class="grid-x grid-margin-x approver">
   <div class="large-3 small-3 cell">
-    <%= f.text_field :name, placeholder: "Name", class: "approvers-input"  %>
+    <%= f.text_field :name, placeholder: "Name", class: "approvers-input", field_type: :name  %>
   </div>
   <div class="large-5 small-5 cell">
-    <%= f.text_field :email, placeholder: "Email address", class: "approvers-input"  %>
+    <%= f.text_field :email, placeholder: "Email address", class: "approvers-input", field_type: :email  %>
   </div>
   <div class="large-3 small-3 cell">
     <%= f.select(:required, [["Required", "required"], ["Optional", "optional"]]) %>
