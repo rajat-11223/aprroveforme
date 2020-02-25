@@ -34,6 +34,10 @@ RSpec.configure do |config|
   config.include StripeHelpers, type: :system, js: true
   config.include ActiveSupport::Testing::TimeHelpers
 
+  config.around :each, :system do |ex|
+    ex.run_with_retry retry: 3
+  end
+
   config.before(:each, type: :system) do
     Capybara.default_max_wait_time = 10
     mock_omniauth_provider!

@@ -68,6 +68,7 @@ group :test do
   gem "email_spec", ">= 1.4.0"
   gem "rails-controller-testing"
   gem "rspec_junit_formatter"
+  gem "rspec-retry"
   gem "rspec-sidekiq"
   gem "selenium-webdriver"
 end
