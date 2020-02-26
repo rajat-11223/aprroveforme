@@ -22,6 +22,9 @@ foreman start postgres
 Deploy to Staging: `bin/thor deploy:staging`
 Deploy to Production: `bin/thor deploy:production`
 
+## Test
+
+To run test suite `bin/rspec`
 
 ## Staging
 HTTP Basic Authentication
