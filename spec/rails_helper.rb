@@ -5,6 +5,7 @@ require File.expand_path("../../config/environment", __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production? || Rails.env.staging?
 require "rspec/rails"
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -34,7 +35,7 @@ RSpec.configure do |config|
   config.include StripeHelpers, type: :system, js: true
   config.include ActiveSupport::Testing::TimeHelpers
 
-  config.around :each, :system do |ex|
+  config.around :each do |ex|
     ex.run_with_retry retry: 3
   end
 
@@ -50,15 +51,36 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    skip "ignored on CI" if example.metadata[:ci_ignore] && ENV["CI"] == "true"
+    skip "ignored on CI" if example.metadata[:ci_ignore] && Workflow::Application::RUNNING_ON_CI
 
     example.run
   end
 
-  config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
-    # driven_by :selenium_chrome, screen_size: [1600, 1400]
+  Capybara.server = :puma, { Silent: true }
+
+  Capybara.register_driver :chrome do |app|
+    Capybara::Selenium::Driver.new(app, browser: :chrome)
   end
+
+  Capybara.register_driver :headless_chrome do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      "goog:chromeOptions": {
+        args: %w(no-sandbox headless disable-gpu window-size=1280,800),
+      },
+    )
+
+    Capybara::Selenium::Driver.new(app,
+                                   browser: :chrome,
+                                   desired_capabilities: capabilities).tap do |d|
+      d.browser.download_path = Rails.root.join("tmp/downloads")
+    end
+  end
+
+  ENGINE = ENV["WITHOUT_HEADLESS"].present? ? :chrome : :headless_chrome
+  config.before(:each, type: :system) do
+    driven_by ENGINE
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

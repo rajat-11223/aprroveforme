@@ -39,6 +39,7 @@ describe "Navigate to static page" do
     end
 
     it 'home' do
+      visit signin_path
       visit_page_with_content(visit_path: root_path, result_path: dashboard_home_index_path, content: "ApproveForMe")
     end
 

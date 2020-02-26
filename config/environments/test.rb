@@ -41,7 +41,7 @@ Rails.application.configure do
 
   config.secret_key_base = SecureRandom.hex(64)
 
-  if ENV.fetch("CI", "false") == "true"
+  if Workflow::Application::RUNNING_ON_CI
     puts "CI... use eastern tz"
     config.time_zone = "Eastern Time (US & Canada)"
   else

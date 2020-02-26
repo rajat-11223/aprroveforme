@@ -69,7 +69,7 @@ group :test do
   gem "rspec_junit_formatter"
   gem "rspec-retry"
   gem "rspec-sidekiq"
-  gem "selenium-webdriver"
+  gem "webdrivers"
 end
 
 group :development do

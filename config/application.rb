@@ -8,6 +8,7 @@ Bundler.require(:default, Rails.env)
 
 module Workflow
   class Application < Rails::Application
+    RUNNING_ON_CI = ENV["CI"] == "true"
     APP_HOST = ENV.fetch("APP_HOST")
     APP_DOMAIN = ENV.fetch("APP_DOMAIN")
     BASE_APP_DOMAIN = ENV.fetch("BASE_APP_DOMAIN", APP_DOMAIN)

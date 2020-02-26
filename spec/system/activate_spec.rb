@@ -17,7 +17,7 @@ describe "Activation" do
   it "enables me to activate" do
     expect(user).to_not be_activated
 
-    visit activate_account_url
+    visit activate_account_path
 
     visit root_path
     click_link "Login"
