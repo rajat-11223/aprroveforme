@@ -21,3 +21,31 @@ foreman start postgres
 
 Deploy to Staging: `bin/thor deploy:staging`
 Deploy to Production: `bin/thor deploy:production`
+
+
+## Staging
+HTTP Basic Authentication
+Username:  approveforme
+Password:  Time.zone.today.year.to_s
+
+https://staging.approveforme.com/
+
+## Production
+
+https://www.approveforme.com/home/dashboard
+
+
+## Adding/Removing Admin role
+
+From Rolify docs: https://github.com/RolifyCommunity/rolify
+
+```ruby
+# Add Admin Role
+
+user = User.find_by(email: "email")
+user.add_role :admin
+
+# Remove Admin Role
+user = User.find_by(email: "email")
+user.remove_role :admin
+```

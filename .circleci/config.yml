@@ -87,7 +87,7 @@ jobs:
 
       - run:
           name: Brakeman
-          command: brakeman --exit-on-warn --progress --run-all-checks -i ./config/brakeman.ignore
+          command: brakeman --exit-on-warn --progress -i ./config/brakeman.ignore
 
       - run:
           name: Wait for Postgres
