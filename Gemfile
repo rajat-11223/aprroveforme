@@ -63,7 +63,6 @@ end
 
 group :test do
   gem "capybara"
-  gem "chromedriver-helper"
   gem "codacy-coverage"
   gem "email_spec", ">= 1.4.0"
   gem "rails-controller-testing"
