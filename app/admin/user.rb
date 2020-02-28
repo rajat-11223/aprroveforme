@@ -19,4 +19,16 @@ ActiveAdmin.register User do
     column(:created_at)
     actions
   end
+
+  csv do
+    column(:id)
+    column(:first_name)
+    column(:last_name)
+    column(:email)
+    column(:approvals_sent)
+    column(:approvals_received)
+    column(:picture)
+    column(:activated?)
+    column(:created_at)
+  end
 end
