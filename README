@@ -17,7 +17,7 @@ foreman start postgres
 bin/thor deploy:copy_prod_to_local
 # stop foreman
 foreman start postgres
-`
+```
 
 Deploy to Staging: `bin/thor deploy:staging`
 Deploy to Production: `bin/thor deploy:production`
