@@ -21,9 +21,11 @@ jobs:
       - DATABASE_URL: "postgres://approveforme@localhost:5432/approveforme_test"
         REDISCLOUD_URL: redis://localhost:6379
         REDIRECT_URI: http://approveforme.lvh.me:5000/auth/google_oauth2/callback
-        GOOGLE_ID: 107940143634-mied1cvqssluehq4t1q3jaa6qi9obesv.apps.googleusercontent.com
+        #GOOGLE_ID: 107940143634-mied1cvqssluehq4t1q3jaa6qi9obesv.apps.googleusercontent.com
+        GOOGLE_ID: 919309896679-6s5dq2q54tkgrecsiekmdej3r6ht2v6a.apps.googleusercontent.com
         GOOGLE_SECRET: MuN9fGHDQloWhCgEOTly5nfF
-        APP_ID: 107940143634
+        #APP_ID: 107940143634
+        APP_ID: 919309896679
         CODACY_PROJECT_TOKEN: "a622d579565045af994e27ff139ab0ea"
         CODACY_RUN_LOCAL: true
         ROLLBAR_ACCESS_TOKEN: 8515b6b943774027a4cd32bd514625a1
@@ -32,7 +34,9 @@ jobs:
         COUNTRY_BLOCK_REDIRECT_URL: /blocked_country
         APP_DOMAIN: approveforme.lvh.me:5000
         APP_HOST: http://approveforme.lvh.me:5000/
-        SENDGRID_API_KEY: ""
+        #SENDGRID_API_KEY: "sk_test_3csz1Gmr5UQUIsGovXbNPvUE"
+        SENDGRID_API_KEY: "AIzaSyCzX29ao1BFoWb5_FBpymSJt8ccCSt33B8"
+
         CI: true
 
     steps:
